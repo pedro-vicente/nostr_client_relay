@@ -32,6 +32,10 @@ set(src ${src} src/log.hh)
 set(src ${src} src/log.cc)
 set(src ${src} src/http.hh)
 set(src ${src} src/http.cc)
+set(src ${src} src/message.hh)
+set(src ${src} src/message.cc)
+set(src ${src} src/database.hh)
+set(src ${src} src/database.cc)
 
 #//////////////////////////
 #executables 
