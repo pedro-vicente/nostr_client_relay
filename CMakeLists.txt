@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.24)
+cmake_minimum_required(VERSION 3.15)
 set(CMAKE_BUILD_TYPE Debug)
 project (nostr_client_relay DESCRIPTION "Nostr client and relay demo" LANGUAGES CXX VERSION 1.0)
 
@@ -21,6 +21,43 @@ if (MSVC)
   add_definitions(-D_WINSOCK_DEPRECATED_NO_WARNINGS)
   add_definitions(-D_CRT_SECURE_NO_WARNINGS)
   add_definitions(-D_CRT_NONSTDC_NO_DEPRECATE)
+endif()
+
+#//////////////////////////
+#Linux/Mac
+#//////////////////////////
+
+if(UNIX AND NOT APPLE)
+  set(LINUX TRUE)
+endif()
+
+if(APPLE)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-declarations")
+  message(STATUS "Mac OS build: ${CMAKE_CXX_FLAGS}")
+endif()
+
+#//////////////////////////
+#link with libraries
+#lib_dep contains a cascade definition of all the libraries needed to link
+#//////////////////////////
+
+set(lib_dep ${lib_dep})
+
+#//////////////////////////
+#LINUX
+#order of the link libraries matters; pthread dl ${ODBC_LIBRARY} must be last
+#//////////////////////////
+
+if(LINUX)
+  set(lib_dep ${lib_dep} pthread dl)
+  set(lib_dep ${lib_dep} stdc++fs) #gcc 8.3.0
+  find_program(LSB_RELEASE_EXEC lsb_release)
+  execute_process(COMMAND ${LSB_RELEASE_EXEC} -is OUTPUT_VARIABLE LSB_RELEASE_ID_SHORT OUTPUT_STRIP_TRAILING_WHITESPACE)
+  message(STATUS "Building in " ${LSB_RELEASE_ID_SHORT})
+endif()
+
+if (MSVC)
+  set(lib_dep ${lib_dep} Ws2_32.lib)
 endif()
 
 #//////////////////////////
@@ -48,7 +85,6 @@ add_executable(relay ${src} src/relay.cc)
 #link
 #//////////////////////////
 
-if (MSVC)
-  target_link_libraries (client Ws2_32.lib)
-  target_link_libraries (relay Ws2_32.lib)
-endif()
+target_link_libraries (client ${lib_dep})
+target_link_libraries (relay ${lib_dep})
+
