@@ -24,6 +24,8 @@ TRIPLET                                 :=aarch64-linux-gnu
 export TRIPLET
 endif
 
+CLANG=$(shell which clang)
+
 ifeq ($(reuse),true)
 REUSE                                   :=-r
 else
@@ -137,6 +139,8 @@ report:###	report
 	@echo ''
 	@echo 'PROJECT_NAME=${PROJECT_NAME}'
 	@echo ''
+	@echo 'CLANG=${CLANG}'
+	@echo ''
 	@echo 'GIT_USER_NAME=${GIT_USER_NAME}'
 	@echo 'GIT_USER_EMAIL=${GIT_USER_EMAIL}'
 	@echo 'GIT_SERVER=${GIT_SERVER}'
@@ -148,6 +152,16 @@ report:###	report
 	@echo 'GIT_REPO_NAME=${GIT_REPO_NAME}'
 	@echo 'GIT_REPO_PATH=${GIT_REPO_PATH}'
 
+.PHONY:build.build.sh
+build-boost-sh:### 	build.cmake.sh
+	./build.boost.sh
+.PHONY:build.cmake.sh
+build-cmake-sh:### 	build.cmake.sh
+	./build.cmake.sh
+.PHONY:build.wt.sh
+build-wt-sh:### 	build.cmake.sh
+	./build.wt.sh
+
 extra:## 	additional
 ##extra
 	@echo "example: add additional make commands"
@@ -157,7 +171,7 @@ submodules:###	recursively initialize git submodules
 
 cmake:submodules## 	cmake .
 ##cmake
-	cmake . && make all
+	cmake -S . -B build && cd build && make all
 .PHONY:ext/openssl
 ext/openssl:
 ##ext/openssl

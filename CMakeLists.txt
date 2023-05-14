@@ -15,6 +15,7 @@ option(BUILD_GUI "BUILD_STATIC" OFF)
 option(BUILD_WEB "BUILD_WEB" OFF)
 option(USE_OPENSSL "set OFF to build without OpenSSL" ON)
 option(DEV_MODE "DEV_MODE" OFF)
+option(OPENSSL_BREW "OPENSSL_BREW" ON)
 
 if(MSVC)
 if(BUILD_STATIC)
@@ -150,6 +151,14 @@ if(USE_OPENSSL)
 endif()
 
 if(USE_OPENSSL)
+
+	set(OPENSSL_ROOT_DIR "${CMAKE_SOURCE_DIR}/ext/openssl-3.0.5")
+	find_package(OpenSSL REQUIRED)
+	message(STATUS "OpenSSL include: ${OPENSSL_INCLUDE_DIR}")
+	message(STATUS "OpenSSL libraries: ${OPENSSL_LIBRARIES}")
+	include_directories(${OPENSSL_INCLUDE_DIR})
+	set(lib_dep ${lib_dep} ${OPENSSL_LIBRARIES})
+
   if (MSVC)
     set(OPENSSL_ROOT_DIR "${CMAKE_SOURCE_DIR}/ext/openssl-3.0.5")
     message(STATUS "OpenSSL include: ${OPENSSL_INCLUDE_DIR}")

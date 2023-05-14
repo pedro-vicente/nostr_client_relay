@@ -1,3 +1,4 @@
+ext/wt-4.10.0/WtInstall.cmake
 build
 /ext/
 /src/nostril/config.h

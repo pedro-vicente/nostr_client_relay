@@ -28,6 +28,7 @@ std::vector<std::string> relays = { "eden.nostr.land",
   "relay.snort.social",
   "relay.damus.io",
   "nostr.wine",
+  "0.0.0.0:6102"
 };
 
 std::vector<std::string> list = { "list_01.txt",
