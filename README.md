@@ -1,63 +1,70 @@
-## NOSTR client and relay demo
+## Nostr client and relay
 
+Nostro and Vostro are Nostr [https://nostr.com/]  client and relay programs. 
+
+### Test client and server
+
+Start a shell with 'nostro' and another shell with 'vostro'. Vostro is currently an echo server. Nostro allows to connect to Vostro on localhost (no parameters) or to any publically available Nostr relay. 
+
+
+```
+./nostro -u relay.damus.io
+nostro:14:47:49 Opened connection: HTTP 1.1 , code 101 Switching Protocols
+nostro:14:47:49 Sending: "["REQ", "RAND", {"kinds": [1], "limit": 1}]"
+nostro:14:47:49 Received: "["EVENT","RAND",{"content":"\nhttps://i.imgur.com/Zqo4RR8.jpg\n#Photography #photostr #blackwhite #plebchain #travel ","created_at":1684867664,"id":"837b42932e5c163a829de1a8b2e8b7234e0dca78b13a0bbeccd03b055fb6e2ef","kind":1,"pubkey":"f96c3d76497074c4c83a7b3823380e77dc73d5a9494fd2e053e4a1453e17824b","sig":"a3b1a74d9d6adc50451c513b30082cbbbef969bd08a9b65e972dc5daf15e9b869f56e39ce11477fe16ad8e4ab5666439be2e8abdd4ef73d58d87c424114bb63e","tags":[["t","Photography"],["t","photostr"],["t","blackwhite"],["t","plebchain"],["t","travel"],["r","https://i.imgur.com/Zqo4RR8.jpg"]]}]"
+
+
+```
+
+```
+./nostro
+vostro:14:51:26 Opened connection: 0x7f8bbcf06930
+nostro:14:51:26 Opened connection: HTTP 1.1 , code 101 Web Socket Protocol Handshake
+nostro:14:51:26 Sending: "["REQ", "RAND", {"kinds": [1], "limit": 3}]"
+vostro:14:51:26 Server: Message received: "["REQ", "RAND", {"kinds": [1], "limit": 3}]" from 0x7f8bbcf06930
+nostro:14:51:26 Received: "["REQ", "RAND", {"kinds": [1], "limit": 3}]"
+vostro:14:51:26 Closed connection: 0x7f8bbcf06930 code 1000
+nostro:14:51:26 Closed: 1000
+nostro:14:51:26 Received 1 messages: 
+nostro:14:51:26 ["REQ", "RAND", {"kinds": [1], "limit": 3}]
+
+```
+
+```
+./vostro
+vostro:14:54:13 Listening on port: 8080
+vostro:14:54:27 Opened connection: 0x7ff052004080
+vostro:14:54:27 Server: Message received: "["REQ", "RAND", {"kinds": [1], "limit": 3}]" from 0x7ff052004080
+vostro:14:54:27 Closed connection: 0x7ff052004080 code 1000
+```
+
+### Dependencies
+
+- CMake [https://cmake.org/]
+- libsecp256k1 [https://github.com/bitcoin-core/secp256k1]
+- OpenSSL [https://www.openssl.org/] (Windows build with ext/openssl-3.0.5/build.bat)
+- Asio [https://think-async.com/Asio/AsioStandalone.html] 
+- Simple-WebSocket-Server [https://gitlab.com/eidheim/Simple-WebSocket-Server] 
+- JSON Modern C++ [https://json.nlohmann.me/] 
+
+To install dependencies on Mac and Linux
+
+Mac
+
+``` cmd 
+brew install cmake
+brew install openssl
+```
+
+Linux
+
+``` cmd 
+sudo apt-get install cmake 
+sudo apt-get install libssl-dev 
+```
 
 ### Building
 
 ``` cmd
-cmake -S . -B build
-cd build 
-cmake --build .
-```
-
-### Overview
-
-A NOSTR client and relay demo. Currently transport is done with HTTP only (TCP) 
-
-### Test
-
-Start a shell with 'relay' and another shell with 'client'
-
-```
-./relay
-relay:17:38:48 Listening on port:2000
-relay:17:39:13 received POST from 127.0.0.1 466 bytes
-relay:17:39:13 event received: some great content
-relay:17:39:13 send response: 127.0.0.1
-```
-The client sends an EVENT and a REQ, and receives a response from the REQ
-
-```
-./client
-client:17:39:13 sent 574 bytes
-client:17:39:13 header: HTTP/1.1 200 OK
-client:17:39:13 message: 
-client:17:39:13 received empty message
-client:17:39:13 sent 491 bytes
-client:17:39:13 header: POST / HTTP/1.1
-client:17:39:13 header: Host: 127.0.0.1
-client:17:39:13 header: Connection: close
-client:17:39:13 header: Content-Type: application/json
-client:17:39:13 header: Content-Length: 455
-client:17:39:13 message: [
-  {
-    "content": "some great content",
-    "created_at": 1684186753,
-    "id": "a3562c82dd4982a74ecf2d0294e22dcc",
-    "kind": 1,
-    "pubkey": "b2b41e936821bb48572c2295ec5f1741",
-    "sig": "0132DB5A8941CE80C4FE1F1B4FD6C93DA6F8142AE6BA53A17909814C013CA694",
-    "tags": [
-      [
-        "e",
-        "a3562c82dd4982a74ecf2d0294e22dcc, 127.0.0.1"
-      ],
-      [
-        "p",
-        "b2b41e936821bb48572c2295ec5f1741, 127.0.0.1"
-      ]
-    ]
-  }
-]
-client:17:39:13 received 1 events
-client:17:39:13 some great content
+./build.cmake.sh
 ```

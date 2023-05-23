@@ -1,9 +1,35 @@
-cmake_minimum_required(VERSION 3.15)
+if (MSVC)
+ cmake_minimum_required(VERSION 3.26)
+else()
+ cmake_minimum_required(VERSION 3.15)
+endif() 
 set(CMAKE_BUILD_TYPE Debug)
-project (nostr_client_relay DESCRIPTION "Nostr client and relay demo" LANGUAGES CXX VERSION 1.0)
+project (nostr_client_relay LANGUAGES CXX C)
 
-include_directories(ext/asio-1.18.1/include)
-include_directories(ext/json-3.11.2/single_include)
+if(MSVC)
+  set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+endif()
+
+#//////////////////////////
+# external dependencies
+#//////////////////////////
+
+include_directories(${CMAKE_SOURCE_DIR}/ext/asio-1.18.1/include)
+include_directories(${CMAKE_SOURCE_DIR}/ext/json-3.11.2/single_include)
+
+include_directories(${CMAKE_SOURCE_DIR}/ext/secp256k1-0.3.2/include)
+add_subdirectory(${CMAKE_SOURCE_DIR}/ext/secp256k1-0.3.2)
+
+#//////////////////////////
+# nostril
+#//////////////////////////
+
+add_subdirectory(${CMAKE_SOURCE_DIR}/src/nostril)
+include_directories(${CMAKE_SOURCE_DIR}/src/nostril)
+
+include_directories(src)
+
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 set(CMAKE_CXX_STANDARD 17)
 add_definitions(-DASIO_STANDALONE)
@@ -24,7 +50,7 @@ if (MSVC)
 endif()
 
 #//////////////////////////
-#Linux/Mac
+# Linux/Mac
 #//////////////////////////
 
 if(UNIX AND NOT APPLE)
@@ -37,54 +63,128 @@ if(APPLE)
 endif()
 
 #//////////////////////////
-#link with libraries
-#lib_dep contains a cascade definition of all the libraries needed to link
+# link with libraries
+# lib_dep contains a cascade definition of all the libraries needed to link
 #//////////////////////////
 
 set(lib_dep ${lib_dep})
 
 #//////////////////////////
-#LINUX
-#order of the link libraries matters; pthread dl ${ODBC_LIBRARY} must be last
+# LINUX
+# order of the link libraries matters; pthread dl
 #//////////////////////////
 
 if(LINUX)
   set(lib_dep ${lib_dep} pthread dl)
-  set(lib_dep ${lib_dep} stdc++fs) #gcc 8.3.0
+  set(lib_dep ${lib_dep} stdc++fs) 
   find_program(LSB_RELEASE_EXEC lsb_release)
   execute_process(COMMAND ${LSB_RELEASE_EXEC} -is OUTPUT_VARIABLE LSB_RELEASE_ID_SHORT OUTPUT_STRIP_TRAILING_WHITESPACE)
   message(STATUS "Building in " ${LSB_RELEASE_ID_SHORT})
 endif()
 
-if (MSVC)
-  set(lib_dep ${lib_dep} Ws2_32.lib)
-endif()
-
 #//////////////////////////
-#sources 
+# common sources library
 #//////////////////////////
 
 set(src ${src})
 set(src ${src} src/log.hh)
 set(src ${src} src/log.cc)
-set(src ${src} src/http.hh)
-set(src ${src} src/http.cc)
 set(src ${src} src/message.hh)
 set(src ${src} src/message.cc)
 set(src ${src} src/database.hh)
 set(src ${src} src/database.cc)
 
-#//////////////////////////
-#executables 
-#//////////////////////////
-
-add_executable(client ${src} src/client.cc)
-add_executable(relay ${src} src/relay.cc)
+add_library(comm ${src})
 
 #//////////////////////////
-#link
+# link
 #//////////////////////////
 
-target_link_libraries (client ${lib_dep})
-target_link_libraries (relay ${lib_dep})
+set(lib_dep ${lib_dep} comm)
+if (MSVC)
+  set(lib_dep ${lib_dep} Ws2_32.lib)
+endif()
+
+#//////////////////////////
+# nostril
+#//////////////////////////
+
+set(lib_dep ${lib_dep} nostri)
+if (MSVC)
+  set(lib_dep ${lib_dep} ${CMAKE_BINARY_DIR}/ext/secp256k1-0.3.2/src/Debug/libsecp256k1.lib)
+  set(lib_dep ${lib_dep} Bcrypt.lib)
+else()
+  set(lib_dep ${lib_dep} ${CMAKE_BINARY_DIR}/ext/secp256k1-0.3.2/src/libsecp256k1.a)
+endif()
+
+
+#//////////////////////////
+# HTTP demo
+#//////////////////////////
+
+add_executable(http_client src/http/http.hh src/http/http.cc src/http/http_client.cc)
+add_executable(http_relay src/http/http.hh src/http/http.cc src/http/http_relay.cc)
+target_link_libraries (http_client ${lib_dep})
+target_link_libraries (http_relay ${lib_dep})
+
+#//////////////////////////
+# IDE project virtual folders
+#//////////////////////////
+
+set_target_properties(http_client PROPERTIES FOLDER "http")
+set_target_properties(http_relay PROPERTIES FOLDER "http")
+
+
+option(USE_OPENSSL "set OFF to build without OpenSSL" ON)
+
+#//////////////////////////
+#SSL certificates
+#//////////////////////////
+
+if(USE_OPENSSL)
+  message(STATUS "Copying SSL certificates to: ${CMAKE_BINARY_DIR}")
+  file(COPY "${CMAKE_SOURCE_DIR}/resources/server.key" DESTINATION ${CMAKE_BINARY_DIR})
+  file(COPY "${CMAKE_SOURCE_DIR}/resources/server.crt" DESTINATION ${CMAKE_BINARY_DIR})
+endif(USE_OPENSSL)
+
+#//////////////////////////
+#OpenSSL
+#//////////////////////////
+
+if(USE_OPENSSL)
+  include_directories(${CMAKE_SOURCE_DIR}/ext/Simple-WebSocket-Server-v2.0.2)
+  add_definitions(-DUSE_STANDALONE_ASIO)
+  set (ASIO_PATH ${CMAKE_SOURCE_DIR}/ext/asio-1.18.1)
+endif()
+
+if(USE_OPENSSL)
+  if (MSVC)
+    set(lib_dep ${lib_dep} crypt32.lib)
+  endif()
+  if (MSVC)
+    set(OPENSSL_ROOT_DIR "${CMAKE_SOURCE_DIR}/ext/openssl-3.0.5")
+    message(STATUS "OpenSSL include: ${OPENSSL_INCLUDE_DIR}")
+  elseif(APPLE)
+    set(OPENSSL_ROOT_DIR "/usr/local/Cellar/openssl@3/3.1.0")
+    set(OPENSSL_SSL_LIBRARY "/usr/local/Cellar/openssl@3/3.1.0/lib/libssl.dylib")
+    set(OPENSSL_CRYPTO_LIBRARY "/usr/local/Cellar/openssl@3/3.1.0/lib/libcrypto.dylib")
+  endif()
+  find_package(OpenSSL REQUIRED)
+  message(STATUS "OpenSSL include: ${OPENSSL_INCLUDE_DIR}")
+  message(STATUS "OpenSSL libraries: ${OPENSSL_LIBRARIES}")
+  include_directories(${OPENSSL_INCLUDE_DIR})
+  set(lib_dep ${lib_dep} ${OPENSSL_LIBRARIES})
+endif()
+
+
+#//////////////////////////
+# executables
+#//////////////////////////
+
+if(USE_OPENSSL)
+  add_executable(nostro src/wss_client.cc)
+  add_executable(vostro src/wss_relay.cc)
+  target_link_libraries (nostro ${lib_dep})
+  target_link_libraries (vostro ${lib_dep})
+endif()
 
