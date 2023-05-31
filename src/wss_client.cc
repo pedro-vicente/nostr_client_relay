@@ -144,7 +144,8 @@ int main(int argc, const char* argv[])
     return 6;
   }
 
-  if (!print_event(&ev, args.flags & HAS_ENVELOPE))
+  char* json = (char*)malloc(102400);
+  if (!print_event(&ev, args.flags & HAS_ENVELOPE, &json))
   {
     fprintf(stderr, "buffer too small\n");
     return 88;
@@ -171,18 +172,13 @@ int main(int argc, const char* argv[])
   //on_open
   /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  client.on_open = [](std::shared_ptr<WssClient::Connection> connection)
+  client.on_open = [&](std::shared_ptr<WssClient::Connection> connection)
   {
     std::stringstream ss;
     ss << "Opened connection: HTTP " << connection.get()->http_version << " , code " << connection.get()->status_code;
     events::log(ss.str());
 
-    std::string out_message;
-    std::ifstream ifs("nostril.json"); //generated at start
-    std::stringstream buf;
-    buf << ifs.rdbuf();
-    out_message = buf.str();
-
+    std::string out_message = json;
     ss.str(std::string());
     ss.clear();
     ss << "Sending: \"" << out_message << "\"";

@@ -26,13 +26,10 @@ void events::start_log()
 //http://en.cppreference.com/w/cpp/chrono/c/strftime
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void events::log(const std::string& msg)
+void events::log(const std::string& msg, bool to_file)
 {
-  assert(ofs_log.is_open());
-  assert(log_program_name.size());
-  assert(msg.size() != 0);
   std::cout << log_program_name << ":" << get_time_now("%X") << " " << msg << std::endl;
-  ofs_log << get_time_now("%Y-%m-%d,%X") << " " << msg << std::endl;
+  if (to_file) ofs_log << get_time_now("%Y-%m-%d,%X") << " " << msg << std::endl;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////

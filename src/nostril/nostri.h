@@ -89,7 +89,7 @@ extern "C" {
   int mine_event(struct nostr_event* ev, int difficulty);
   int generate_event_id(struct nostr_event* ev);
   int sign_event(secp256k1_context* ctx, struct key* key, struct nostr_event* ev);
-  int print_event(struct nostr_event* ev, int envelope);
+  int print_event(struct nostr_event* ev, int envelope, char** json);
 
   int parse_args(int argc, const char* argv[], struct args* args, struct nostr_event* ev);
 #ifdef __cplusplus

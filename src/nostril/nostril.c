@@ -148,12 +148,14 @@ int main(int argc, const char* argv[])
     return 6;
   }
 
-  if (!print_event(&ev, args.flags & HAS_ENVELOPE))
+  char* json = malloc(102400);
+  if (!print_event(&ev, args.flags & HAS_ENVELOPE, &json))
   {
     fprintf(stderr, "buffer too small\n");
     return 88;
   }
 
+  fprintf(stderr, json);
   return 0;
 }
 

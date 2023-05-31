@@ -327,15 +327,13 @@ void NostroApplication::generate()
     return;
   }
 
-  if (!print_event(&ev, args.flags & HAS_ENVELOPE))
+  char* json = (char*)malloc(102400);
+  if (!print_event(&ev, args.flags & HAS_ENVELOPE, &json))
   {
     fprintf(stderr, "buffer too small\n");
     return;
   }
 
-  std::ifstream ifs("nostril.json"); //generated in 'print_event'
-  std::stringstream buf;
-  buf << ifs.rdbuf();
-  std::string out_message = buf.str();
+  std::string out_message = json;
   m_area_input->setText(out_message);
 }

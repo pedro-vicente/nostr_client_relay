@@ -329,7 +329,7 @@ int sign_event(secp256k1_context* ctx, struct key* key, struct nostr_event* ev)
 // print_event
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-int print_event(struct nostr_event* ev, int envelope)
+int print_event(struct nostr_event* ev, int envelope, char** json)
 {
   unsigned char buf[102400];
   char pubkey[65];
@@ -348,31 +348,48 @@ int print_event(struct nostr_event* ev, int envelope)
   if (!cursor_push_tags(&cur, ev))
     return 0;
 
-  FILE* fp = fopen("nostril.json", "w");
+  char str[1024];
+  char out[102400];
 
   if (envelope)
-    fprintf(fp, "[\"EVENT\",");
+  {
+    sprintf(str, "[\"EVENT\",");
+    strcpy(out, str);
+  }
 
-  fprintf(fp, "{\"id\": \"%s\",", id);
-  fprintf(fp, "\"pubkey\": \"%s\",", pubkey);
-  fprintf(fp, "\"created_at\": %" PRIu64 ",", ev->created_at);
-  fprintf(fp, "\"kind\": %d,", ev->kind);
-  fprintf(fp, "\"tags\": %.*s,", (int)cursor_len(&cur), cur.start);
+  sprintf(str, "{\"id\": \"%s\",", id);
+  if (envelope) strcat(out, str);
+  else strcpy(out, str);
+  sprintf(str, "\"pubkey\": \"%s\",", pubkey);
+  strcat(out, str);
+  sprintf(str, "\"created_at\": %" PRIu64 ",", ev->created_at);
+  strcat(out, str);
+  sprintf(str, "\"kind\": %d,", ev->kind);
+  strcat(out, str);
+  sprintf(str, "\"tags\": %.*s,", (int)cursor_len(&cur), cur.start);
+  strcat(out, str);
 
   reset_cursor(&cur);
   if (!cursor_push_jsonstr(&cur, ev->content))
     return 0;
 
-  fprintf(fp, "\"content\": %.*s,", (int)cursor_len(&cur), cur.start);
-  fprintf(fp, "\"sig\": \"%s\"}", sig);
+  sprintf(str, "\"content\": %.*s,", (int)cursor_len(&cur), cur.start);
+  strcat(out, str);
+  sprintf(str, "\"sig\": \"%s\"}", sig);
+  strcat(out, str);
 
   if (envelope)
-    fprintf(fp, "]");
+  {
+    sprintf(str, "]");
+    strcat(out, str);
+  }
 
-  fprintf(fp, "\n");
+  sprintf(str, "\n");
+  strcat(out, str);
 
-  fclose(fp);
-
+  fprintf(stderr, out);
+  int len = strlen(out);
+  *json = out;
   return 1;
 }
 

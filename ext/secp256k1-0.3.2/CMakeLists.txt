@@ -17,8 +17,14 @@ project(libsecp256k1
   LANGUAGES C
 )
 
-if(MSVC)
+
+message(STATUS "Source directory is " ${CMAKE_SOURCE_DIR})
+message(STATUS "Build directory is " ${CMAKE_CURRENT_BINARY_DIR})
+if (MSVC)
+message("-- Static build: " ${BUILD_STATIC})
+if(BUILD_STATIC)
   set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+endif()
 endif()
 
 set_property(GLOBAL PROPERTY CTEST_TARGETS_ADDED 1)
