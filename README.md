@@ -59,7 +59,8 @@ brew install openssl
 Linux
 
 ``` cmd 
-sudo apt-get install cmake 
+sudo apt-get install cmake
+sudo apt-get install build-essential libgtk-3-dev 
 sudo apt-get install libssl-dev 
 ```
 

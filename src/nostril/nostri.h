@@ -40,6 +40,7 @@ struct args
   const char* tags;
   const char* content;
   uint64_t created_at;
+  const char* uri;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -89,6 +90,8 @@ extern "C" {
   int generate_event_id(struct nostr_event* ev);
   int sign_event(secp256k1_context* ctx, struct key* key, struct nostr_event* ev);
   int print_event(struct nostr_event* ev, int envelope);
+
+  int parse_args(int argc, const char* argv[], struct args* args, struct nostr_event* ev);
 #ifdef __cplusplus
 }
 #endif

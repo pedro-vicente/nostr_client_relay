@@ -6,9 +6,23 @@ endif()
 set(CMAKE_BUILD_TYPE Debug)
 project (nostr_client_relay LANGUAGES CXX C)
 
-if(MSVC)
+option(BUILD_STATIC "BUILD_STATIC" OFF)
+option(BUILD_GUI "BUILD_STATIC" OFF)
+option(BUILD_WEB "BUILD_WEB" ON)
+option(USE_OPENSSL "set OFF to build without OpenSSL" ON)
+option(WT_ROOT "Use \root location for WT (Linux only)" OFF)
+
+
+if (MSVC)
+if(BUILD_STATIC)
   set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 endif()
+endif()
+
+
+message("-- nostr_client_relay static build: " ${BUILD_STATIC})
+message(STATUS "Source directory is " ${CMAKE_SOURCE_DIR})
+message(STATUS "Build directory is " ${CMAKE_CURRENT_BINARY_DIR})
 
 #//////////////////////////
 # external dependencies
@@ -16,7 +30,6 @@ endif()
 
 include_directories(${CMAKE_SOURCE_DIR}/ext/asio-1.18.1/include)
 include_directories(${CMAKE_SOURCE_DIR}/ext/json-3.11.2/single_include)
-
 include_directories(${CMAKE_SOURCE_DIR}/ext/secp256k1-0.3.2/include)
 add_subdirectory(${CMAKE_SOURCE_DIR}/ext/secp256k1-0.3.2)
 
@@ -30,6 +43,10 @@ include_directories(${CMAKE_SOURCE_DIR}/src/nostril)
 include_directories(src)
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+
+#//////////////////////////
+# Asio definitions
+#//////////////////////////
 
 set(CMAKE_CXX_STANDARD 17)
 add_definitions(-DASIO_STANDALONE)
@@ -135,8 +152,6 @@ set_target_properties(http_client PROPERTIES FOLDER "http")
 set_target_properties(http_relay PROPERTIES FOLDER "http")
 
 
-option(USE_OPENSSL "set OFF to build without OpenSSL" ON)
-
 #//////////////////////////
 #SSL certificates
 #//////////////////////////
@@ -188,3 +203,20 @@ if(USE_OPENSSL)
   target_link_libraries (vostro ${lib_dep})
 endif()
 
+
+
+#//////////////////////////
+# Wt desktop
+#//////////////////////////
+
+if (BUILD_GUI)
+  add_subdirectory(desktop)
+endif() 
+
+#//////////////////////////
+# Wt web
+#//////////////////////////
+
+if (BUILD_WEB)
+ add_subdirectory(web)
+endif()
