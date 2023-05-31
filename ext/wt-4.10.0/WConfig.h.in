@@ -1,0 +1,55 @@
+#ifndef WCONFIG_H
+#define WCONFIG_H
+
+// Version defines
+#define WT_SERIES ${VERSION_SERIES}
+#define WT_MAJOR  ${VERSION_MAJOR}
+#define WT_MINOR  ${VERSION_MINOR}
+
+/*! \brief A constant that encodes the library version of %Wt
+ *
+ * You may use this constant to check for the version of %Wt at build-time.
+ */
+#define WT_VERSION (((WT_SERIES & 0xff) << 24) | ((WT_MAJOR & 0xff) << 16) | ((WT_MINOR & 0xff) << 8))
+#define WT_VERSION_STR "${VERSION_SERIES}.${VERSION_MAJOR}.${VERSION_MINOR}"
+#define WT_CLASS       "Wt${VERSION_SERIES}_${VERSION_MAJOR}_${VERSION_MINOR}"
+#define WT_INCLUDED_VERSION Wt_${VERSION_SERIES}_${VERSION_MAJOR}_${VERSION_MINOR}
+
+#define RUNDIR "${RUNDIR}"
+#define WT_CONFIG_XML "${CONFIGURATION}"
+#define WTHTTP_CONFIGURATION "${WTHTTP_CONFIGURATION}"
+
+#cmakedefine WT_STATIC
+#cmakedefine WTDBO_STATIC
+#cmakedefine WTDBOPOSTGRES_STATIC
+#cmakedefine WTDBOSQLITE3_STATIC
+#cmakedefine WTDBOFIREBIRD_STATIC
+#cmakedefine WTDBOMYSQL_STATIC
+#cmakedefine WTDBOMSSQLSERVER_STATIC
+#cmakedefine WTHTTP_STATIC
+
+#cmakedefine WT_HAS_WRASTERIMAGE
+#cmakedefine WT_HAS_WPDFIMAGE
+#cmakedefine WT_WITH_SSL
+#cmakedefine WT_HAS_SAML
+
+#cmakedefine WT_USE_OPENGL
+#cmakedefine WT_DEBUG_ENABLED
+#cmakedefine WT_THREADED
+
+#cmakedefine WT_ANY_IS_THELINK2012_ANY
+#cmakedefine WT_ANY_IS_EXPERIMENTAL_ANY
+#cmakedefine WT_ANY_IS_STD_ANY
+
+#cmakedefine WT_DATE_TZ_USE_DATE
+#cmakedefine WT_DATE_TZ_USE_STD
+
+#cmakedefine WT_ASIO_IS_BOOST_ASIO
+#cmakedefine WT_ASIO_IS_STANDALONE_ASIO
+
+// our win32: WIN32 (gcc) or _WIN32 (MSC)
+#if defined(WIN32) || defined(_WIN32)
+#define WT_WIN32 1
+#endif
+
+#endif

@@ -1,0 +1,3880 @@
+WARNING! This file is no longer used.
+
+Please refer to the ReleaseNotes for major changes, and the git log for
+more fine-grained information on changes.
+
+28-11-2013:
+	* WRasterImage: now also support skia as backend. Cmake option
+	ENABLE_GM is replaced by WT_RASTERIMAGE_IMPLEMENTATION, which has
+	to be set to none, GraphicsMagick, or skia.
+
+10-07-2013:
+	* WSignal: Due to boost 1.54 complaining on boost.signals being
+	deprecated, namespace Wt::Signals was created. This namespace contains
+	the boost signals implementation that is optimal for your boost: for
+	boost < 1.54 it will be signals, for boost > 1.54 it will be signals2.
+
+15-05-2013:
+	* WStandardItem, WStandardItemModel: before: checkboxes are rendered
+	in enabled state when ItemIsUserCheckable flag is set. Now: checkboxes
+	are rendered when CheckStateRole is present. If ItemIsUserCheckable is
+	set, the checkbox will be editable. If ItemIsUserCheckable is not set,
+	the checkbox will be uneditable. setCheckable(true) will add a
+	CheckStateRole of false when no CheckStateRole was present on the
+	element.
+
+05-04-2013:
+	* Client SSL certificates can be queried from (static) WResources
+
+26-02-2013:
+	* Fixed bugs #1711, #1712, #1713, #1714, #1715
+
+	* Wt-3.3.0-rc3
+
+19-02-2013:
+	* Fixed bugs #1689, #1698, #1687 (from Starius)
+
+	* Implemented features #1675 (from Thomas Saquet)
+
+	* Wt-3.3.0-rc2
+
+18-02-2013:
+	* Fixed regression in resource continations
+
+15-02-2013:
+	* Fixed bugs #1699, #1697, #1696, #1695, #1677, #1676
+
+	* Fixed WPopupMenu::triggered() behaviour change from 3.2.3
+
+12-02-2013:
+	* Wt-3.3.0-rc1
+
+25-01-2013:
+	* Merged in bootstrap branch, with many additions, changes and above
+	all addition of support for Twitter's Bootstrap framework as a new
+	theme
+
+12-12-2012:
+	* Added binary WebGL VBO buffers, contributed by Tassilo Glander
+
+01-11-2012:
+	* Wt-3.2.3
+
+05-10-2012:
+	* Layouts: various bug fixes and improvements
+
+	* Render: added support for repeating table headers
+
+	* WApplication: added some tentative methods for 404 generation in
+	response to internal paths
+
+13-09-2012:
+	* Render: added support for explicit page breaks and % widths
+
+	* layouts: fix popup widgets confusing preferred size calculations
+	(tentatively)
+
+13-08-2012:
+	* Payment: new API for payment processing, with an implementation
+	for PayPal
+
+10-08-2012:
+	* layouts: fix various issues
+
+	* WTextEdit: fix behaviour inside a WPanel
+
+	* Render: code reorganizations for java port
+
+03-08-2012:
+	* QueryModel: added stableResultRow() method which has more guarantees
+	of consistently returning the same result regardless of database
+	changes
+
+27-07-2012:
+	* Dbo/Exception: add support for SQLSTATE code information
+
+	* Mail/Client: log configuration that will be used on first use
+
+	* WAnchor: use <a> tag even if no link has been provided (#1348)
+
+	* WDoubleSpinBox: fix formatting (#1358)
+
+	* WSlider: add more hooks for custom styles
+
+25-07-2012:
+	* Layouts: fix error in switching to contents determining layout size
+
+	* Wt-3.2.2-p1
+
+23-07-2012:
+	* WebController: workaround filesystem runtime problem for boost 1.50
+
+	* Wt-3.2.2
+
+16-07-2012:
+	* Wt: fix compile issues with boost 1.50
+
+	* WPieChart: support TooltipRole data
+
+	* WGridLayout, WBoxLayout: fix dynamic add/remove behaviour, fix
+	behaviour in WGroupBox, and honor minimum size settings on container
+
+	* Wt-3.2.2-rc2
+
+04-07-2012:
+	* Wt-3.2.2-rc1
+
+28-06-2012:
+	* WAbstractSpinBox: fix (server-side) validate()
+
+	* WComboBox: handle current index when deleting rows
+
+	* WTreeView: use hasChildren() do determine need for expand icon
+
+	* layout: properly constrain minimum sizes in the application root
+
+23-05-2012:
+	* dbo: add One-to-One relations, using Wt::Dbo::weak_ptr<>
+
+	* dbo: check relations are soundly defined instead of generating wrong
+	SQL
+
+	* dbo: collection::clear() method added
+
+	* Utils::base64Encode(): added option to omit CRLFs from generated
+	base64 stream
+
+	* WGridLayout, WBoxLayout: more fixes to be backwards compatible
+	with previous version
+
+	* http/WtReply: fix memory leak when too-large files are uploaded
+	leaving stale temporary files
+
+	* WebSession: clean-up session-id file for FastCGI (regression)
+
+	* WApplication::setInternalPath(): make it work properly when used
+	without JavaScript
+
+15-05-2012:
+	* feature/dbo/tutorial9 example added: splits the classes over several
+	files
+
+	* WCartesianChart: add support for custom markers, and custom axis
+	padding
+
+	* WGridLayout, WBoxLayout: several bug fixes
+
+14-05-2012:
+	* WInteractWidget::setMouseOverDelay() configures a delay before
+	the mouse over signal is fired
+
+	* WInteractWidget::doubleClicked() has been reimplemented using
+	mouseClicked() so that not both will fire in case both have events
+	attached
+
+09-05-2012:
+	* WGridLayout, WBoxLayout: new implementation, which should get rid
+	of misfeatures and annoyances
+
+	* WebRenderer: do not generate double '//' when loading theme CSS
+
+	* WebSession: do not wait for 'load' signal if not using ajax puzzle
+
+	* WFileUpload: fix behaviour in MS HTA mode
+
+05-04-2012:
+	* StdGridLayoutImpl.js: unbreak layout in WGroupBox behaviour
+
+	* Dbo/QueryModel: fix Firefox not showing header problem (LevelRole error)
+
+03-04-2012:
+	* WGlobal: add more forwards
+
+	* WTreeView: relax fix for behaviour in layout manager
+
+	* Dbo::QueryModel: make const methods const
+
+30-03-2012:
+	* Wt 3.2.1 (final) released
+
+03-01-2012:
+	* Wt/Utils: new header with utility functions that implement
+	commonly used hash functions and encoding/decoding
+
+	* WAxis: fix Date and DateTime scale rendering, to take into acount
+	labelInterval() and better choice of label values
+
+28-12-2011:
+	* Dbo/Transaction: do not require a commit() to commit a transaction
+	(but preserve behaviour to rollback in case of an exception)
+
+27-12-2011:
+	* Auth/: reorganisation, more model/widget separation
+
+26-12-2011:
+	* WSlider: implement disabled rendering
+
+22-12-2011:
+	* hangman example: add Russian translation
+
+19-12-2011:
+	* Render/: optimize table rendering
+
+07-12-2011:
+	* WGoogleMap: unify loading for v2 and v3, fixes bugs in loading
+	a second v3 google map
+
+01-12-2011:
+	* Wt.js, WtReply: more robust handling of flaky WebSocket connections
+
+	* hangman example: misc editorial changes
+
+	* WReadOnlyProxyModel: a simple proxy model that allows sharing of
+	source model between different sessions (but read-only)
+
+	* Dbo: added belongsTo() and hasMany() overloads which infers the
+	foreign key names from the foreign table
+
+	* Dbo: added session() method to actions
+
+	* WStringStream: optimization for string literals which avoids
+	strlen()
+
+	* WDialog: fix positionAt()
+
+	* wtfcgi: fix regression (data corruption) when built with DEBUG=ON
+
+29-11-2011:
+	* Released: 3.2.0
+
+21-11-2011:
+	* Wt/Dbo/backend/Firebird: merged Firebird backend contributed by
+	Lukasz Matuszewski from Technical University of Gdansk.
+
+	* Wt/WLogger: the library now uses macros that wrap around
+	Wt::log() by default for internal logging, but this could be
+	adapted to use another logging system of your choice. We also
+	abide the third law of logging libraries: that they will expand
+	their features until they become unusable: we added configurations
+	options to enable or disable specific logging.
+
+	* WServer: support catching SIGHUP (on unix-like) systems to
+	reread the configuration file.
+
+	* httpd: implement newer (and newest) WebSocket drafts (protocol
+	versions 7, 8 and 13)
+
+	* all: closed several bugs and feature requests (#956, #1015,
+	#1018, #1064)
+
+18-11-2011:
+	* WString: we now store arguments as WString so they are also
+	properly i18n-ed (#1059).
+
+07-11-2011:
+	* WException: new, public exception class (was previously an internal
+	one)
+
+	* WIOService: new, public service class for async I/O, and its
+	thread pool
+
+	* WStringStream: new, public fast stringstream implementation (was
+	previously an internal class)
+
+	* Wt/Auth: new, authentication module
+
+	* Wt/Json: new, JSON library
+
+	* Wt/Mail: new, mail client
+
+	* Wt/Http/Client: new, http client (former Client renamed to WtClient)
+
+	* Wt/Test/WTestEnvironment: has moved to a "wttest" pseudo-connector
+	library
+
+	* WFormWidget: added a valueText() that returns the textual
+	representation of the current value
+
+	* WApplication: added deferRendering() and resumeRendering() API,
+	useful for asynchronous client operations
+
+	* Wt::log(): global logging method, similar to but more useful
+	than WApplication::log()
+
+	* WTemplate: added support for functions, and two standard functions
+	id() and tr()
+
+	* WTemplate: implemented arguments parsing and use ("class")
+
+	* WebSession: added DoS meausures: ajax puzzle and plain session
+	rate limitation
+
+19-10-2011:
+	* WAbstractItemView: reimplemented and simplified header item rendering
+
+	* Wt.js: workaround browser bugs in scrollLeft reading in RTL mode,
+	fixing WAbstractItemView column resizing in RTL layouts.
+
+12-10-2011:
+	* WRectF: fix isEmpty() to be more restrictive: only a rect with
+	width = 0 and height = 0 is now empty
+
+11-10-2011:
+	* WPopupMenuItem: fix crash with re-showing hidden popup
+
+	* WDialog: add setClosable() which adds a close icon to the title bar
+
+	* WAbstractItemView: more flexible API for header height and vertical
+	alignment
+
+05-10-2011
+	* WMediaPlayer: make sure that relative URLs resolve against deployment
+	path (#1007)
+
+03-10-2011
+	* Dbo: added dialect option for 'rows ? to ?' (Firebird database).
+
+23-09-2011
+	* Wt 3.1.11 released
+
+19-09-2011
+	* WAnchor, RefEncoder: added indirection to strip session ID from the
+	referrer before navigating to an external URL (#607)
+
+	* wthttp: stabilized WebSockets handling
+
+13-09-2011
+	* WConfig: added a check to detect header/library version mismatches
+
+	* Chart/WAxis.C: a fix from Joe Garcia, crash with log scaling
+
+	* WItemDelegate: set target new window for WLink data when it references
+	a resource
+
+	* WMenu: fix hiding of a menu item to hide the entire item, not just
+	the contents (label)
+
+05-09-2011
+	* WResource, Http/ResponseContinuation: added API to suspend a response
+	while waiting for more data, and resuming later
+
+31-08-2011:
+	* WResource: use suggestedFilename() also when set during
+	handleRequest() (#920)
+
+22-08-2011:
+	* Dbo/DbAction: fix missing actId() in FromAnyAction triggered
+	by QueryModel with natural ids
+
+	* WAbstractServer, WebMain, WebSession: added support for
+	scheduling events, used to timeout bootstyle response to avoid problems
+	on IE(9) ?
+
+	* WCssDecorationStyle: fix border() segfault
+
+10-08-2011:
+	* WContainerWidget, WScrollArea, DomElement: use overflow-x and
+	overflow-y CSS style since now well cross-browser supported (#830)
+
+	* Dbo/Session: add forceReread parameter to load()
+
+	* WLength: throw exception when unit is corrupt
+
+	* WTreeTable: throw exception on contract abuse
+
+	* examples/wt-homepage: Russian translation contributed by Dmitriy
+	Igrishin
+
+09-08-2011:
+	* Wt.js: fix z-index for drag widget (#927)
+
+	* WTreeView.js: fix column 0 resizing with total treeview regression
+
+	* WFormWidget.C: do not allow editing when isReadOnly()
+
+	* Dbo/ptr: fix ptr operator bool() loading the object (#909)
+
+	* Dbo/CMakeLists.txt: support building and installing Wt::Dbo
+	independently from Wt (#907)
+
+05-08-2011:
+	* WApplication: added a docRoot() method which returns the webserver
+	document root
+
+03-08-2011:
+	* WMediaPlayer: new cross-browser, flexible, audio/video player widget
+
+	* WHTML5Video, WHTML5Audio, WHTML5Media: renamed to WVideo, WAudio, WAbstractMedia
+
+	* WSound, SoundManager: reimplemented using WMediaPlayer
+
+	* WPopupMenu: new method setAutoHide() for automatic hide when
+	the mouse leaves
+
+	* WLink, ...: new utility class that abstracts a link destination (be
+	it a URL, a WResource or an internal path)
+
+	* WPopupMenuItem: new methods setLink() and setLinkTarget()
+	associate a link with the popup menu
+
+25-07-2011:
+	* WPopupMenu, WPopupMenuItem: improved triggered() signal API and
+	added setSelectable() signals
+
+18-07-2011:
+	* WMenuItem: fix takeContents() (#897)
+
+	* WMenu, WMenuItem, WSubMenuItem: simplifiy internal path handling with submenus
+
+15-07-2011:
+	* examples/feature/broadcast: add an example that illustrates
+	server push, WServer::post() and synchronizing a shared resource
+	across sessions
+
+14-07-2011:
+	* fix min-width being ignored in layout managers
+
+	* WDialog: implement setResiable() (#612)
+
+12-07-2011:
+	* collection: implemented count() method for relational
+	collections (#882)
+
+11-07-2011:
+	* WFileUpload, WApplication: fix maximum request size and fileTooLarge()
+	bugs (#794)
+
+	* WTestEnvironment: add methods to test reentrant eventloops (#711)
+
+08-07-2011:
+	* Wt 3.1.10 !
+
+07-07-2011:
+	* Dbo: allow foreign key constraints to be passed to a
+	primary key (that is also a foreing key)
+
+	* Dbo: implement ostream<< for a ptr<C>.
+
+06-07-2011:
+	* Wt.js: fix HTML5 history spec weirdness with null state
+
+	* WFileUpload: fix second upload() crash (#888).
+
+04-07-2011:
+	* WWebWidget: added childrenChanged() signal and use this in
+	WMenu to track contents stack updates
+
+29-06-2011:
+	* WWidget: show/hide animations also work on FF5 now
+
+	* WMenu: better handling of internal path changes to use best
+	match (when components include more than one level)
+
+	* WMenu: fix stateless slot learning issue with submenu items
+
+28-06-2011:
+	* Dbo/ptr: let modify() return a proxy mutator object which marks
+	dirty from its constructor and destructor, ensuring that
+	modifications are not lost in the case the session is flushed
+	amidst a modification.
+
+27-06-2011:
+	* Dbo/collection: implement insert() and erase() for ManyToOne
+	collections
+
+24-06-2011:
+	* WApplication: implemented changeSessionId() method, useful to
+	mitigate session fixation attacks
+
+	* WApplication: added removeMetaHeader() method
+
+	* WFontMetrics: solve pango font-based metrics for cursive fonts
+
+	* WTableCell, WTableRow, WTableColumn: add more convenience
+	methods for navigating the row, column
+
+23-06-2011:
+	* WApplication: button img style to keep HTML4 behaviour of centering
+	the icon vertically in the button
+
+	* WWidget, WWebWidget, js/ToolTip: implement an XHTML tooltip using
+	JavaScript
+
+	* WTableView: fix setHeaderRowHeight() in plain HTML mode, other
+	plain HTML style consistency improvements
+
+19-06-2011:
+	* collection: implement copy constructor which is needed for relational
+	collections
+
+14-06-2011:
+	* WTemplate, WText: implement setInternalPathEncoding() method which
+	encodes anchors with internal path references
+
+	* WAnchor, ... resolve relative paths correctly when HTML5 History
+	internal path implementations are used
+
+30-05-2011:
+	* WAbstractItemView, WTreeView: fix browser memory leaks of
+	inline stylesheet definitions (#834)
+
+27-05-2011:
+	* WebRenderer, WebSession: better detection of IE9 and workaround
+	its bugs (box-sizeing border-box)
+
+	* WWebWidget: do not set an offset auto for IE (gets confused)
+
+23-05-2011:
+	* WTextEdit: implement missing toolBar() method
+
+	* WCssDecorationStyle: fix operator= behaviour and unset properties
+	(#816)
+
+20-05-2011:
+	* WServer, http: remove singleton objects to allow multiple
+	WServer instances
+
+	* WAbstractSpinBox: fix behaviour on IE
+
+	* Wt.js: fix button up registration
+
+19-05-2011:
+	* WTextEdit: make all things configurable per instance (#801).
+
+13-05-2011:
+	* WebSession: relax needs for setting baseURL. Looks good !
+
+	* WWidget, WAnimation: added animation options for setHidden(),
+	and new methods animateShow() and animateHide()
+
+	* WStackedWidget: added support for a transition animation
+
+	* WDialog: added animation support for the dialog cover as well,
+	and improved centering on IE (at least it seems to me ?)
+
+06-05-2011:
+	* WebSession: fix baseURL property usage and internal path
+	inconsistencies
+
+	* WObject: fixed memory leak (signal destroyed was never deleted)
+
+	* WTreeTable: fixed progressive bootstrap behaviour
+
+	* WTableView: pageSize is minimally 1
+
+	* http/Connection: fix HTTP1.0 + continuations error (#810)
+
+	* WTestEnvironment: fix reading from server_ = 0 bug
+
+27-04-2011:
+	* backend/Postgres: use actual autogenerated id field name instead
+	of "id"
+
+26-04-2011:
+	* http/Connection: fix a leak in websocket sockets (file descriptors)
+
+	* WLayout: added a clear() method which removes all contents
+
+	* WDataSeries: fix setLabelColor() being ignored
+
+	* Dbo/backend/Postgres: set client encoding to UTF8
+
+	* WTable: added moveRow() and moveColumn() methods
+
+	* WTableView: fix setColumnHidden() with headerColumns()
+
+	* WebSession: use baseURL property for self-referencing URLs
+
+	* WServer: post() with optional fallbackFunction that is called
+	when the targeted session is dead (by Gaetano Mendola)
+
+14-04-2011:
+	* WAbstractArea: fix anchor not being deleted
+
+13-04-2011:
+	* WebSession: fix setting cookies when using websockets
+
+	* WApplication: fix unload() interfering with session reload
+	when reload-is-new-session is set to false
+
+	* sqlite3: bump to version 3.7.6
+
+12-04-2011:
+	* WebSession, WebRenderer: handle WidgetSet session reloading
+
+11-04-2011:
+	* http/Configuration.C: fix missing --docroot segfault problem
+
+	* web/WebRenderer: option to allow splitting skeleton file in an
+	invariant and variant part (useful if refreshing frequently)
+
+	* WGoogleMap: fix rendering in layout manager on webkit
+
+	* WStreamResource: refactored WFileResource, contributed by Dmitriy
+	Igrishin
+
+07-04-2011:
+	* 3.1.9: release time !
+
+05-04-2011:
+	* target/android, target/osx: starting to support these mobile targets
+
+	* Ext/Calendar: set selected date on render
+
+01-04-2011:
+	* Chart/WChart2DRenderer.C: avoid clipping with WRasterImage backend of
+	labels, titles by rendering in a wider box
+
+	* WServer::post(): for lock-free event delivery to a session, instead of
+	taking the WApplication::UpdateLock. Simplechat and codeview exapmles were
+	adapted to use this approach.
+
+29-03-2011:
+	* WAbstractItemView: fix API usage when not rendered
+
+	* WDate: patches from Gaetano Mendola w.r.t. invalid dates after month/year
+	operations + isLeapYear() implementation
+
+25-03-2011:
+	* FontSupportPango: store leaky pango_font_map in thread local memory
+
+	* WRasterImage: fix clipping problem with text rendering
+
+	* W*Slider: fix 0 value and readonly attribute behaviour (#748, #749)
+
+	* Wt.js: fitToWindow() when object is wider/taller than window (#766)
+
+	* WebSession: support cookies in CORS (withCredentials flag)
+
+	* Wt/WAxis: setResolution() implementation, contributed by Gaetano Mendola
+
+23-03-2011:
+	* target/osx: Add script to generate an OSX Framework for iPad/iPhone
+
+	* Dbo/Query: fix limit_ and offset_ not being copied in copy constructor
+
+	* Chart/WCartesianChart: allow custom color for a single bar in a bar
+	series using BarPenColorRole and BarBrushColorRole data roles
+
+21-03-2011:
+	* Dbo/QueryModel: honour original limit() and offset()
+
+25-02-2011:
+	* WSpinBox, WDoubleSpinBox: separated integer from double spinbox,
+	rewrite to take into account #737, #727, #721. Note that the API
+	changed in several ways.
+
+23-02-2011:
+	* WRasterImage: implement drawImage() and improved text rendering,
+	using libpango as font selector and glyph shaper, if available.
+
+	* WPdfImage: use libpango for selecting (truetype) fonts, if available.
+
+15-02-2011:
+	* WebSession: support HTML5 History API for internal paths
+
+	* wthttpd: a value for docroot like .:/css,/resources,/style is
+	interpreted as defaulting to a deployed app except for the given
+	paths, allowing deployment without ugly URLs (?_=)
+
+12-02-2011:
+	* WSubMenuItem: behave more consistently w.r.t selection (#694)
+
+11-02-2011:
+	* WString, WMessageResourceBundle: added i18n support for plural forms
+
+	* WSlider: provide better CSS-ability and support for HTML5 input range
+	native control
+
+10-02-2011:
+	* WRun(), WServer::addEntryPoint(): uses a boost::function for the
+	application creator callback, so that you can bind additional arguments
+
+	* WServer::initializeThread() a virtual method which can be used to
+	initialize thread in a specialized WServer class (only for built-in httpd)
+
+09-02-2011:
+	* WTableView, WTreeView: renamed (and implemented for WTableView)
+	setColumn1Fixed to setRowHeaderCount()
+
+04-02-2011:
+	* Released 3.1.8
+
+28-01-2011:
+	* Dbo: belongsTo() and hasMany(/* ManyToMany */) can now be passed
+	foreign key constraints such as NotNull and OnDeleteCascade.
+
+27-01-2011:
+	* StdGridLayout: collapse paddings of empty items (affects all non-Ext
+	layout managers)
+
+25-01-2011:
+	* Wt/Text/Renderer: warn but proceed when minimum render width exceeds
+	page width
+
+	* Wt/WPaintDevice: solve inconsistencies w.r.t. clear()
+
+	* WebRenderer, WebSession, Boot.html: wait for stylesheets to load
+	before loading widget tree in default bootstrap mode
+
+	* WApplication: initial work for RTL layout, set using
+	setLayoutDirection()
+
+19-01-2011:
+	* Wt/WPdfImage: add true type font support (libharu patch pending)
+
+	* Wt/WApplication.C: fix #693
+	(sloppy WApplication::internalPathMatches())
+
+	* Wt/WBoostAny.C: add support for bool types (#690)
+
+	* Boot.html, Hybrid.html: fix IE8 unreliable startup (occasional
+	blank screen)
+
+13-01-2011:
+	* Wt/Chart/WCartesianChart: implement legend location, alignment,
+	and styling options
+
+	* Wt/Chart/WDataSeries: add setXSeriesColumn() to allow for
+	individual X series per Y series in a scatter plot.
+
+11-01-2011:
+	* Wt/WAbstractItemView: implement setHeaderItemDelegate() and defer
+	rendering of header cells to the item delegate; also added
+	WStandardItemModel::setHeaderFlags() to allow configuration of
+	header flags.
+
+07-01-2011:
+	* Wt/WAbstractItemView: implement scrollTo()
+
+	* Wt/Dbo: support for bool types
+
+06-01-2011:
+	* Render/WTextRenderer, Render/WPdfRenderer: XHtml-to-(PDF) renderer.
+
+	* Wt/WFontMetrics: font metrics info
+
+	* Wt/WPaintDevice: add methods for font metrics
+
+	* WLength: add a string-based constructors which parses a CSS
+	length declaration like "50%"
+
+	* WFont: the string-based constructor now parses #aabbcc and
+	rgb(a,b,c) values into rgb components.
+
+	* WWidget: added setHeight() and setWidth() methods
+
+21-12-2010:
+	* WAbstractItemView, WTableView, WTreeView: persist editors through
+	model changes and avoid closing editors when something changes
+
+	* WAbstractItemModel: clarify (and narrow down) usage of internal data
+	in a model index so that views can keep their relaxed take on stale
+	indexes.
+
+16-12-2010:
+	* WEvent: add eventType() method
+
+	* wt-homepage, simplechat examples: show-case widget set mode
+
+	* blog example: add archive
+
+	* libwtwithqt: simplify implementation since notify() is now used
+	more consistently by Wt
+
+	* WObject: object ids are now seeded by a random start value, to
+	allow mixing of several wt applications
+
+	* WRasterImage: implemented a getPixel() method
+
+08-12-2010:
+	* WApplication: fix unload event interfering with session refresh
+
+	* WebSession: handle session quit() during a websocket message
+
+	* WRandom: moved high-entropy random generator to public API, and
+	a utility method to create a random id
+
+	* wt-homepage example: illustrate use of a cookie to persist logins
+	across sessions
+
+02-12-2010:
+	* WebSession, WApplication, ...: support CORS (Cross-Origin Resource
+	Sharing including IE's XDomainRequest and WebSockets), deprecated
+	WApplication::setAjaxMethod() which is now chosen automatically
+	and support request pref-flighting using OPTIONS.
+
+01-12-2010:
+	* WApplication, examples/wtwithqt/DispatchThread: attach the Qt
+	thread only during event handling
+
+	* Dbo/Session: add rereadAll() option to reread single table
+
+	* WFileUpload: correctly handle non-ascii tokens in suggestFileName()
+
+30-11-2010:
+	* fixed a regression in layout managers, released as 3.1.7a
+
+27-11-2010:
+	* js/StdGridLayout.js: implement rowspan handling
+
+26-11-2010:
+	* released 3.1.7
+
+24-11-2010:
+	* WAbstractItemView: added support for column hiding
+
+23-11-2010:
+	* Chart/WCartesianChart: support ToolTipRole data using WAbstractArea
+	areas
+
+15-11-2010:
+	* Dbo/Sesion: add rereadAll()
+
+	* Wt.js: fix IE6-8 history management regression
+
+10-11-2010:
+	* QueryModel: setData() now converts the incoming type to the database
+	field type (if possible), and also uses a transaction to persist the
+	result (if not nested in another transaction)
+
+08-11-2010:
+	* WebSession: landed Web Sockets support, must be enabled in the
+	configuration file
+
+05-11-2010:
+	* Wt.js: fix opera script loading indicating failure when loading from
+	cache
+
+02-11-2010:
+	* WebSession: initialize() in first notify()
+
+	* WStringUtil: fix a bug in widen() when the underlying conversion
+	gives an error
+
+	* build: fixes suggested by Pau
+
+29-10-2010:
+	* Wt 3.1.6 released
+
+28-10-2010:
+	* WebSession: use sequence instead of random numbers for resources
+
+	* WebRenderer: be resilient to multiple GET requests for the main
+	script
+
+	* WApplication: unload() does not quite() when reload-is-new-session
+	is disabled
+
+	* WebRenderer: fix regression where timers are stopped by refreshing
+	a session when reload-is-new-session is disabled
+
+27-10-2010:
+	* examples/feature/dbo: added examples from the Wt::Dbo tutorial
+
+	* WPushButton: added setRef() and setResource() APIs to make a button
+	behave like an anchor
+
+	* WString::widen() and WString::narrow(): fix broken implementation
+
+26-10-2010:
+	* WMessageResourceBundle: better preservation of white-space when
+	parsing the XML resource bundle
+
+25-10-2010:
+	* WFileUpload: added setMultiple() which alows multiple files to
+	be uploaded at once (and demonstrate in composer example)
+
+	* Http/Request: changed UploadedFileMap typedef from std::map to
+	std::multimap
+
+	* WAbstractItemView: added methods sortColumn() and sortOrder()
+
+22-10-2010:
+	* WFileUpload, WResource: support upload progress tracking (currently
+	only with wthttpd)
+
+21-10-2010:
+	* various: support IE9 in IE9 document mode, enabling HTML5 features
+	like canvas and disabling workarounds no longer needed -- hooray !
+
+19-10-2010:
+	* WPopupMenu: fix recycling of popup menu
+
+18-10-2010:
+	* WSignal: EventSignal::connect(): added an overload which accepts
+	a JavaScript function, as a short-cut for JSlot when connection
+	management is not needed
+
+	* WSpinBox: a spin box is in the making
+
+	* WApplication: deprecated getUpdateLock() in favour of the more
+	conventional RIIA UpdateLock(WApplication *app) constructor
+
+	* WebSession: do not access WebSession shared_ptr during ~WebSession
+	but allow acquiring the update lock to fail instead when an application
+	is slated for destruction (#564)
+
+	* SyncLock: an adaptor for a Boost Mutex lock which avoids dead-locks
+	when used while holding an application lock
+
+15-10-2010:
+	* WApplication: addMetaHeader() allows now to set http-equiv meta
+	headers and override the X-UA-Compatible meta header
+
+14-10-2010:
+	* WWebWidget: reimplemented buggy clear() optimisation.
+
+12-10-2010:
+	* WBoostAny: added registerType<Type>() method to register
+	new types for boost::any support by standard item views.
+
+11-10-2010:
+	* Dbo/WtSqlTraits, Dbo/backends: added support for WTime
+
+	* Dbo/QueryModel: added support for customized header data, and
+	option for setQuery() to keep the current columns.
+
+	* js/StdGridLayoutImpl: use parent node geometry for detecting need
+	for relayout, fixes IE7+ behaviour
+
+07-10-2010:
+	* WTableView, WTreeView, *ProxyModel: shift model indexes only after
+	the source model has inserted or removed rows, see bug #546
+
+	* WProgressBar: added valueChanged() and progressCompleted() signals,
+	from Omer Katz.
+
+05-10-2010:
+	* CMakeLists.txt: patch for gentoo, make many things optional which
+	can be enabled or disabled explicitly regardless of whether the
+	libraries and header files for it are found
+
+01-10-2010:
+	* WebController, WebSession: use shared_ptr for WebSession to resolve
+	concurrency bug #544
+
+	* Wt::Dbo: use a spirit based parser for sql queries to handle more
+	complex queries like 'WITH ... SELECT ...' syntax, but also with
+	complex aggregate functions in the SELECT clause.
+
+28-09-2010:
+	* WDatePicker: add setGlobalPopup() method which can be used to avoid
+	clipping problems on a date picker
+
+	* WDatePicker: add setPopupVisible() method
+
+	* Http/Request: add getRanges(), parsing the HTTP 1.1 Ranges header
+
+	* Http/Response: add setContentLength() allowing you to specify the
+	content length.
+
+	* WFileResource: support ranges to return partial file contents.
+
+27-09-2010:
+	* WMenuItem: destructor now cleans up properly
+
+	* all connectors: consider appRoot as the location for the
+	wt_config.xml file and provide ways to configure appRoot for
+	wthttp and fastcgi connectors.
+
+22-09-2010:
+	* WProgressBar: based on a contribution by Thomas Suckow.
+
+21-09-2010:
+	* WRegExpValidator, WSortFilterProxyModel: support case-insensitive
+	regular expressions
+
+	* WSuggestionPopup: optimized behaviour w.r.t server-side and
+	client-side filtering
+
+20-09-2010:
+	* WApplication: added makeAbsoluteUrl() method.
+
+	* WPopupMenuItem: support setDisabled().
+
+16-09-2010:
+	* WPaintDevice: remove paintFlags() method; PaintUpdate is a property of
+	the painted widget, and no longer something which has to do with
+	WPainter. In this we revert to the old behaviour of supporting multiple
+	WPainters on a single paint device in turn.
+
+14-09-2010:
+	* Wt.js: fix JavaScript memory leak after learning about the
+	surprising JavaScript scoping rules
+
+	* WApplication: add unload() and setConfirmCloseMessage() to handle the
+	event of the user closing the window respectively have a confirmation
+
+	* WInteractWidget, WMouseEvent: add mouseWheel() event
+
+	* WTabWidget: fixed polished style close icon, and wrapping to next line
+	if having many tabs
+
+	* WFormWidget: implement hasFocus()
+
+	* WLineEdit, WTextArea: implements methods for retrieving cursor
+	position and current selection
+
+08-09-2010:
+	* WCheckBox: better tri-state support, using opacity: 0.5 as
+	workaround instead of an image
+
+07-09-2010:
+	* WBoxLayout, WGridLayout: improved client-side performance by
+	selectively doing relayout
+
+	* WDate, WCalendar, WDatePicker, ...: support i18n through built-in
+	message resource bundle and get rid of ugly i18n bool in API
+
+23-08-2010:
+	* fcgi: fix connector when using WDialog::exec() or server push
+	(this is broken in 3.1.4!)
+
+	* WSocketNotifier: finally (!) this beast works as advertised
+
+10-08-2010:
+	* isapi: various improvements
+
+	* WSignal: SLOT/slots macro can be disabled using -DWT_NO_SLOT_MACROS
+
+	* examples: cleanups to use appRoot() and no longer use SLOT() macro
+
+02-08-2010:
+	* WBatchEditProxyModel: a model that caches editing until submitted
+	in batch (or reverted)
+
+	* Dbo/QueryModel: remove edit strategy, this is now handled by
+	WBatchEditProxyModel
+
+	* WModelIndex: clarify usage when model rows/columns shift, implement
+	in-place toRaw/fromRaw conversion
+
+	* WDialog: add titleBar() to access the title bar
+
+30-07-2010:
+	* Dbo/Query: support 'select distinct/all' syntax, and case-insenstive
+	query parsing
+
+29-07-2010:
+	* WSuggestionPopup: misc improvements to server-side filtering, fixing
+	rendering glitches
+
+	* examples/feature/suggestionpopup: example demonstrating WSuggestionPopup
+	features
+
+27-07-2010:
+	* WRasterImage: Graphicsmagick backend implementation for WPaintDevice,
+	sponsorted by Eurofer, can be used for PNG, GIF, etc... output
+
+22-07-2010:
+	* WPdfImage: PDF backend implementation for WPaintDevice,
+	sponsored by Eurofer.
+
+	* http/Reply.C: enable compression for image/svg+xml mime-type.
+
+	* WInteractWidget: suppress click and double click mouse events when
+	disabled
+
+20-07-2010:
+	* Wt/WTreeNode: added insertChildNode(), as suggested by
+	Aleksey Chirkin
+
+19-07-2010:
+	* isapi: added a (first implementation) of an ISAPI connector,
+	which provides native support in Microsft IIS.
+
+	* WebSession: fix one possible race condition, and one possible dead-lock
+	when grabbing the session lock
+
+	* Dbo/QueryModel: implement write support (setData(), insertRows(),
+	and removeRows())
+
+15-07-2010:
+	* Wt::Dbo: adds support for natural keys, including composite
+	keys, custom id and version field names, and foreign key
+	constraint definition that is compatible with mysql's broken sql.
+
+	* Wt::Dbo: Dbo base class is now changed to Dbo<C> template
+	class to take into account customizable id type.
+
+14-07-2010:
+	* resizable layout managers: reset total width percentage of all
+	remaining columns to 100
+
+	* WCanvasPaintDevice: fix transformation bug
+
+07-07-2010:
+	* examples/feature/serverPush: fix WIN32 build problem
+
+	* Chart/WCartesianChart: fix clipping margin glitch
+
+	* Dbo/QueryModel: fix missing implementation fields() method
+
+	* WAbstractToggleButton: fix disabled/readonly properties #423
+
+	* WApplication: useStyleSheet(): allow media to be specified
+
+	* WCanvasPaintDevice: fix font rendering glitch
+
+	* WTableView: improved keyboard navigation through editors
+
+30-06-2010:
+	* WTabWidget, WMenu: support for closing, hiding and disabing
+	items, contributed by Dmitriy Igrishin
+
+	* Wt::Dbo: fix boost::optional<T> support
+
+	* WAbstractItemView: build fix for MSVC in non-Latin locales
+
+	* WAbstractItemModel: copyData() does first nullify existing data
+
+	* WSuggestionPopup: fix bug in handling of model row removal
+
+	* WWebWidget, WebRenderer: fix statelss slot learning bug when a
+	stubbed widget is affected (see treelist example)
+
+	* WWebWidget: fix addStyleClass(), removeStyleClass()
+	implementations with force=true (from Dmitriy Igrishin)
+
+	* WTableView: improved handling of arrow keys for navigating editors
+
+10-06-2010:
+	* WTableView, WTreeView: workaround IE bug w.r.t. white-space: nowrap
+
+	* Chart/WCartesianChart: added createLegendItemWidget() to paint the
+	legend item outside the chart
+
+	* WItemDelegate, WAbstractItemView: add support for validation
+
+	* WBorderLayout: add missing setSpacing() method to control internal
+	spacing
+
+	* WWidget: addStyleClass() and removeStyleClass() (finally!)
+
+	* WContainerWidget: workaround scrolling bug in IE caused by
+	position: relative
+
+	* WEnvironment: agent() and agentIsXXX() methods
+
+	* WSvgImage: give in to inkscape's CSS font needs
+
+	* WHTML5Video, WHTML5Audio: HTML5 video and audio support
+
+	* WSuggestionPopup: implement explicit trigger (icon, key down)
+
+	* WTreeNode: support selection by click on whole row
+
+	* WWebWidget: added doJavaScript()
+
+	* examples/blog: improved support for MSVC builds, new feature allowing
+	profile editing
+
+	* examples/feature/serverpush: simple example illustrating use of
+	server push
+
+20-05-2010:
+	* build: added support for cygwin
+
+19-05-2010:
+	* WMenu: fix first selection not emitting internal path change (dmitry)
+
+	* WTableView: properly react to model changes
+
+	* WItemDelegate: explicit focus support
+
+18-05-2010:
+	* Chart/WChart2DRenderer: fix rendering glitch when rendering grids
+
+13-05-2010:
+	* WInteractWidget: added mouseDragged()
+
+	* WApplication: added addMetaHeader()
+
+10-05-2010:
+	* WTableView: now supports (almost) same API as WTreeView, with the
+	similar style, but better performance for tabular data.
+
+	* WTableView, WTreeView, WAbstractItemView: support non-AJAX rendering
+	using a paging bar.
+
+	* WAbstractItemDelegate, WItemDelegate, WAbstractItemView:
+	supports editing
+
+	* Dbo/QueryModel: a Wt model for viewing data from a Dbo::Query
+	result (a first version).
+
+	* Dbo/SqlTraits: sql_result_traits was renamed to query_result_traits,
+	and its API updated to allow more robust query creation and result
+	interpretation as a list of boost::any's
+
+	* Signal: SignalBase and EventSignalBase are now documented API
+
+	* WFlashObject: reimplemented: no longer relies on JavaScript to load
+	the flash movie. WFlashObject no longer uses SwfObject.js. The objects
+	will also be resized when inserted in a layout manager.
+
+	* WHTML5Video: HTML-5 video implementation, will become part of
+	generic video support later
+
+	* http/Reply.C, http/StaticReply.C: support for http range header
+	and partial content
+
+	* web/CgiParser.C: fix parsing logic error for multi-part/formdata
+
+28-04-2010:
+	* WTimer: implement singleShot(f) with f a function object variant
+
+21-04-2010:
+	* WMenu: support usage without contentsStack_
+
+	* rapidxml.hpp: fix bug #344 (some special entity characters not being
+	handled properly)
+
+	* examples/planner: new example illustrating simple dbo usage
+
+20-04-2010:
+	* Dbo/SqlConnectionPool, Dbo/FixedSqlConnectionPool: connection pool
+	implementations
+
+	* Dbo/Query: support for several bind strategies, including a new
+	DynamicBinding strategy which supports incremental query
+	specification
+
+	* Dbo/Session: add execute() method for executing SQL that does not
+	return results
+
+08-04-2010:
+	* Http/Request: added headerValue() 
+
+07-04-2010:
+	* WSuggestionPopup: add setFilterLength() and filterModel() methods
+	which allow for server-side filtering based on initial input. Also
+	support setMaxSize() to specifiy maximum height of the popup and
+	scrolling through the list of suggestions
+
+30-03-2010:
+	* WPanel: make titleBarWidget() public
+
+26-03-2010:
+	* Wt/WShadow, Wt/WPainter: add support for drop shadows
+
+	* Wt/Chart/WDataSeries, Wt/Chart/WChart2DRenderer: add support for shadows
+
+25-03-2010:
+	* Wt/Dbo/backend: provide generic properties() and API clean-ups
+
+24-03-2010:
+	* Wt/Dbo/Query: also support queries without 'from' or 'select'
+
+	* Wt/Dbo/DbAction.C: create indexes on join table for each referenced
+	table id
+
+	* Wt/Dbo: support schema-qualified tables
+
+23-03-2010:
+	* Wt/Dbo/Postgres, Wt/Dbo/Sqlite3: add proper support for dates,
+	time stamps, binary blobs, var chars
+
+19-03-2010:
+	* WCheckBox, WRadioButton: fix inconsistencies when setting style
+	attributes and they have a non-empty label
+
+15-03-2010:
+	* Dbo/backend/Postgres: a PostgreSQL backend, contributed by Hilary
+	Cheng
+
+12-03-2010:
+	* EscapeOStream, WSvgImage: a host of performance improvements by
+	tossing away stringstream in favour of a simple SStream
+
+	* WWidget: add setLayoutSizeAware() and layoutSizeChanged() methods
+
+08-03-2010:
+	* WResource: add setInternalPath() to deploy a resource at a
+	deterministic URL
+
+05-03-2010:
+	* WebSession: add support for http PUT/DELETE methods.
+
+	* src/Http/Request: add method() to access request method
+
+	* src/Http/Response: add setStatus() to set the response status
+
+03-03-2010:
+	* WCalendar: add HorizontalHeaderFormat enum (long day name support),
+	currentPageChanged signal, clicked signal, activated signal,
+	SelectionMode enum (NoSelection mode support), renderCell() virtual
+	method
+
+01-03-2010:
+	* WGridLayout, WBoxLayout: add support for user resizing ('splitter')
+	functionality
+
+	* WTreeView, WGridLayout: externalize JS
+
+25-02-2010:
+	* src/Wt/WString: fix narrow() and widen() character encoding
+	conversions
+
+	* http connector: spool large POSTs to a temporary file instead
+	of in-memory, and avoid extra copies
+
+	* web/CgiParser.C: skip large file uploads entirely (instead of
+	erroneously buffering them to memory)
+
+22-02-2010:
+	* Dbo/StdSqlTraits: support float and double
+
+	* WApplication: missing initialization messes up refresh() by reload
+
+	* WPainter: now has defined behavior when missing horizontal or vertical
+	alignment flags in drawText()
+
+18-02-2010:
+	* web/EscapeOStream.C: fix build error on MSVC
+
+	* Wt 3.1.1 released
+
+12-02-2010:
+	* mxml: replace mxml with an (adapted) rapidxml browser.
+
+28-01-2010:
+	* Ext/Container.C, WStackedWidget.C: fixed behavior in combination
+	with layout managers
+
+25-01-2010:
+	* WTreeView.C: simplified column resize handling code
+
+22-01-2010:
+	* WCanvasPaintDevice: Use HTML5 native canvas text when available
+
+21-01-2010:
+	* WSuggestionPopup, WTree, WTreeNode, & co: make CSS themed
+
+18-01-2010:
+	* Dbo: additional optional parameter to hasMany() allows the
+	definition of the joinId in the joinTable (you need this if you
+	are doing Many-to-Many between the same table).
+
+	* WDateTime, WTime: fix AM/PM parsing problem
+
+	* Dbo/SqlStatement: explicit null binding, since SQLite3 does not
+	reset bindings on reset()
+
+	* WTreeView: fix ite column 0 changing
+
+12-01-2010:
+	* WTemplate: do not rerender bound widgets when rerendering the
+	template if the widget was already rendered
+
+11-01-2010:
+	* themes/polished: several improvements
+
+	* WPanel, WCalendar, WDatePicker, WDialog: improved theme support
+
+	* WTreeView: several bug fixes and improved IE bug workaround support
+
+05-01-2010:
+	* Chart/WAxis: added setLabelFont(), labelFont() methods
+
+	* WTreeNode: fix selection handling when removing and readding a node
+
+	* Boot.html, Hybrid.html: fix an XSS vulnerability arising from the
+	internal path
+
+04-01-2010:
+	* Wt.js, CommAjax.js, CommScript.js: support communication problems
+	by retrying with exponential back-off
+
+31-12-2009:
+	* Dbo: quote all identifiers
+
+	* WContainerWidget: support resetting a layout manager
+
+29-12-2009:
+	* Release 3.1.0, after some more bug fixes
+
+22-12-2009:
+	* Ext/FormWidget: add changed(), blurred() and focussed() signals
+
+21-12-2009:
+	* WTemplate: add handleUnresolvedVariable() from Maurice Gittens
+
+	* WMenu: sanitize internal path handling
+
+	* documentation: integrate asciidoc and doxygen in CMake (target
+	'doc'), and improve Wt::Dbo documentation
+
+18-12-2009:
+	* WTreeView: fix treeview column add/remove glitches with column 1 fixed
+
+17-12-2009:
+	* WSlider: correct upside down behavior of WSlider, use more accurate
+	position handling
+
+15-12-2009:
+	* Wt/Dbo: new C++ ORM layer
+
+	* test/: automated test suite (for non-GUI features)
+
+	* src/Wt/WTemplate: new XHTML template-based widget
+
+	* examples/blog: new example that implements a blog using Wt and
+	Wt::Dbo
+
+	* src/Wt/WDateTime, src/Wt/WTime: date time and time classes
+
+15-12-2009:
+	* CMakeLists.txt: add XML_FEATURES option which can be used to disable
+	the (mini-)XML library
+
+11-12-2009:
+	* WPaintedWidget, Ext::Container: properly react to resizes within
+	a Wt layout manager, both width and height
+
+	* StdGridLayoutItem.C, Ext::Widget: concatenate html and body style
+	classes to not have interference
+
+09-12-2009:
+	* WDataSeries: added setHidden(bool) and isHidden()
+
+	* WCartesianChart: added renderLegendIcon()
+
+	* WTextEdit: fix updating of contents
+
+07-12-2009:
+	* WWidget: added isRendered(), let widgets keep track of being rendered
+
+	* WSignal: added connect(Function& f) method
+
+04-12-2009:
+	* src/web/skeleton/Wt.js: added getSelectionRange and setSelectionRange
+	utility functions for line edits and text areas
+
+30-11-2009:
+	* src/mxml: updated to an unmodified mxml-2.6 (which includes our bug
+	UTF-8 bug fixes)
+
+25-11-2009:
+	* all: added support for CSS-based themes.
+
+	* WAbstractItemModel, WAggregateProxyModel, WTreeView: addded support
+	for drilling down through treeview columns
+
+	* WSlider: added sliderMoved() signal
+
+	* Chart/WAxis: added setAutoLimits() and autoLimits() methods, and have
+	maximum() and minimum() return computed values
+
+	* Chart/WCartesianChart: use MarkerPenColorRole and
+	MarkerBrushColorRole to override colors for markers per data point
+
+	* WCanvasPaintDevice: several improvements for outputting more
+	concise JavaScript rendering statements
+
+	* WWidget: add find() method to find a widget with a particular
+	objectName()
+
+	* WFileUpload: fileTooLarge() signal now propagates within the
+	event loop
+
+10-11-2009:
+	* Chart/WCartesianChart, Chart/WDataSeries: added mapFromDevice() and
+	mapToDevice() methods.
+
+03-11-2009:
+	* WTreeView: fix for adding a first row to an otherwise empty model
+	(from Guy De Leeuw)
+
+03-11-2009:
+	* 3.0.0: released!
+
+21-10-2009:
+	* WMenu: set correct internal path before loading a menu item
+
+09-10-2009:
+	* WAxis: add TimeDateScale to AxisScale enum
+
+28-09-2009:
+	* WCartesianChart: seriesIndexOf() is now private
+
+	* WebRenderer: several small fixes for the hybrid bootstrap
+
+23-09-2009:
+	* WTableView: table_ is now private and a protected getter table() was
+	added
+
+18-09-2009
+	* Wt.js: cancelEvent() includes an option to only include cancelling
+	propagation or the default action
+
+	* WResource: add setChanged() and url() methods which are more
+	useful than the generateUrl() method
+
+	* http/RequestParser: fix possible shared_ptr corruption issue
+	reported by David Galicia
+
+	* WCssDecorationStyle: add method for WResource as background
+	image
+
+	* JSlot: fix internal consistency problem when connecting same
+	JSlot to same signal twice
+
+	* JSlot::exec() now takes parameters for object and event
+
+	* WTreeView: fix vertical scrolling showing mis-aligned columns
+	when column 1 is fixed
+
+15-09-2009:
+	* WWidget: move WFormWidget::setEnabled() to WWidget::setDisabled(),
+	allowing all widgets to be set enabled or disabled.
+
+	* WWidget: isVisible() and isEnabled() reflect the computed visibility
+	respectively being enabled taking int account ancestors settings
+
+	* WWidget: added setHiddenKeepsGeometry(), which uses css visibility
+	for setHidden()
+
+03-09-2009:
+	* WDialog, Ext::Dialog, and related: allow for multiple modal dialogs
+	and nested exec() calls.
+
+	* Boot.html, Hybrid.html: add a loadScript() method to defer loading of
+	user JavaScript
+
+01-09-2009
+	* WDatePicker: Use 'positionAtWidget' to make sure the widget
+	is rendered visible even if at bottom of page (folds up instead of down)
+
+	* WDialog: Fix JavaScript positioning for IE6
+
+	* WFileUpload: Fix empty file regression (#53)
+
+31-08-2009
+	* Wt.js: fix server push mayhem
+
+	* WTreeView: fix autoJavaScript performance
+
+	* Wt.js: fix mouse capture on IE, fix mouse capture of mouse up when
+	dragging outside the window
+
+	* Wt.js: fix synchronisation issue with 'load' request and loading
+	of JS libraries
+
+	* Wt.js, DomElement: use setExpression() to set a CSS expression
+	(for min/max-width)
+
+	* WApplication: fix conditional stylesheet condition parse error
+	with 'gte' expression
+
+26-08-2009
+	* Wt.js: attach mouse grab events to body using DOM event
+	capture
+
+	* HybridBoot.html, WebSession, WebRenderer: assimilate new
+	bootstrap method with a refactoring, make it all a bit less
+	stateful
+
+	* WApplication: notify() can now be used as a generic request
+	handling point where you grab and free request-specific
+	resources
+
+22-08-2009
+	* fcgi/Sever.C: make multi-threaded, using the <num-threads>
+	number of threads
+
+19-08-2009
+	* ProgressiveBoot.html, WebSession, WebRenderer: a new bootstrap
+	method has been added which implements the principle of
+	"progressive enhancement"
+
+	* WebSession, Boot.html: avoid one extra round-trip when
+	redirecting to the canonical URL.
+
+	* Plain.html: better SEO: do not render the form to a spider engine
+
+18-08-2009
+	* WWidget: add boxPadding() and boxBorder() methods, which are
+	used by the layout managers to correct for built-in borders and
+	paddings of form widgets
+
+	* WComboBox: listen to layoutChanged()
+
+06-08-2009
+	* WGoogleMap: add setCenter() method without zoom argument, change
+	myHtml argument to WString
+
+01-08-2009
+	* WLineEdit: work around IE's inability to change <input> type
+	attribute
+
+	* DomElement, WebRenderer, EscapeOStream: use IE alternative
+	createElement() which also sets all attribute values, and thus
+	saves JavaScript calls
+
+	* StdGridLayoutImpl, StdWidgetItemImpl: fix IE glitches in
+	layout managers
+
+31-07-2009
+	* WCssDecorationStyle: add custom cursor image functionality
+
+23-07-2009
+	* WApplication: simplified the semantics of internal path API signal
+	internalPathChanged(). You may still use the old behavior by
+	defining the property oldInternalPathAPI.
+
+20-07-2009:
+	* WAxis: fix crash when dealing with negative values and a logscale axis
+
+17-07-2009:
+	* WServer, WGlobal: move WServer::Application and WServer::WidgetSet to
+	global enum
+
+	* WAbstractToggleButton.C: put label inside a <span> so that it works
+	as expected when used within a layout manager
+
+	* Test/WTestEnvironment: test environment, for instantiating
+	WApplication instances usable for (unit) tests
+
+06-07-2009:
+	* WGridLayout, WBoxLayout, WTabWidget: better documentation that
+	discusses how to set contents with 100% height.
+
+29-06-2009:
+	* JSlot: fix exec() call as suggested by Adrian Sutherland
+
+25-06-2009:
+	* WCanvasPaintDevice, WSvgImage, WVmlImage: string -> stringstream
+	optimizations
+
+	* WTableCell: fix vertical component of content alignment
+
+	* WModelIndex: fix operator== to not use memcmp() since this gets
+	into trouble with struct padding bytes
+
+19-06-2009:
+	* Chart/WAbstractChart: react well to modelReset() and
+	modelLayoutChanged()
+
+	* WCheckbox, WRadioButton: internal cleanup and simplifications
+
+	* WButtonGroup: added checkedChanged() signal
+
+	* WIntValidator: allow entry of +/- signs
+
+15-06-2009:
+	* WGlobal: fix Horizontals = Left | Right and Verticals = Top | Bottom
+
+	* WPanel: clear the title bar
+
+	* DomElement: fix an unstubbing regression with ExtJS widgets
+
+	* Wt.js: fix server push + JSignal.emit()
+
+	* WGlobal: fix doxygen for WFlags masks
+
+	* http/Server.C: avoid http/https accept() to abort on Win32
+
+	* WResource, WFileResource: fix continuation + suggested filename
+	data corruption, and implement WFileResource::setBufferSize()
+
+10-06-2009:
+	* WRectF: added isEmpty() method, removed isNull() method
+
+09-06-2009:
+	* WEnvironment: added headerValue method
+
+08-06-2009:
+	* WPoint, WPointF, WLineF: removed obsolete isNull methods
+
+02-06-2009:
+	* WAbstractItemDelegate, WItemDelegate: new classes to which the
+	rendering of a model item is delegated.
+
+	* WTreeView: use WAbstractItemDelegate and WItemDelegates, and
+	API to customize the used item delegate class.
+
+	* WWidget: add setSelectable() method which can enable or disable
+	the rendering of the browser's default text selection handling
+
+29-05-2009:
+	* fcgi/Server.C: build fixes for FreeBSD and OpenSolaris
+
+	* fcgi/Server.C: implement a (mostly stub) WServer implementation
+
+	* Http/Response: add continuation() method to get a continuation
+	created for the response.
+
+28-05-2009:
+	* WMenu: show vertical scrollbar when needed
+
+	* WGridLayout: support row stretch value of -1, like 0, but
+	indicates that height of cell contents for that row still needs to
+	be managed
+
+	* DomElement.C: fix IE6 min/max-width workaround bugs
+
+	* WStackedWidget: make behave well in layout managers
+
+	* WPainter::Image: add constructor that fetches image dimensions
+	from file (from Daniel Derr)
+
+	* DomElement.C: fix style.float -> style.cssFloat or
+	style.styleFloat property
+
+26-05-2009:
+	* WebRenderer, Configuration, WebSession, http/WServer: add support
+	for a favicon per EntryPoint, and in general for a favicon not in
+	"/favicon.ico"
+
+18-05-2009:
+	* WAbstractItemModel: add reset() method and modelReset() signal, which
+	are used to invalidate the whole model. Adjusted the views to listen
+	to this signal, and make WStandardItemModel::clear() call reset()
+
+	* Ext/ToolBar: implement addStretch()
+
+	* WPaintedWidget, WPaintDevice: support PaintUpdate flag which does
+	not erase the painting but merely adds to it
+
+	* WTreeView: fix setColumnWidth() for column 0 bug,
+	setSortingEnabled() when no model yet set bug, column removal
+	behavior bug, JavaScript error when no column sort/resize handles
+
+	* StdGridLayoutImpl, WStackedWidget: make WStackedWidget manage
+	children height actively when in a layout manager
+
+	* WebSession: make server push survive refresh(), and fix cookie
+	support detection regression
+
+	* WApplication.C: fix expose logic for widgets removed from the
+	widget tree
+
+	* WCssDecorationStyle: WBorder::None is not always default
+
+11-05-2009
+	* WDate: refactor modifiedJulianDate() to toJulianDate(), replaced
+	modifiedJulianDate constructor to static fromJulianDate function
+
+05-05-2009
+	* WebSession: fix WApplication::attachThread(), simplify use of
+	thread specific storage
+
+04-05-2009
+	* WString: do not assume a message resource bundle as localized
+	strings
+
+	* Wt.js: fix empty line edit regression
+
+	* WCalendar: setSingleClickSelect()
+
+	* WEnvironment: getDeploymentPath()
+
+23-04-2009:
+	* WCheckBox, WAbstractToggleButton: tri-state checkboxes
+
+	* WAbstractItemModel, WModelIndex, WStandardItem: support
+	tri-state checkboxes (ItemIsTriState ItemFlag)
+
+22-04-2009:
+	* WebRenderer: keep iterating the update map as long as render()
+	calls add new widgets to it
+
+21-04-2009:
+	* WFormWidget: add setReadOnly(), isReadOnly() methods
+
+	* WTimer.C: fix multiple signals firing when stopping and
+	restarting, and use client-side repetition if the signal is not
+	exposed
+
+	* WFileUpload: deprecated isUploaded(), new method canUpload()
+
+16-04-2009:
+	* WApplication, WDialog: simplify dialog rendering, allow
+	(multiple) non-modal dialogs (WDialog::setModal(false)), allow
+	dialogs to be moved around by dragging in the title bar
+
+	* WWebWidget: saner handling of z-index, only apply IE6 shim to DIVs
+
+	* WPaintedWidget: fix use of WImage for WAbstractArea's
+
+	* WImage, Wt.js: fix position reporting in mouse events from
+	WAbstractArea's in non-compliant browsers (all except for Firefox)
+
+07-04-2009:
+	* Ext/FormField: add setFocus() method
+
+30-03-2009:
+	* WEnvironment.C, WebSession.C, wt_config.xml: allow configuration
+	of AJAX-capable user agents and bots in configuration file
+
+	* Configuration.C, wt_config.xml: synchronize configuration
+	defaults. WARNING: default settings have changed! (see
+	wt_config.xml what the default values are)
+
+	* WTabWidget.C: use a layout manager to manage vertical height
+
+	* WLabel.C: fix bug with placement of image and add option to place
+	image to left or right of label text
+
+	* WDatePicker.C: implement setEnabled()
+
+	* WT_SERIES, WT_MAJOR, WT_MINOR, WT_VERSION: change to hexadecimal
+	format for preprocessor defines
+
+	* Ext/TableView.C: fix access to null dataStore_
+
+26-03-2009:
+	* Fixed cookie handling. Cookie parser is now less strict, and cookie
+	values are URL encoded, similar to PHP. Fixed setting multiple
+	cookies.
+
+24-02-2009:
+	* WWebWidget: implement a real propagateRenderOk() that does not
+	cause render() of children widgets of stubbed widgets
+
+	* WTreeView: move JavaScript around that assumes jsRef() exists
+
+	* WGoogleMap: fix require() dependency
+
+	* install: do not overwrite existing configuration file wt_config.xml
+
+20-03-2009:
+	* WFormWidget: refuse to give focus to a disabled widget
+
+	* Wt.js: make sure updated autoJavaScript() is executed by onresize
+	handler
+
+19-03-2009:
+	* WGoogleMap: fix require() to depend on google.load
+
+	* filetostring: removed in favor of a CMAke-only solution
+
+	* simplechat: improve its behaviour
+
+	* WebSession/WebRenderer: update the form object list after
+	each event since it may contain stale objects
+
+17-03-2009:
+	* Fixes for cookie parser
+
+	* Send along form values and hash in each 'update', and keep
+	JavaScript updates around until acknowledged by the browser
+	(avoids loss of updates especially for server push situations)
+
+16-03-2009:
+	* fixed build errors and warnings on Sun Studio and Visual Studio
+
+	* WSignal: remove EventSignal<void> specialization, use
+	EventSignal<> everywhere
+
+	* add WT_NO_BOOST_INTRUSIVE compile option to use std::list instead
+	of boost::intrusive::list (needed for Sun Studio)
+
+	* WTableColumn, WTableRow: support for custom id's with setId()
+
+	* WViewWidget: fix interference problem with stateless slot learning
+
+	* WWebWidget: complement quickPropagateRenderOk() with a clean
+	rerender of itself
+
+	* Configuration.C: add option inline-css useful to disable inline
+	CSS stylesheets, in case you prefer all of them in an external style
+	sheet
+
+	* WTableCell, WDomElement: support colspan/rowspan as properties
+
+	* WTable.C: fix rendering problem for th/td reordering
+
+	* WebRenderer: WLoadingIndicator: fix rendering and stateless slot
+	learning interference
+
+	* WebSession: avoid superfluous 'none' request
+
+11-03-2009:
+	* WPushButton: allow line breaks in text using ('\n')
+
+	* WebController: fix widget set mode (default entry path parsing)
+
+	* CMakeLists.txt: also install Http/ directory
+
+	* XSSFilter: refactored
+
+	* WAbstractTableModel: new abstract model class
+
+	* WebSession: simplify session locking (and fix reentrant event
+	loop memory corrouption)
+
+06-03-2009:
+	* win32: fix build problems
+
+	* WMemoryResource: change API to unsigned char
+
+03-03-2009:
+	* WFileUpload.C: emit uploaded() signal in event loop.
+
+27-02-2009:
+	* WApplication.C, WebSession.C, Wt.js: finally a robust and simple
+	server-push implementation instead of orbited
+
+	* WMenu.C, WTabWidget.C: simplify CSS (better IE workaround)
+
+	* WCssDecorationStyle, WGlobal, WText, Ext/TableView: remove
+	deprecated enums and methods
+
+	* WButtonGroup: make API more complete
+
+	* WDatePicker: provide default constructor
+
+	* fcgi/FCGIStream.C: make FCGI connector work again in new branch
+
+	* lots of documentation updates
+
+24-02-2009:
+	* WOverlayLoadingIndicator.C: fixes for IE8 and opera
+
+23-02-2009:
+	* WAbstractItemModel.C, Wt.js: fix IE date propagation problem
+
+	* WLineEdit.C, WTextArea.C: do not set style classes when no validator
+	is configured
+
+	* WSocketNotifier.C: fixes for boost >= 1.36 (does not work yet
+	for win32)
+
+02-02-2009:
+	* fix konqueror show stopper bug
+
+28-01-2009:
+	* fix bug causing mouseup being called twice at end of drag (for
+	example confused mandlebrot example)
+
+	* WApplication.C: found cause for long standing IE6 mystery 19px
+	offset
+
+	* WDate.C: require 2 digits for 'dd' or 'MM' format entries
+
+	* WFormWidget.C: auto-validate when contents changes
+
+	* WebRenderer.C, Wt.js: fix several widgetset mode problems for
+	IE.
+
+	* Wt.js: do not block when getting an AJAX error
+
+26-01-2009:
+	* 2.2.3 released.
+
+23-01-2009:
+	* examples: misc improvements, update homepage
+
+	* src/Wt/WAbstractItemModel: support for const char * data in
+	boost::any()
+
+	* src/Wt/WTreeView: better support for non-JavaScript situations
+
+	* WDialog: fix layout regression
+
+21-01-2009:
+	* WRectF: normalized() returns a rectangle without negative width
+	or height, and is used within WPainter to normalize rectangle
+	arguments
+
+	* WebRenderer.C: fix embedded mode
+
+16-01-2009:
+	* new example 'gitmodel': demonstrates how to create a custom model
+	class, to be used in conjunction with WTreeView.
+
+	* WGridLayout, WBoxLayout, WBorderLayout: when used in conjuction
+	with WContainerWidget, there is now the possibility to hint an
+	alternative implementation for managing space horizontally, which
+	uses the 'table-layout: fixed' CSS property.
+
+	* WCssStyleSheet: fix JavaScript error on IE
+
+	* WTreeView: fixes for when the treeview is not immediately shown
+
+15-01-2009:
+	* WCanvasPaintDevice.C: fix arc drawing in singular case (width or
+	height == 0), and for very skewed arcs (widht / height <<< 1 or >>> 1)
+
+08-01-2009:
+	* WTreeView: react to column insertion and removal, and
+	fix WTreeNode::load() unintentionally overriding WWidget::load()
+
+	* WAbstractProxyModel: implement toRawIndex() and fromRawIndex() so
+	that WTreeView does not lose selection or expanded index list when
+	resorting (or partial refiltering)
+
+07-01-2009:
+	* WDialog: add setTitleBarEnabled() to disable the title bar
+
+06-01-2009:
+	* WTreeView: setColumnBorder() allows setting the color for a
+	border line between columns, setColumnResizeEnabled() for
+	disabling the resize handles, and the content in each column is
+	now rendered with some padding (3px to the left and right).
+
+05-01-2009:
+	* WAbstractTobbleButton.C: fix inserting label into widget tree when
+	parent is not passed in constructor
+
+	* Ext/Widget.C: fix hide() and show() to consistently use Ext methods
+
+	* Wt.js, WebRenderer.C, WApplication.C: fix IE CSS loading ?
+
+24-12-2008:
+	* WTreeView: setColumn1Fixed() allows fixing of the first column while
+	scrolling through the other columns in a large model.
+
+22-12-2008:
+	* WMenu, WTabWidget: implement removeItem() and removeTab()
+
+	* WebRenderer.C: fix internal path issue when starting with a path,
+	AJAX is available, and deployment ends on a /
+
+	* WDialog: fix usage of layout managers in contents area
+
+	* WJavaScript, WSignal: scope ::_1 in global scope
+
+	* WOverlayIndicator: allow style class customization (Goetz Babin-Ebell)
+
+	* CgiParser: cleanup when using GNU regexp API (Goetz Babin-Ebell)
+
+	* Ext/PagingToolBar.C: fix adding multiple additional toolbar items.
+
+10-12-2008:
+	* WCompositeWidget.C: fix implementation not being load()ed
+
+	* Boot.html, Wt.js: do not create a new stylesheet but add rules to
+	existing inline stylesheet (for ordering consistency)
+
+	* Wt.js: fix regression for widget coordinates
+
+06-12-2008:
+	* hello-widgetset: do not build with fcgi connector (Guy Deleeuw)
+
+	* global: do not use (unsigned) long long but
+	use (u)int64_t (Goetz Babin-Ebell and Pau)
+
+	* DomElement.C: convert <img> to <input type=image> instead of
+	wrapping it in a button, when JavaScript is not available (Anthony
+	aka roja)
+
+04-12-2008:
+	* treeview-dragdrop: new example, demonstrating Drag&Drop operations
+	between treeviews, WSortFilterProxyModel usage, and context popup
+	menus.
+
+02-12-2008:
+	* WWidget: remove parent_ member, use WObject::parent() instead
+
+27-11-2008:
+	* WPopupMenu, WPopupMenuItem: implementation of a popup menu
+
+	* WAbstractProxyModel, WSortFilterProxyModel: proxy model classes
+	for WAbstractItemModel, that provide filtered and sortered views
+	of a source model
+
+	* StdGridLayoutImpl.C: more consistent layout rendering, now using
+	JavaScript on all browsers, and using relative positioning of contents
+	to avoid overflow the layout when the child manages its size using
+	JavaScript (like WTreeView)
+
+	* WButtonGroup: add count() method (from Torsten Schulz)
+
+	* WComboBox: add findText() method.
+
+	* WDialog.C: avoid applying css rules to contained tables.
+
+	* WDropEvent: add mouseEvent() to access causing mouse event details
+
+	* JSignal: support passing original event too using Wt.createEventCall()
+
+	* WTreeView: add expandToDepth() method, and pass mouse event in
+	  item clicked, doubleClicked and mouseWentDown signals.
+
+	* WTreeView: better support for item drag&drop.
+
+19-11-2008:
+	* StaticReply.C: do not bwarf when we cannot determine file
+	size (i.e. for a pipe, reported by Michael Sorensen)
+
+	* WMenuItem.C, DomElement.C: do not prevent default action for
+	anchor click, by default, (reported by Bin tan)
+
+18-11-2008:
+	* WTreeNode.C: apply width to TD only for IE
+
+	* WTreeTable.C: fix scrollbar issues for IE6 and IE7
+
+	* TabWidget.C: fix offsets hiding problem
+
+17-11-2008:
+	* Boot.html, examples/hello-widgetset/hello.html: fix race
+	condition for IE7/6 with ExtJS loading (thanks to Guy Deleeuw for
+	help in debugging)
+
+	* Ext/Dialog.C: make sure dialog is not centered on too small window.
+
+14-11-2008:
+	* WOverlayLoadingIndicator: a more obvious loading indicator
+
+13-11-2008:
+	* WApplication.C: fix miscalculation of exposed signals
+
+	* WMenu.C: make Horizontal menus really behave horizontal
+
+	* WLoadingIndicator, WDefaultLoadingIndicator: interface and default
+	implementation for loading the indicator
+
+12-11-2008:
+	* Boot.hml: typo oops indicated by Anthony Roger Buck
+
+	* WApplication, WDialog, Ext::Dialog, Ext::MessageBox: more generic
+	way of preventing signals hidden by a modal dialog
+
+	* WTreeView: more accurate column widths
+
+	* CgiParser: fix handling of plain POSTs (indicated by Jim Koornneef)
+
+	* WebSession: fix handling of recursive event loop when JavaScript
+	is disabled
+
+	* Configuration.C, Wt.js: add configuration option for strict
+	event serialization, dropping events that happen while a response
+	is pending (off by default).
+
+	* WTreeTable.C, WTree.C, WTreeNode.C: backport IE fixes from
+	WTreeView to WTreeTable
+
+07-11-2008:
+	* Boot.html: fix issue with IE7 and extkitchen loading (do not
+	apply same fix as for IE6)
+
+	* WTreeView: support multi line headers, and rework layout management
+	for header row (revert to old style since it didn't work for IE7)
+
+06-11-2008:
+	* examples/extkitchen: use a WTreeView as another MVC-model
+	when demonstrating Ext::TableView
+
+	* WAbstractItemModel, WItemSelectionModel, WTreeView, Wt.js:
+	support for drag of item selections, and drop of item selections
+	or other events
+
+	* WTreeView: several bug fixes for incrementally handling row
+	insert and removals, and cosmetic improvements
+
+04-11-2008:
+	* WTreeView.C: allow setColumnWidth() and setContentAlignment for
+	column 0 too.
+
+	* WebRenderer.C, WContainerWidget.C: brush up WidgetSet mode
+
+	* examples/hello-widgetset: WidgetSet mode example
+
+03-11-2008:
+	* examples/treeview, examples/widgetgallery: new examples
+
+	* WSubMenuItem.C: a menu item that can contain a sub menu
+
+	* WGridLayout.C: do not attempt to layout when hidden since
+	measurements will fail
+
+	* WGridLayout.C: apply width rules to every row since first
+	row may contain overspanned cells
+
+	* WAnchor.C: support configurable word-wrap
+
+	* WTextArea: allow default Wt-invalid class for also for textarea
+
+	* WCssStyleSheet: implement assignment operator, and reimplement
+	addRule with WCssDecorationStyle, returns a WCssTemplateRule now.
+
+	* WMenu: allow multiple menus to use a single
+	WStackedWidget (useful for menus with submenus)
+
+	* WSuggestionPopup.C: pop up after widget itself
+
+	* WTable.C: fix memory leak introduced by incremental row rendering
+
+	* WTransform.C: fix double rounding error bug leading to NaNs
+
+	* WTreeView: add setHeaderHeight() and setColumnAlignment()
+	methods, and many rendering misc.
+
+	* Ext/Widget.C: apply correct style classes to body if Ext is not
+	loaded during initial page render
+
+	* WApplication.C, Boot.html, Wt.js: url encoding and decoding for
+	internal paths
+
+	* Boot.html, Wt.js: avoid race condition with IE when loading
+	application
+
+	* Wt 2.2.1 released
+
+27-10-2008:
+	* WAnchor.C: no clicked connect when setting internal paths
+
+	* WWidget, WWebWidget, WCompositeWidget: add setLineHeight() API
+
+	* WCssStyleSheet: WCssTemplateRule copies CSS properties from a
+	template widget
+
+	* WModelIndex: allow for SHA-1 internal Id's for on-disk models
+
+	* WTreeView, WModelIndex, WStandardItem: add UrlRole and
+	InternalPathRole
+
+23-10-2008:
+	* WAppliation.C: be more accurate about when to absolutelify
+	relative URLs
+
+	* WContainerWidget.C: use sorted vector instead of set to figure
+	out child insertions
+
+	* WResource.C: use Content-Disposition to trick IE to get the name
+	right (in addition to an internal path)
+
+	* WTable, DomElement.C: use table DOM API, and present row
+	additions incrementally
+
+	* RequestHandler.C: fix url decoding
+
+13-10-2008:
+	* WTreeView.C: loading indicator in spacer
+
+	* WTree.C: fix propagation of events inside table rows
+
+11-10-2008:
+	* src/WebSession.C: do not use relative Urls when JavaScript is
+	disabled since we cannot redirect to the canonical url (Bin Tan)
+
+	* WDate.C: bugfix in JS date parsing
+
+	* WServer.C: added new --config parameter to specify the
+	location of the wt_config.xml file
+
+	* WApplication.C: style Wt-invalid applies to all objects, not only
+	input
+
+	* Configuration.C: look for configuration file path in environment
+	variable WT_CONFIG_XML. This is overridden by program option --config
+	in wthttpd.
+
+11-10-2008:
+	* src/WebSession.C: do not use relative Urls when JavaScript is
+	disabled since we cannot redirect to the canonical url (Bin Tan)
+
+	* src/WTreeView[.C]: implement selection, make sorting controls
+	optional
+
+10-10-2008:
+	* WDateValidator.C: better client-side date validation
+
+09-10-2008:
+	* fcgi/Server.C: pass parent environment to children (suggested by
+	misi e)
+
+	* WBorderLayout[.C]: implement methods to retrieve widgets or
+	layout items set for a position.
+
+	* WAbstractItemModel[.C], WModelIndex[.C], WStandardItemModel[.C]:
+	add support for hierarchical models
+
+	* WAbstractItemModel[.C]: new abstract base class for
+	one-dimensional list models
+
+	* WAbstractToggleButton.C: do not generate no-op click handlers
+
+	* WApplication: update outdated documentation (rsh not longer
+	needed, and internal paths work for all major browsers since 2.2.0)
+
+	* WApplication.C: improve consistency for CSS + XHTML
+
+	* WComboBox.C, Ext/ComboBox.C: use WStringListModel instead of
+	WStandardItemModel by default
+
+	* WContainerWidget[.C]: add scrolled event signal
+
+	* WContainerWidget[.C], WWebWidget[.C]: implement different way of
+	handling insertChild() that fixes a bug with removing a child that
+	was just inserted but not yet rendered
+
+	* WCssDecorationStyle[.C]: support dynamic updates to style sheet
+	rules
+
+	* WCssStyleSheet[.C], Wt.js, WebRenderer.C: support dynamic
+	addition and removal of stylesheet rules
+
+	* Wt.js, WEvent, WebController.C: pipeline multiple events,
+	queueing events while a reply is pending.
+
+	* WEvent: add a WScrollEvent
+
+	* WLabel[.C]: add methods to configure and inspect word wrapping.
+
+	* WStandardItem[.C]: new class for implementing the hierarchical
+	WStandardItemModel
+
+	* WStringListModel[.C]: new model that implements a simple string list
+
+	* WTableRow[.C]: add setHidden() and related methods
+
+	* WTreeView[.C]: new view widget for displaying trees or tree tables
+
+	* Chart/WAbstractChart[.C], Chart/WCartesianChart[.C],
+	Chart/WPieChart[.C], Ext/ComboBox[.C], Ext/TableView[.C]: update
+	model listeners to use new hierarchical WAbstractItemModel API
+
+	* DomElement.C: generate more compact code by using more
+	aggressively innerHtml
+
+02-10-2008:
+	* Ext/TableView.C: shift selected rows when rows are
+	inserted/deleted
+
+	* WebController.C: do not send anything when the page script is
+	requested outside the Bootstrap.
+
+01-10-2008:
+	* WebController.C: fix refresh() regression, simplify, prevent
+	CSRF, and remove unnecessary code
+
+30-09-2008:
+	* Connection.C: catch exceptions thrown by
+	remote_endpoint() (reported by kal sason)
+
+28-09-2008:
+	* WContainerWidget.C: do not stub TDs for IE
+
+21-09-2008:
+	* DomElement.C: do not use innerHTML on IE6 for select element (fixes
+	WComboBox error reported by Sergey Bryukov)
+
+19-09-2008:
+	* WApplication.C: do not block timers when dialog is active (Billy
+	Muma)
+
+18-09-2008:
+	* various places: do not generate DOM ids when serving to a bot,
+	in the hope that this improves the way the bot indexes the page
+	since it should always look the same
+
+	* Configuration.C: add <num-threads> configuration option for
+	FastCGI deployments, to allow usage of reentrant event loops, as
+	used by (W)Dialog::exec() methods when using shared session
+	process deployments.
+
+10-09-2008:
+	* WLocalizedStrings: add an abstract class to localized WString,
+	which is by default implemented using WMessageResourceBundle, but
+	may be customized (as suggested by Lars Hamren)
+
+	* several files: fixes for RubyWt (Richard Dale)
+
+	* WTabWidget: CSS fix for IE7
+
+21-08-2008:
+	* all: build fixes for Sun Studio 12, and boost 1.36
+
+	* various places: better use of STL containers
+
+19-08-2008:
+	* src/web/WebSession.h: build fix for boost 1.36
+
+	* examples/wt-homepage: add Chinese translation (by Zhimin Song)
+
+	* various places: fixes suggested by Richard Dale and Pau
+
+18-08-2008:
+	* CMakeFile.txt: default is now boost 1.35
+
+13-08-2008:
+	* StdGridLayoutImpl.C: deal with padding in widgets correctly,
+	always fit item heights (this may cause rows to get stuck at a
+	particular height, but gives more consistent behaviour..., handle
+	UL children
+
+	* WApplication: simplify internalPath stuff
+
+	* WebController: propagate form values before touching the widget tree
+
+11-08-2008:
+	* WMenu: add setInternalBasePath(), do not specify display: inline
+	for a horizontal menu item, instead, should be handled by
+	programmer CSS
+
+	* WMenuItem: do not erronously delete contents in destructor, if
+	it was already loaded.
+
+08-08-2008:
+	* Bejing: olympics started! gogo Kim Gevaert!
+
+	* WApplication: more internal path small fixes
+
+	* Connection.C: build fixes for MSVC and Visual Age
+
+07-08-2008:
+	* WApplication: fix old behaviour of applicationName(), deprecate it
+
+	* WebSession.C, WebController.C, WebRenderer.C: improved url and
+	internal path handling: handle redirecting to a new internal path,
+	properly initialize application with an initial internal path,
+	more flexible internal paths (do not enforce trailing '/')
+
+	* WMenu: properly restore application internal path when doing
+	stateless slot learning
+
+06-08-2008:
+	* cmake/WtFindSsl.txt: removed redundant code
+
+	* src/web/skeleton/Wt.js: fix widget position bug when nested in scrolled
+	DOM elements or page on Safari/Opera/IE
+
+	* all: merged in prettyurls branch
+	  - no longer use frameset in bootstrap page, load instead ajax script. Remove
+	    all code that dealt with the frame, and Ajax skeleton page
+	  - switch to own implementation of history management, remove really simple
+	    history framework code
+	  - add internal path API: see WApplication::setInternalPath(),
+	    WAnchor::setRefInternalPath()
+	  - remove internal iframes to deal with file uploads, found a workaround for IE
+	    problem
+	  - make JavaScript skeleton files compressable with YUI JS compressor
+	  - WMenu and WMenuItems: API changes to work with internal path API
+	  - improved marking of deprecated methods in API
+
+	* wt_config.xml: add new setting <redirect-message> used in anchor
+	for redirecting to non-JavaScript version
+
+05-08-2008:
+	* web/Configuration.C: remove cppfileno mess
+
+04-08-2008:
+	* WFormWidget.C: fix crash when calling setBuddy() twice (or only
+	once in case of WAbstractToggleButton)
+
+	* WTreeTable.C: fix problem when height is not explicitly set
+
+02-08-2008:
+	* WVMLImage.C: fix bounding box calculation for arc rendering in path when
+	rotated. It is still broken for non-uniform scale + rotation
+
+	* TableView.C: fix cellSelected signal when used together with a
+	PagingToolBar to not propagate the correct model indexes
+
+01-08-2008:
+	* src/http/StaticReply.C, src/http/StockReply.C: transmit response only
+	when all POST'ed data was received
+
+	* src/http/StaticReply.C: call stream_.clear() to recover from error state
+
+29-07-2008:
+	* WEnvironment.C, src/web/WebController.C, src/web/WebRenderer.C:
+	fix cookie setting and cookie parsing
+
+	* WMenuItem: move itemWidget() from protected to public scope.
+
+25-07-2008:
+	* WTextEdit[.C]: implement an XHTML rich text editor wrapping the
+	TinyMCE javascript library
+
+	* CMakeListst.txt: install resources/ folder to share/Wt/resources
+
+	* WText[.C]: deprecated WText::Formatting enum,
+	WText::setFormatting() and WText::formatting() for Wt::TextFormat
+	enum, WText::setTextFormat() and textFormat(). Add a constructor
+	that accepts the format as an argument, and update examples
+
+	* http/Reply.C, http/StaticReply.C: serve a .gz version of a file
+	with gzip content-encoding if possible and available, fix a
+	problem with logging when the reply is relayed
+
+22-07-2008:
+	* WAbstractArea, WRectArea, WCircleArea, WPolygonArea: new classes
+	that implement interactive areas on WImage and WPaintedWidget.
+
+	* WImage, WPaintedWidget: add methods for defining interactive
+	areas
+
+	* StdGridLayoutImpl.C: fix alignment margin glitch
+
+	* WApplication.C: default stylesheet: add border: 0px for images,
+	which are rendered using a border when adding a map.
+
+	* WMemoryResource: add constructors and methods for using C-style
+	array data.
+
+	* WLogger.C: fix error in ~WLogEntry
+
+	* all: misc build fixes for win32
+
+15-07-2008:
+	* src/wt: renamed to src/Wt
+
+	* src/Ext: renamed to src/Wt/Ext
+
+	* src/Chart: renamed to src/Wt/Chart
+
+	* src: upgrade to new include file locations <Wt/...>
+
+	* cmake/FindWt.cmake: update to new new include file locations,
+	and add some documentation for cmake newbies
+
+	* src/wt/StdLayoutImpl.C: fix itemAt() problem
+
+	* src/Wt/WMessageResource*, src/wt/WString[.C]: make literal
+	WString work properly with argument substitution (reported by
+	Micahel Ivanov)
+
+	* src/web/Configuration.C: setup loggers even if no wt_config.xml
+	file (reported by Goetz Babin-Ebell)
+
+14-07-2008:
+	* src/wt/WComboBox[.C], src/Ext/ComboBox[.C]: fix problem with
+	setModel wrongly deleting the previous model (reported by Michael
+	Ivanov).
+
+	* src/wt/WApplication, examples/composer/ComposeExample.C,
+	src/wt/WMessageResourceBundle: document and contrast expected
+	location for relative URLs or relative paths (suggested by Pau
+	Garcia)
+
+	* doc/main: improved Inroduction to include logging and error
+	handling, and related configuration options
+
+	* src/Chart/WChart2DRenderer.C: fix regression with stacked bars,
+	introduced by WAxis::setBreak() implementation
+
+	* */CMakeListst.txt: install header files in Wt/ subdirectory to
+	not clobber the main include directory. You should make sure that
+	${CMAKE_INSTALL_PREFIX}/include/Wt is searched for these headers!
+
+13-07-2008:
+	* src/wt/WLogger[.C], src/wt/WApplication: logging API, new method
+	WApplication::log()
+
+	* src/web/Configuration.[Ch], src/wt/Configuration.[Ch]: add
+	configuration options for accesslog and application logging
+
+	* src/wt/WText[.C], src/wt/WWebWidget[.C]: allow to detect XML
+	parse errors when using XHTMLFormatting
+
+	* allover: code cleanups to use logging instead of std::cerr, to
+	throw exceptions for fatal errors
+
+	* src/wt/WLayout[.C]: change contract of count() and itemAt() to
+	allow for '0' layout items, fix crash with WGridLayout (reported by
+	bvh).
+
+10-07-2008:
+	* src/Ext/Widget.C: propagate CSS style class and inline style to
+	the Ext widget through the config.
+
+	* src/web/WtRandom.C: fix integer overflow compile warning (Pau
+	Garcia)
+
+09-07-2008:
+	* src/Chart/WAxis[.C]: add setBreak() to support a "broken" axis
+	that omits a part of the entire value range.
+
+07-07-2008:
+	* src/wt/WContainerWidget.C: implement clear() to also delete any
+	layout manager that was set, and support creation of a layout
+	manager in an existing widget
+
+	* examples/simplechat/SimpleChat.C: use clear() in conjunction
+	with layout managers
+
+	* src/web/DomElement.C: make sure style attribute is rendered as
+	JavaScript
+
+	* src/wt/WApplication.C: do not apply 19px IE6 offset bug to IE7 or
+	later
+
+	* src/wt/WGridLayout.C: use default spacing of 6px instead of 9px
+
+	* src/wt/WContainerWidget.C: setLayout() replace two bools
+	fitWidth and fitHeight with an alignment option
+
+	* examples/painting/PaintExample.C: use WGridLayout
+
+03-07-2008:
+	* src/web/skeletons/*, src/web/DomElement.C,
+	src/web/WebRenderer.C: make sure Wt homepage validates as proper
+	HTML or XHTML.
+
+	* src/wt/WText.C: autodetect common block-style XHTHML content and
+	call setInline(false) for block elements (helps in producing valid
+	XHTML).
+
+	* src/Ext/Widget.C: fix for Ext date picker and calendar with Firefox 3
+
+	* src/web/WebRenderer.C: fix JavaScript to reload an old session
+	(again!)
+
+02-07-2008:
+	* src/wt/WAppliation.C: block events from widgets under the modal
+	dialog cover
+
+01-06-2008:
+	* src/wt/WServer[.C]: API to start and stop the embedded http
+	server programatically.
+
+	* src/Ext/TextEdit.C: fix forgotten string literal bug (Michael
+	Ivanov)
+
+	* src/wt/WApplication.C: add auto-centering for WDialog using
+	JavaScript (Michael Ivanov)
+
+30-06-2008:
+	* src/wt/WGridLayout.C, src/wt/StdGridLayoutImpl.C: unify
+	cross-browser handling, fix alignment bugs, border handling
+
+27-06-2008:
+	* src/Ext/Widget.C: eliminate client-side memory leak of ExtW array
+
+	* src/wt/StdGridLayoutImpl.C: fix minimum row height calculation
+	bug, and some clean up + internal doc improvements
+
+	* src/Ext/Container.C: fix interference bugs between Ext and Wt
+	layout managers
+
+	* src/wt/WBoxLayout, src/wt/WGridLayout: implement alignment
+
+25-06-2008:
+	* src/wt/WBoxLayout[.C], src/wt/WGridLayout[.C],
+	src/wt/WBorderLayout[.C], src/wt/WContainerWidget[.C]: implemented
+	layout management for WContainerWidgets
+
+	* examples/chat: simplified by using layout managers instead of
+	absolute CSS layout.
+
+	* src/wt/WApplication.C: reset padding to 0 for the body. Add
+	padding to the WApplication::root() if you want to have it back.
+
+	* src/web/DomElement.C: change cancelEvent() signature, and add
+	emulate IE support for setMinimumSize() (using CSS expressions),
+	add support for CSS property white-space
+
+	* src/web/skeleton/Wt.js: add pixel calculation routines
+
+	* src/wt/WApplication.C: define declared functions as soon as
+	possible
+
+	* src/wt/WText[.C]: add setWordWrap() method
+
+	* src/wt/WLabel.C: use setWordWrap(false) for the text
+
+	* src/wt/WMenuItem.C: do not set margin-right for horizontal
+	items (Billy Muma)
+
+18-06-2008:
+	* CMakeLists.txt: fixed CONFIGDIR issues
+
+	* src/http/Reply.[Ch]: fixed non-multi threaded build
+
+	* src/wt/WTabWidget[C], src/wt/WMenu[C]: reimplement
+	currentChanged signal
+
+17-06-2008:
+	* src/wt/WContainerWidget.C: fix bug caused by not searching child
+	list before inserting child, triggered when using insertBefore()
+
+	* src/Ext/Dialog.C, src/Ext/MessageBox.C: workaround for missing
+	cursor problem in FireFox 1.5 and 2
+
+16-06-2008:
+	* CMakeLists.txt: CONFIGDIR variable (from Pau Garcia i Quiles)
+
+	* src/CMakeLists.txt: use a macro for FileToString
+
+	* examples/wtwithqt: new example and library for interopability
+	between Wt and Qt4.
+
+13-06-2008:
+	* LICENSE: Clarified that GPL Wt is only licensed under the
+	second version of the GNU GPL (requested by debian folks)
+
+	* src/wt/WWebWidget.C: performance improvement, do not search child
+	list before inserting child because we know for sure that it isn't
+	there
+
+	* src/Ext/Dialog.C: do not use display:none since this may
+	cause problems with certain Ext widgets that need hide-with-offsets
+
+	* src/Chart/WAxis[.C]: add support for axis titles with custom font
+
+12-06-2008:
+	* src/Ext/WWidgetItemImpl: do not use display:none since this may
+	cause problems with certain Ext widgets that need hide-with-offsets
+
+11-06-2008:
+	* add WEnvironment::pathInfo()
+
+10-06-2008:
+	* refactoring to simplify WWebWidget implementations
+
+	* preliminary support for AJAX on IE Mobile. Things that do not
+	yet work include WFileUpload, WTimer, and there are many rendering
+	layout glitches (such as in the tree list stuff).
+
+	* src/web/DomElement.C, src/web/WebController.C: fix handling
+	multiple buttons when JavaScript is not available
+
+	* src/Ext/TableView.C: clearSelection() fix (Archimedes Cortes)
+
+	* src/wt/WFormWidget, src/wt/WValidator: add an inputFilter()
+	method which allows filtering input characters against a regular
+	expression.
+
+	* src/wt/WTree.C: let selection only on the label, so that other
+	interactive widgets may be present in other columns
+
+	* src/web/DomElement.C: support return value, note this may break
+	existing behaviour of JavaScript slots, since they really need to
+	return properly! Better cross-platform event handling.
+
+30-05-2008:
+	* src/http/Server.[Ch]: fix potential thread safety issue on shutdown
+	(Max M)
+
+28-05-2008:
+	* src/Ext/LineEdit[.C]: add setMaxLength()
+
+	* src/wt/WAnchor.C: fix targetChanged_ is uninitialized bug
+
+27-05-2008:
+	* src/fcgi/Server.C, src/web/Configuration.C: support valgrind arguments
+
+	* src/web/Configuration.C: fix close(-1) valgrind warning, and
+	read 'valgrind-path' from fcgi-configuration
+
+26-05-2008:
+	* charts example: better support without JavaScript
+
+	* src/Ext/NumberField: fix undefined reference: setDecimalPrecision()
+
+	* src/Ext/TableView: add setColumnAlignment() method
+
+	* src/web/DomElement.C: better support for anchor onclick events:
+	use browser default when used with a modifier, otherwise prevent
+	browser default
+
+	* src/web/WebSession, src/web/WebController: propagate initial history
+	as a history event after application construction
+
+	* various places: documentation improvements
+
+21-05-2008:
+	* src/web/WWebWidget.C: allow disabling the stubbing of small
+	widgets (added setLoadLaterVisible() method)
+
+	* src/wt/WWidget: add htmlText() method to public API
+
+20-05-2008:
+	* src/wt/WTreeNode.C, src/wt/WIconPair.C: performance improvements
+
+	* src/wt/WTree.C: suppress browser text selection when selection is
+	enabled
+
+	* src/web/skeleton/Ajax.html: support for IE 8 beta
+
+	* various places: documentation improvements
+
+	* src/wt/WApplication[.C]: added WApplication::applicationName(),
+	from Goetz Babin-Ebell.
+
+	* src/wt/WWebWidget.C: optimize widget destruction
+
+15-05-2008:
+	* src/web/WebSession.C: fix build problem when threading is disabled
+
+	* src/wt/WVmlImage.C, Wt.js: fix selection problem on IE
+
+14-05-2008:
+	* src/wt/WInteractWidget.C: block changed signal after enterPressed
+	when the enterPressed signal is connected to get same behaviour across
+	all browsers
+
+	* src/wt/WLenghtValidator.C: fix bug in constructor
+
+	* src/wt/WLineEdit[.C]: add setMaxLength()
+
+	* src/wt/WWidget.C: disable the fixed JavaScript implementation
+	for hide() and show() and revert to stateless slot learning by
+	default to take into account reimplement setHidden() methods. This
+	is now overridden only in WTreeNode.
+
+	* src/web/CgiParser.C: open spoolfile in binary mode, fixes wrong
+	behaviour with binary files on Windows platforms
+
+	* src/wt/WApplication: revert behaviour change for url() to return
+	the entire application path
+
+	* src/wt/WSlider.C: avoid compile warning with gcc 4.2
+
+13-05-2008:
+	* src/wt/WValidator[.C], src/wt/WIntValidator[.C],
+	src/wt/WDoubleValidator[.C], src/wt/WDateValidator[.C],
+	src/wt/WRegExpValidator[.C]. src/wt/WLengthValidator[.C],
+	src/wt/WFormWidget[.C]: add javaScriptValidate() for
+	client-side validation
+
+	* src/wt/WDate[.C]: small cleanup and add conversion to perl
+	regular expression for client-side validation
+
+	* put Wt stateless client-side routines in a version-dependent
+	namespace WT_CLASS
+
+	* src/wt/WMessageResources.C: preserve white space and new lines for
+	message resources
+
+11-05-2008:
+	* src/wt/WSignal[.C]: reduce memory for unused event signals, and
+	add support for preventing the default handler (untested)
+
+	* src/wt/WInteractWidget: better keyboard event documetation
+
+	* src/wt/WTree[.C]: support for standard behaviour of Control and
+	Shift modifiers in extended selection mode
+
+10-05-2008:
+	* src/web/DomElement.C, src/web/skeleton/Wt.js, src/wt/WEvent[.C]:
+	improved keyboard and mouse event information
+
+	* src/wt/WInteractWidget: better keyboard event documetation
+
+	* src/wt/WTree[.C]: support for standard behaviour of Control and
+	Shift modifiers in extended selection mode
+
+08-05-2008:
+	* cmake/WtFindBoost.txt, src/web/random_device.cpp: add support
+	for MacOS X
+
+	* src/wt/WAbstractItemModel: add asString(const boost::any&) and
+	asNumber(const boost::any&), and add warnings when trying to read
+	or write data outside the bounds
+
+	* src/wt/WAbstractToggleButton.C, src/wt/WFormWidget.C: avoid
+	double changed event propagation (needs exception for bug in IE6
+	and IE7).
+
+	* src/wt/WCanvasPaintDevice.C: improve text rendering, optimize
+	path rendering, and fix bug with clipping and transformations
+
+	* src/wt/WColor: documentation improvements, and specify default
+	colors numerically
+
+	* src/wt/WComboBox: documentation improvements
+
+	* src/wt/WComboBox.C: do not emit changed() event when changing
+	the values using setCurrentIndex()
+
+	* src/wt/WDate: add support for conversion to integers using
+	julian day calculation, and add methods addDays(), addMonths(),
+	and addYears(), and fix string parse bug s/1900/2000
+
+	* src/wt/WDoubleValidator: fix default argument to real -inf
+
+	* src/wt/WPainter, src/wt/WVmlImage: add support for rectangle
+	clipping to VML renderer
+
+	* src/wt/WPainterPath: add support for bounding box calculations,
+	fix inverted angle calculation in getArcPosition()
+
+	* src/wt/WRectF: add intersection test and united() method
+
+	* src/wt/WResource: add write(std::ostream&) method to serialize a
+	resource (e.g. to a file)
+
+	* src/wt/WSvgImage: optimize paths even when transformations
+	change (only translations), fix clipPath definition so that it
+	works with inkscape and opera, and make drawText() more accurate
+
+	* src/wt/WVmlImage: optimize paths through transformations, and
+	use multiple parallel paths to avoid overlap artefacts, and add
+	full text support (including rotations and scales)
+
+	* src/wt/WWebWidget: fix bug with double processing of new siblings
+
+	* src/wt/WWidget: move enums to Wt:: scope (with full backwards
+	compatible support)
+
+	* src/Chart/: first release of the Wt charting library
+
+	* examples/charts/: example demonstrating the Wt charting library
+
+	* src/wt/WPanel: new widget (will evolve to support many standard
+	options you want for a panel)
+
+29-04-2008:
+	* src/wt/WLength: Added multiplication operator, and toPixels()
+	method
+
+	* src/wt/WFont: Fixed equality operator: fixed sizes are now also
+	compared
+
+	* src/wt/WVmlImage.C, src/web/WebController.C, src/wt/WEnvironment,
+	src/web/skeleton/Boot.html: Fixed rendering on high density
+	displays (DPI scaling)
+
+25-04-2008:
+	* CMakeLists.txt: Dynamic/static boost build fix
+
+24-04-2008:
+	* CMakeLists.txt: FindWt.cmake is now installed in /usr/share/...
+	instead of /usr/usr/share/...
+
+	* src/wt/WCssDecorationStyle.C: bugfix for setting background colors
+
+19-04-2008:
+	* src/web/WWebWidget.C: also update form objects in addChild()
+	and removeChild (could be optimized later)
+
+18-04-2008:
+	* CMakeLists.txt: LIB_INSTALL_DIR fixes. LIB_INSTALL_DIR must now be
+	a relative path.
+
+	* src/web/WebController.C: reroute all methods that may call user
+	code through WApplication::notify() (including rendering and
+	application refresh())
+
+	* src/wt/WApplication[.C], src/web/WebSession[.C]: allow
+	post-construction and pre-destruction application initialization
+	and finalization
+
+	* src/wt/WApplication[.C], src/web/WebSession[.C]: attachThread()
+	attaches an auxiliary thread to an application context
+
+        * src/http/Connection.C: use graceful connection shutdown on timeout,
+        to avoid the occasional 502 proxy errors
+
+17-04-2008:
+	* src/http/Connection.C. src/http/Reply.C: fix race condition on
+	shutdown, protect connection_ with a mutex, and illegal access to
+	dead connection's request in the logging
+
+	* src/http/HTTPRequest.[Ch]: keep a shared pointer (ReplyPtr)
+	instead of raw pointer for the WtReply
+
+	* src/web/WebController.C: remove killed sessions from sessions
+	map from sessions map in forceShutDown() so that they do not get
+	illegally accessed from expireSessions().
+
+	* src/web/WebSession: do not call finalize() on 0 app_
+
+	* src/wt/WResource: setRequest() flushes a previous request if
+	there is already one
+
+	* src/wt/WMenuItem.C: fix memory leak with LazyLoading
+
+	* various places: make build work on gcc 3.4.0 (thanks to Petr Cerny)
+
+14-04-2008:
+	* src/web/DomElement.C: do not use innerHTML in xhtml (opera
+	doesn't like it with inline SVG)
+
+	* src/wt/WPaintedWidget.C: prefer InlineSVG on Opera
+
+	* src/wt/WPaintDevice.C, src/wt/WVmlImage.C: scale pen widths with
+	transform
+
+	* src/web/skeletons/Wt.js: import XML nodes with correct namespace
+	into DOM
+
+	* revert commit 4e7766d105888ae898ca6a8d7446d2188ae09846, since IE
+	cannot handle special tokens in DOM element id's
+
+	* release 2.1.2
+
+13-04-2008:
+	* src/wt/WPainter[.C], src/wt/WCanvasPaintDevice[.C],
+	src/wt/WVmlImage[.C], src/wt/WSvgImage[.C]: add drawImage() methods
+
+	* src/wt/WRectF.C: fix setX() and setY() incorrect width adaptation
+
+	* src/wt/WSvgImage.C: fix regression in drawLine
+
+	* src/wt/WTransform.C: fix double comparison in SVD decomposition
+
+	* src/wt/WVmlImage.C: fix drawArc() wrong transformation problem
+
+12-04-2008:
+	* src/web/DomElement.C, src/web/skeleton/Wt.js: capture() mouse
+	down so that all subsequent mouse events are received by the same
+	element/widget
+
+	* src/web/WebRenderer.C: use JS reload(true) to force reload, and
+	disallow caching of bootstrap HTML
+
+	* src/web/WebRenderer.C, src/wt/WVmlImage.C: use VML in standards
+	compliant rendering mode
+
+	* src/web/skeleton/Wt.js: make private functions really sit within
+	"Wt" closure
+
+	* src/wt/WJavaScriptSlot.C: fix wrong JavaScript code when JSlot
+	is not owned by a WWidget, and thus not using function
+	declaration, and define JavaScript functions before loading
+
+	* src/wt/WPaintedWidget[.C]: update() on resize()
+
+	* src/wt/WSlider[.C]: initial implementation of a slider
+	control (rendered using WPaintedWidget)
+
+	* src/Ext/TabWidget[.C]: make sure currentIndex() is updated before
+	propagating the signal
+
+	* src/wt/WVmlImage.C: correct -1 vertical offset problem
+
+	* src/wt/WTreeTableNode.C: fix seg fault of calling virtual method
+	addChildNode() from WTreeNode constructor
+
+	* src/wt/WTree.C: fix seg fault on consecutive calls of setTreeRoot()
+
+	* src/wt/WTreeNode[.C]: rename expanded() to isExpanded() and add
+	two signals, expanded and collapsed
+
+	* src/wt/WSignal: allow late binding of a relay signal to
+	EventSignal<void>
+
+	* src/wt/WTableTreeNode: change incorrect protected scope of
+	addChildNode() to public
+
+11-04-2008:
+	* src/wt/WPainter[.C]: expand API with setViewPort() and
+	setWindow() methods
+
+	* src/wt/WTransform.C: fix reflexion bug in WTransform's SVD
+
+	* src/wt/WPen[.C]: define 0 width as cosmetic pen of width 1
+	pixel, independent of transformation matrix
+
+	* Boost 1.35 support
+
+	* CMakeLists.txt: The static version of Wt is now default
+	built on Windows
+
+10-04-2008:
+	* src/wt/WApplication[.C]: fix regression in
+	WApplication::processEvents()
+
+	* src/wt/WPainter[.C]: add WPainter::save() and
+	WPainter::restore() methods
+
+	* src/wt/WTransform.C: handle reflexions correctly in the singular
+	value decomposition
+
+	* Released 2.1.1
+
+09-04-2008:
+	* src/wt/WLineF, WPointF, WRectF, WPaintDevice, WPainter, WPen,
+	WBrush, WPainterPath, WVmlImage, WSVGImage, WCanvasPaintDevice:
+	complete implementation and documentation
+
+	* src/wt/WString: improve documentation
+
+07-04-2008:
+	* src/wt/WTreeNode[.C]: add virtual expandable() method which
+	returns whether a node is expandable (even when not populated)
+
+	* src/Ext/TabWidget.C: addTab(WWidget *, const WString&) checks if
+	the widget is a Panel, and only creates a Panel if not.
+
+	* src/wt/WJavaScriptSlot[.C], WObject[.C], add
+	implementPrelearned() to directly specify the JavaScript behavior
+	for a method. Add support to switch the implementation of a method
+	between implementStateless() and implementJavaScript().
+
+	* src/wt/WTreeNode[.C]: add setChildCountPolicy() to enable the
+	child count next to the label, which now by default is disabled
+
+	* src/wt/WWidget.C, src/wt/WWebWidget.C: performance optimization:
+	change implementation of hide() and show() from stateless to
+	prelearned
+
+	* src/wt/WTreeTable[.C]: use offsetHeight instead of clientHeight and
+	offsetTop to solve layout problem ?
+
+	* src/wt/WObject[.C]: use a simple 64-bit encoding for a valid
+	JavaScript identifier id
+
+02-04-2008:
+	* src/Ext/*.C: performance improvement: change config generation
+	to use streaming instead of string concatenation
+
+	* src/Ext/*.C: performance improvement: do not use addUpdateJS
+	when not yet rendered
+
+01-04-2008:
+	* src/wt/WApplication: support dynamic loading of scripts,
+	internal stylesheet changes, and external stylesheets. This fixes
+	the problem with using Ext widgets only later in the application.
+
+	* src/wt/WTableRow[.C], src/wt/WTableColumn[.C]: add support in
+	public API
+
+	* src/wt/WApplication.C: move default CSS for widgets to the
+	widget constructors
+
+	* src/wt/Ext/Widget.C, src/wt/WJavaScriptSlot.C: fix bugs when
+	using setId() to override the auto-generated id's.
+
+	* src/wt/WEnvironment[.C]: make hostName() and clientAddress()
+	robust to proxies at either the client or server side, add
+	urlScheme() method.
+
+	* src/fcgi/Server.C, src/http/PosixMain.C,
+	src/web/WebController.C: add support for multiple entry points
+
+	* src/http/Configuration.C: add --servername option to override
+	the DNS name as default host name
+
+	* src/http/Configuration.C: fix -1 error when removing trailing
+	'/' from directories.
+
+	* src/web/CgiParser.C: use GNU regex when HAVE_GNU_REGEX is defined.
+
+	* src/web/Configuration.C: add behind-reverse-proxy boolean
+	configuration option, and separate general from FastCGI specific
+	settings
+
+	* src/web/DomElement.C, src/web/EscapeOStream.C,
+	src/web/WebRenderer.C: more rendering performance improvements
+
+	* src/web/WebController.C: use GNU regex when HAVE_GNU_REGEX is defined.
+
+	* src/web/WebController.C, src/web/WebRenderer.C,
+	src/web/WebSession.C: preliminary support for embedded application
+	mode, cross-domain AJAX using dynamic script tags, and automatic
+	conversion from relative to absolute URLs
+
+	* src/web/skeletons/: reorganisation to have modular javascript,
+	and encapsulation in JavaScript "classes" to allow multiple
+	applications in a single page (in the future)
+
+	* src/wt/WApplication.C: make "Loading" feedback work properly on
+	all browsers
+
+	* src/wt/WCssDecorationStyle.C: do not generate no-op JavaScript
+
+	* src/wt/WCssStyleSheet[.C]: add functionality to check whether a
+	particular rule has already been added
+
+	* src/wt/WMessageResources.C: do not read the same XML file twice
+	when locale is empty
+
+	* src/wt/WPushButton.C: do not generated no-op JavaScript
+
+	* src/wt/WResource: change suggestFilename to suggestFileName, add
+	addHeader() method
+
+	* src/wt/WSignal.C: fix double removal of a user event signal from
+	the exposed signals list
+
+18-03-2008:
+	* src/wt/WStackedWidget[.C]: fix bug when trying to add a composite
+	widget to a stack (cannot yet call hide()) through parent passing,
+	reported by Michael Ivanov
+
+17-03-2008:
+	* src/web/DomElement.C: fix regression introduced 04-03-2008 with
+	alternate hiding method interfering with setPositionScheme()
+
+	* src/Ext/ComboBox.C: use modelColumn when indexing into model.
+
+	* src/web/DomElement.C: various performance improvements (const
+	char * for string literals)
+
+	* src/web/EscapeOStream[.C]: performance improvements
+
+	* src/web/FileServe.C: performance improvement: avoid char-based I/O
+
+	* src/web/WebRenderer.C: performance improvements: do not use
+	formName(), instead use pointer, do not propagateRenderOk() before
+	initial render, do stateless slot learning in JavaScript update
+
+	* src/wt/WObject.C: performance improvement: use sprintf() in formName()
+
+	* src/wt/WSignal.C: performance improvements: use local info to
+	track whether a signal was exposed instead of the expensive call
+	to WApplication
+
+	* src/wt/WWebWidget.C: performance improvements
+
+	* src/wt/WTreeNode[.C]: virtual method displayedChildCount()
+
+	* src/web/skeleton/Ajax.html: fix offset problem in coordinate
+	calculations
+
+	* src/wt/TableView[.C]: use SelectionBehavior instead of
+	SelectionUnit, which is now deprecated
+
+	* src/wt/WSelectionBox[.C]: add support for multiple selection
+
+	* src/web/DomElement.C: fix button wrap when using IE6 with
+	JavaScript disabled
+
+	* all: various documentation cleanups
+
+13-03-2008:
+	* wthttpd: make build without thread support really work without
+	linking to a thread library
+
+	* src/mxml/mxml-file.c: fix unicode encoding to not encode twice,
+	bug that was triggered on linux-arm platforms
+
+	* src/mxml: merge with latest official release 2.5
+
+	* src/wt/WDate.C, src/http/Request.C: fix non-cost string literals
+
+	* src/web/CgiParser.C: fix a regression to detect content-type
+
+12-03-2008:
+	* src/wt/WPainterPath: complete API, largely untested
+
+10-03-2008:
+	* src/wt/WPainterPath and devices: implement painter path arcTo()
+
+06-03-2008:
+	* examples/wt-homepage/: updated to emweb design
+
+	* src/wt/WApplication.C: disable state system for WebKit, since it
+	does not work at all
+
+	* src/wt/WMessageResources.C, src/wt/WWebWidget.C, src/web/DomElement.C:
+	do not let mxml self-close non-self-closing tags (gives problems in IE)
+
+05-03-2008:
+	* src/wt/WMenu[.C]: added method setRenderAsList() which allows
+	the menu to be rendered as an HTML list
+
+	* src/wt/WContainerWidget[.C]: added methods setList(), isList(),
+	isOrderedList(), isUnorderedList(), that allow the container to
+	be used to render HTML <ul> and <ol> lists.
+
+04-03-2008:
+	* src/wt/WTable.C: correctly participate in slot learning when
+	stubbed
+
+	* src/wt/WWebWidget[.C]: allow alternate method for hiding, which
+	propagates to parents. methods does not use display: none
+
+	* src/Ext/ComboBox.C, src/Ext/DateField.C: use alternate method
+	for hiding
+
+03-03-2008:
+	* examples/extkitchen/ExtKitchenExample.C: modify example to use
+	a WTable for layout
+
+02-03-2008:
+	* src/wt/WSignal: connect new signals at_front, since it seems
+	that boost signals will call slots being appended to the signal
+	during slot invocation -- contrary to the documentation
+
+	* src/wt/W[.*]Image: add support for VML rendering
+
+	* src/wt/WVmlImage.C: make text alignment work properly
+
+01-03-2008:
+	* src/wt/WMenu[Item][.C]: make itemSelected signal normal signal,
+	instead of being called from within stateless slot
+
+	* src/web/WebRenderer.C: do not show 'ignore' for updates to widgets
+	not inserted into the widget hierarchy
+
+	* src/wt/WObject.C: do not show internal error when (no)FormData
+	is called
+
+	* src/http/WinMain.C: adapted for non-boost asio
+
+	* src/wt/WWebWidget.C: Allow widget reparenting. setParent() for a
+	widget who has already a parent used to be a no-op; now it reparents
+	the widget.
+
+	* */CMakelists.txt: added 'd' suffix to debug libraries; added
+	FindWt.cmake (from Pau Garcia i Quiles)
+
+        * Released 2.1.0
+
+29-02-2008:
+	* */CMakeList.txt: Restructured the cmake files
+
+	* wthttp: made zlib dependency optional
+
+	* wthttp: asio_error becomes asio_error_code and asio_system_error
+
+ 	* src/Ext/Widget.C: make setHidden() behave properly also when
+	not yet rendered
+
+25-02-2008:
+	* documentation updates
+
+23-02-2008:
+	* several fixes for JavaScript handling after a reload of the same
+	session
+
+22-02-2008:
+	* src/wt/WTreeTable.C: fix layout bug when using a border for the
+	header
+
+16-02-2008:
+	* src/wt/WAnchor[.C]: allow referencing to dynamically generated
+	documents
+
+15-02-2008:
+	* src/Ext/TableView.C: implement enableColumnHiding() methods
+
+	* src/, src/http: move to boost-1.34.1 and (boost/non-boost) asio 0.3.9
+
+	* src/Ext/Dialog.C: implement setSizeGripEnabled(bool) method
+
+	* src/Ext/Panel[.C]: add collapse(), expand() methods and fix
+	setCollapsed() implementation
+
+	* src/Ext/TableView.C: fix setAutoExpandColumn min and max widths
+
+14-02-2008:
+	* src/Ext/PagingToolBar.C: render other buttons that were added,
+	as suggested by Michael Ivanov, 08-01-2008
+
+	* src/wt/WLabel[.C]: add setBuddy(Ext::FormField *) as suggested
+	by Pau Garcia i Quiles, 16-01-2008
+
+	* src/wt/WAnchor[.C]: add setTarget() method
+
+13-02-2008:
+	* src/Ext/MessageBox.[Ch]: fix delete from buttonClicked crash,
+	reported by Alex, 05-01-2008
+
+	* src/wt/WAnchor[.C]: fix anchor implementation problem reported
+	by Lasse Karkkainen, 15-01-2008. Note that the API has changed,
+	since we no longer use a WLabel (which caused the problem). Unless
+	your code relied on the fact that it was implemented using a label
+	there should be no problem in adapting to the new API.
+
+	* src/web/WebController.C: fix IE6 history problem reported by Joe
+	Croft, 28-01-2008
+
+	* src/web/WebRender.C: fix synchronization problem of form
+	objects, bug and patch by Goetz Babin-Ebell
+
+	* src/wt/WContainerWidget.C: syntax fix, by Goetz Babin-Ebell
+
+	* src/wt/WString and related: use UTF8 internally, as suggested by
+	Goetz Babin-Ebell
+	
+02-01-2008:
+	* src/wt/WTreeTable[.C]: scroll content while keeping headers fixed
+
+	* src/wt/WTreeNode[.C]: add support for an invisible root node
+
+	* src/Ext/LayoutImpl.C: trigget layout recalculation after adding a
+	panel
+
+	* src/Ext/Button.C: fix bug not showing initial enabled/disabled state
+
+	* src/Ext/WWidgetItemImpl.C: wrap non-Container Widgets also, so that
+	their style is not lost
+
+	* src/Wt/WPainter: drawLine methods
+
+	* src/web/skeleton/Ajax.html: fix mouse position calculations in
+	presence of scrolled widgets
+
+01-01-2008:
+	* src/web/WebController.[Ch], src/http/HTTPStream.[Ch]:
+	addSocketNotifier and removeSocketNotifier as virtual methods in
+	WebStream instead of callbacks from wt lib to connector lib
+
+30-12-2007:
+	* src/wt/WRectF[.C], src/wt/WCanvasPaintDevice[.C], ...: further
+	improvements to painting infrastructure
+
+	* src/wt/WSignalMapper: API changes to be able to build on MSVC
+
+	* src/wt/WEnvironment: allow reading content type, and raw CGI
+	environment variables
+
+	* src/web/Configuration.C: switch back to default to HTML mime type
+	
+29-12-2007:
+	* src/http/PosixMain.C: use asio::thread by default
+
+	* src/wt/WContainerWidget.C: fix bug to use delete[] instead of delete
+	on overflow_ array
+
+	* src/wt/WApplication: add notify(const WEvent& e) method to allow
+	custom event exception handling.
+
+	* src/wt/WEnvironment: add cgiValue() method to inspect any CGI
+	environment variable
+
+18-12-2007:
+	* various places: pass string by reference where it makes sense
+
+	* Ext/*: upgrade from Ext 1.x to Ext 2.x series, main addition is a
+	full layout management system
+
+12-12-2007:
+	* src/web/WebRenderer.C, src/web/DomElement.C, ...: serve XHTML
+	content-type if the browser accepts it, and if it is not disabled
+	in the config.xml file
+
+	* resources/orbited.js: produce valid XHTML (no document.write())
+
+	* resources/rsh.js: produce valid XHMTL (except for IE)
+
+	* src/wt/WApplication[.C]: split javascript in javascript that
+	needs to be run before starting the DOM (which is rendered
+	everytime the page is reloaded), and javascript that is run to
+	manipulate the DOM (which is the default)
+
+	* src/web/DomElement.C: fix button wrap layout that was adding
+	extra padding in non-javascript support rendering
+
+	* src/wt/WApplication.C: use lowercase CSS element selectors!
+	you will need to change your style sheets accordingly!
+
+	* src/wt/WBrush[.C], src/wt/WPaintDevice[.C],
+	src/wt/WPaintedWidget[.C], src/wt/WPainter[.C], src/wt/WPen[.C],
+	src/wt/WPointF[.C], src/wt/WVectorImageResource[.C]: initial
+	check-in of incomplete painting infrastructure
+
+10-12-2007:
+	* src/web/WebController.C: keep the server push connection alive
+	when receiving a heart-beat
+
+	* src/web/skeleton/Ajax.html: preliminary WinCE IE support
+
+	* src/wt/WImage[.C]: add loaded event
+
+02-12-2007:
+	* examples/simplechat: added a chat example (replaces previous
+	stupid serverpush example)
+
+	* src/web/WServerPushResource.C, resources/orbited.js: several
+	improvements to make server-push work
+
+	* src/web/WebSession.C: allow updating another session from within an
+	existing session
+
+	* src/wt/WContainerWidget: add setOverflow() method for easier
+	scrollbars
+
+	* src/wt/WString: add operator< to be able to put them in std::set<>
+	
+01-12-2007:
+	* src/mxml: updated to mxml-2.4
+
+	* resources/rhs.js, resources/json2005.js, src/wt/WApplication.C,
+	src/web/WebController.C: upgraded to RSH 0.6 RC1 (works now in IE,
+	Firefox and Opera)
+
+	* examples/hello/hello.C: make example more interesting
+
+	* examples/serverpush/serverpush.C: adapted to test intermixing
+	event server and client events
+
+	* src/Ext/TableView.C: disconnect connections when changing model
+
+	* src/fcgi/FCGIStream.[Ch]: add socket notifier stubs
+
+	* src/http/Server.[Ch], src/web/WebController.[Ch]: implement
+	socket notification
+
+	* src/http/WtReply.[Ch]: robust handling of server shutdown and
+	connection closing
+
+	* src/web/WServerPushResource.C: adapted for orbited.js for as
+	server-push library
+
+	* src/web/WebController.C: no longer add --Quited to application
+	title when quiting an application
+
+
+27-11-2007:
+	* src/Ext/MessageBox.C: fix setting prompt value
+
+	* src/Ext/DataStore[.C], src/Ext/ComboBox[.C],
+	src/Ext/TableView[.C]: bundle model changes leading to
+	significant reduction in generated JS for model changes.
+
+	* src/Ext/DataStore[.C], src/Ext/TableView[.C]: support resetting the
+	model, and process row removals in reverse order
+
+	* src/wt/WAbstractToggleButton.C: use click signal instead of
+	change to make checked/unChecked signals work in IE.
+
+	* src/wt/WSignal.C: reorder emission of stateless and dynamic slots,
+	to avoid processing on a signal that has been deleted (which should
+	not happen in a stateless slot).
+
+23-11-2007:
+	* src/wt/WButtonGroup, src/Ext/RadioButton.C: add support for
+	Ext::RadioButton in WButtonGroup
+
+23-11-2007:
+	* CMakeLists.txt, src/CMakeLists.txt: add build option to disable
+	thread (in wthttpd) altogether
+
+22-11-2007:
+	* src/Ext/DataStore.C: fix use of DataStore when removing rows
+
+15-11-2007:
+	* src/Ext/DataStore.C: fix regression bug when inserting rows
+	
+	* src/Ext/ComboBox.[Ch]: add activated signal
+
+	* src/Ext/DataStore.C: fix use of DataStore when inserting rows
+
+12-11-2007:
+	* src/Ext/ProgressDialog.C: don't show by default (unlike Qt)
+
+26-10-2007:
+	* src/Ext/TableView.C: add missing method implementations
+
+21-10-2007:
+	* src/Ext/DataStore.[Ch], src/Ext/TableView.[Ch]: support multiple row
+	selection, and be robust to sorting by using ids instead of row
+	indexes
+
+	* src/Ext/TabWidget[.C]: fix bug where children were not inserted
+	into the widget tree, and thus could not implement event handling
+
+	* src/wt/WTreeTableNode.C: fix konqueror/IE6 rendering problems
+
+18-10-2007:
+	* src/Ext/TableView[.C]: add methods for modifying and inspecting
+	the current selection
+
+17-10-2007:
+	* src/wt/WMessageResources.C: remove the trailing '\n' that was
+	being added to every WString in a resourcefile by mxml
+
+10-10-2007:
+	* examples/extkitchen/ExtKitchenExample.[Ch]: add a password prompt
+	dialog example
+
+	* src/wt/WAbstractToggletButton.[C], src/wt/WCheckBox.[Ch],
+	src/wt/WRadioButton.[C]: fix reversion caused by constructor with
+	bool as first argument resulting in missing label text
+
+	* src/wt/WFormWidget.[C]: add setFocus() method
+
+	* src/wt/WInPlaceEdit.C: focus line edit using setFocus()
+	stateless slot 
+
+	* src/wt/WScrollArea.[C]: add vertical scrollbar stuff
+	
+01-10-2007:
+	* src/web/skeleton/*.html: Reorder inline and external stylesheets so
+	that Wt's default rules can be overridden by applications
+	
+	* src/wt/WAnchor: Inherit from WContainerWidget so that other stuff can
+	be added to it
+
+27-09-2007:
+	* src/CMakeLists.txt: integrate mxml sources directly in libwt.so (to
+	avoid the static non-PIC .a in dynamic .so problem with CMake)
+
+24-09-2007:
+	* resources/dhtml_dhtmlHistory.js, src/web/WebController.C: use
+	dynamically generated blank image
+
+	* src/wt/WApplication.C: use dhtml_dhtmlHistory.js in directory
+	specified using resourcesURL property
+
+	* src/web/skeleton/Ajax.html: fix Loading... CSS for Internet Explorer
+
+21-09-2007:
+	* src/wt/WMenuItem.C: fix segfault when container stack is deleted
+	before menu.
+	
+	* src/mxml/*: supply a version of mxml(patched 2.3) which is used
+	by default instead of a system-installed mxml.
+
+11-09-2007:
+	* src/wt/WSignal: fixed EventSignal.emit() to also emit stateless
+	slots.
+
+08-09-2007:
+	* src/wt/WMenuItem, src/wt/WMenuItem.C: decouple render widget
+	from activate signal, move margin for horizontal items from WMenu.C
+
+	* src/wt/WObject, src/wt/WSignal: use WObject::Method typedef
+
+	* src/examples/wt/RoundedWidget.C: implement missing method, add
+	enabledRoundedCorners method for changing color in stateless
+	slot functions.
+
+	* src/wt/WTabWidget, src/wt/WTabWidget.C, others: implement
+	WTabWidget with doxygen look, based on WMenu.C
+
+07-09-2007:
+	* src/Ext/SplitterHandle.C, src/Ext/Splitter.C: implemented full
+	awareness of configured minimum and maximum sizes.
+
+	* src/Ext/TableView.C, src/wt/WAbstractItemModel.C: added full
+	support for other data types in models with respect to rendering
+	and editing
+
+04-09-2007:
+	* src/CMakeLists.txt: added -DBOOST_SPIRIT_THREADSAFE, fixes
+	thread safety problem (Max M)
+	
+	* src/http/Reply.C: implemented If-Modified-Since, Last-Modified,
+	and 304 Not Modified response codes
+
+	* *CMakeLists.txt: add soversioning
+
+	* src/wt/WDllDefs: added WT_VERSION define (4gsystems)
+	
+	* src/wt/WTimer: WTimer memory leak patch (4gsystems)
+
+03-09-2007:
+	* all: Released 2.0.5.
+
+	Didn't keep track of ChangeLog, intending to improve on
+	that, using GNU Changelog guidelines.
+
+12-05-2007:
+	* Haven't kept track of things in ChangeLog.. Sorry.
+
+18-02-2007:
+	* various transient and widget memory improvements
+	  sample of sizeof() before and after:
+	  WObject:           48		 40
+	  WResource:         84		 60
+	  WWidget:           92		 68
+	  WWebWidget:       592		108
+	  WInteractWidget: 1356		300
+	  WText:           1384		328
+	  WTable:          1376		320
+
+16-02-2007:
+	* New widget: WTreeTable and example File Browser.
+
+18-12-2006:
+	* Use Boost.Signals instead of home-brew signal/slots
+	* Drag&Drop seems to work with firefox/konqueror, probably needs more
+	testing
+	* valgrind checked, no warnings no errors !
+	* adopt wide string array
+
+05-12-2006:
+	* Solaris patches by Patrick Mauritz
+	* Drag&Drop, initial implementation (not yet complete)
+	* Drag&Drop example
+
+01-12-2006:
+	* Happy birthday, Wt.
+	* many changes not documented in the Changelog.
+
+07-09-2006:
+	* Support for cookies for session management (when available) instead
+	  of URL rewriting
+	* Support for reading and setting cookies (in respectively WEnvironment
+	  and WApplication)
+
+04-09-2006:
+	* Starting to finalize event handling: WMouseEvent and WKeyEvent
+	* working on a new example and a new widget: WVirtualImage
+
+02-09-2006:
+	* Added WTreeNode and WIconPair widgets, derived from the
+	  treelist example with different loading policies, and OO
+	  overloading capabilities.
+	* Corrected API bug: hide() and show() are non-virtual but
+	  setHidden() is the virtual one that you should reimplement
+	* Remove WCssDecorationStyle from WWebWidget header, and do
+	  not allocated it until needed. Saves alot on memory usage
+	  when using many widgets.
+
+01-09-2006:
+	* Moved Menu from the homepage example to become WMenu. Provides now
+	  different loading policies for the items, and customizable
+	  WMenuItem look (through OO inheritance).
+	* Fixed a nasty bug in stateless slot learning.
+
+30-08-2006:
+	* implemented WJavascriptSlot (abdiel) for pure client-side event
+	  handling
+	* implemented WSuggestionPopup
+	* use two-phase rendering for all updates, and configuration option
+	  to change the threshold
+	* separated examples in their own doxygen documentation
+	* added ContactSuggestions widget to the composer example
+	* various documentation improvements
+	* fix a bug with deleting a signal while emitting the slots (abdiel)
+	* avoid (?) race condition in blur() and click() handler in WSuggestionPopup.C
+
+24-08-2006:
+	* mindfully implemented all quoting stuff
+	* change behaviour at quit(): simply render the last changes, but
+	  add -- Quited. to the title, and avoid receiving new events.
+	* fix non-javascript look for the wrap buttons.
+
+22-08-2006:
+	* add WWidget::isVisible()
+	* workaround for Firefox keeping 'Transferring data from:'
+	* yet another WFileUpload implementation -- the final one ?
+	* misc improvements to Composer example
+	* add support for external stylesheets
+	* fix stateless slots discarding changes after serving resource
+	* allow caching of WWidget resources
+
+21-08-2006:
+	* Added the composer example
+	* Fixed bug not quoting href attribute in DemoTreeList
+	* CgiParser: revert old behaviour, parsing through big requests
+	* move helper function escape and replace to DomElement
+	* WFileUpload::fileTooLarge in addition to WAppliation::requestTooLarge
+	* isLoaded is broken because of WCompositeWidget..., but not needed anyway
+        * add WEnvironment::getArgument, by Tomek Mazurek
+	* WFileUpload: looks much better (konqueror, opera & firefox).
+        * WFileUpload: added alternative firefox implementation that is even better (but is not used now)
+	* WFileUpload: add isUploaded to check if calling upload() will do anything
+	* WLineEdit: bugfix: escape preset text
+	* WText: bugfix: replace newlines with <br/> in plainFormatting
+	* WTextArea: bugfix: now set preset text correctly
+	* WWebWidget, WCompositeWidget: bugfix: fix destructor javascript code
+	* WWebWidget: bugfix: do not propagate renderOk in stubbed widgets
+	* WWebWidget: bugfix: escapeText returns the escaped text
+	* WWidget: bugfix: resourceMimeType: escape " in javascript code.
+
+18-08-2006:
+	* Documentation improvements
+	* Fixed WFileUpload and FileUpload example (one bug remains)
+	* Add propagateRenderOk() instead of creating the complete
+	  DOM structure
+	* prevent XSS attacks at the heart by filtering user supplied
+	  XHTML.
+	* Do not parse CGI input if too big anyway -- simply discard.
+
+17-08-2006:
+	* Documentation improvements, also doxygenified some reusable
+	  classes in the examples.
+
+16-08-2006:
+	* improved look on non-javascript version, konqueror renders
+	  wt-homepage now ok, but Firefox keeps adding padding inside
+	  the button...
+
+14-08-2006:
+	* parse locale from browser and use it as start-up locale
+	  and other things in WEnvironment
+	* release 1.1.5
+
+11-08-2006:
+	* performance improvement: keep track of widgets that need
+	  to be repainted, and only process these when finding
+	  changes in the DOM.
+
+10-08-2006:
+	* many new features, not kept track off in ChangeLog (bad habit)
+	* release 1.1.4
+
+13-07-2006:
+	* adopted cmake, an autoconf/tool/make alternative.
+
+26-04-2006:
+	* new: WContainerWidget::insert(WWidget *w, WWidget *before)
+	* WCssDecorationStyle background image may be positioned
+	* Added a Style example
+
+24-04-2006:
+ 	* Patch for gcc 4 compile errors (Alan Ezust).
+	* chased any remaining memory leaks in all examples, reworked
+	  WCompositeWidget implementation -- you will need to update any code
+	* WFileUpload improvements: looks better, works better
+          Added a changed signal which allows capturing file selection on
+          some browsers
+	* WApplication: limit post-size API
+	* CgiParser: make buffer static
+
+22-04-2006:
+	* fix session behaviour with multiple fastcgi servers for high
+	  performance settings
+	* added WDoubleValidator and WRegExpValidator and example of a
+	  custom validator -- DateValidator
+
+20-04-2006:
+	* kick buggy cgi_util.c in favour of C++ CgiParser
+	* rewrote WFileUpload -- works well but looks ugly (most of the time)
+	* fixed some memory-leaks indicated by valgrind
+
+14-04-2006:
+	* many changes in the last months that were not recorded
+	  in the Changelog.
+
+16-01-2006:
+	* add new example hangman, contributed by Wim Dumon
+	* add new example hello-word, contributed by Wim Dumon
+	* fixed contentAlignment() on non-inline children
+	* moved HorizontAlignment to WWidget (that was ugly!)
+	* add support for valgrind, and fixed dito bugs
+	* remove excess zeros in object ids
+	* release 1.0.14
+
+03-01-2006:
+	* add WSignalMapper class, suggested by Wim Dumon
+	* fix gcc 4 compile error, thanks to Costantino Giuliodori and Udo
+	  Kreckel.
+	* release 1.0.13
+	* add WContainerWidget::clear()
+	* add WLineEdit::echoMode (Normal/Password)
+
+29-12-2005:
+	* add javascript but non-ajax code. But does not work with
+	  netscape 4, because of 'onclick' not working ?
+	* release 1.0.12
+
+28-12-2005:
+	* make WWidget an abstract interface
+	* create WWebWidget
+	* create WCompositeWidget
+	* fixed a bug not initializing margin and padding
+	* add non-javascript support
+	* add message resource bundles, and support for localization to
+	  most WWebWidgets
+	* add refresh() in WApplication and WWidget, and in wt-homepage
+	  example.
+
+22-12-2005:
+	* fix (hack?) for browser going back to Wt page bug
+	* added side specific margin and padding, moved padding to
+	  WContainerWidget
+	* More documented members in WWidget
+	* release 1.0.11
+
+21-12-2005:
+	* added WFont, and use in the wt-homepage example (for the navigation
+	  menu)
+	* discovered, but not fixed, the reason why going back to the Wt page
+	  does not work: when going backward, the page replays the same stuff
+	  as if it was unloaded. So, we probably want our first keep-alive
+	  message to be 'load', which should find out which things were
+	  stubbed, and retransmit these -- are easier just trigger a reload
+
+20-12-2005:
+	* some bug fixes in WStackedWidget
+	* converted homepage to Wt (as new example)
+	* add support for WApplication.title()
+	* release 1.0.10
+
+19-12-2005:
+	* started doing ChangeLog
+	* read XHTML tutorial at w3org, now properly generate xhtml, no more
+  	  problems caused by closing non-empty tags (such as <select />), and
+ 	  fixes some cross-browser inconsistencies such as disabled widgets
+	* add security checks around web references to resource and signal
+	  instances (as suggested by Graydon Hoare).
+	* quit the application nicely on timeout by exiting the eventloop
+	  (as suggested by Wim Dumon).
+	* release 1.0.9

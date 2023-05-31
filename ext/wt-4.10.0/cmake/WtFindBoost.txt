@@ -1,0 +1,156 @@
+# This file sets:
+# - BOOST_INCLUDE_DIRS
+# - BOOST_LIB_DIRS
+# - BOOST_WT_FOUND  // All dependencies for wt found
+# - BOOST_WT_MT_FOUND
+# - BOOST_WTHTTP_FOUND // All dependencies for wthttp found
+# - BOOST_WTHTTP_MT_FOUND
+# - BOOST_SUPPORT_LIBRARIES (should always be added to the boost libs)
+# - BOOST_WT_LIBRARIES
+#
+# Separate compiled boost libraries are also discovered:
+# - BOOST_FS_LIB
+# - BOOST_PO_LIB
+# - BOOST_SYSTEM_LIB
+# - BOOST_THREAD_LIB (only if BOOST_MT_FOUND)
+# Boost will try to find the same kind (mt or not) of library for all three
+# of these libraries. Boost is considered to be found successfully only
+# when the libraries are all of the same kind (mt or not). If the mt
+# libraries exits, the mt versions will be used unless MULTI_THREADED is
+# set to OFF. Otherwise, the non-mt versions will be used.
+#
+
+# For starters, see if the cmake-provided scripts are able to find boost
+SET(BOOST_WT_FOUND FALSE)
+SET(BOOST_WT_MT_FOUND FALSE)
+SET(BOOST_WTHTTP_FOUND FALSE)
+SET(BOOST_WTHTTP_MT_FOUND FALSE)
+SET(BOOST_SUPPORT_LIBRARIES "")
+
+IF(NOT DEFINED Boost_ADDITIONAL_VERSIONS)
+  SET(Boost_ADDITIONAL_VERSIONS
+  "1.50" "1.51" "1.52" "1.53" "1.54" "1.55" "1.56" "1.57" "1.58" "1.59"
+  "1.60" "1.61" "1.62" "1.63" "1.64" "1.65" "1.65.1" "1.66" "1.67" "1.68" "1.69"
+  "1.70" "1.71" "1.72" "1.73" "1.74" "1.75" "1.76" "1.77" "1.78" "1.79")
+ENDIF(NOT DEFINED Boost_ADDITIONAL_VERSIONS)
+
+SET(Boost_USE_MULTITHREADED ON)
+
+IF(DEFINED BOOST_PREFIX AND NOT DEFINED BOOST_ROOT)
+  SET(BOOST_ROOT ${BOOST_PREFIX})
+ENDIF(DEFINED BOOST_PREFIX AND NOT DEFINED BOOST_ROOT)
+
+IF(WIN32)
+  IF(BOOST_DYNAMIC)
+    SET(Boost_USE_STATIC_LIBS OFF)
+  ELSE(BOOST_DYNAMIC)
+    SET(Boost_USE_STATIC_LIBS ON)
+  ENDIF(BOOST_DYNAMIC)
+ENDIF(WIN32)
+
+SET(Boost_DEBUG ON)
+
+SET(Boost_COMPONENTS
+    program_options
+    filesystem
+    thread
+)
+
+IF(WIN32 AND BOOST_DYNAMIC AND BUILD_TESTS)
+    LIST(APPEND Boost_COMPONENTS unit_test_framework)
+ENDIF()
+
+function(find_boost_system)
+  find_package(Boost 1.50 QUIET
+    COMPONENTS
+      system
+  )
+
+  set(_BOOST_FOUND ${Boost_FOUND} PARENT_SCOPE)
+  if(Boost_VERSION_MAJOR)
+    set(_BOOST_MAJOR_VERSION ${Boost_VERSION_MAJOR} PARENT_SCOPE)
+    set(_BOOST_MINOR_VERSION ${Boost_VERSION_MINOR} PARENT_SCOPE)
+  else()
+    set(_BOOST_MAJOR_VERSION ${Boost_MAJOR_VERSION} PARENT_SCOPE)
+    set(_BOOST_MINOR_VERSION ${Boost_MINOR_VERSION} PARENT_SCOPE)
+  endif()
+endfunction(find_boost_system)
+
+find_boost_system()
+
+if(_BOOST_FOUND AND _BOOST_MAJOR_VERSION EQUAL 1 AND _BOOST_MINOR_VERSION LESS 69)
+  SET(Boost_COMPONENTS
+    ${Boost_COMPONENTS}
+    system
+  )
+endif()
+
+set(_BOOST_FOUND)
+set(_BOOST_MAJOR_VERSION)
+set(_BOOST_MINOR_VERSION)
+
+FIND_PACKAGE(Boost 1.50
+  COMPONENTS
+    ${Boost_COMPONENTS}
+  REQUIRED
+)
+
+# Use IMPORTED targets if defined
+FOREACH(_target ${Boost_COMPONENTS})
+  IF(TARGET Boost::${_target})
+    STRING(TOUPPER ${_target} _TARGET)
+    SET(Boost_${_TARGET}_LIBRARY Boost::${_target})
+  ENDIF(TARGET Boost::${_target})
+ENDFOREACH(_target ${Boost_COMPONENTS})
+UNSET(_target)
+UNSET(_TARGET)
+
+IF (Boost_FOUND)
+  IF(Boost_VERSION_MAJOR AND NOT Boost_MAJOR_VERSION)
+    set(Boost_MAJOR_VERSION ${Boost_VERSION_MAJOR})
+  ENDIF()
+  IF(Boost_VERSION_MINOR AND NOT Boost_MINOR_VERSION)
+    set(Boost_MINOR_VERSION ${Boost_VERSION_MINOR})
+  ENDIF()
+
+  # Translate variables from official cmake names to internally used names
+  SET(BOOST_INCLUDE_DIRS ${Boost_INCLUDE_DIRS})
+  SET(BOOST_LIB_DIRS ${Boost_LIBRARY_DIRS})
+  SET(BOOST_FS_LIB ${Boost_FILESYSTEM_LIBRARY})
+  SET(BOOST_PO_LIB ${Boost_PROGRAM_OPTIONS_LIBRARY})
+  SET(BOOST_SYSTEM_LIB ${Boost_SYSTEM_LIBRARY})
+  SET(BOOST_THREAD_LIB ${Boost_THREAD_LIBRARY})
+  IF(WIN32 AND BOOST_DYNAMIC AND BUILD_TESTS)
+    SET(BOOST_UT_LIB ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+  ELSE()
+    SET(BOOST_UT_LIB "")
+  ENDIF()
+
+  SET(BOOST_WT_MT_FOUND TRUE)
+  SET(BOOST_WT_FOUND TRUE)
+  SET(BOOST_WTHTTP_MT_FOUND TRUE)
+  SET(BOOST_WTHTTP_FOUND TRUE)
+
+  IF(MSVC AND Boost_MAJOR_VERSION EQUAL 1 AND Boost_MINOR_VERSION LESS 70)
+    # use autolink
+    SET(BOOST_WT_LIBRARIES "")
+    SET(BOOST_WTHTTP_LIBRARIES "")
+    SET(BOOST_TEST_LIBRARIES "")
+  ELSE()
+    SET(BOOST_WT_LIBRARIES
+        ${Boost_THREAD_LIBRARY}
+        ${Boost_SYSTEM_LIBRARY}
+        ${Boost_FILESYSTEM_LIBRARY})
+    SET(BOOST_WTHTTP_LIBRARIES
+        ${Boost_THREAD_LIBRARY}
+        ${Boost_PROGRAM_OPTIONS_LIBRARY}
+        ${Boost_SYSTEM_LIBRARY}
+        ${Boost_FILESYSTEM_LIBRARY})
+    SET(BOOST_TEST_LIBRARIES ${BOOST_UT_LIB})
+  ENDIF()
+
+  IF(TARGET Boost::headers)
+    SET(BOOST_WT_LIBRARIES ${BOOST_WT_LIBRARIES} Boost::headers)
+    SET(BOOST_WTHTTP_LIBRARIES ${BOOST_WTHTTP_LIBRARIES} Boost::headers)
+  ENDIF()
+ENDIF (Boost_FOUND)

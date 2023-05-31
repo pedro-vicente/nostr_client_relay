@@ -1,0 +1,19 @@
+SET(tutorial_libs ${EXAMPLES_DBO_LIBS})
+
+#IF (MULTI_THREADED)
+#  SET(tutorial_libs ${tutorial_libs} ${BOOST_THREAD_LIB})
+#ENDIF (MULTI_THREADED)
+
+ADD_EXECUTABLE(dbo-tutorial9 main.C Membership.C Organisation.C Person.C)
+TARGET_LINK_LIBRARIES(dbo-tutorial9 ${tutorial_libs})
+
+INCLUDE_DIRECTORIES(${WT_SOURCE_DIR}/src)
+
+IF(MSVC)
+  SET_TARGET_PROPERTIES(dbo-tutorial9 PROPERTIES FOLDER "dbo/examples")
+ENDIF(MSVC)
+
+IF(INSTALL_EXAMPLES)
+  INSTALL(TARGETS dbo-tutorial9 
+    DESTINATION ${CMAKE_INSTALL_PREFIX}/${EXAMPLES_DESTINATION}/feature/dbo/)
+ENDIF(INSTALL_EXAMPLES)

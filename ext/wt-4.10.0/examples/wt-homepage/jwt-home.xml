@@ -1,0 +1,881 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<messages>
+  <message id="template">
+    <div id="top_wrapper">
+      <div id="top_content">
+        ${languages}
+        <div id="top_wt">
+          <a href="http://www.emweb.be/">
+            <img src="/css/jwt/emweb_powered.jpg" alt="Emweb" height="22" />
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div id="banner_wrapper">
+      <div id="banner_content">
+        <div id="banner_end"> <div id="banner"><a href="#">JWt</a></div> </div>
+      </div>
+    </div>
+
+    <div id="main_wrapper" class="home">
+      <div id="main_content">
+        <div id="main_menu">
+          ${menu}
+          ${sidebar}
+        </div>
+        ${contents}
+
+        <div class="clearall"></div>
+      </div>
+    </div>
+
+    <div id="footer_wrapper">
+      <div id="footer_content">
+        <div id="footer_copyright">
+          <a href="http://www.emweb.be/">
+            <img src="/css/jwt/emweb_large.jpg" height="25" width="101"
+                 alt="Emweb.be" title="emweb.be"/></a>
+          Solutions for web-based systems<br/>
+          <a href="http://www.emweb.be/">www.emweb.be</a>
+        </div>
+
+        <div id="footer_menu">
+          <a href="http://www.webtoolkit.eu/wt/">Home</a>
+          | <a href="http://www.emweb.be/?page=contact">Contact</a>
+
+        </div>
+
+        <div id="chat"></div>
+        <script type="text/javascript">
+            /*<![CDATA[*/
+          setTimeout(function() {
+            loadScript("http://www.webtoolkit.eu/wt/examples/simplechat/chat.js?div=chat", null);
+          }, 0);
+            /* ]]> */
+        </script>
+        <div class="clearall"></div>
+      </div>
+      <script type="text/javascript">
+            /*<![CDATA[*/
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-4345578-1', 'auto');
+ga('send', 'pageview');
+            /* ]]> */
+      </script>
+    </div>
+  </message>
+
+  <message id="wt">JWt, Java Web Toolkit</message>
+
+  <message id="introduction">Introduction</message>
+  <message id="blog">Blog</message>
+  <message id="features">Features</message>
+  <message id="documentation">Documentation</message>
+  <message id="examples">Examples</message>
+  <message id="download">Download</message>
+  <message id="community">Support</message>
+  <message id="other-language">!Java</message>
+
+  <message id="hello-world">Hello world</message>
+  <message id="charts">Charts</message>
+  <message id="wt-homepage">Wt homepage</message>
+  <message id="treeview">Treeview</message>
+  <message id="git">Git explorer</message>
+  <message id="chat">Chat</message>
+  <message id="mail-composer">Mail composer</message>
+  <message id="figtree">FigTree</message>
+  <message id="widget-gallery">Widget gallery</message>
+
+  <message id="home.news">
+    <h3><span>News</span></h3>
+  </message>
+  <message id="home.latest-news">
+    <h4><span>Latest News</span></h4>
+  </message>
+  <message id="home.historical-news">
+    <h4><span>Historical News</span></h4>
+  </message>
+
+  <message id="source-browser-link">
+    <a href="{1}">Browse the source code</a>
+  </message>
+
+  <message id="src-title">
+    <div>
+    </div>
+  </message>
+
+
+  <message id="home.intro">
+
+<h3><span>JWt: an introduction</span></h3>
+
+<p>JWt is a Java library for developing web applications.</p>
+
+<p>The API is <b>widget-centric</b> and uses well-tested patterns of
+desktop GUI development tailored to the web. To the developer, it offers
+abstraction of many web-specific implementation details and frees
+the developer from tedious JavaScript manipulations of HTML and
+dealing with cross-browser issues. Instead, with JWt, you can focus on
+actual functionality with a rich set of feature-complete widgets.</p>
+
+<p>Unlike old-school page-based frameworks or current-day single-page
+JavaScript "frameworks", JWt allows you to create stateful
+applications that are at the same time highly interactive (using
+WebSockets and Ajax for everything) but still support plain HTML
+browsers or web crawlers using automatic <b>graceful degradation or
+progressive enhancement</b>. Things that are natural and simple with
+JWt would require an impractical amount of development effort
+otherwise: switching widgets using animations, while retaining clean
+URLs and browser navigation functions, or having a persistent chat
+widget open throughout the entire application, that even works in
+legacy browsers like Microsoft Internet Explorer 6.</p>
+
+<p>JWt applications can be deployed in a standard Java Servlet
+container.</p>
+
+<h4>Feature rich</h4>
+
+<ul>
+<li>Layout using <a
+href="http://jwt.emweb.be/jwt-gallery/gallery/layout/html-templates">HTML
+templates</a> or intelligent <a
+href="http://jwt.emweb.be/jwt-gallery/gallery/layout/layout-managers">layout
+managers</a> and themable look-and-feel, including support for <a
+href="http://getbootstrap.com">Twitter Bootstrap</a> versions 2 or 3.</li>
+<li>Create and maintain complexity by using and building reusable and
+self-contained widgets.</li>
+<li>Comes with a large set of feature-rich widgets that include <a href="http://jwt.emweb.be/jwt-gallery/gallery/forms/">form
+widgets</a>, <a
+href="http://jwt.emweb.be/jwt-gallery/gallery/trees-tables/mvc-table-views">table</a>
+and <a
+href="http://jwt.emweb.be/jwt-gallery/gallery/trees-tables/mvc-tree-views">tree
+views</a>, <a
+href="http://jwt.emweb.be/jwt-gallery/gallery/layout/dialogs">dialogs</a>, <a
+href="http://jwt.emweb.be/jwt-gallery/gallery/navigation/popup-menu">popup
+menu's</a>, etc...</li>
+<li>Unified <a
+href="http://jwt.emweb.be/jwt-gallery/gallery/graphics-charts">graphics</a>
+APIs, 2D (SVG, HTML5 Canvas, VML, PNG, and PDF) &amp; 3D (client side
+WebGL and server-side OpenGL).</li>
+<li>Feature rich <a
+href="http://jwt.emweb.be/jwt-gallery/gallery/media/pdf-output">HTML
+to PDF renderer</a> for dynamic report generation.</li>
+<li>Built-in security against common vulnerabilities such as <a
+href="http://en.wikipedia.org/wiki/Cross-site_scripting">XSS (Cross-Site Scripting)</a> or <a
+href="http://en.wikipedia.org/wiki/Cross-site_request_forgery">CSRF
+(Cross-Site Request Forgery)</a></li>
+<li>Open-source or commercial license model.</li>
+</ul>
+
+<p>By using standard Java and JVMs, JWt applications can benefit from
+any existing Java libraries and JVM features including its support for
+your favourite scripting language.</p>
+
+<h4>Typical use scenarios:</h4>
+
+<ul>
+  <li><b>High performance, complex web applications</b> (with a
+    database backend) that require a responsive and dynamic user
+    interface and benefit from the use of Java, if only to use Java
+    refactoring tools while keeping track of ever changing
+    requirements.</li>
+
+  <li>Web applications which maximally benefit from modern browser
+    capabilities but with <b>graceful degradation</b> to adhere to W3C
+    accessibility guidelines and be search engine friendly.</li>
+
+  <li>Porting of <b>Java desktop applications</b> to the web.</li>
+</ul>
+
+  </message>
+  <message id="home.features">
+
+<h3><span>Features</span></h3>
+
+<h4>Core library</h4>
+
+<ul>
+  <li>Supports major browsers (Firefox/Gecko, Internet Explorer,
+    Safari, Chrome, Konqueror, and Opera) but also plain HTML browsers
+    and web crawlers.</li>
+  <li>Simple deployment in standard Java Servlet 2.4 or 3.0 containers. </li>
+  <li>No need for IDE plugins: it's plain old Java.</li>
+  <li>Equal behavior with or without support for JavaScript or Ajax,
+    as far as possible, by using graceful degradation or progressive
+    enhancement.</li>
+  <li>Efficient rendering and low latency.</li>
+  <li>Support for browser history navigation (back/forward buttons and
+    bookmarks), pretty URLs with HTML5 History if available, and
+    search engine optimization with a unified behavior for plain HTML
+    or Ajax sessions.</li>
+  <li>Widget centric API that promotes component reuse and increases
+    productivity.</li>
+</ul>
+
+<h4>Event handling</h4>
+
+<ul>
+  <li>Uses an event listener system for server-side event handling,
+    comparable to Java GUI frameworks (SWT, Swing).</li>
+  <li>Listen for keyboard, mouse, focus, scroll or drag&amp;drop events,
+    and get event details (such as mouse position, modifier buttons, or
+    keyboard key).</li>
+  <li>Automatic synchronization Automatically synchronizes form field data
+    from browser to server and tracks server-side changes to be rendered
+    in browser.</li>
+  <li>Integrate with JavaScript libraries</li>
+  <li>Timed events and server-initiated updates ("server push"), the
+    latter using Servlet 3.0 async features when deployed in a Servlet
+    3.0 container.</li>
+</ul>
+
+<h4>Native painting system</h4>
+
+<ul>
+  <li>Unified 2D painting API which uses the browsers native (vector)
+    graphics support (inline VML, inline SVG, or HTML5 canvas), or
+    renders to common image formats (PNG, GIF, ...) or vector formats
+    (SVG, PDF).</li>
+  <li>Unified GL-based 3D painting API which leverages WebGL in the browser
+    or server-side OpenGL (fallback).</li>
+</ul>
+
+<h4>Built-in security</h4>
+
+<ul>
+  <li>Enables continuous use of HTTPS through low bandwidth
+    requirements.</li>
+  <li>Built-in Cross-Site Scripting (XSS) prevention. Rendered text is
+    always filtered against potentially malicious code, making XSS
+    attacks against JWt applications (close to) impossible.</li>
+  <li>Not vulnerable to Cross-site Request Forgery (CSRF) because
+    cookies are not needed for session tracking.</li>
+  <li>Not vulnerable to breaking the application logic by skipping to
+    a particular URL, since only those events exposed in the interface
+    can be triggered.</li>
+</ul>
+
+<h4>Testing</h4>
+
+With JWt, event handling code constructs and manipulates a widget
+tree, which can easily be inspected by test code. Therefore, a <a
+href="http://www.webtoolkit.eu/jwt/latest/doc/javadoc/eu/webtoolkit/jwt/WTestEnvironment.html">test
+environment</a> allows your application to be instantiated and events
+to be simulated in absence of a browser, short-cutting the underlying
+request/response cycle that would otherwise require a simulated
+browser.
+
+<h4>Deployment</h4>
+<ul>
+  <li>Deploy into servlet containers (Tomcat, Jetty) and application
+    servers (JBoss).</li>
+  <li>Consists out of (currently four) jar files that need to be
+    included in the IDE or used in war/ear archives.</li>
+  <li>No XML, except for JEE's web.xml and message resource bundles.</li>
+</ul>
+
+  </message>
+  <message id="home.examples">
+
+<h3><span>Examples</span></h3>
+
+<p>Explore some live examples of JWt below.</p>
+
+<p>
+  The source code of these (and many more) examples is included in the
+  JWt source distribution. You may also browse through the source code
+  of each example using the <a href="#/src">source code viewer</a>.
+</p>
+
+  </message>
+
+  <message id="home.examples.hello">
+<div>
+<h4 class="example">Hello world!</h4>
+
+<p>
+  <a href="http://jwt.emweb.be/jwt-hello/" class="run" target="_blank">
+    <img src="/icons/orange-play.png" style="vertical-align: top"/> Run example
+  </a>
+</p>
+
+<p>This simple example illustrates most of the basic JWt concepts:</p>
+<ul>
+  <li>
+    How to create a simple Ajax web application that degrades
+    gracefully to plain HTML post-backs, using <a
+    href="http://www.webtoolkit.eu/jwt/latest/doc/javadoc/eu/webtoolkit/jwt/WApplication.html">WApplication</a> that corresponds to a new session.
+  </li>
+  <li>
+    <b>Creating widgets</b>, and adding them to <b>the widget tree</b>.
+  </li>
+  <li>
+    Reacting to events using <b>event listeners</b>.
+  </li>
+  <li>
+    Reading user input and updating widgets.
+  </li>
+</ul>
+</div>
+  </message>
+
+  <message id="home.examples.treeview">
+<div>
+<h4 class="example">Treeview</h4>
+<p>
+  <a href="http://jwt.emweb.be/jwt-treeviewdragdrop/treeviewdragdrop" class="run" target="_blank">
+    <img src="/icons/orange-play.png" style="vertical-align: top"/> Run example
+  </a>
+</p>
+
+This example illustrates some MVC functionality provided by builtin
+Views (WTreeView, WTableView and PieChart) and models.
+
+<ul>
+  <li>
+    The example uses <a
+    href="http://www.webtoolkit.eu/jwt/latest/doc/javadoc/eu/webtoolkit/jwt/WTreeView.html">WTreeView</a>
+    and <a
+    href="http://www.webtoolkit.eu/jwt/latest/doc/javadoc/eu/webtoolkit/jwt/WTableView.html">WTableView</a> widgets for rendering a Model's
+    data in a tree or a table.
+  </li>
+  <li>
+    A <a
+    href="http://www.webtoolkit.eu/jwt/latest/doc/javadoc/eu/webtoolkit/jwt/WSortFilterProxyModel.html">WSortFilterProxyModel</a>
+    implement sorting and filtering for another model.
+  </li>
+  <li>
+    These item views have support for drag and drop of a selection of items.
+  </li>
+  <li>
+    You can use nested layout managers (horizontal and
+    vertical
+    <a
+    href="http://www.webtoolkit.eu/jwt/latest/doc/javadoc/eu/webtoolkit/jwt/WBoxLayout.html">WBoxLayout</a>)
+    for an automatic window-filling layout, with optional resize handles.
+  </li>
+  <li>
+    Modal (and non-modal) <a
+    href="http://www.webtoolkit.eu/jwt/latest/doc/javadoc/eu/webtoolkit/jwt/WDialog.html">dialogs</a> can be used to prompt for input.
+  </li>
+</ul>
+</div>
+  </message>
+
+  <message id="home.examples.chart">
+<div>
+<h4 class="example">Charts example</h4>
+
+<p>
+  <a href="http://jwt.emweb.be/jwt-charts/charts" class="run" target="_blank">
+    <img src="/icons/orange-play.png" style="vertical-align: top"/> Run example
+  </a>
+</p>
+
+<p>This example demonstrates the <a
+href="http://www.webtoolkit.eu/jwt/latest/doc/javadoc/eu/webtoolkit/jwt/chart/package-summary.html">JWt
+charting widgets</a> that are implemented on top of JWt's
+cross-browser painting API. This painting API uses built-in browser
+support for generating high quality graphics. Depending on the
+browser, inline VML, inline SVG, HTML5 canvas or a PNG image is used
+to render painted contents in a <a
+href="http://www.webtoolkit.eu/jwt/latest/doc/javadoc/eu/webtoolkit/jwt/WPaintedWidget.html">WPaintedWidget</a>.
+</p>
+
+<p>This example also demonstrates how a Model can be shared by several
+Views, and pass modification events to each connected View. The <a
+href="http://www.webtoolkit.eu/jwt/latest/doc/javadoc/eu/webtoolkit/jwt/WTableView.html"
+target="_blank">table view</a> and the chart implement a <i>View</i>
+on the same <a
+href="http://www.webtoolkit.eu/jwt/latest/doc/javadoc/eu/webtoolkit/jwt/WAbstractItemModel.html"
+target="_blank">item model</a>.</p>
+
+</div>
+  </message>
+
+  <message id="home.examples.composer">
+<div>
+<h4 class="example">Mail composer</h4>
+
+<p>
+  <a href="http://jwt.emweb.be/jwt-composer/composer" class="run" target="_blank">
+    <img src="/icons/orange-play.png" style="vertical-align: top"/> Run example
+  </a>
+</p>
+
+<p>
+  This example implements a GMail-like mail composer and shows among
+  other things how to upload files asynchronously, showing a
+  cross-browser upload progress bar and with support for multiple
+  files.
+</p>
+
+<p>
+  Some notes about this example:
+</p>
+
+  <ul>
+    <li>
+      The <i>ContactSuggestions</i> class provides auto-completion of
+      the addressees in the To: Cc: and Bcc: fields. The widget
+      derives from <a
+      href="http://www.webtoolkit.eu/jwt/latest/doc/javadoc/eu/webtoolkit/jwt/WSuggestionPopup.html">WSuggestionPopup</a>.
+    </li>
+    <li>
+      The <i>AttachmentEdit</i> widget uses a <a
+      href="http://www.webtoolkit.eu/jwt/latest/doc/javadoc/eu/webtoolkit/jwt/WFileUpload.html">WFileUpload</a>
+      to asynchronously upload one or more files. The upload <a
+      href="http://www.webtoolkit.eu/jwt/latest/doc/javadoc/eu/webtoolkit/jwt/WProgressBar.html">progress bar</a> will work even in IE6.
+    </li>
+  </ul>
+</div>
+  </message>
+
+ <message id="home.examples.chat">
+<div>
+<h4 class="example">Simple Chat</h4>
+
+<p>
+  <a href="http://jwt.emweb.be/jwt-simplechat/simplechat" class="run" target="_blank">
+    <img src="/icons/orange-play.png" style="vertical-align: top"/> Run example
+  </a>
+</p>
+
+<p>
+  This example implements a simple chat client and server. Using
+  <b>server-initiated updates</b>, you can easily push events from one
+  user to other users. Server-initiated updates are implemented
+  using Ajax long polling.
+</p>
+
+<p>
+  When deploying in a Servlet-3.0 container, you can enable its
+  asynchronous processing and JWt will benefit from this to not tie up
+  threads for each open connection. But you can also deploy the
+  application on a Servlet-2.5 container, reverting to blocking
+  threads. This may be convenient when a Servlet-3.0 container is not
+  available, e.g. during development.
+</p>
+
+<p>
+  It also illustrates nice benefits of a class-based approach to web
+  application development: you can easily instantiate the same widget
+  class multiple times. The SimpleChatClient widget may be reused
+  just as you reuse basic JWt widgets such as a push button.
+</p>
+
+<p>
+  Interactive applications like these, which allow users to post HTML
+  text to other users, are notorious for <b>cross-site-scripting (XSS)
+  attacks</b>: a user enters malicious (javascript) code as part of
+  his message. When another user renders this message, it may transmit
+  unwanted private information retrieved from, for example, browser
+  cookies. JWt prevents such attacks completely, and without any
+  responsibility to the developer, since widgets such as WText ensure
+  that what is displayed is only passive text, discarding anything
+  that is not strictly text.
+</p>
+</div>
+  </message>
+
+ <message id="home.examples.figtree">
+<div>
+<h4 class="example">FigTree</h4>
+
+<p>
+  <a href="http://jwt.emweb.be/figtree/figtree" class="run" target="_blank">
+    <img src="/icons/orange-play.png" style="vertical-align: top"/> Run example
+  </a>
+</p>
+
+<p>
+  <a href="http://tree.bio.ed.ac.uk/software/figtree/"
+  target="_blank">FigTree</a> is an application created by Andrew
+  Rambaut for visualizing
+  <a href="http://en.wikipedia.org/wiki/Phylogenetic_tree"
+  target="_blank">phylogenetic trees</a> estimated from molecular
+  data. It is a Java Swing application with a basic UI available as a
+  Java applet.</p>
+
+<p>
+  In no more than 500 lines Java code, we rehashed the applet version
+  into a real web application, reusing much of the existing
+  application. In fact, we needed only a single line code change in
+  the reused Swing code.
+</p>
+
+<p>
+  The source code of this example is not part of the JWt source
+  distribution, but you can find it (including the web version which
+  we contributed) on
+  the <a href="http://code.google.com/p/figtree/source/checkout"
+  target="_blank">FigTree project page</a>.
+</p>
+
+<p>
+  See also
+  our <a href="#/blog/2010/10/25/fun_with_jwt_and_swing__webgraphics2d"
+  target="_blank">blog post</a> on porting this application.
+</p>
+</div>
+  </message>
+
+  <message id="home.examples.widgetgallery">
+<div>
+<h4 class="example">Widget gallery</h4>
+
+<p>
+  <a href="http://jwt.emweb.be/jwt-gallery/gallery" class="run" target="_blank">
+    <img src="/icons/orange-play.png" style="vertical-align: top"/>  Go to widget gallery
+  </a>
+</p>
+
+<p>
+ This example demonstrates most widgets provided by Wt, in addition to
+ other aspects such as event handling and layout classes. Useful as an
+ executable reference to widgets and features provided by the library.
+</p>
+
+</div>
+  </message>
+
+  <message id="home.download">
+    <h3><span>Download</span></h3>
+  </message>
+  <message id="home.download.license">
+<h4>License and Pricing</h4>
+
+<p>JWt may be used using either an Open Source or a Commercial License.</p>
+
+<p>If you wish to use the library using the <b>GNU General Public
+License (GPL)</b>, you may build a web application with JWt and deploy
+it, but per the terms of the GPL, you are obliged to make the source
+code available to anyone who you give the application to install the
+application on its own server. This also applies to redistribution of
+the JWt library, in original or modified form.</p>
+
+<p><b>The Commercial License</b> has no such limitations: you may
+redistribute applications developed with JWt without needing to
+redistribute the source code. The license is a royalty-free, perpetual
+license for one developer to use the API of JWt for application
+development, using the latest version of JWt or any version released
+during one year, and costs &euro;599.
+</p>
+  </message>
+
+  <message id="home.download.other">
+
+<p>As of JWt 3.1.11, JWt is also available in Maven and can be added
+to a project using:
+  <pre class="fragment">&lt;dependency&gt;
+  &lt;groupId&gt;eu.webtoolkit&lt;/groupId&gt;
+  &lt;artifactId&gt;jwt&lt;/artifactId&gt;
+  &lt;version&gt;3.1.11&lt;/version&gt;
+&lt;/dependency&gt;</pre></p>
+
+<h4>System requirements</h4>
+
+For building and using the latest version of JWt, you should follow the  <a
+href="http://www.webtoolkit.eu/jwt/latest/doc/userguide/userguide.html#getting-started"> Getting started tutorial
+</a>, this tutorial explains on how to build JWt and run the examples.
+
+<h4>Git repository</h4>
+
+<a href="https://github.com/kdeforche/jwt"><img style="display: block; width: 80px; float: right" src="https://github.com/github/media/blob/master/octocats/octocat.png?raw=true"></img></a>
+<p>If you want to keep track of the latest changes, or participate in
+JWt development, you may want to work from
+the <a href="https://github.com/kdeforche/jwt">github
+repository</a>.</p>
+
+<p>
+<div class="fragment">
+  <pre class="fragment">$ git clone git://github.com/kdeforche/jwt.git</pre>
+</div>
+</p>
+  </message>
+
+  <message id="home.download.packages">
+    <h4><span>Available packages</span></h4>
+  </message>
+  <message id="home.download.version"><b>Version</b></message>
+  <message id="home.download.date"><b>Date</b></message>
+  <message id="home.download.description"><b>Description</b></message>
+
+  <message id="home.community">
+<h3><span>Support</span></h3>
+
+<h4>Support and Training</h4>
+
+<p>
+  You can get <a href="http://www.emweb.be/support">support and
+  training</a> directly from the library authors, with a
+  guaranteed three-day response time.
+</p>
+
+<p>
+  Community help is available in the <a
+  href="http://redmine.webtoolkit.eu/projects/wt/boards">public
+  forums</a>.
+</p>
+
+<p>
+  To get up to speed with JWt, you may also obtain <a
+  href="http://www.emweb.be/support">training</a> directly from
+  the library authors.
+</p>
+
+<h4>Authors</h4>
+
+<p>
+  JWt is mainted by <a href="http://www.emweb.be/">Emweb bv</a>, and
+  is derived from the latest version of its sibling C++ solution,
+  <a href="http://www.webtoolkit.eu/wt">Wt</a>.
+</p>
+
+<h4>Wiki</h4>
+
+<p>
+  There is a community-run <a
+  href="http://redmine.webtoolkit.eu/projects/jwt/wiki">JWt Wiki</a> where
+  you may share tips, notes and experiences using JWt.
+</p>
+
+<h4>Contributions</h4>
+
+<p>
+  User contributions are welcomed, ranging from simple patches to
+  widgets, widget sets, and core improvements.
+</p>
+
+<p>
+  However, because JWt is dual-licensed under an Open Source and
+  commercial license, and to legally protect the code base of JWt as a
+  whole by one entity without having to worry about the copyrights for
+  different pieces, we require a copyright assignment from contributors
+  to <a href="http://www.emweb.be/">Emweb</a> before
+  accepting the contribution.
+</p>
+  </message>
+
+  <message id="home.other-language">
+
+<h3><span>!Java ?</span></h3>
+
+<p>You like the functionality, but do not grok Java for your project?</p>
+
+<p>Do not despair. JWt exists in a native variant or through bindings
+in other languages:
+
+<ul class="languages">
+
+<li>
+<div>
+<img class="language-icon" src="/icons/clojure-logo.png" alt="Clojure"></img>
+
+Leveraging the JVM's support for other languages, such
+as <b>Clojure</b>, a LISP variant, Ralph Moritz is experimenting
+with <a href="http://lispetc.posterous.com/hello-jwt-from-clojure">using
+JWt from within Clojure</a>, documenting his experience in his blog
+and eventually developing a small support library.
+</div>
+
+<br style="clear: both" />
+
+</li>
+<li>
+<div>
+<img class="language-icon" src="/icons/jython-logo.png" alt="Jython"></img>
+
+Albert Cervera i Areny is experimenting to use JWt from <b>Jython</b>,
+another language running on the JVM. He documents how to create and run
+the "Hello World!" program in Jython in <a href="http://www.nan-tic.com/en/from-pyqt-to-jythonjwt-setting-up-the-environment">this blog post</a>.
+</div>
+
+<br style="clear: both" />
+
+</li>
+
+<li>
+<div>
+<img class="language-icon" src="/icons/cpp-logo.jpg" alt="C++"></img>
+
+If you prefer <b>C++</b>, you should consider
+using <a href="http://www.webtoolkit.eu/wt">Wt</a>, the C++ version, which is developed and
+maintained together with the Java version, and from which the Java
+version is derived. It comes with application server included.
+</div>
+
+<br style="clear: both" />
+
+</li>
+<li>
+<div>
+<img class="language-icon" src="/icons/ruby-logo-R.png" alt="Ruby"></img>
+
+Richard Dale is
+maintaining <a href="http://github.com/rdale/wtruby/tree/master">WtRuby</a>,
+<b>Ruby</b> bindings to Wt, using the same framework used for generating Ruby
+bindings to Qt and KDE.
+</div>
+
+<br style="clear: both" />
+
+</li>
+
+</ul>
+</p>
+
+  </message>
+
+  <message id="home.documentation">
+
+<h3><span>Documentation</span></h3>
+
+<h4>Build and install</h4>
+
+<p>A <a href="http://www.webtoolkit.eu/jwt/latest/doc/userguide/userguide.html" target="_blank">User Guide</a> is available (in a new window). This user guide consists of a <a href="http://www.webtoolkit.eu/jwt/latest/doc/userguide/userguide.html#_library_overview" target="_blank">library overview</a> section and a <a href="http://www.webtoolkit.eu/jwt/latest/doc/userguide/userguide.html#getting-started" target="_blank">getting started</a> section.</p>
+
+<h4>Introduction and tutorials</h4>
+
+<p>Learn about the benefits of using JWt compared to traditional web
+application frameworks using our <a
+href="http://www.webtoolkit.eu/doc/Wt-WhitePaper.pdf">white paper</a>.</p>
+
+<p>More introductory material and tutorials are currently lacking. In
+the mean time, you can use the documentation available for <a
+href="http://www.webtoolkit.eu/wt/documentation">the C++ library</a>, as they are the same
+code base.</p>
+
+<h4>Reference manual</h4>
+
+<p>There is a <a href="http://www.webtoolkit.eu/jwt/latest/doc/javadoc/"
+target="_blank"> reference manual (in a new window)</a>, generated
+from the source code using javadoc.
+</p>
+
+<h4>Wiki</h4>
+
+<p>
+There is a community-run <a
+href="http://redmine.webtoolkit.eu/projects/jwt/wiki">JWt Wiki</a> where
+you may share tips, notes and experiences using JWt.
+</p>
+  </message>
+
+  <message id="srcview.title.JAVA.">
+    <div class="srcviewtitle">
+      <h2>Source code for JWt examples</h2>
+
+      <p>
+        Browse below the source code for all examples included in
+        <a href="http://www.webtoolkit.eu/jwt">JWt</a>.
+      </p>
+    </div>
+  </message>
+
+  <message id="srcview.title.">JWt examples</message>
+
+  <message id="srcview.title.JAVA.hello">
+    <div class="srcviewtitle">
+      <h2>Source code of the <i>Hello world</i> example</h2>
+
+      <p>
+        Browse below the source code for JWt's
+        <a href="http://www.webtoolkit.eu/jwt/examples/hello_world">
+          Hello world</a> example.
+      </p>
+    </div>
+  </message>
+
+  <message id="srcview.title.hello">Example: Hello world</message>
+
+  <message id="srcview.title.JAVA.hello">
+    <div class="srcviewtitle">
+      <h2>Source code of the <i>Hello world</i> example</h2>
+
+      <p>
+        Browse below the source code for JWt's
+        <a href="http://www.webtoolkit.eu/jwt/examples/hello_world">
+          Hello world</a> example.
+      </p>
+    </div>
+  </message>
+
+  <message id="srcview.title.hello_world">Example: Hello world</message>
+
+  <message id="srcview.title.JAVA.charts">
+    <div class="srcviewtitle">
+      <h2>Source code of the <i>Charts</i> example</h2>
+
+      <p>
+        Browse below the source code for JWt's
+        <a href="http://www.webtoolkit.eu/jwt/examples/charts">
+          Charts</a> example.
+      </p>
+    </div>
+  </message>
+
+  <message id="srcview.title.charts">Example: Charts</message>
+
+  <message id="srcview.title.JAVA.treeviewdragdrop">
+    <div class="srcviewtitle">
+      <h2>Source code of the <i>Treeview</i> example</h2>
+
+      <p>
+        Browse below the source code for JWt's
+        <a href="http://www.webtoolkit.eu/jwt/examples/treeview">
+          Treeview</a> example.
+      </p>
+    </div>
+  </message>
+
+  <message id="srcview.title.treeviewdragdrop">Example: Treeview</message>
+
+  <message id="srcview.title.JAVA.composer">
+    <div class="srcviewtitle">
+      <h2>Source code of the <i>Mail composer</i> example</h2>
+
+      <p>
+        Browse below the source code for JWt's
+        <a href="http://www.webtoolkit.eu/jwt/examples/composer">
+          Mail composer</a> example.
+      </p>
+    </div>
+  </message>
+
+  <message id="srcview.title.composer">Example: Mail composer</message>
+
+  <message id="srcview.title.JAVA.simplechat">
+    <div class="srcviewtitle">
+      <h2>Source code of the <i>Chat</i> example</h2>
+
+      <p>
+        Browse below the source code for JWt's
+        <a href="http://www.webtoolkit.eu/jwt/examples/simplechat">
+          Chat</a> example.
+      </p>
+    </div>
+  </message>
+
+  <message id="srcview.title.simplechat">Example: Chat</message>
+
+  <message id="srcview.title.JAVA.widgetgallery">
+    <div class="srcviewtitle">
+      <h2>Source code of the <i>Widget gallery</i> example</h2>
+
+      <p>
+        Browse below the source code for JWt's
+        <a href="http://www.webtoolkit.eu/jwt/examples/widget_gallery">
+          Widget gallery</a> example.
+      </p>
+    </div>
+  </message>
+
+  <message id="srcview.title.widgetgallery">Example: Widget gallery</message>
+</messages>

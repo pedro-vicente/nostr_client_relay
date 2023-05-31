@@ -1,0 +1,422 @@
+               Wt Installation instructions on Unix-like systems
+
+   This page lists the instructions for building and installing Wt on
+   Unix-like systems (Linux, macOS, BSD,…). It is organized in 3 sections:
+     * [1]Requirements
+     * [2]Building and installing the library
+     * [3]Trying the examples (or your own Wt application)
+
+Requirements
+
+   The library provides two ways for deploying applications: either with
+   the built-in web server (recommended), or using FastCGI (legacy).
+
+   The built-in web server is a simple HTTP and WebSockets server. It
+   supports all of Wt's features, and is simple to setup. This is the
+   recommended way of deploying a Wt application.
+
+   FastCGI is also supported if necessary, but it does not support
+   WebSockets.
+
+   Each of these two choices correspond to a library, a so-called
+   connector library. Below it is outlined how to configure the build
+   process of Wt to build either or both libraries (libwthttp and
+   libfcgi).
+
+   Thus, to build a Wt library with built-in web server you need to link
+   against libwt and libwthttp. To build a Wt library which acts as a
+   FastCGI process, you need to link against libwt and libfcgi.
+
+  1 Wt requirements
+
+     * Compiler: Any compiler with sufficient support for C++14, like GCC
+       5.1 or higher, or Clang 3.3 or higher.
+     * [4]CMake 3.1 or higher
+     * [5]C++ boost library 1.50.0 or higher
+     * Optionally, [6]OpenSSL, which is used to support the HTTPS protocol
+       in the web client, and the HTTPS protocol in the built-in wthttpd
+       connector.
+     * Optionally, [7]Haru Free PDF Library, which is used to provide
+       support for painting to PDF (WPdfImage).
+     * Optionally, [8]GraphicsMagick, for supporting painting to raster
+       images (PNG, GIF, ...) (WRasterImage).
+     * Optionally, [9]Pango, for improved font support in the WPdfImage
+       and WRasterImage paint devices.
+     * Optionally, [10]PostgreSQL, for the PostgreSQL backend for Wt::Dbo
+       (Dbo::backend::Postgres).
+     * Optionally, [11]Firebird, for the Firebird backend for Wt::Dbo
+       (Dbo::backend::Firebird).
+     * Optionally, [12]the C API for MySQL (mysqlclient), or the
+       [13]MariaDB connector library, for the MySQL/MariaDB backend for
+       Wt::Dbo (Dbo::backend::MySQL).
+     * Optionally, [14]unixODBC, for the SQL Server backend for Wt::Dbo
+       (Dbo::backend::MSSQLServer).
+     * Optionally, [15]libunwind, for the saving of backtraces in
+       exceptions (useful for debugging).
+
+    1a Using wthttpd
+
+   When using the built-in web server, two more libraries may be installed
+   to enable optional features (you can also build without them), but
+   otherwise no extra dependencies are required.
+     * Optionally, zlib (libz), for compression over HTTP and WebSockets.
+     * Optionally, OpenSSL (libopenssl), for HTTPS.
+
+    1b Using FastCGI
+
+   When using FastCGI, Wt requires a webserver (like Apache or NGINX)
+   which supports the FastCGI protocol.
+
+   To build wtfcgi, you need:
+     * [16]FCGI library, including C++ bindings (libfcgi++)
+     * A suitable plugin for your web server.
+
+  2 Additional and optional requirements for some of the examples
+
+     * Qt, for the libwtwithqt interopability layer
+     __________________________________________________________________
+
+Building and installing the Wt library
+
+    1. Create a build directory
+
+   The recommended way to build the library is in a separate build
+   directory, for example within the top level of the Wt package:
+    $ cd wt-x.x.x
+    $ mkdir build
+    $ cd build
+
+    2. Configure the library
+
+    $ cmake ../
+
+   The latter command will try to locate the necessary libraries. If
+   everything is OK, then this should end with something like:
+  -- Generating done
+  -- Build files have been written to: /home/kdforc0/project/wt/build
+
+   If CMake fails, because it cannot resolve all dependencies, then you
+   may help CMake by setting some variables to help CMake locate the
+   libraries. This may be done on the command-line using -Dvar=value or
+   using the interactive program:
+    $ ccmake ../
+
+   or
+    $ cmake-gui ../
+
+   The GUI lists all variables that are configurable in Wt's build
+   process.
+
+   The variables specify several build and configuration aspects of Wt, of
+   which the most relevant ones are (there are many more visible in the
+   GUI):
+
+   CMAKE_INSTALL_PREFIX
+          Installation prefix for the library and include files)
+
+   CONFIGDIR
+          Path for configuration files (default is /etc/wt/)
+
+   CONNECTOR_FCGI
+          Build the FastCGI connector (libwtfcgi) ?
+
+   CONNECTOR_HTTP
+          Build the stand-alone httpd connector (libwthttp) ?
+
+   EXAMPLES_CONNECTOR
+          Which connector library to use for the examples? (wthttp or
+          wtfcgi)
+
+   MULTI_THREADED
+          Build a multi-threaded wthttpd? While on by default, and
+          recommended, you may want to disable this for example if you
+          suspect threading problems. Note that recursive event loops
+          (most notably when using Dialog::exec()) are not possible
+          without thread support.
+
+   The following variables apply to the FastCGI connector:
+
+   RUNDIR
+          Default location for Wt runtime session management (can be
+          overridden in the Configuration file)
+
+   WEBUSER
+          Webserver username: used to assign permissions to RUNDIR
+
+   WEBGROUP
+          Webserver groupname: used to assign permissions to RUNDIR
+
+   The following variables apply to the wthttpd connector:
+
+   WTHTTP_CONFIGURATION
+          Location of the wthttpd configuration file (default is
+          /etc/wt/wthttpd)
+
+   To change any entry, use [Enter]. To save and quit, do [c] followed by
+   [g].
+
+    3. Build the library
+
+    $ make
+
+   If you want to speed up compilation, you may want to use multiple
+   threads (e.g. 4):
+    $ make -j4
+
+    4. Install the library (as user with sufficient permissions):
+
+    $ make install
+
+    5. Get your LD_LIBRARY_PATH ok, if needed (mostly for FastCGI).
+
+   If you did not install Wt in a directory (CMAKE_INSTALL_PREFIX)
+   included in the default linker dynamic library search path, then the
+   web server will not be able to start Wt programs (such as the
+   examples).
+
+   Fix it by (as user with sufficient permissions):
+    $ ln -s /your/path/to/lib/libwt.so /usr/lib
+    $ ln -s /your/path/to/lib/libwtfcgi.so /usr/lib
+     __________________________________________________________________
+
+Trying the examples (or your own Wt application)
+
+   Deploying an application is different when using FastCGI or the
+   built-in web server (wthttpd).
+
+   The examples that come with the library use the connector specified by
+   the build option EXAMPLES_CONNECTOR (see supra).
+
+   Some examples need TinyMCE:
+     * Download TinyMCE from [17]http://tinymce.moxiecode.com/ and install
+       its tiny_mce folder into the resources/ folder.
+
+   You will notice 404 File not Found errors for resources/tiny_mce/ if
+   you are missing this library.
+
+  A. Using wthttpd
+
+    1. Build the examples
+
+    $ make -C examples
+
+    2. Running an example
+
+   Most examples use additional files, such as message resource bundles,
+   which are not indicated with absolute path names. Therefore the working
+   directory should be the source directory for the example. A similar
+   argument goes for icons and the setting of the --docroot variable.
+   Since Wt 3.1.4, you can use the "approot" property to move the
+   additional files that should not be available to browsers outside of
+   the docroot.
+    $ cd ../examples/foobar # source directory for example foobar
+    $ ln -s ../../resources . # include standard Wt resource files
+    $ ../../build/examples/foobar/foobar.wt --docroot . --http-listen 0.0.0.0:80
+80
+
+   This will start a httpd server listening on all local interfaces, on
+   port 8080, and you may browse the example at [18]http://127.0.0.1:8080/
+
+   You will notice 404 File not Found errors for resources/ files if you
+   are missing the resources files.
+
+   These are all the command-line options that are available:
+General options:
+  -h [ --help ]                         produce help message
+  -t [ --threads ] arg (=-1)            number of threads (-1 indicates that
+                                        num_threads from wt_config.xml is to be
+                                        used, which defaults to 10)
+  --servername arg                      servername (IP address or DNS name)
+  --docroot arg                         document root for static files,
+                                        optionally followed by a
+                                        comma-separated list of paths with
+                                        static files (even if they are within a
+                                        deployment path), after a ';'
+
+                                        e.g. --docroot=".;/favicon.ico,/resourc
+                                        es,/style"
+
+  --resources-dir arg                   path to the Wt resources folder. By
+                                        default, Wt will look for its resources
+                                        in the resources subfolder of the
+                                        docroot (see --docroot). If a file is
+                                        not found in that resources folder,
+                                        this folder will be checked instead as
+                                        a fallback. If this option is omitted,
+                                        then Wt will not use a fallback
+                                        resources folder.
+  --approot arg                         application root for private support
+                                        files; if unspecified, the value of the
+                                        environment variable $WT_APP_ROOT is
+                                        used, or else the current working
+                                        directory
+  --errroot arg                         root for error pages
+  --accesslog arg                       access log file (defaults to stdout),
+                                        to disable access logging completely,
+                                        use --accesslog=-
+  --no-compression                      do not use compression
+  --deploy-path arg (=/)                location for deployment
+  --session-id-prefix arg               prefix for session IDs (overrides
+                                        wt_config.xml setting)
+  -p [ --pid-file ] arg                 path to pid file (optional)
+  -c [ --config ] arg                   location of wt_config.xml; if
+                                        unspecified, the value of the
+                                        environment variable $WT_CONFIG_XML is
+                                        used, or else the built-in default
+                                        (/etc/wt/wt_config.xml) is tried, or els
+e
+                                        built-in defaults are used
+  --max-memory-request-size arg (=131072)
+                                        threshold for request size (bytes), for
+                                        spooling the entire request to disk, to
+                                        avoid DoS
+  --gdb                                 do not shutdown when receiving Ctrl-C
+                                        (and let gdb break instead)
+
+HTTP/WebSocket server options:
+  --http-listen arg                     address/port pair to listen on. If no
+                                        port is specified, 80 is used as the
+                                        default, e.g. 127.0.0.1:8080 will cause
+                                        the server to listen on port 8080 of
+                                        127.0.0.1 (localhost). For IPv6, use
+                                        square brackets, e.g. [::1]:8080 will
+                                        cause the server to listen on port 8080
+                                        of [::1] (localhost). This argument can
+                                        be repeated, e.g. --http-listen
+                                        0.0.0.0:8080 --http-listen [0::0]:8080
+                                        will cause the server to listen on port
+                                        8080 of all interfaces using IPv4 and
+                                        IPv6. You must specify this option or
+                                        --https-listen at least once. The older
+                                        style --http-address and
+                                        --https-address can also be used for
+                                        backwards compatibility. If a hostname
+                                        is provided instead of an IP address,
+                                        the server will listen on all of the
+                                        addresses (IPv4 and IPv6) that this
+                                        hostname resolves to.
+  --http-address arg                    IPv4 (e.g. 0.0.0.0) or IPv6 Address
+                                        (e.g. 0::0). You must specify either
+                                        --http-listen, --https-listen,
+                                        --http-address, or --https-address.
+  --http-port arg (=80)                 HTTP port (e.g. 80)
+
+HTTPS/Secure WebSocket server options:
+  --https-listen arg                    address/port pair to listen on. If no
+                                        port is specified, 80 is used as the
+                                        default, e.g. 127.0.0.1:8080 will cause
+                                        the server to listen on port 8080 of
+                                        127.0.0.1 (localhost). For IPv6, use
+                                        square brackets, e.g. [::1]:8080 will
+                                        cause the server to listen on port 8080
+                                        of [::1] (localhost). This argument can
+                                        be repeated, e.g. --https-listen
+                                        0.0.0.0:8080 --https-listen [0::0]:8080
+                                        will cause the server to listen on port
+                                        8080 of all interfaces using IPv4 and
+                                        IPv6. If a hostname is provided instead
+                                        of an IP address, the server will
+                                        listen on all of the addresses (IPv4
+                                        and IPv6) that this hostname resolves
+                                        to.
+  --https-address arg                   IPv4 (e.g. 0.0.0.0) or IPv6 Address
+                                        (e.g. 0::0). You must specify either
+                                        --http-listen, --https-listen,
+                                        --http-address, or --https-address.
+  --https-port arg (=443)               HTTPS port (e.g. 443)
+  --ssl-certificate arg                 SSL server certificate chain file
+                                        e.g. "/etc/ssl/certs/vsign1.pem"
+  --ssl-private-key arg                 SSL server private key file
+                                        e.g. "/etc/ssl/private/company.pem"
+  --ssl-tmp-dh arg                      File for temporary Diffie-Hellman
+                                        parameters
+                                        e.g. "/etc/ssl/dh512.pem"
+  --ssl-enable-v3                       Switch on SSLv3 support (not
+                                        recommended; disabled by default)
+  --ssl-client-verification arg (=none) The verification mode for client
+                                        certificates.
+                                        This is either 'none', 'optional' or
+                                        'required'. When 'none', the server
+                                        will not request a client certificate.
+                                        When 'optional', the server will
+                                        request a certificate, but the client
+                                        does not have to supply one. With
+                                        'required', the connection will be
+                                        terminated if the client does not
+                                        provide a valid certificate.
+  --ssl-verify-depth arg (=1)           Specifies the maximum length of the
+                                        server certificate chain.
+
+  --ssl-ca-certificates arg             Path to a file containing the
+                                        concatenated trusted CA certificates,
+                                        which can be used to authenticate the
+                                        client. The file should contains a a
+                                        number of PEM-encoded certificates.
+
+  --ssl-cipherlist arg                  List of acceptable ciphers for SSL.
+                                        This list is passed as-is to the SSL
+                                        layer, so see openssl for the proper
+                                        syntax. When empty, the default
+                                        acceptable cipher list will be used.
+                                        Example cipher list string:
+                                        "TLSv1+HIGH:!SSLv2"
+
+  --ssl-prefer-server-ciphers arg (=0)  By default, the client's preference is
+                                        used for determining the cipher that is
+                                        choosen during a SSL or TLS handshake.
+                                        By enabling this option, the server's
+                                        preference will be used.
+
+  B. Using FastCGI and apache
+
+    1. Build the examples
+
+    $ make -C examples
+
+    2. Deploy the example foobar
+
+   The easiest way to deploy the examples is by copying the binary (from
+   your build directory) and the source directory (which contains the
+   images) and the resources/ into the same destination directory
+   somewhere in your Apache server (we no longer generate a ./deploy.sh
+   script that took care of some of this).
+    $ export DESTINATION=/var/www/localhost/htdocs/wt-examples
+    $ mkdir -p $DESTINATION/foobar
+    $ cp -r examples/foobar/* resources/* build/examples/foobar/*.wt $DESTINATIO
+N/foobar/
+
+   This does however make public also files (such as message resources
+   bundles, data files, etc...) that do not need to be served by your web
+   server. The clean way to deploy your own applications is to use the
+   "approot" property to deploy those files to a directory outside the
+   webserver's doc root.
+
+    3. Configure Apache
+
+   Treat the example as a mod_fastcgi application, by adding a line to
+   20_mod_fastcgi.conf in your Apache configuration modules.d/ directory,
+   e.g.:
+    FastCgiServer /var/www/localhost/htdocs/wt-examples/composer/composer.wt
+
+    4. Restart apache
+
+References
+
+   1. file:///home/roel/project/wt/git/wt4/INSTALL.html#requirements
+   2. file:///home/roel/project/wt/git/wt4/INSTALL.html#build
+   3. file:///home/roel/project/wt/git/wt4/INSTALL.html#examples
+   4. http://www.cmake.org/
+   5. http://www.boost.org/
+   6. http://www.openssl.org/
+   7. http://libharu.org/
+   8. http://www.graphicsmagick.org/
+   9. http://www.pango.org/
+  10. http://www.postgresql.org/
+  11. http://www.firebirdsql.org/
+  12. https://www.mysql.com/products/connector/
+  13. https://mariadb.com/kb/en/the-mariadb-library/about-mariadb-connector-c
+  14. http://www.unixodbc.org/
+  15. http://www.nongnu.org/libunwind/
+  16. http://www.fastcgi.com/
+  17. http://tinymce.moxiecode.com/
+  18. http://127.0.0.1:8080/

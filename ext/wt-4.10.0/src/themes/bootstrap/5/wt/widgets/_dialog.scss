@@ -1,0 +1,47 @@
+.Wt-dialog.modal {
+  display: block; // .modal automatically adds 'none', but we do visibility differently
+
+  height: auto;
+  width: auto;
+
+  > .modal-dialog {
+    // Bootstrap 5's left and right margins make the contents shift right and causes
+    // them to be cut off. The top and bottom margins make it so that resizes don't work
+    // properly. We can make it work properly by unsetting the margins.
+    margin: unset;
+
+    // Wt-specific class: movable
+    > .modal-content.movable > .modal-header {
+      cursor: move;
+    }
+
+    // WMessageBox
+    // Wt-specific classes: Wt-msgbox-body, Wt-msgbox-icon, Wt-msgbox-text
+    .modal-content > .modal-body.Wt-msgbox-body {
+      > .Wt-msgbox-icon {
+        display: block;
+        float: left;
+        width: 25px;
+        height: 35px;
+        margin: -5px 15px 0 0;
+      }
+
+      > .Wt-msgbox-text {
+        overflow: auto;
+      }
+    }
+  }
+
+  &.pop.fade > .modal-dialog {
+    // Don't add transform(-50px) when we're doing the pop animation with a Wt dialog
+    transform: none;
+  }
+
+  // Wt-specific class: .Wt-resizable
+  &.Wt-resizable > .modal-dialog > .modal-content {
+    background-attachment: scroll;
+    background-image: url(#{$wt-resources-prefix}resizable.png);
+    background-position: right bottom;
+    background-repeat: no-repeat;
+  }
+}

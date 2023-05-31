@@ -1,0 +1,208 @@
+.Wt-animated > * {
+    background-color: #F7F7F7;
+}
+
+#main_page {
+    -webkit-backface-visibility: visible; /* avoid flicker on Safari */
+}
+
+.home .Wt-tabs {
+    margin-top: 5px;
+    margin-bottom: 0px;
+}
+
+.home .Wt-tabs span {
+    color:#777777;
+}
+
+.home .Wt-tabs a {
+    text-decoration: none;
+}
+
+.home .Wt-tabs .itemselected span {
+    color:black;
+}
+
+.home .Wt-tabs .itemselected {
+    background-position:100% -150px;
+}
+
+.home .Wt-tabs .itemselected a {
+    background-position:0% -150px;
+}
+
+.home .Wt-tabs span:hover {
+    text-decoration: none;
+}
+
+ol, ul {
+    list-style: bullet;
+}
+
+.fragment {
+    font-family:monospace,fixed;
+}
+
+pre.fragment {
+    background-color: #F5F5F5;
+    border: 1px solid #CCCCCC;
+    margin: 4px 8px 4px 2px;
+    padding: 4px 6px;
+}
+
+td.sponsor-logo {
+    text-align: center;
+    vertical-align: middle;
+    padding: 5px;
+    white-space: nowrap;
+}
+
+td.sponsor-role {
+    vertical-align: middle;
+    padding: 5px;
+}
+
+ul.languages {
+    list-style: none;
+    padding-left: 0px;
+}
+
+ul.languages li {
+    margin: 40px 0px;
+}
+
+img.language-icon {
+    float: left;
+    margin-right: 30px;
+}
+
+img.java-language-icon {
+    float: left;
+    margin-right: 30px;
+    margin-left: 25px;
+}
+
+.run {
+    font-size: 130%;
+    margin: 0px 5px;
+    text-decoration: none;
+    text-align: top;
+}
+
+.emph {
+    font-style: italic;
+    color: #CC1111;
+} 
+
+.versions {
+    width: 90%;
+    margin: 5%;
+    background: #E1E1E1;
+    border: 5px solid white;
+}
+
+.versions th {
+    text-align: left;    
+    padding: 2px 5px;
+}
+
+.versions th.product {
+    width: 7em;
+}
+
+table.versions td, .versions .trh th {
+    text-align: center;
+}
+
+.versions .indent {
+    padding-left: 2em;
+}
+
+.versions .multiline {
+    vertical-align: baseline;
+}
+
+.versions .separate td, .versions .separate th {
+    padding-top: 1em;
+}
+
+.versions .r0 {
+    background-color: white;
+}
+
+.versions .r1 {
+}
+
+#footer_wrapper {
+    position: relative; /* avoids example menu animation glitch */
+}
+
+.price {
+    font-style: italic;
+}
+
+.smallprint {
+    font-size: smaller;
+}
+
+.quote {
+    text-align: center;
+}
+
+.quote .quoteform {
+    width: 86%;
+    margin: 5%;
+    text-align: left;
+    padding: 2%;
+    background-color: #F1F1F1;
+}
+
+.quote .form {
+    width: 100%;
+    line-height: 1.5em;
+    margin: 1em 0px;
+}
+
+.quote .form .label {
+    text-align: right;
+    padding-right: 1em;
+}
+
+.quote .form .value {
+    width: 65%;
+}
+
+.quote .form input {
+    width: 100%;
+}
+
+.quote .button-box {
+    text-align: center;
+}
+
+.quoteform h4 {
+    border-top: 0px;
+    margin-top: 0px;
+}
+
+.quoteform .licenses {
+    width: 98%;
+    margin: 1em 1%;
+}
+
+.quoteform .licenses td.button {
+    text-align: center;
+    padding: 0px 0.5em;
+}
+
+.quoteform td.button button {
+    width: 2em;
+}
+
+.licenses input {
+    width: 90%;
+}
+
+.quoteform .comment textarea {
+    width: 99%;
+}
