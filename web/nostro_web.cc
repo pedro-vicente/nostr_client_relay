@@ -23,9 +23,6 @@ std::string log_program_name("nostro_web");
 std::vector<std::string> store;
 std::vector<std::string> message_recv;
 
-// --docroot=. --http-address=0.0.0.0 --http-port=80 
-// --docroot=. --https-address=0.0.0.0 --ssl-certificate=server.crt --ssl-private-key=server.key --ssl-tmp-dh=dh2048.pem 
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //NostroApplication
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -44,6 +41,36 @@ private:
   void send();
   void generate();
 };
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+//main
+// --docroot=. --http-address=0.0.0.0 --http-port=80 
+// --docroot=. --https-address=0.0.0.0 --ssl-certificate=server.crt --ssl-private-key=server.key --ssl-tmp-dh=dh2048.pem 
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+std::unique_ptr<Wt::WApplication> create_application(const Wt::WEnvironment& env)
+{
+  return std::make_unique<NostroApplication>(env);
+}
+
+int main(int argc, char** argv)
+{
+  try
+  {
+    events::start_log();
+
+    Wt::WServer server(argc, argv);
+    server.addEntryPoint(Wt::EntryPointType::Application, create_application);
+    server.run();
+  }
+  catch (std::exception& e)
+  {
+    events::log(e.what());
+  }
+}
+
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //NostroApplication
@@ -215,25 +242,6 @@ void NostroApplication::send()
     events::log(store.at(idx));
   }
 }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-//main
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
-std::unique_ptr<Wt::WApplication> create_application(const Wt::WEnvironment& env)
-{
-  return std::make_unique<NostroApplication>(env);
-}
-
-int main(int argc, char** argv)
-{
-  events::start_log();
-
-  Wt::WServer server(argc, argv);
-  server.addEntryPoint(Wt::EntryPointType::Application, create_application);
-  server.run();
-}
-
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //NostroApplication::generate

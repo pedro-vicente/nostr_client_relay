@@ -74,9 +74,9 @@ if(UNIX AND NOT APPLE)
   set(LINUX TRUE)
 endif()
 
-if(APPLE)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-declarations")
-  message(STATUS "Mac OS build: ${CMAKE_CXX_FLAGS}")
+if(UNIX)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated -Wno-deprecated-declarations")
+  message(STATUS "Compiler flags: ${CMAKE_CXX_FLAGS}")
 endif()
 
 #//////////////////////////

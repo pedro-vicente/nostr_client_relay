@@ -19,6 +19,34 @@
 #include "proof.h"
 #include "nostri.h"
 
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+// usage
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void usage()
+{
+  printf("usage: nostro [OPTIONS]\n");
+  printf("\n");
+  printf("  OPTIONS\n");
+  printf("\n");
+  printf("      --uri <string>                  URI to send (e.g 'relay.damus.io', default 'localhost:8080/nostr' for vostro listening)\n");
+  printf("      --req                           message is a request (REQ). EVENT parameters are ignored\n");
+  printf("      --content <string>              the content of the note\n");
+  printf("      --dm <hex pubkey>               make an encrypted dm to said pubkey. sets kind and tags.\n");
+  printf("      --kind <number>                 set kind\n");
+  printf("      --created-at <unix timestamp>   set a specific created-at time\n");
+  printf("      --sec <hex seckey>              set the secret key for signing, otherwise one will be randomly generated\n");
+  printf("      --pow <difficulty>              number of leading 0 bits of the id to mine\n");
+  printf("      --mine-pubkey                   mine a pubkey instead of id\n");
+  printf("      --tag <key> <value>             add a tag\n");
+  printf("      -e <event_id>                   shorthand for --tag e <event_id>\n");
+  printf("      -p <pubkey>                     shorthand for --tag p <pubkey>\n");
+  printf("      -t <hashtag>                    shorthand for --tag t <hashtag>\n");
+  printf("\n");
+  exit(0);
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 // cursor_push_escaped_char
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -46,6 +74,12 @@ static int cursor_push_jsonstr(struct cursor* cur, const char* str)
 {
   int i;
   int len;
+
+  //content can be NULL (for REQ)
+  if (!str)
+  {
+    return 1;
+  }
 
   len = strlen(str);
 
@@ -387,9 +421,90 @@ int print_event(struct nostr_event* ev, int envelope, char** json)
   sprintf(str, "\n");
   strcat(out, str);
 
-  fprintf(stderr, out);
+  fprintf(stderr, "%s", out);
   int len = strlen(out);
-  *json = out;
+  strcpy(*json, out);
+  return 1;
+}
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+// print_request
+// Clients can send 3 types of messages, which must be JSON arrays, according to the following patterns:
+//
+//    ["EVENT", <event JSON as defined above>], used to publish events.
+//    ["REQ", <subscription_id>, <filters JSON>...], used to request events and subscribe to new updates.
+//    ["CLOSE", <subscription_id>], used to stop previous subscriptions.
+//
+// <subscription_id> is an arbitrary, non-empty string of max length 64 chars, that should be used to represent a subscription.
+//
+// <filters> is a JSON object that determines what events will be sent in that subscription, it can have the following attributes:
+//
+// {
+//  "ids": <a list of event ids or prefixes>,
+//  "authors": <a list of pubkeys or prefixes, the pubkey of an event must be one of these>,
+//  "kinds": <a list of a kind numbers>,
+//  "#e": <a list of event ids that are referenced in an "e" tag>,
+//  "#p": <a list of pubkeys that are referenced in a "p" tag>,
+//  "since": <an integer unix timestamp, events must be newer than this to pass>,
+//  "until": <an integer unix timestamp, events must be older than this to pass>,
+//  "limit": <maximum number of events to be returned in the initial query>
+// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+int print_request(struct nostr_event* ev, char** json)
+{
+  unsigned char buf[102400];
+  char pubkey[65];
+  char id[65];
+  char sig[129];
+  struct cursor cur;
+  int ok;
+
+  ok = hex_encode(ev->id, sizeof(ev->id), id, sizeof(id)) &&
+    hex_encode(ev->pubkey, sizeof(ev->pubkey), pubkey, sizeof(pubkey)) &&
+    hex_encode(ev->sig, sizeof(ev->sig), sig, sizeof(sig));
+
+  assert(ok);
+
+  make_cursor(buf, buf + sizeof(buf), &cur);
+  if (!cursor_push_tags(&cur, ev))
+    return 0;
+
+  char str[1024];
+  char out[102400];
+
+  sprintf(str, "[\"REQ\",");
+  strcpy(out, str);
+  sprintf(str, "\"subscription_nostro\","); //hardcoded subscription_id
+  strcat(out, str);
+
+  //start filter
+  sprintf(str, "{");
+  strcat(out, str);
+
+  //send a REQ with a filter that has the event id of the event you want to check for as the #e tag.
+  sprintf(str, "\"kinds\": [1],");
+  strcat(out, str);
+
+  sprintf(str, "\"ids\": \"%s\"", id);
+  strcat(out, str);
+
+  //end filter
+  sprintf(str, "}");
+  strcat(out, str);
+
+  //always envelop
+  sprintf(str, "]");
+  strcat(out, str);
+
+  sprintf(str, "\n");
+  strcat(out, str);
+
+  fprintf(stderr, "%s", out);
+  int len = strlen(out);
+  strcpy(*json, out);
   return 1;
 }
 
@@ -403,7 +518,6 @@ void make_event_from_args(struct nostr_event* ev, struct args* args)
   ev->content = args->content;
   ev->kind = args->flags & HAS_KIND ? args->kind : 1;
 }
-
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 // parse_num
@@ -660,6 +774,9 @@ int make_encrypted_dm(secp256k1_context* ctx, struct key* key, struct nostr_even
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 // parse_args
+// new arguments are
+// --uri URI
+// --req 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 int parse_args(int argc, const char* argv[], struct args* args, struct nostr_event* ev)
@@ -667,6 +784,17 @@ int parse_args(int argc, const char* argv[], struct args* args, struct nostr_eve
   const char* arg, * arg2;
   uint64_t n;
   int has_added_tags = 0;
+  int req_mode = 0;
+
+  //detect REQ mode
+  for (int idx = 1; idx < argc; idx++)
+  {
+    if (strcmp(argv[idx], "--req") == 0)
+    {
+      req_mode = 1;
+      break;
+    }
+  }
 
   argv++; argc--;
   for (; argc; )
@@ -675,19 +803,34 @@ int parse_args(int argc, const char* argv[], struct args* args, struct nostr_eve
 
     if (!strcmp(arg, "--help"))
     {
-
+      usage();
     }
 
-    if (!argc)
+    if (!argc && req_mode == 0)
     {
       fprintf(stderr, "expected argument: '%s'\n", arg);
       return 0;
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    // new arguments
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+
     if (!strcmp(arg, "--uri"))
     {
       args->uri = *argv++; argc--;
     }
+
+    else if (!strcmp(arg, "--req"))
+    {
+      args->req = 1;
+      return 1; //no more arguments 
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    // original arguments (Note: --envelope is always used) 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+
     else if (!strcmp(arg, "--sec"))
     {
       args->sec = *argv++; argc--;
@@ -832,4 +975,141 @@ int parse_args(int argc, const char* argv[], struct args* args, struct nostr_eve
     args->content = "";
 
   return 1;
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+// make_message
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+int make_message(int argc, const char* argv[], char** json, char** uri)
+{
+  //default URI
+  const char* url = "localhost:8080/nostr";
+  int has_uri = 0;
+
+  //detect URI
+  for (int idx = 1; idx < argc; idx++)
+  {
+    if (strcmp(argv[idx], "--uri") == 0)
+    {
+      has_uri = 1;
+      break;
+    }
+  }
+
+  if (!has_uri)
+  {
+    fprintf(stderr, "using default URI: localhost:8080/nostr\n");
+  }
+
+  struct args args = { 0 };
+  struct nostr_event ev = { 0 };
+  struct key key;
+  secp256k1_context* ctx;
+  if (!init_secp_context(&ctx))
+    return 2;
+  args.uri = url;
+
+  if (!parse_args(argc, argv, &args, &ev))
+  {
+    usage();
+    return 10;
+  }
+
+  //export URI
+  strcpy(*uri, args.uri);
+  args.flags |= HAS_ENVELOPE;
+
+  if (args.tags)
+  {
+    ev.explicit_tags = args.tags;
+  }
+
+  make_event_from_args(&ev, &args);
+
+  if (args.sec)
+  {
+    if (!decode_key(ctx, args.sec, &key))
+    {
+      return 8;
+    }
+  }
+  else
+  {
+    int* difficulty = NULL;
+    if ((args.flags & HAS_DIFFICULTY) && (args.flags & HAS_MINE_PUBKEY))
+    {
+      difficulty = &args.difficulty;
+    }
+
+    if (!generate_key(ctx, &key, difficulty))
+    {
+      fprintf(stderr, "could not generate key\n");
+      return 4;
+    }
+    fprintf(stderr, "secret_key ");
+    print_hex(key.secret, sizeof(key.secret));
+    fprintf(stderr, "\n");
+  }
+
+  if (args.flags & HAS_ENCRYPT)
+  {
+    int kind = args.flags & HAS_KIND ? args.kind : 4;
+    if (!make_encrypted_dm(ctx, &key, &ev, args.encrypt_to, kind))
+    {
+      fprintf(stderr, "error making encrypted dm\n");
+      return 0;
+    }
+  }
+
+  // set the event's pubkey
+  memcpy(ev.pubkey, key.pubkey, 32);
+
+
+  if (args.flags & HAS_DIFFICULTY && !(args.flags & HAS_MINE_PUBKEY))
+  {
+    if (!mine_event(&ev, args.difficulty))
+    {
+      fprintf(stderr, "error when mining id\n");
+      return 22;
+    }
+  }
+  else
+  {
+    if (!generate_event_id(&ev))
+    {
+      fprintf(stderr, "could not generate event id\n");
+      return 5;
+    }
+  }
+
+  if (!sign_event(ctx, &key, &ev))
+  {
+    fprintf(stderr, "could not sign event\n");
+    return 6;
+  }
+
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+  // envelop is either EVENT (req 0) or REQ (req 1). If REQ return
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  if (args.req == 1)
+  {
+    if (!print_request(&ev, json))
+    {
+      fprintf(stderr, "buffer too small\n");
+      return 88;
+    }
+    return 0;
+  }
+
+  if (!print_event(&ev, args.flags & HAS_ENVELOPE, json))
+  {
+    fprintf(stderr, "buffer too small\n");
+    return 88;
+  }
+
+  return 0;
 }

@@ -40,7 +40,8 @@ struct args
   const char* tags;
   const char* content;
   uint64_t created_at;
-  const char* uri;
+  const char* uri; // --uri URI to send
+  int req; // send a REQ with a filter that has the event id of the event you want to check for as the #e tag.
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -90,8 +91,11 @@ extern "C" {
   int generate_event_id(struct nostr_event* ev);
   int sign_event(secp256k1_context* ctx, struct key* key, struct nostr_event* ev);
   int print_event(struct nostr_event* ev, int envelope, char** json);
+  int print_request(struct nostr_event* ev, char** json);
 
+  void usage();
   int parse_args(int argc, const char* argv[], struct args* args, struct nostr_event* ev);
+  int make_message(int argc, const char* argv[], char** json, char** uri);
 #ifdef __cplusplus
 }
 #endif

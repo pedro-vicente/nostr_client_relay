@@ -23,7 +23,9 @@ int main()
   events::start_log();
 
   //wait for server (test locally)
+#if defined _MSC_VER
   std::this_thread::sleep_for(std::chrono::seconds(1));
+#endif
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////
   //send an event

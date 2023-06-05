@@ -4,11 +4,11 @@ Nostr client and relay is a Nostr [https://nostr.com/]  C++ engine that allows t
 
 https://github.com/pedro-vicente/nostr_client_relay
 
-A modified version of Nostril [https://github.com/jb55/nostril] is used for event generation. Att events are enveloped by default (ready to send to the wire)
+A modified version of Nostril [https://github.com/jb55/nostril] is used for event and request generation. All events or requests are enveloped by default (ready to send to the wire)
 
-ATTENTION DEVELOPERS
+**ATTENTION DEVELOPERS**
 
-See BUILDING.md for source code build instructions. The CMake build utility is used. There are 3 modes of build. Default is command line only. To enable desktop and web builds, define at command line 
+See [BUILDING.md](./BUILDING.md) for source code build instructions. The CMake build utility is used. There are 3 modes of build. Default is command line only. To enable desktop and web builds, define at command line 
 
 ```
 -DBUILD_WEB=ON -DBUILD_GUI=ON
@@ -69,42 +69,9 @@ vostro:14:54:27 Closed connection: 0x7ff052004080 code 1000
 - Boost [https://www.boost.org/]
 - Wt [https://www.webtoolkit.eu/wt]
 
-To install dependencies on Mac and Linux
-
-Mac
-
-``` cmd 
-brew install cmake
-brew install openssl
-brew install boost
-```
-
-Linux
-
-``` cmd 
-sudo apt-get install cmake
-sudo apt-get install build-essential libgtk-3-dev 
-sudo apt-get install libssl-dev 
-sudo apt-get install libboost-all-dev
-```
-
-### Building
-
-``` cmd
-./build.cmake.sh
-```
-
-For web
-
-``` cmd
-./build.wt.sh
-./build.cmake.sh
-```
-
 ### Running on web
 
 At command line, for this example having '/home/nostr_client_relay/build/web/nostro_web' as the build executable, do 
-
 
 ```
 /home/nostr_client_relay/build/web/nostro_web --http-address=0.0.0.0 --http-port=8080 --docroot=.

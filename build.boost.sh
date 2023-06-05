@@ -1,5 +1,6 @@
 #!/bin/bash
 
+pushd ext
 pushd boost_1_82_0
 
 if [[ "$OSTYPE" == "msys" ]]; then
@@ -16,6 +17,7 @@ elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
 ./b2 --prefix=. variant=release 
 
 fi
+popd
 popd
 
 #The Boost C++ Libraries were successfully built!
