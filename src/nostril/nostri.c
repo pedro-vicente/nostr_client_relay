@@ -19,7 +19,6 @@
 #include "proof.h"
 #include "nostri.h"
 
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 // usage
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -31,7 +30,11 @@ void usage()
   printf("  OPTIONS\n");
   printf("\n");
   printf("      --uri <string>                  URI to send (e.g 'relay.damus.io', default 'localhost:8080/nostr' for vostro listening)\n");
+  printf("      --rand                          send a RAND request \n");
+  printf("      Request parameters\n");
   printf("      --req                           message is a request (REQ). EVENT parameters are ignored\n");
+  printf("      --id <id>                       event id (hex) to look up on the request; if none a random id is sent\n");
+  printf("      Event parameters (no --req)\n");
   printf("      --content <string>              the content of the note\n");
   printf("      --dm <hex pubkey>               make an encrypted dm to said pubkey. sets kind and tags.\n");
   printf("      --kind <number>                 set kind\n");
@@ -360,155 +363,6 @@ int sign_event(secp256k1_context* ctx, struct key* key, struct nostr_event* ev)
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
-// print_event
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
-int print_event(struct nostr_event* ev, int envelope, char** json)
-{
-  unsigned char buf[102400];
-  char pubkey[65];
-  char id[65];
-  char sig[129];
-  struct cursor cur;
-  int ok;
-
-  ok = hex_encode(ev->id, sizeof(ev->id), id, sizeof(id)) &&
-    hex_encode(ev->pubkey, sizeof(ev->pubkey), pubkey, sizeof(pubkey)) &&
-    hex_encode(ev->sig, sizeof(ev->sig), sig, sizeof(sig));
-
-  assert(ok);
-
-  make_cursor(buf, buf + sizeof(buf), &cur);
-  if (!cursor_push_tags(&cur, ev))
-    return 0;
-
-  char str[1024];
-  char out[102400];
-
-  if (envelope)
-  {
-    sprintf(str, "[\"EVENT\",");
-    strcpy(out, str);
-  }
-
-  sprintf(str, "{\"id\": \"%s\",", id);
-  if (envelope) strcat(out, str);
-  else strcpy(out, str);
-  sprintf(str, "\"pubkey\": \"%s\",", pubkey);
-  strcat(out, str);
-  sprintf(str, "\"created_at\": %" PRIu64 ",", ev->created_at);
-  strcat(out, str);
-  sprintf(str, "\"kind\": %d,", ev->kind);
-  strcat(out, str);
-  sprintf(str, "\"tags\": %.*s,", (int)cursor_len(&cur), cur.start);
-  strcat(out, str);
-
-  reset_cursor(&cur);
-  if (!cursor_push_jsonstr(&cur, ev->content))
-    return 0;
-
-  sprintf(str, "\"content\": %.*s,", (int)cursor_len(&cur), cur.start);
-  strcat(out, str);
-  sprintf(str, "\"sig\": \"%s\"}", sig);
-  strcat(out, str);
-
-  if (envelope)
-  {
-    sprintf(str, "]");
-    strcat(out, str);
-  }
-
-  sprintf(str, "\n");
-  strcat(out, str);
-
-  fprintf(stderr, "%s", out);
-  int len = strlen(out);
-  strcpy(*json, out);
-  return 1;
-}
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-// print_request
-// Clients can send 3 types of messages, which must be JSON arrays, according to the following patterns:
-//
-//    ["EVENT", <event JSON as defined above>], used to publish events.
-//    ["REQ", <subscription_id>, <filters JSON>...], used to request events and subscribe to new updates.
-//    ["CLOSE", <subscription_id>], used to stop previous subscriptions.
-//
-// <subscription_id> is an arbitrary, non-empty string of max length 64 chars, that should be used to represent a subscription.
-//
-// <filters> is a JSON object that determines what events will be sent in that subscription, it can have the following attributes:
-//
-// {
-//  "ids": <a list of event ids or prefixes>,
-//  "authors": <a list of pubkeys or prefixes, the pubkey of an event must be one of these>,
-//  "kinds": <a list of a kind numbers>,
-//  "#e": <a list of event ids that are referenced in an "e" tag>,
-//  "#p": <a list of pubkeys that are referenced in a "p" tag>,
-//  "since": <an integer unix timestamp, events must be newer than this to pass>,
-//  "until": <an integer unix timestamp, events must be older than this to pass>,
-//  "limit": <maximum number of events to be returned in the initial query>
-// }
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
-int print_request(struct nostr_event* ev, char** json)
-{
-  unsigned char buf[102400];
-  char pubkey[65];
-  char id[65];
-  char sig[129];
-  struct cursor cur;
-  int ok;
-
-  ok = hex_encode(ev->id, sizeof(ev->id), id, sizeof(id)) &&
-    hex_encode(ev->pubkey, sizeof(ev->pubkey), pubkey, sizeof(pubkey)) &&
-    hex_encode(ev->sig, sizeof(ev->sig), sig, sizeof(sig));
-
-  assert(ok);
-
-  make_cursor(buf, buf + sizeof(buf), &cur);
-  if (!cursor_push_tags(&cur, ev))
-    return 0;
-
-  char str[1024];
-  char out[102400];
-
-  sprintf(str, "[\"REQ\",");
-  strcpy(out, str);
-  sprintf(str, "\"subscription_nostro\","); //hardcoded subscription_id
-  strcat(out, str);
-
-  //start filter
-  sprintf(str, "{");
-  strcat(out, str);
-
-  //send a REQ with a filter that has the event id of the event you want to check for as the #e tag.
-  sprintf(str, "\"kinds\": [1],");
-  strcat(out, str);
-
-  sprintf(str, "\"ids\": \"%s\"", id);
-  strcat(out, str);
-
-  //end filter
-  sprintf(str, "}");
-  strcat(out, str);
-
-  //always envelop
-  sprintf(str, "]");
-  strcat(out, str);
-
-  sprintf(str, "\n");
-  strcat(out, str);
-
-  fprintf(stderr, "%s", out);
-  int len = strlen(out);
-  strcpy(*json, out);
-  return 1;
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
 // make_event_from_args
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -824,7 +678,16 @@ int parse_args(int argc, const char* argv[], struct args* args, struct nostr_eve
     else if (!strcmp(arg, "--req"))
     {
       args->req = 1;
-      return 1; //no more arguments 
+    }
+
+    else if (!strcmp(arg, "--rand"))
+    {
+      args->rand_req = 1;
+    }
+
+    else if (!strcmp(arg, "--id"))
+    {
+      args->event_id = *argv++; argc--;
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -977,6 +840,142 @@ int parse_args(int argc, const char* argv[], struct args* args, struct nostr_eve
   return 1;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+// print_event
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+int print_event(struct nostr_event* ev, char** json)
+{
+  unsigned char buf[102400];
+  char pubkey[65];
+  char id[65];
+  char sig[129];
+  struct cursor cur;
+  int ok;
+
+  ok = hex_encode(ev->id, sizeof(ev->id), id, sizeof(id)) &&
+    hex_encode(ev->pubkey, sizeof(ev->pubkey), pubkey, sizeof(pubkey)) &&
+    hex_encode(ev->sig, sizeof(ev->sig), sig, sizeof(sig));
+
+  assert(ok);
+
+  make_cursor(buf, buf + sizeof(buf), &cur);
+  if (!cursor_push_tags(&cur, ev))
+    return 0;
+
+  char str[1024];
+  char out[102400];
+
+  sprintf(str, "[\"EVENT\",");
+  strcpy(out, str);
+
+  sprintf(str, "{\"id\": \"%s\",", id);
+  strcat(out, str);
+  sprintf(str, "\"pubkey\": \"%s\",", pubkey);
+  strcat(out, str);
+  sprintf(str, "\"created_at\": %" PRIu64 ",", ev->created_at);
+  strcat(out, str);
+  sprintf(str, "\"kind\": %d,", ev->kind);
+  strcat(out, str);
+  sprintf(str, "\"tags\": %.*s,", (int)cursor_len(&cur), cur.start);
+  strcat(out, str);
+
+  reset_cursor(&cur);
+  if (!cursor_push_jsonstr(&cur, ev->content))
+    return 0;
+
+  sprintf(str, "\"content\": %.*s,", (int)cursor_len(&cur), cur.start);
+  strcat(out, str);
+  sprintf(str, "\"sig\": \"%s\"}", sig);
+  strcat(out, str);
+
+  sprintf(str, "]\n");
+  strcat(out, str);
+
+  fprintf(stderr, "%s", out);
+  int len = strlen(out);
+  strcpy(*json, out);
+  return 1;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+// print_request
+// Clients can send 3 types of messages, which must be JSON arrays, according to the following patterns:
+//
+//    ["EVENT", <event JSON as defined above>], used to publish events.
+//    ["REQ", <subscription_id>, <filters JSON>...], used to request events and subscribe to new updates.
+//    ["CLOSE", <subscription_id>], used to stop previous subscriptions.
+//
+// <subscription_id> is an arbitrary, non-empty string of max length 64 chars, that should be used to represent a subscription.
+//
+// <filters> is a JSON object that determines what events will be sent in that subscription, it can have the following attributes:
+//
+// {
+//  "ids": <a list of event ids or prefixes>,
+//  "authors": <a list of pubkeys or prefixes, the pubkey of an event must be one of these>,
+//  "kinds": <a list of a kind numbers>,
+//  "#e": <a list of event ids that are referenced in an "e" tag>,
+//  "#p": <a list of pubkeys that are referenced in a "p" tag>,
+//  "since": <an integer unix timestamp, events must be newer than this to pass>,
+//  "until": <an integer unix timestamp, events must be older than this to pass>,
+//  "limit": <maximum number of events to be returned in the initial query>
+// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+int print_request(struct nostr_event* ev, struct args* args, char** json)
+{
+  char id[65];
+  char str[1024];
+  char out[102400];
+
+  int limit = 2;
+
+  //["REQ", "RAND", {"kinds": [1], "limit": 2}]
+  if (args->rand_req)
+  {
+    sprintf(str, "[\"REQ\",");
+    strcpy(out, str);
+    sprintf(str, "\"RAND\","); 
+    strcat(out, str);
+    sprintf(str, "{");
+    strcat(out, str);
+    sprintf(str, "\"kinds\": [1], ");
+    strcat(out, str);
+    sprintf(str, "\"limit\": %d", limit);
+    strcat(out, str);
+    sprintf(str, "}]\n");
+    strcat(out, str);
+  }
+  else
+  {
+    sprintf(str, "[\"REQ\",");
+    strcpy(out, str);
+    sprintf(str, "\"subscription_nostro\","); //hardcoded subscription_id
+    strcat(out, str);
+    sprintf(str, "{");
+    strcat(out, str);
+    sprintf(str, "\"kinds\": [1],");
+    strcat(out, str);
+    if (!args->event_id)
+    {
+      int ok = hex_encode(ev->id, sizeof(ev->id), id, sizeof(id));
+      assert(ok);
+    }
+    else
+    {
+      strcpy(id, args->event_id);
+    }
+    sprintf(str, "\"ids\": \"%s\"", id);
+    strcat(out, str);
+    sprintf(str, "}]\n");
+    strcat(out, str);
+  }
+
+  fprintf(stderr, "%s", out);
+  int len = strlen(out);
+  strcpy(*json, out);
+  return 1;
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 // make_message
@@ -1009,6 +1008,7 @@ int make_message(int argc, const char* argv[], char** json, char** uri)
   secp256k1_context* ctx;
   if (!init_secp_context(&ctx))
     return 2;
+
   args.uri = url;
 
   if (!parse_args(argc, argv, &args, &ev))
@@ -1090,22 +1090,20 @@ int make_message(int argc, const char* argv[], char** json, char** uri)
     return 6;
   }
 
-
   /////////////////////////////////////////////////////////////////////////////////////////////////////
   // envelop is either EVENT (req 0) or REQ (req 1). If REQ return
   /////////////////////////////////////////////////////////////////////////////////////////////////////
 
   if (args.req == 1)
   {
-    if (!print_request(&ev, json))
+    if (!print_request(&ev, &args, json))
     {
       fprintf(stderr, "buffer too small\n");
       return 88;
     }
     return 0;
   }
-
-  if (!print_event(&ev, args.flags & HAS_ENVELOPE, json))
+  else if (!print_event(&ev, json))
   {
     fprintf(stderr, "buffer too small\n");
     return 88;

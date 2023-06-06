@@ -10,13 +10,13 @@
 using WssClient = SimpleWeb::SocketClient<SimpleWeb::WSS>;
 std::string log_program_name("nostro");
 std::vector<std::string> store;
+void save(const std::string& name, const std::string& buf);
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 // usage examples
 // ./nostro --uri relay.damus.io --content hello 
 // ./nostro --content hello --sec 7f612229528369d91ddcaae527f097ab4c7cacd0058fa46d5857f74f88ad1a5e 
 // ./nostro --content hello --mine-pubkey --pow 1 
-// ./nostro --uri relay.damus.io --content hello --req --tags 1 (envelop event id on a REQ) 
 // 
 // relays 
 // wss://relay.snort.social
@@ -24,10 +24,12 @@ std::vector<std::string> store;
 // wss://eden.nostr.land
 // wss://nostr-pub.wellorder.net
 // wss://nos.lol
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-// main
+// 
+// real event ids for testing REQ
+// 92cae1df88a32fe9ffa43cf81219404039125b155458885dd083af06b4bd3363 @jack
+// ./nostro --uri relay.snort.social --req --id 92cae1df88a32fe9ffa43cf81219404039125b155458885dd083af06b4bd3363
+// ./nostro --uri relay.damus.io --req --rand
+// 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main(int argc, const char* argv[])
@@ -45,12 +47,7 @@ int main(int argc, const char* argv[])
   std::string uri = url;
   std::string json = buf;
 
-#ifdef _MSC_VER
-  std::ofstream ofs;
-  ofs.open("message.json", std::ofstream::out);
-  ofs << json;
-  ofs.close();
-#endif
+  save("message.json", json);
 
   WssClient client(uri, false);
 
@@ -65,13 +62,7 @@ int main(int argc, const char* argv[])
     ss << "Received: " << "\"" << str << "\"";
     events::log(ss.str());
     store.push_back(str);
-
-#ifdef _MSC_VER
-    std::ofstream ofs;
-    ofs.open("response.txt", std::ofstream::out);
-    ofs << str;
-    ofs.close();
-#endif
+    save("response.txt", str);
 
     connection->send_close(1000);
   };
@@ -132,6 +123,30 @@ int main(int argc, const char* argv[])
     events::log(store.at(idx));
   }
 
+  std::stringstream js;
+  js << "[";
+  for (int idx = 0; idx < store.size(); idx++)
+  {
+    js << store.at(idx);
+    std::string c = (idx < store.size() - 1) ? " ,\n" : "\n";
+    js << c;
+  }
+  js << "]";
+  std::string s = js.rdbuf()->str();
+  save("response.json", s);
+
   free(url);
   free(buf);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+// save
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void save(const std::string& name, const std::string& buf)
+{
+  std::ofstream ofs;
+  ofs.open(name, std::ofstream::out);
+  ofs << buf;
+  ofs.close();
 }

@@ -42,6 +42,8 @@ struct args
   uint64_t created_at;
   const char* uri; // --uri URI to send
   int req; // send a REQ with a filter that has the event id of the event you want to check for as the #e tag.
+  int rand_req; //send a RAND REQ (test)
+  const char* event_id; //event id to look up on REQ
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -90,12 +92,12 @@ extern "C" {
   int mine_event(struct nostr_event* ev, int difficulty);
   int generate_event_id(struct nostr_event* ev);
   int sign_event(secp256k1_context* ctx, struct key* key, struct nostr_event* ev);
-  int print_event(struct nostr_event* ev, int envelope, char** json);
-  int print_request(struct nostr_event* ev, char** json);
+  int print_event(struct nostr_event* ev, char** json);
 
   void usage();
   int parse_args(int argc, const char* argv[], struct args* args, struct nostr_event* ev);
   int make_message(int argc, const char* argv[], char** json, char** uri);
+  int print_request(struct nostr_event* ev, struct args* args, char** json);
 #ifdef __cplusplus
 }
 #endif

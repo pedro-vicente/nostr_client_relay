@@ -121,7 +121,7 @@ int main(int argc, const char* argv[])
   }
 
   char* json = malloc(102400);
-  if (!print_event(&ev, args.flags & HAS_ENVELOPE, &json))
+  if (!print_event(&ev, &json))
   {
     fprintf(stderr, "buffer too small\n");
     return 88;

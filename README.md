@@ -8,51 +8,41 @@ A modified version of Nostril [https://github.com/jb55/nostril] is used for even
 
 **ATTENTION DEVELOPERS**
 
-See [BUILDING.md](./BUILDING.md) for source code build instructions. The CMake build utility is used. There are 3 modes of build. Default is command line only. To enable desktop and web builds, define at command line 
-
-```
--DBUILD_WEB=ON -DBUILD_GUI=ON
-
-```
+See [BUILDING.md](./BUILDING.md) for source code build instructions. There are 3 non exclusive modes of build (command line, desktop and web). Default is command line only.
 
 ## Nostro and Vostro
 
-Nostro and Vostro are command line client and relay programs. 
+Nostro and Vostro are command line client and relay programs. Start a shell with 'nostro' and another shell with 'vostro'. Vostro is currently an echo server. Nostro allows to connect to Vostro on localhost (no --uri parameter) or to any publicly available Nostr relay. 
 
-### Test client and server
+## Usage
 
-Start a shell with 'nostro' and another shell with 'vostro'. Vostro is currently an echo server. Nostro allows to connect to Vostro on localhost (no parameters) or to any publically available Nostr relay. 
+### Requests
 
-
-```
-./nostro -u relay.damus.io
-nostro:14:47:49 Opened connection: HTTP 1.1 , code 101 Switching Protocols
-nostro:14:47:49 Sending: "["REQ", "RAND", {"kinds": [1], "limit": 1}]"
-nostro:14:47:49 Received: "["EVENT","RAND",{"content":"\nhttps://i.imgur.com/Zqo4RR8.jpg\n#Photography #photostr #blackwhite #plebchain #travel ","created_at":1684867664,"id":"837b42932e5c163a829de1a8b2e8b7234e0dca78b13a0bbeccd03b055fb6e2ef","kind":1,"pubkey":"f96c3d76497074c4c83a7b3823380e77dc73d5a9494fd2e053e4a1453e17824b","sig":"a3b1a74d9d6adc50451c513b30082cbbbef969bd08a9b65e972dc5daf15e9b869f56e39ce11477fe16ad8e4ab5666439be2e8abdd4ef73d58d87c424114bb63e","tags":[["t","Photography"],["t","photostr"],["t","blackwhite"],["t","plebchain"],["t","travel"],["r","https://i.imgur.com/Zqo4RR8.jpg"]]}]"
-
+Send a REQ with a RAND subscription 
 
 ```
+./nostro --uri relay.damus.io --req --rand
 
-```
-./nostro
-vostro:14:51:26 Opened connection: 0x7f8bbcf06930
-nostro:14:51:26 Opened connection: HTTP 1.1 , code 101 Web Socket Protocol Handshake
-nostro:14:51:26 Sending: "["REQ", "RAND", {"kinds": [1], "limit": 3}]"
-vostro:14:51:26 Server: Message received: "["REQ", "RAND", {"kinds": [1], "limit": 3}]" from 0x7f8bbcf06930
-nostro:14:51:26 Received: "["REQ", "RAND", {"kinds": [1], "limit": 3}]"
-vostro:14:51:26 Closed connection: 0x7f8bbcf06930 code 1000
-nostro:14:51:26 Closed: 1000
-nostro:14:51:26 Received 1 messages: 
-nostro:14:51:26 ["REQ", "RAND", {"kinds": [1], "limit": 3}]
-
+["REQ","RAND",{"kinds": [1], "limit": 2}]
 ```
 
+Send a REQ for events with event id (if no id, a random id is generated) 
+
 ```
-./vostro
-vostro:14:54:13 Listening on port: 8080
-vostro:14:54:27 Opened connection: 0x7ff052004080
-vostro:14:54:27 Server: Message received: "["REQ", "RAND", {"kinds": [1], "limit": 3}]" from 0x7ff052004080
-vostro:14:54:27 Closed connection: 0x7ff052004080 code 1000
+./nostro --uri relay.snort.social --req --id 92cae1df88a32fe9ffa43cf81219404039125b155458885dd083af06b4bd3363
+
+["REQ","subscription_nostro",{"kinds": [1],"ids": "92cae1df88a32fe9ffa43cf81219404039125b155458885dd083af06b4bd3363"}]
+```
+
+### Events
+
+Send an EVENT with content and a public key (if no key, one is generated) 
+
+```
+./nostro --content hello --sec 7f612229528369d91ddcaae527f097ab4c7cacd0058fa46d5857f74f88ad1a5e 
+
+["EVENT",{"id": "a5cd029dfe3098fd2241b92a01162b5a0d398b7c5af5f16d1d9ef2efa1326369","pubkey": "f8d5b589fc116b7171fb0c5d4555b1c27ff4860a6cfbcb4cf2412583312b5a29","created_at": 1686036353,"kind": 1,"tags": [],"content": "hello","sig": "43c5c7b1fdc9077ec4bdc5beb3c4346188a86d42f5eab879b890d57b82a65bfb365044fc0f3a750c9d07250e4151dd346fa1d11d2599a5739483aeebcc213c75"}]
+
 ```
 
 ### Dependencies
