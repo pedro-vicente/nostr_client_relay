@@ -1,0 +1,5 @@
+[submodule "ext/boost_1_82_0"]
+	path = ext/boost_1_82_0
+	url = git@github.com:boostorg/boost.git
+	branch = boost-1.82.0
+	igmore = dirty

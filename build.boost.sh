@@ -1,5 +1,7 @@
 #!/bin/bash
 
+git submodule update --init --recursive ext/boost_1_82_0
+
 pushd ext
 pushd boost_1_82_0
 
@@ -8,8 +10,8 @@ if [[ "$OSTYPE" == "msys" ]]; then
 ./b2 --prefix=.  --layout=versioned --toolset=msvc-14.3 address-model=64 architecture=x86 variant=debug threading=multi link=static runtime-link=shared install
 elif [[ "$OSTYPE" == "darwin"* ]]; then
 
-./bootstrap.sh
-./b2 --prefix=. variant=release 
+./bootstrap.sh --prefix=`pwd`
+./b2 --prefix=`pwd` variant=release headers
 
 elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
 
