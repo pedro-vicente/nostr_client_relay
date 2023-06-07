@@ -1,7 +1,6 @@
 #!/bin/bash
 
 git clone --recursive --depth=1 https://github.com/boostorg/boost.git ext/boost_1_82_0
-git checkout boost-1.82.0
 sleep 5
 
 pushd ext
