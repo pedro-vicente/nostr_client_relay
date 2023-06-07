@@ -1,6 +1,8 @@
 #!/bin/bash
 
-git submodule update --init --recursive ext/boost_1_82_0
+git clone --recursive --depth=1 https://github.com/boostorg/boost.git ext/boost_1_82_0
+git checkout boost-1.82.0
+sleep 5
 
 pushd ext
 pushd boost_1_82_0
@@ -8,6 +10,7 @@ pushd boost_1_82_0
 if [[ "$OSTYPE" == "msys" ]]; then
 ./bootstrap.bat
 ./b2 --prefix=.  --layout=versioned --toolset=msvc-14.3 address-model=64 architecture=x86 variant=debug threading=multi link=static runtime-link=shared install
+
 elif [[ "$OSTYPE" == "darwin"* ]]; then
 
 ./bootstrap.sh --prefix=`pwd`
