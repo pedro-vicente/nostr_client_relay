@@ -629,8 +629,9 @@ int make_encrypted_dm(secp256k1_context* ctx, struct key* key, struct nostr_even
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 // parse_args
 // new arguments are
-// --uri URI
-// --req 
+// --uri <URI>
+// --req <evend_id>
+// --rand
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 int parse_args(int argc, const char* argv[], struct args* args, struct nostr_event* ev)
@@ -935,7 +936,7 @@ int print_request(struct nostr_event* ev, struct args* args, char** json)
   {
     sprintf(str, "[\"REQ\",");
     strcpy(out, str);
-    sprintf(str, "\"RAND\","); 
+    sprintf(str, "\"RAND\",");
     strcat(out, str);
     sprintf(str, "{");
     strcat(out, str);
@@ -978,10 +979,10 @@ int print_request(struct nostr_event* ev, struct args* args, char** json)
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
-// make_message
+// make_message_from_args
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-int make_message(int argc, const char* argv[], char** json, char** uri)
+int make_message_from_args(int argc, const char* argv[], char** json, char** uri)
 {
   //default URI
   const char* url = "localhost:8080/nostr";
@@ -999,15 +1000,11 @@ int make_message(int argc, const char* argv[], char** json, char** uri)
 
   if (!has_uri)
   {
-    fprintf(stderr, "using default URI: localhost:8080/nostr\n");
+    fprintf(stderr, "using default URI: %s\n", url);
   }
 
   struct args args = { 0 };
   struct nostr_event ev = { 0 };
-  struct key key;
-  secp256k1_context* ctx;
-  if (!init_secp_context(&ctx))
-    return 2;
 
   args.uri = url;
 
@@ -1017,20 +1014,34 @@ int make_message(int argc, const char* argv[], char** json, char** uri)
     return 10;
   }
 
-  //export URI
+  //export URI taken from arguments
   strcpy(*uri, args.uri);
-  args.flags |= HAS_ENVELOPE;
 
-  if (args.tags)
+  return make_message(&args, &ev, json);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+// make_message
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+int make_message(struct args* args, struct nostr_event* ev, char** json)
+{
+  struct key key;
+  secp256k1_context* ctx;
+  if (!init_secp_context(&ctx))
+    return 2;
+
+  args->flags |= HAS_ENVELOPE;
+  if (args->tags)
   {
-    ev.explicit_tags = args.tags;
+    ev->explicit_tags = args->tags;
   }
 
-  make_event_from_args(&ev, &args);
+  make_event_from_args(ev, args);
 
-  if (args.sec)
+  if (args->sec)
   {
-    if (!decode_key(ctx, args.sec, &key))
+    if (!decode_key(ctx, args->sec, &key))
     {
       return 8;
     }
@@ -1038,9 +1049,9 @@ int make_message(int argc, const char* argv[], char** json, char** uri)
   else
   {
     int* difficulty = NULL;
-    if ((args.flags & HAS_DIFFICULTY) && (args.flags & HAS_MINE_PUBKEY))
+    if ((args->flags & HAS_DIFFICULTY) && (args->flags & HAS_MINE_PUBKEY))
     {
-      difficulty = &args.difficulty;
+      difficulty = &args->difficulty;
     }
 
     if (!generate_key(ctx, &key, difficulty))
@@ -1053,10 +1064,10 @@ int make_message(int argc, const char* argv[], char** json, char** uri)
     fprintf(stderr, "\n");
   }
 
-  if (args.flags & HAS_ENCRYPT)
+  if (args->flags & HAS_ENCRYPT)
   {
-    int kind = args.flags & HAS_KIND ? args.kind : 4;
-    if (!make_encrypted_dm(ctx, &key, &ev, args.encrypt_to, kind))
+    int kind = args->flags & HAS_KIND ? args->kind : 4;
+    if (!make_encrypted_dm(ctx, &key, ev, args->encrypt_to, kind))
     {
       fprintf(stderr, "error making encrypted dm\n");
       return 0;
@@ -1064,12 +1075,11 @@ int make_message(int argc, const char* argv[], char** json, char** uri)
   }
 
   // set the event's pubkey
-  memcpy(ev.pubkey, key.pubkey, 32);
+  memcpy(ev->pubkey, key.pubkey, 32);
 
-
-  if (args.flags & HAS_DIFFICULTY && !(args.flags & HAS_MINE_PUBKEY))
+  if (args->flags & HAS_DIFFICULTY && !(args->flags & HAS_MINE_PUBKEY))
   {
-    if (!mine_event(&ev, args.difficulty))
+    if (!mine_event(ev, args->difficulty))
     {
       fprintf(stderr, "error when mining id\n");
       return 22;
@@ -1077,14 +1087,14 @@ int make_message(int argc, const char* argv[], char** json, char** uri)
   }
   else
   {
-    if (!generate_event_id(&ev))
+    if (!generate_event_id(ev))
     {
       fprintf(stderr, "could not generate event id\n");
       return 5;
     }
   }
 
-  if (!sign_event(ctx, &key, &ev))
+  if (!sign_event(ctx, &key, ev))
   {
     fprintf(stderr, "could not sign event\n");
     return 6;
@@ -1094,16 +1104,16 @@ int make_message(int argc, const char* argv[], char** json, char** uri)
   // envelop is either EVENT (req 0) or REQ (req 1). If REQ return
   /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  if (args.req == 1)
+  if (args->req == 1)
   {
-    if (!print_request(&ev, &args, json))
+    if (!print_request(ev, args, json))
     {
       fprintf(stderr, "buffer too small\n");
       return 88;
     }
     return 0;
   }
-  else if (!print_event(&ev, json))
+  else if (!print_event(ev, json))
   {
     fprintf(stderr, "buffer too small\n");
     return 88;

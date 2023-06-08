@@ -96,7 +96,8 @@ extern "C" {
 
   void usage();
   int parse_args(int argc, const char* argv[], struct args* args, struct nostr_event* ev);
-  int make_message(int argc, const char* argv[], char** json, char** uri);
+  int make_message_from_args(int argc, const char* argv[], char** json, char** uri);
+  int make_message(struct args* args, struct nostr_event* ev, char** json);
   int print_request(struct nostr_event* ev, struct args* args, char** json);
 #ifdef __cplusplus
 }

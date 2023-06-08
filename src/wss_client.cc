@@ -39,7 +39,7 @@ int main(int argc, const char* argv[])
   char* url = (char*)malloc(1024);
   events::start_log();
 
-  if (make_message(argc, argv, &buf, &url) < 0)
+  if (make_message_from_args(argc, argv, &buf, &url) < 0)
   {
     return 0;
   }

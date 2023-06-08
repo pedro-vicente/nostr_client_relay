@@ -8,6 +8,7 @@
 #include <Wt/WTextArea.h>
 #include <Wt/WHBoxLayout.h>
 #include <Wt/WVBoxLayout.h>
+#include <Wt/WCheckBox.h>
 
 #include "client_wss.hpp"
 #include <future>
@@ -25,6 +26,9 @@ std::vector<std::string> message_recv;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //NostroApplication
+// real event ids for testing REQ
+// ./nostro --uri relay.snort.social --req --id 92cae1df88a32fe9ffa43cf81219404039125b155458885dd083af06b4bd3363
+// ./nostro --uri relay.damus.io --req --rand
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 class NostroApplication : public Wt::WApplication
@@ -38,15 +42,16 @@ private:
   Wt::WTextArea* m_area_output;
   Wt::WLineEdit* m_edit_uri;
   Wt::WLineEdit* m_edit_key;
-  void send();
-  void generate();
+  Wt::WLineEdit* m_edit_event_id;
+  Wt::WCheckBox* m_check_request;
+  void send_message();
+  void make_message();
 };
-
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //main
-// --docroot=. --http-address=0.0.0.0 --http-port=80 
-// --docroot=. --https-address=0.0.0.0 --ssl-certificate=server.crt --ssl-private-key=server.key --ssl-tmp-dh=dh2048.pem 
+// --docroot=. --http-port=80 --http-address=0.0.0.0 
+// --docroot=. --https-port=4430 --https-address=0.0.0.0 --ssl-certificate=server.crt --ssl-private-key=server.key --ssl-tmp-dh=dh2048.pem 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 std::unique_ptr<Wt::WApplication> create_application(const Wt::WEnvironment& env)
@@ -80,6 +85,7 @@ NostroApplication::NostroApplication(const Wt::WEnvironment& env)
   : WApplication(env)
 {
   setTitle("Nostro");
+  const int width = 500;
 
   auto container = std::make_unique<Wt::WContainerWidget>();
   auto box_main = container->setLayout(std::make_unique<Wt::WHBoxLayout>());
@@ -91,7 +97,7 @@ NostroApplication::NostroApplication(const Wt::WEnvironment& env)
   /////////////////////////////////////////////////////////////////////////////////////////////////////
 
   std::string local = "localhost:8080/nostr";
-  std::string uri = "relay.damus.io";
+  std::string uri = "relay.snort.social";
 
   box_left->addWidget(std::make_unique<Wt::WText>("Relay Uri"));
   m_edit_uri = box_left->addWidget(std::make_unique<Wt::WLineEdit>());
@@ -101,19 +107,32 @@ NostroApplication::NostroApplication(const Wt::WEnvironment& env)
 
   box_left->addWidget(std::make_unique<Wt::WText>("Public Key"));
   m_edit_key = box_left->addWidget(std::make_unique<Wt::WLineEdit>());
-  m_edit_key->setWidth(500);
+  m_edit_key->setWidth(width);
 
-  box_left->addWidget(std::make_unique<Wt::WBreak>());
   box_left->addWidget(std::make_unique<Wt::WText>("Content"));
 
   m_area_content = box_left->addWidget(std::make_unique<Wt::WTextArea>());
   m_area_content->setInline(false);
-  m_area_content->setColumns(100);
-  m_area_content->resize(Wt::WLength::Auto, 200);
+  m_area_content->setColumns(50);
+  m_area_content->resize(Wt::WLength::Auto, 100);
   m_area_content->setFocus();
 
-  box_left->addWidget(std::make_unique<Wt::WBreak>());
-  box_left->addWidget(std::make_unique<Wt::WText>("Event"));
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+  //request
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  m_check_request = box_left->addWidget(std::make_unique<Wt::WCheckBox>("Request"));
+  m_check_request->setChecked(true);
+
+  box_left->addWidget(std::make_unique<Wt::WText>("Event id"));
+  m_edit_event_id = box_left->addWidget(std::make_unique<Wt::WLineEdit>());
+  m_edit_event_id->setWidth(width);
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+  //generated message
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  box_left->addWidget(std::make_unique<Wt::WText>("Message"));
 
   m_area_input = box_left->addWidget(std::make_unique<Wt::WTextArea>());
   m_area_input->setInline(false);
@@ -128,8 +147,8 @@ NostroApplication::NostroApplication(const Wt::WEnvironment& env)
   /////////////////////////////////////////////////////////////////////////////////////////////////////
 
   auto hbox_buttons = box_left->addLayout(std::make_unique<Wt::WHBoxLayout>());
-  auto button_gen = hbox_buttons->addWidget(std::make_unique<Wt::WPushButton>("Generate event"));
-  auto button_send = hbox_buttons->addWidget(std::make_unique<Wt::WPushButton>("Send event"));
+  auto button_gen = hbox_buttons->addWidget(std::make_unique<Wt::WPushButton>("Generate message"));
+  auto button_send = hbox_buttons->addWidget(std::make_unique<Wt::WPushButton>("Send message"));
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////
   //output, right
@@ -138,20 +157,20 @@ NostroApplication::NostroApplication(const Wt::WEnvironment& env)
   m_area_output = box_right->addWidget(std::make_unique<Wt::WTextArea>());
   m_area_output->setInline(false);
   m_area_output->setColumns(100);
-  m_area_output->resize(Wt::WLength::Auto, 400);
+  m_area_output->resize(Wt::WLength::Auto, 600);
   m_area_output->setReadOnly(true);
 
-  button_send->clicked().connect(this, &NostroApplication::send);
-  button_gen->clicked().connect(this, &NostroApplication::generate);
+  button_send->clicked().connect(this, &NostroApplication::send_message);
+  button_gen->clicked().connect(this, &NostroApplication::make_message);
   root()->addWidget(std::move(container));
 }
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
-//NostroApplication::send
+//NostroApplication::send_message
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void NostroApplication::send()
+void NostroApplication::send_message()
 {
   Wt::WString uri = m_edit_uri->text();
   WssClient client(uri.toUTF8(), false);
@@ -244,28 +263,18 @@ void NostroApplication::send()
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
-//NostroApplication::generate
+//NostroApplication::make_message
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void NostroApplication::generate()
+void NostroApplication::make_message()
 {
-  std::string message = R"(["REQ", "RAND", {"kinds": [1], "limit": 2}])";
-
   struct args args = { 0 };
   struct nostr_event ev = { 0 };
-  struct key key;
-  secp256k1_context* ctx;
-  if (!init_secp_context(&ctx))
-    return;
-
-  make_event_from_args(&ev, &args);
+  char* json = (char*)malloc(102400);
 
   //get content
-  Wt::WString str = m_area_content->text();
-  ev.content = strdup(str.toUTF8().c_str());
-
-  //always envelop (send)
-  args.flags |= HAS_ENVELOPE;
+  Wt::WString content = m_area_content->text();
+  args.content = strdup(content.toUTF8().c_str());
 
   //get key
   Wt::WString sec = m_edit_key->text();
@@ -274,74 +283,21 @@ void NostroApplication::generate()
     args.sec = strdup(sec.toUTF8().c_str());
   }
 
-  if (args.sec)
-  {
-    if (!decode_key(ctx, args.sec, &key))
-    {
-      return;
-    }
-  }
-  else
-  {
-    int* difficulty = NULL;
-    if ((args.flags & HAS_DIFFICULTY) && (args.flags & HAS_MINE_PUBKEY))
-    {
-      difficulty = &args.difficulty;
-    }
+  bool is_req = m_check_request->isChecked();
+  if (is_req) args.req = 1; else args.req = 0;
 
-    if (!generate_key(ctx, &key, difficulty))
-    {
-      fprintf(stderr, "could not generate key\n");
-      return;
-    }
-    fprintf(stderr, "secret_key ");
-    print_hex(key.secret, sizeof(key.secret));
-    fprintf(stderr, "\n");
+  //get event id
+  Wt::WString event_id = m_edit_event_id->text();
+  if (event_id.toUTF8().size() && is_req == true)
+  {
+    args.event_id = strdup(event_id.toUTF8().c_str());
   }
 
-  if (args.flags & HAS_ENCRYPT)
+  if (::make_message(&args, &ev, &json) < 0)
   {
-    int kind = args.flags & HAS_KIND ? args.kind : 4;
-    if (!make_encrypted_dm(ctx, &key, &ev, args.encrypt_to, kind))
-    {
-      fprintf(stderr, "error making encrypted dm\n");
-      return;
-    }
-  }
-
-  // set the event's pubkey
-  memcpy(ev.pubkey, key.pubkey, 32);
-
-  if (args.flags & HAS_DIFFICULTY && !(args.flags & HAS_MINE_PUBKEY))
-  {
-    if (!mine_event(&ev, args.difficulty))
-    {
-      fprintf(stderr, "error when mining id\n");
-      return;
-    }
-  }
-  else
-  {
-    if (!generate_event_id(&ev))
-    {
-      fprintf(stderr, "could not generate event id\n");
-      return;
-    }
-  }
-
-  if (!sign_event(ctx, &key, &ev))
-  {
-    fprintf(stderr, "could not sign event\n");
-    return;
-  }
-
-  char* json = (char*)malloc(102400);
-  if (!print_event(&ev, &json))
-  {
-    fprintf(stderr, "buffer too small\n");
-    return;
   }
 
   std::string out_message = json;
   m_area_input->setText(out_message);
+  free(json);
 }
