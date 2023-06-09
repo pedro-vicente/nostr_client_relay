@@ -9,6 +9,7 @@
 #include <Wt/WHBoxLayout.h>
 #include <Wt/WVBoxLayout.h>
 #include <Wt/WCheckBox.h>
+#include <Wt/WGroupBox.h>
 
 #include "client_wss.hpp"
 #include <future>
@@ -105,15 +106,20 @@ NostroApplication::NostroApplication(const Wt::WEnvironment& env)
   m_edit_uri->setText(uri);
   m_edit_uri->setWidth(200);
 
-  box_left->addWidget(std::make_unique<Wt::WText>("Public Key"));
-  m_edit_key = box_left->addWidget(std::make_unique<Wt::WLineEdit>());
+  auto group_event = box_left->addWidget(std::make_unique<Wt::WGroupBox>("Event"));
+
+  group_event->addWidget(std::make_unique<Wt::WText>("Public Key"));
+  group_event->addWidget(std::make_unique<Wt::WBreak>());
+  m_edit_key = group_event->addWidget(std::make_unique<Wt::WLineEdit>());
   m_edit_key->setWidth(width);
+  group_event->addWidget(std::make_unique<Wt::WBreak>());
 
-  box_left->addWidget(std::make_unique<Wt::WText>("Content"));
+  group_event->addWidget(std::make_unique<Wt::WText>("Content"));
+  group_event->addWidget(std::make_unique<Wt::WBreak>());
 
-  m_area_content = box_left->addWidget(std::make_unique<Wt::WTextArea>());
+  m_area_content = group_event->addWidget(std::make_unique<Wt::WTextArea>());
   m_area_content->setInline(false);
-  m_area_content->setColumns(50);
+  m_area_content->setColumns(100);
   m_area_content->resize(Wt::WLength::Auto, 100);
   m_area_content->setFocus();
 
@@ -121,12 +127,17 @@ NostroApplication::NostroApplication(const Wt::WEnvironment& env)
   //request
   /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  m_check_request = box_left->addWidget(std::make_unique<Wt::WCheckBox>("Request"));
-  m_check_request->setChecked(true);
+  auto group_request = box_left->addWidget(std::make_unique<Wt::WGroupBox>("Request"));
 
-  box_left->addWidget(std::make_unique<Wt::WText>("Event id"));
-  m_edit_event_id = box_left->addWidget(std::make_unique<Wt::WLineEdit>());
+  m_check_request = group_request->addWidget(std::make_unique<Wt::WCheckBox>("Request"));
+  m_check_request->setChecked(true);
+  group_request->addWidget(std::make_unique<Wt::WBreak>());
+
+  group_request->addWidget(std::make_unique<Wt::WText>("Event id"));
+  group_request->addWidget(std::make_unique<Wt::WBreak>());
+  m_edit_event_id = group_request->addWidget(std::make_unique<Wt::WLineEdit>());
   m_edit_event_id->setWidth(width);
+  group_request->addWidget(std::make_unique<Wt::WBreak>());
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////
   //generated message

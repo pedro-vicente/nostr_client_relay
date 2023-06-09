@@ -1,0 +1,3 @@
+build
+/ext/openssl-*/**
+/src/nostril/config.h
