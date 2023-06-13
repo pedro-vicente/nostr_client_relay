@@ -929,7 +929,7 @@ int print_request(struct nostr_event* ev, struct args* args, char** json)
   char str[1024];
   char out[102400];
 
-  int limit = 2;
+  int limit = 5;
 
   //["REQ", "RAND", {"kinds": [1], "limit": 2}]
   if (args->rand_req)

@@ -45,5 +45,10 @@ fi
 cmake --build . --parallel 9
 popd
 pwd
+
+pushd build
+pushd web
+export LD_LIBRARY_PATH=/home/pvn/git/nostr_client_relay/ext/boost_1_82_0/stage/lib:$LD_LIBRARY_PATH
+./nostro_web --http-address=0.0.0.0 --http-port=8080  --docroot=.
 exit
 

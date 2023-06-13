@@ -10,6 +10,7 @@
 #include <Wt/WVBoxLayout.h>
 #include <Wt/WCheckBox.h>
 #include <Wt/WGroupBox.h>
+#include <Wt/WTable.h>
 
 #include "client_wss.hpp"
 #include <future>
@@ -40,11 +41,13 @@ public:
 private:
   Wt::WTextArea* m_area_content;
   Wt::WTextArea* m_area_input;
-  Wt::WTextArea* m_area_output;
   Wt::WLineEdit* m_edit_uri;
   Wt::WLineEdit* m_edit_key;
   Wt::WLineEdit* m_edit_event_id;
   Wt::WCheckBox* m_check_request;
+
+  Wt::WTable* m_table_messages;
+  int m_row;
   void send_message();
   void make_message();
 };
@@ -83,8 +86,10 @@ int main(int argc, char** argv)
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 NostroApplication::NostroApplication(const Wt::WEnvironment& env)
-  : WApplication(env)
+  : WApplication(env), m_row(0)
 {
+  useStyleSheet("nostro.css");
+  root()->setStyleClass("yellow-box");
   setTitle("Nostro");
   const int width = 500;
 
@@ -102,7 +107,6 @@ NostroApplication::NostroApplication(const Wt::WEnvironment& env)
 
   box_left->addWidget(std::make_unique<Wt::WText>("Relay Uri"));
   m_edit_uri = box_left->addWidget(std::make_unique<Wt::WLineEdit>());
-  m_edit_uri->setFocus();
   m_edit_uri->setText(uri);
   m_edit_uri->setWidth(200);
 
@@ -119,9 +123,8 @@ NostroApplication::NostroApplication(const Wt::WEnvironment& env)
 
   m_area_content = group_event->addWidget(std::make_unique<Wt::WTextArea>());
   m_area_content->setInline(false);
-  m_area_content->setColumns(100);
+  m_area_content->setColumns(80);
   m_area_content->resize(Wt::WLength::Auto, 100);
-  m_area_content->setFocus();
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////
   //request
@@ -165,11 +168,9 @@ NostroApplication::NostroApplication(const Wt::WEnvironment& env)
   //output, right
   /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  m_area_output = box_right->addWidget(std::make_unique<Wt::WTextArea>());
-  m_area_output->setInline(false);
-  m_area_output->setColumns(100);
-  m_area_output->resize(Wt::WLength::Auto, 600);
-  m_area_output->setReadOnly(true);
+  m_table_messages = box_right->addWidget(std::make_unique<Wt::WTable>());;
+  m_table_messages->resize(1000, Wt::WLength::Auto);
+  m_table_messages->setStyleClass("table_messages");
 
   button_send->clicked().connect(this, &NostroApplication::send_message);
   button_gen->clicked().connect(this, &NostroApplication::make_message);
@@ -204,9 +205,10 @@ void NostroApplication::send_message()
     for (int idx = 0; idx < message_recv.size(); idx++)
     {
       buf += message_recv.at(idx);
-
     }
-    m_area_output->setText(buf);
+    
+    m_table_messages->elementAt(m_row, 0)->addNew<Wt::WText>(str);
+    m_row++;
 
     connection->send_close(1000);
   };
@@ -228,6 +230,9 @@ void NostroApplication::send_message()
     ss.clear();
     ss << "Sending: \"" << out_message << "\"";
     events::log(ss.str());
+
+    m_table_messages->clear();
+    m_row = 0;
 
     connection->send(out_message);
   };
@@ -302,6 +307,12 @@ void NostroApplication::make_message()
   if (event_id.toUTF8().size() && is_req == true)
   {
     args.event_id = strdup(event_id.toUTF8().c_str());
+  }
+
+  int rand_req = 0;
+  if (rand_req)
+  {
+    args.rand_req = 1;
   }
 
   if (::make_message(&args, &ev, &json) < 0)
