@@ -11,6 +11,9 @@
 #include <Wt/WCheckBox.h>
 #include <Wt/WGroupBox.h>
 #include <Wt/WTable.h>
+#include <Wt/WButtonGroup.h>
+#include <Wt/WRadioButton.h>
+#include <Wt/WTemplate.h>
 
 #include "client_wss.hpp"
 #include <future>
@@ -44,7 +47,7 @@ private:
   Wt::WLineEdit* m_edit_uri;
   Wt::WLineEdit* m_edit_key;
   Wt::WLineEdit* m_edit_event_id;
-  Wt::WCheckBox* m_check_request;
+  std::shared_ptr<Wt::WButtonGroup> m_button_message;
 
   Wt::WTable* m_table_messages;
   int m_row;
@@ -55,7 +58,6 @@ private:
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //main
 // --docroot=. --http-port=80 --http-address=0.0.0.0 
-// --docroot=. --https-port=4430 --https-address=0.0.0.0 --ssl-certificate=server.crt --ssl-private-key=server.key --ssl-tmp-dh=dh2048.pem 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 std::unique_ptr<Wt::WApplication> create_application(const Wt::WEnvironment& env)
@@ -79,97 +81,105 @@ int main(int argc, char** argv)
   }
 }
 
-
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //NostroApplication
+// CSS layout: by default, the widget corresponds to a <div> tag.
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 NostroApplication::NostroApplication(const Wt::WEnvironment& env)
   : WApplication(env), m_row(0)
 {
   useStyleSheet("nostro.css");
-  root()->setStyleClass("yellow-box");
+  root()->setStyleClass("div_yellow_box");
   setTitle("Nostro");
-  const int width = 500;
 
   auto container = std::make_unique<Wt::WContainerWidget>();
-  auto box_main = container->setLayout(std::make_unique<Wt::WHBoxLayout>());
-  auto box_left = box_main->addLayout(std::make_unique<Wt::WVBoxLayout>());
-  auto box_right = box_main->addLayout(std::make_unique<Wt::WVBoxLayout>());
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////
-  //input, left
+  //input
   /////////////////////////////////////////////////////////////////////////////////////////////////////
 
   std::string local = "localhost:8080/nostr";
   std::string uri = "relay.snort.social";
 
-  box_left->addWidget(std::make_unique<Wt::WText>("Relay Uri"));
-  m_edit_uri = box_left->addWidget(std::make_unique<Wt::WLineEdit>());
+  container->addWidget(std::make_unique<Wt::WText>("Relay wss://"));
+  m_edit_uri = container->addWidget(std::make_unique<Wt::WLineEdit>());
   m_edit_uri->setText(uri);
   m_edit_uri->setWidth(200);
+  m_edit_uri->setMargin(10, Wt::Side::Top | Wt::Side::Bottom | Wt::Side::Right);
 
-  auto group_event = box_left->addWidget(std::make_unique<Wt::WGroupBox>("Event"));
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+  //radion buttons, select EVENT or REQ
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  m_button_message = std::make_shared<Wt::WButtonGroup>();
+  Wt::WRadioButton* button;
+  button = container->addWidget(std::make_unique<Wt::WRadioButton>("Event"));
+  m_button_message->addButton(button);
+  button = container->addWidget(std::make_unique<Wt::WRadioButton>("Request"));
+  m_button_message->addButton(button);
+  m_button_message->setSelectedButtonIndex(1);
+
+  auto container_row = container->addWidget(std::make_unique<Wt::WContainerWidget>());
+  container_row->setStyleClass("row");
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+  //EVENT
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  auto group_event = container_row->addWidget(std::make_unique<Wt::WGroupBox>("Event"));
+  group_event->setStyleClass("col");
 
   group_event->addWidget(std::make_unique<Wt::WText>("Public Key"));
   group_event->addWidget(std::make_unique<Wt::WBreak>());
   m_edit_key = group_event->addWidget(std::make_unique<Wt::WLineEdit>());
-  m_edit_key->setWidth(width);
+  m_edit_key->setWidth(500);
   group_event->addWidget(std::make_unique<Wt::WBreak>());
 
   group_event->addWidget(std::make_unique<Wt::WText>("Content"));
   group_event->addWidget(std::make_unique<Wt::WBreak>());
 
   m_area_content = group_event->addWidget(std::make_unique<Wt::WTextArea>());
-  m_area_content->setInline(false);
   m_area_content->setColumns(80);
-  m_area_content->resize(Wt::WLength::Auto, 100);
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////
-  //request
+  //REQ
   /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  auto group_request = box_left->addWidget(std::make_unique<Wt::WGroupBox>("Request"));
-
-  m_check_request = group_request->addWidget(std::make_unique<Wt::WCheckBox>("Request"));
-  m_check_request->setChecked(true);
-  group_request->addWidget(std::make_unique<Wt::WBreak>());
+  auto group_request = container_row->addWidget(std::make_unique<Wt::WGroupBox>("Request"));
+  group_request->setStyleClass("col");
 
   group_request->addWidget(std::make_unique<Wt::WText>("Event id"));
   group_request->addWidget(std::make_unique<Wt::WBreak>());
   m_edit_event_id = group_request->addWidget(std::make_unique<Wt::WLineEdit>());
-  m_edit_event_id->setWidth(width);
+  m_edit_event_id->setWidth(500);
+
   group_request->addWidget(std::make_unique<Wt::WBreak>());
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////
   //generated message
   /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  box_left->addWidget(std::make_unique<Wt::WText>("Message"));
+  container->addWidget(std::make_unique<Wt::WText>("Message"));
 
-  m_area_input = box_left->addWidget(std::make_unique<Wt::WTextArea>());
+  m_area_input = container->addWidget(std::make_unique<Wt::WTextArea>());
   m_area_input->setInline(false);
   m_area_input->setColumns(100);
-  m_area_input->resize(Wt::WLength::Auto, 200);
-  m_area_input->setFocus();
 
-  box_left->addWidget(std::make_unique<Wt::WBreak>());
+  container->addWidget(std::make_unique<Wt::WBreak>());
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////
   //buttons
   /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  auto hbox_buttons = box_left->addLayout(std::make_unique<Wt::WHBoxLayout>());
-  auto button_gen = hbox_buttons->addWidget(std::make_unique<Wt::WPushButton>("Generate message"));
-  auto button_send = hbox_buttons->addWidget(std::make_unique<Wt::WPushButton>("Send message"));
+  auto button_gen = container->addWidget(std::make_unique<Wt::WPushButton>("Generate message"));
+  auto button_send = container->addWidget(std::make_unique<Wt::WPushButton>("Send message"));
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////
-  //output, right
+  //message received
   /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  m_table_messages = box_right->addWidget(std::make_unique<Wt::WTable>());;
-  m_table_messages->resize(1000, Wt::WLength::Auto);
+  m_table_messages = container->addWidget(std::make_unique<Wt::WTable>());
   m_table_messages->setStyleClass("table_messages");
 
   button_send->clicked().connect(this, &NostroApplication::send_message);
@@ -206,7 +216,7 @@ void NostroApplication::send_message()
     {
       buf += message_recv.at(idx);
     }
-    
+
     m_table_messages->elementAt(m_row, 0)->addNew<Wt::WText>(str);
     m_row++;
 
@@ -299,17 +309,17 @@ void NostroApplication::make_message()
     args.sec = strdup(sec.toUTF8().c_str());
   }
 
-  bool is_req = m_check_request->isChecked();
-  if (is_req) args.req = 1; else args.req = 0;
+  int id = m_button_message->checkedId();
+  if (id == 1) args.req = 1; else args.req = 0;
 
   //get event id
   Wt::WString event_id = m_edit_event_id->text();
-  if (event_id.toUTF8().size() && is_req == true)
+  if (event_id.toUTF8().size() && id == 1)
   {
     args.event_id = strdup(event_id.toUTF8().c_str());
   }
 
-  int rand_req = 0;
+  int rand_req = 1;
   if (rand_req)
   {
     args.rand_req = 1;

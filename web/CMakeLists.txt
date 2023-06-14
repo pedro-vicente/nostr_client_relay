@@ -58,4 +58,5 @@ target_link_libraries (nostro_web ${lib_web})
 
 
 message(STATUS "Copying data files to: ${CMAKE_BINARY_DIR}/web")
-file(COPY "${CMAKE_SOURCE_DIR}/resources/nostro.css" DESTINATION ${CMAKE_BINARY_DIR}/web)
+file(COPY "${CMAKE_SOURCE_DIR}/nostro.css" DESTINATION ${CMAKE_BINARY_DIR}/web)
+add_custom_target(css SOURCES ${CMAKE_BINARY_DIR}/web/nostro.css)
