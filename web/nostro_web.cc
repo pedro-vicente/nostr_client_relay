@@ -28,6 +28,7 @@ using WssClient = SimpleWeb::SocketClient<SimpleWeb::WSS>;
 std::string log_program_name("nostro_web");
 std::vector<std::string> store;
 std::vector<std::string> message_recv;
+const int mark_div = 1;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //NostroApplication
@@ -53,6 +54,7 @@ private:
   int m_row;
   void send_message();
   void make_message();
+  void row_text(const Wt::WString& s);
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -100,7 +102,10 @@ NostroApplication::NostroApplication(const Wt::WEnvironment& env)
   /////////////////////////////////////////////////////////////////////////////////////////////////////
 
   std::string local = "localhost:8080/nostr";
-  std::string uri = "relay.snort.social";
+  std::vector<std::string> relay = { "relay.snort.social",
+   "relay.damus.io",
+   "nostr.pleb.network" };
+  std::string uri = relay[2];
 
   container->addWidget(std::make_unique<Wt::WText>("Relay wss://"));
   m_edit_uri = container->addWidget(std::make_unique<Wt::WLineEdit>());
@@ -128,7 +133,7 @@ NostroApplication::NostroApplication(const Wt::WEnvironment& env)
   /////////////////////////////////////////////////////////////////////////////////////////////////////
 
   auto group_event = container_row->addWidget(std::make_unique<Wt::WGroupBox>("Event"));
-  group_event->setStyleClass("col");
+  if (mark_div) group_event->setStyleClass("col");
 
   group_event->addWidget(std::make_unique<Wt::WText>("Public Key"));
   group_event->addWidget(std::make_unique<Wt::WBreak>());
@@ -147,12 +152,13 @@ NostroApplication::NostroApplication(const Wt::WEnvironment& env)
   /////////////////////////////////////////////////////////////////////////////////////////////////////
 
   auto group_request = container_row->addWidget(std::make_unique<Wt::WGroupBox>("Request"));
-  group_request->setStyleClass("col");
+  if (mark_div) group_request->setStyleClass("col");
 
   group_request->addWidget(std::make_unique<Wt::WText>("Event id"));
   group_request->addWidget(std::make_unique<Wt::WBreak>());
   m_edit_event_id = group_request->addWidget(std::make_unique<Wt::WLineEdit>());
   m_edit_event_id->setWidth(500);
+  if (mark_div) m_edit_event_id->setText("d75d56b2141b12be96421fc5c913092cda06904208ef798b51a28f1c906bbab7");
 
   group_request->addWidget(std::make_unique<Wt::WBreak>());
 
@@ -164,7 +170,7 @@ NostroApplication::NostroApplication(const Wt::WEnvironment& env)
 
   m_area_input = container->addWidget(std::make_unique<Wt::WTextArea>());
   m_area_input->setInline(false);
-  m_area_input->setColumns(100);
+  m_area_input->setColumns(200);
 
   container->addWidget(std::make_unique<Wt::WBreak>());
 
@@ -217,7 +223,11 @@ void NostroApplication::send_message()
       buf += message_recv.at(idx);
     }
 
-    m_table_messages->elementAt(m_row, 0)->addNew<Wt::WText>(str);
+    Wt::WText* wtext = m_table_messages->elementAt(m_row, 0)->addNew<Wt::WText>(str);
+    wtext->clicked().connect([=]()
+      {
+        row_text(wtext->text());
+      });
     m_row++;
 
     connection->send_close(1000);
@@ -319,7 +329,7 @@ void NostroApplication::make_message()
     args.event_id = strdup(event_id.toUTF8().c_str());
   }
 
-  int rand_req = 1;
+  int rand_req = 0;
   if (rand_req)
   {
     args.rand_req = 1;
@@ -332,4 +342,15 @@ void NostroApplication::make_message()
   std::string out_message = json;
   m_area_input->setText(out_message);
   free(json);
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+//NostroApplication::make_message
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void NostroApplication::row_text(const Wt::WString& s)
+{
+
+
 }

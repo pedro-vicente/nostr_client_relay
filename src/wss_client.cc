@@ -7,6 +7,10 @@
 #include "message.hh"
 #include "database.hh"
 
+#ifdef _MSC_VER
+#pragma warning(disable: 6387)
+#endif
+
 using WssClient = SimpleWeb::SocketClient<SimpleWeb::WSS>;
 std::string log_program_name("nostro");
 std::vector<std::string> store;
@@ -29,22 +33,35 @@ void save(const std::string& name, const std::string& buf);
 // 92cae1df88a32fe9ffa43cf81219404039125b155458885dd083af06b4bd3363 @jack
 // ./nostro --uri relay.snort.social --req --id 92cae1df88a32fe9ffa43cf81219404039125b155458885dd083af06b4bd3363
 // ./nostro --uri relay.damus.io --req --rand
-// 
+// ./nostro --uri nostr.pleb.network --req --id d75d56b2141b12be96421fc5c913092cda06904208ef798b51a28f1c906bbab7
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main(int argc, const char* argv[])
 {
+  std::string relay_vostro = "localhost:8080/nostr";
   std::string message = R"(["REQ", "RAND", {"kinds": [1], "limit": 2}])";
+  std::vector<std::string> relay = { "relay.snort.social",
+    "relay.damus.io",
+    "nostr.pleb.network" };
   char* buf = (char*)malloc(102400);
-  char* url = (char*)malloc(1024);
+  struct args args = { 0 };
+  struct nostr_event ev = { 0 };
+
   events::start_log();
 
-  if (make_message_from_args(argc, argv, &buf, &url) < 0)
+  if (!parse_args(argc, argv, &args, &ev))
+  {
+    usage();
+    return 10;
+  }
+
+  if (make_message(&args, &ev, &buf) < 0)
   {
     return 0;
   }
 
-  std::string uri = url;
+  std::string uri(args.uri);
+  uri = relay[0];
   std::string json = buf;
 
   save("message.json", json);
@@ -135,7 +152,6 @@ int main(int argc, const char* argv[])
   std::string s = js.rdbuf()->str();
   save("response.json", s);
 
-  free(url);
   free(buf);
 }
 

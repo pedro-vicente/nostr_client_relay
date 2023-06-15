@@ -966,7 +966,7 @@ int print_request(struct nostr_event* ev, struct args* args, char** json)
     {
       strcpy(id, args->event_id);
     }
-    sprintf(str, "\"ids\": \"%s\"", id);
+    sprintf(str, "\"ids\": [\"%s\"]", id); //"ids" must be an array (only 1 element)
     strcat(out, str);
     sprintf(str, "}]\n");
     strcat(out, str);
@@ -976,48 +976,6 @@ int print_request(struct nostr_event* ev, struct args* args, char** json)
   int len = strlen(out);
   strcpy(*json, out);
   return 1;
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-// make_message_from_args
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
-int make_message_from_args(int argc, const char* argv[], char** json, char** uri)
-{
-  //default URI
-  const char* url = "localhost:8080/nostr";
-  int has_uri = 0;
-
-  //detect URI
-  for (int idx = 1; idx < argc; idx++)
-  {
-    if (strcmp(argv[idx], "--uri") == 0)
-    {
-      has_uri = 1;
-      break;
-    }
-  }
-
-  if (!has_uri)
-  {
-    fprintf(stderr, "using default URI: %s\n", url);
-  }
-
-  struct args args = { 0 };
-  struct nostr_event ev = { 0 };
-
-  args.uri = url;
-
-  if (!parse_args(argc, argv, &args, &ev))
-  {
-    usage();
-    return 10;
-  }
-
-  //export URI taken from arguments
-  strcpy(*uri, args.uri);
-
-  return make_message(&args, &ev, json);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////

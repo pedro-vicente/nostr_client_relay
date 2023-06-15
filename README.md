@@ -61,14 +61,17 @@ Send an EVENT with content and a public key (if no key, one is generated)
 
 ### Running on web
 
-At command line, for this example having '/home/nostr_client_relay/build/web/nostro_web' as the build executable, do 
+At command line
 
 ```
-/home/nostr_client_relay/build/web/nostro_web --http-address=0.0.0.0 --http-port=8080 --docroot=.
+/nostro_web --http-address=0.0.0.0 --http-port=8080 --docroot=.
 ```
 
-Open a browser at localhost port 80 
+Open a browser at localhost port 8080
 
 ```
 http://127.0.0.1/8080
 ```
+
+![Nostro on the web](https://pedro-vicente.net/images/nostro.png)
+
