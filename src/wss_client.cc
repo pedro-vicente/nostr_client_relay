@@ -61,7 +61,6 @@ int main(int argc, const char* argv[])
   }
 
   std::string uri(args.uri);
-  uri = relay[0];
   std::string json = buf;
 
   save("message.json", json);

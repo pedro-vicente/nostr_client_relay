@@ -29,11 +29,11 @@ void usage()
   printf("\n");
   printf("  OPTIONS\n");
   printf("\n");
-  printf("      --uri <string>                  URI to send (e.g 'relay.damus.io', default 'localhost:8080/nostr' for vostro listening)\n");
+  printf("      --uri <wss URI>                 WSS URI to send (e.g 'relay.damus.io', 'localhost:8080/nostr' for vostro listening)\n");
   printf("      --rand                          send a RAND request \n");
   printf("      Request parameters\n");
   printf("      --req                           message is a request (REQ). EVENT parameters are ignored\n");
-  printf("      --id <id>                       event id (hex) to look up on the request; if none a random id is sent\n");
+  printf("      --id <hex>                      event id (hex) to look up on the request; if none a random id is sent\n");
   printf("      Event parameters (no --req)\n");
   printf("      --content <string>              the content of the note\n");
   printf("      --dm <hex pubkey>               make an encrypted dm to said pubkey. sets kind and tags.\n");

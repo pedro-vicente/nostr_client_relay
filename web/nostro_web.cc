@@ -135,7 +135,7 @@ NostroApplication::NostroApplication(const Wt::WEnvironment& env)
   auto group_event = container_row->addWidget(std::make_unique<Wt::WGroupBox>("Event"));
   if (mark_div) group_event->setStyleClass("col");
 
-  group_event->addWidget(std::make_unique<Wt::WText>("Public Key"));
+  group_event->addWidget(std::make_unique<Wt::WText>("Private Key"));
   group_event->addWidget(std::make_unique<Wt::WBreak>());
   m_edit_key = group_event->addWidget(std::make_unique<Wt::WLineEdit>());
   m_edit_key->setWidth(500);
