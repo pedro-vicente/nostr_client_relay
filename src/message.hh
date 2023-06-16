@@ -5,8 +5,6 @@
 #include <vector>
 #include "nlohmann/json.hpp"
 
-extern const std::string port_relay;
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //event_t
 //The only object type that exists is the event, which has the following format on the wire:
@@ -66,20 +64,7 @@ public:
 void to_json(nlohmann::json& j, const filter_t& s);
 void from_json(const nlohmann::json& j, filter_t& s);
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-//Clients can send 3 types of messages, which must be JSON arrays, according to the following patterns:
-//["EVENT", <event JSON as defined above>], used to publish events.
-//["REQ", <subscription_id>, <filters JSON>...], used to request events and subscribe to new updates.
-//["CLOSE", <subscription_id>], used to stop previous subscriptions.
-//<subscription_id> is an arbitrary, non-empty string of max length 64 chars, that should be used to represent a subscription.
-/////////////////////////////////////////////////////////////////////////////////////////////////////
 
-namespace message
-{
-  std::string hex_string(int len, int to_lower = 0);
-  std::string make_event(const std::string& url_relay);
-  std::string make_request();
-}
 
 #endif
 

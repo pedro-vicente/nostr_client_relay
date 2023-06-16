@@ -47,3 +47,15 @@ std::string events::get_time_now(const std::string& time_format)
   std::string str(buf);
   return str;
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+// events::save_to_file
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void events::save_to_file(const std::string& name, const std::string& buf)
+{
+  std::ofstream ofs;
+  ofs.open(name, std::ofstream::out);
+  ofs << buf;
+  ofs.close();
+}

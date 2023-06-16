@@ -171,6 +171,7 @@ NostroApplication::NostroApplication(const Wt::WEnvironment& env)
   m_area_input = container->addWidget(std::make_unique<Wt::WTextArea>());
   m_area_input->setInline(false);
   m_area_input->setColumns(200);
+  m_area_input->setHeight(200);
 
   container->addWidget(std::make_unique<Wt::WBreak>());
 
@@ -306,7 +307,7 @@ void NostroApplication::make_message()
 {
   struct args args = { 0 };
   struct nostr_event ev = { 0 };
-  char* json = (char*)malloc(102400);
+  char* buf = (char*)malloc(102400);
 
   //get content
   Wt::WString content = m_area_content->text();
@@ -335,13 +336,18 @@ void NostroApplication::make_message()
     args.rand_req = 1;
   }
 
-  if (::make_message(&args, &ev, &json) < 0)
+  //nostril generated JSON
+  if (::make_message(&args, &ev, &buf) < 0)
   {
   }
 
-  std::string out_message = json;
-  m_area_input->setText(out_message);
-  free(json);
+  //format JSON to display
+  nlohmann::json js_message = nlohmann::json::parse(buf);
+  std::string json = js_message.dump(1); //indent level
+  events::save_to_file("send_message.json", json);
+
+  m_area_input->setText(json);
+  free(buf);
 }
 
 

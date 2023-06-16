@@ -13,6 +13,7 @@ std::string log_program_name("http_relay");
 
 int main()
 {
+  const std::string port_relay("2000"); //listens on 2000
   unsigned short port_num = std::atoi(port_relay.c_str());
   events::start_log();
 

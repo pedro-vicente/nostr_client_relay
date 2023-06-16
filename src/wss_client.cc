@@ -14,7 +14,6 @@
 using WssClient = SimpleWeb::SocketClient<SimpleWeb::WSS>;
 std::string log_program_name("nostro");
 std::vector<std::string> store;
-void save(const std::string& name, const std::string& buf);
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 // usage examples
@@ -61,9 +60,13 @@ int main(int argc, const char* argv[])
   }
 
   std::string uri(args.uri);
-  std::string json = buf;
 
-  save("message.json", json);
+  //format JSON to display
+  nlohmann::json js_message = nlohmann::json::parse(buf);
+  std::string json = js_message.dump(1); //indent level
+  events::save_to_file("send_message.json", json);
+
+  events::save_to_file("message.json", json);
 
   WssClient client(uri, false);
 
@@ -78,7 +81,7 @@ int main(int argc, const char* argv[])
     ss << "Received: " << "\"" << str << "\"";
     events::log(ss.str());
     store.push_back(str);
-    save("response.txt", str);
+    events::save_to_file("response.txt", str);
 
     connection->send_close(1000);
   };
@@ -149,19 +152,7 @@ int main(int argc, const char* argv[])
   }
   js << "]";
   std::string s = js.rdbuf()->str();
-  save("response.json", s);
+  events::save_to_file("response.json", s);
 
   free(buf);
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-// save
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
-void save(const std::string& name, const std::string& buf)
-{
-  std::ofstream ofs;
-  ofs.open(name, std::ofstream::out);
-  ofs << buf;
-  ofs.close();
 }
