@@ -30,7 +30,6 @@ const std::string default_author("35d26e4690cbe1");
 using WssClient = SimpleWeb::SocketClient<SimpleWeb::WSS>;
 std::string log_program_name("nostro_web");
 std::vector<std::string> store;
-std::vector<std::string> message_recv;
 const int mark_div = 1;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -59,6 +58,8 @@ private:
   void send_message();
   void make_message();
   void row_text(const Wt::WString& s);
+
+  Wt::WCheckBox* m_check_raw;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -99,11 +100,11 @@ NostroApplication::NostroApplication(const Wt::WEnvironment& env)
   root()->setStyleClass("div_yellow_box");
   setTitle("Nostro");
 
-  auto container = std::make_unique<Wt::WContainerWidget>();
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+  //top container input
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
-  //input
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
+  auto container_top = std::make_unique<Wt::WContainerWidget>();
 
   std::string local = "localhost:8080/nostr";
   std::vector<std::string> relay = { "relay.snort.social",
@@ -111,8 +112,8 @@ NostroApplication::NostroApplication(const Wt::WEnvironment& env)
    "nostr.pleb.network" };
   std::string uri = relay[2];
 
-  container->addWidget(std::make_unique<Wt::WText>("Relay wss://"));
-  m_edit_uri = container->addWidget(std::make_unique<Wt::WLineEdit>());
+  container_top->addWidget(std::make_unique<Wt::WText>("Relay wss://"));
+  m_edit_uri = container_top->addWidget(std::make_unique<Wt::WLineEdit>());
   m_edit_uri->setText(uri);
   m_edit_uri->setWidth(200);
   m_edit_uri->setMargin(10, Wt::Side::Top | Wt::Side::Bottom | Wt::Side::Right);
@@ -123,20 +124,26 @@ NostroApplication::NostroApplication(const Wt::WEnvironment& env)
 
   m_button_message = std::make_shared<Wt::WButtonGroup>();
   Wt::WRadioButton* button;
-  button = container->addWidget(std::make_unique<Wt::WRadioButton>("Event"));
+  button = container_top->addWidget(std::make_unique<Wt::WRadioButton>("Event"));
   m_button_message->addButton(button);
-  button = container->addWidget(std::make_unique<Wt::WRadioButton>("Request"));
+  button = container_top->addWidget(std::make_unique<Wt::WRadioButton>("Request"));
   m_button_message->addButton(button);
   m_button_message->setSelectedButtonIndex(1);
 
-  auto container_row = container->addWidget(std::make_unique<Wt::WContainerWidget>());
-  container_row->setStyleClass("row");
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+  //containers for EVENT and REQ
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  auto container_row = std::make_unique<Wt::WContainerWidget>();
+  auto box_row = container_row->setLayout(std::make_unique<Wt::WHBoxLayout>());
+  auto box_left = box_row->addLayout(std::make_unique<Wt::WVBoxLayout>());
+  auto box_right = box_row->addLayout(std::make_unique<Wt::WVBoxLayout>());
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////
   //EVENT
   /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  auto group_event = container_row->addWidget(std::make_unique<Wt::WGroupBox>("Event"));
+  auto group_event = box_left->addWidget(std::make_unique<Wt::WGroupBox>("Event"));
   if (mark_div) group_event->setStyleClass("col");
 
   group_event->addWidget(std::make_unique<Wt::WText>("Private Key"));
@@ -155,7 +162,7 @@ NostroApplication::NostroApplication(const Wt::WEnvironment& env)
   //REQ
   /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  auto group_request = container_row->addWidget(std::make_unique<Wt::WGroupBox>("Request"));
+  auto group_request = box_right->addWidget(std::make_unique<Wt::WGroupBox>("Request"));
   if (mark_div) group_request->setStyleClass("col");
 
   group_request->addWidget(std::make_unique<Wt::WText>("Event id"));
@@ -170,41 +177,45 @@ NostroApplication::NostroApplication(const Wt::WEnvironment& env)
   m_edit_author = group_request->addWidget(std::make_unique<Wt::WLineEdit>());
   m_edit_author->setWidth(400);
   if (mark_div) m_edit_author->setText(default_author);
-
   group_request->addWidget(std::make_unique<Wt::WBreak>());
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////
   //generated message
   /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  container->addWidget(std::make_unique<Wt::WText>("Message"));
-
-  m_area_input = container->addWidget(std::make_unique<Wt::WTextArea>());
+  auto container_message = std::make_unique<Wt::WContainerWidget>();
+  container_message->addWidget(std::make_unique<Wt::WText>("Message"));
+  m_area_input = container_message->addWidget(std::make_unique<Wt::WTextArea>());
   m_area_input->setInline(false);
-  m_area_input->setColumns(200);
+  m_area_input->setColumns(150);
   m_area_input->setHeight(200);
-
-  container->addWidget(std::make_unique<Wt::WBreak>());
+  container_message->addWidget(std::make_unique<Wt::WBreak>());
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////
   //buttons
   /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  auto button_gen = container->addWidget(std::make_unique<Wt::WPushButton>("Generate message"));
-  auto button_send = container->addWidget(std::make_unique<Wt::WPushButton>("Send message"));
+  auto button_gen = container_message->addWidget(std::make_unique<Wt::WPushButton>("Generate message"));
+  auto button_send = container_message->addWidget(std::make_unique<Wt::WPushButton>("Send message"));
+  m_check_raw = container_message->addNew<Wt::WCheckBox>("Raw message");
+  m_check_raw->setChecked(false);
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////
   //message received
   /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  m_table_messages = container->addWidget(std::make_unique<Wt::WTable>());
+  m_table_messages = container_message->addWidget(std::make_unique<Wt::WTable>());
   m_table_messages->setStyleClass("table_messages");
 
   button_send->clicked().connect(this, &NostroApplication::send_message);
   button_gen->clicked().connect(this, &NostroApplication::make_message);
+
+  auto container = std::make_unique<Wt::WContainerWidget>();
+  container->addWidget(std::move(container_top));
+  container->addWidget(std::move(container_row));
+  container->addWidget(std::move(container_message));
   root()->addWidget(std::move(container));
 }
-
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //NostroApplication::send_message
@@ -225,14 +236,33 @@ void NostroApplication::send_message()
     std::string str = in_message->string();
     ss << "Received: " << "\"" << str << "\"";
     events::log(ss.str());
-
     store.push_back(str);
-    message_recv.push_back(str);
 
-    std::string buf;
-    for (int idx = 0; idx < message_recv.size(); idx++)
+    bool raw_message = m_check_raw->isChecked();
+
+    try
     {
-      buf += message_recv.at(idx);
+      nlohmann::json js_message = nlohmann::json::parse(str);
+      std::string json = js_message.dump(1);
+      events::save_to_file("message.json", json);
+
+      //Relays can send 3 types of messages, which must also be JSON arrays, according to the following patterns:
+      //["EVENT", <subscription_id>, <event JSON as defined above>], used to send events requested by clients.
+      //["EOSE", <subscription_id>], used to indicate the end of stored events and the beginning of events newly received in real - time.
+      //["NOTICE", <message>], used to send human - readable error messages or other things to clients.
+
+      std::string message_type = js_message.at(0);
+      if (message_type.compare("EVENT") == 0)
+      {
+        event_t ev;
+        from_json(js_message.at(2), ev);
+        events::log("event received: " + ev.content);
+        if (raw_message == false) str = ev.content;
+      }
+    }
+    catch (const std::exception& e)
+    {
+      events::log(e.what());
     }
 
     Wt::WText* wtext = m_table_messages->elementAt(m_row, 0)->addNew<Wt::WText>(str);
@@ -278,8 +308,6 @@ void NostroApplication::send_message()
     std::stringstream ss;
     ss << "Closed: " << status;
     events::log(ss.str());
-
-    message_recv.clear();
   };
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -362,11 +390,18 @@ void NostroApplication::make_message()
   }
 
   //format JSON to display
-  nlohmann::json js_message = nlohmann::json::parse(buf);
-  std::string json = js_message.dump(1); //indent level
-  events::save_to_file("send_message.json", json);
+  try
+  {
+    nlohmann::json js_message = nlohmann::json::parse(buf);
+    std::string json = js_message.dump(1);
+    m_area_input->setText(json);
+    events::save_to_file("send_message.json", json);
+  }
+  catch (const std::exception& e)
+  {
+    events::log(e.what());
+  }
 
-  m_area_input->setText(json);
   free(buf);
 }
 

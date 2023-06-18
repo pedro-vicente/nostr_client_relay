@@ -4,7 +4,7 @@ Nostr client and relay is a Nostr [https://nostr.com/]  C++ engine that allows t
 
 https://github.com/pedro-vicente/nostr_client_relay
 
-A modified version of Nostril [https://github.com/jb55/nostril] is used for event and request generation. All events or requests are enveloped by default (ready to send to the wire)
+A modified version of Nostril [https://github.com/jb55/nostril] is used for event and request generation.
 
 **ATTENTION DEVELOPERS**
 
@@ -12,7 +12,8 @@ See [BUILDING.md](./BUILDING.md) for source code build instructions. There are 3
 
 ## Nostro and Vostro
 
-Nostro and Vostro are command line client and relay programs. Start a shell with 'nostro' and another shell with 'vostro'. Vostro is currently an echo server. Nostro allows to connect to Vostro on localhost (no --uri parameter) or to any publicly available Nostr relay. 
+Nostro and Vostro are command line client and relay programs. Start a shell with 'nostro' and another shell with 'vostro'. Vostro is currently an echo server. 
+Nostro allows to connect to Vostro on localhost(localhost:8080/nostr) or to any publicly available Nostr relay. 
 
 ## Options
 
@@ -37,7 +38,7 @@ is set, the generated private key is dumped to standard output and can be stored
 ### REQ options
 
 *--id* `<hex>`  
-  event id (hex) to look up on the request; if none a random id is sent
+  event id (hex) to look up on the request
   
 *--rand*  
   send a RAND request (e.g ["REQ","RAND",{"kinds": [1], "limit": 2}])
@@ -97,10 +98,10 @@ Send a REQ with a RAND subscription
 ]
 ```
 
-Send a REQ for events with event id (if no id, a random id is generated) 
+Send a REQ for event with event id
 
 ```
-./nostro --uri relay.snort.social --req --id d75d56b2141b12be96421fc5c913092cda06904208ef798b51a28f1c906bbab7
+./nostro --req --id d75d56b2141b12be96421fc5c913092cda06904208ef798b51a28f1c906bbab7
 ```
 
 ``` json
@@ -168,7 +169,7 @@ Send an EVENT with content and a private key (if no key, one is generated)
 At command line
 
 ```
-/nostro_web --http-address=0.0.0.0 --http-port=8080 --docroot=.
+./nostro_web --http-address=0.0.0.0 --http-port=8080 --docroot=.
 ```
 
 Open a browser at localhost port 8080
