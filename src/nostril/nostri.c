@@ -33,7 +33,7 @@ void usage()
   printf("      --rand                          send a RAND request \n");
   printf("      Request parameters\n");
   printf("      --req                           message is a request (REQ). EVENT parameters are ignored\n");
-  printf("      --id <hex>                      event id (hex) to look up on the request; if none a random id is sent\n");
+  printf("      --id <hex>                      event id (hex) to look up on the request\n");
   printf("      Event parameters (no --req)\n");
   printf("      --content <string>              the content of the note\n");
   printf("      --dm <hex pubkey>               make an encrypted dm to said pubkey. sets kind and tags.\n");
@@ -624,8 +624,6 @@ int make_encrypted_dm(secp256k1_context* ctx, struct key* key, struct nostr_even
   return 1;
 }
 
-
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 // parse_args
 // new arguments are
@@ -894,13 +892,27 @@ int print_event(struct nostr_event* ev, char** json)
   strcat(out, str);
 
   fprintf(stderr, "%s", out);
-  int len = strlen(out);
   strcpy(*json, out);
   return 1;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 // print_request
+// NIP-01
+// The only object type that exists is the event, which has the following format on the wire:
+// {
+// "id": <32-bytes lowercase hex-encoded sha256 of the serialized event data>,
+// "pubkey" : <32-bytes lowercase hex-encoded public key of the event creator>,
+// "created_at" : <unix timestamp in seconds>,
+// "kind" : <integer>,
+// "tags" : [
+//  ["e", <32 - bytes hex of the id of another event>, <recommended relay URL>],
+//    ["p", <32 - bytes hex of a pubkey>, <recommended relay URL>],
+// ],
+// "content" : <arbitrary string>,
+// "sig" : <64 - bytes hex of the signature of the sha256 hash of the serialized event data, which is the same as the "id" field>
+// }
+// 
 // Clients can send 3 types of messages, which must be JSON arrays, according to the following patterns:
 //
 //    ["EVENT", <event JSON as defined above>], used to publish events.
@@ -923,9 +935,8 @@ int print_event(struct nostr_event* ev, char** json)
 // }
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-int print_request(struct nostr_event* ev, struct args* args, char** json)
+int print_request(struct args* args, char** json)
 {
-  char id[65];
   char str[1024];
   char out[102400];
 
@@ -955,25 +966,45 @@ int print_request(struct nostr_event* ev, struct args* args, char** json)
     strcat(out, str);
     sprintf(str, "{");
     strcat(out, str);
-    sprintf(str, "\"kinds\": [1],");
+    sprintf(str, "\"kinds\": [1]");
     strcat(out, str);
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    // add event id if present 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+
     if (!args->event_id)
     {
-      int ok = hex_encode(ev->id, sizeof(ev->id), id, sizeof(id));
-      assert(ok);
     }
     else
     {
-      strcpy(id, args->event_id);
+      sprintf(str, ","); //add array separator 
+      strcat(out, str);
+      sprintf(str, "\"ids\": [\"%s\"]", args->event_id); //"ids" must be an array (only 1 element)
+      strcat(out, str);
     }
-    sprintf(str, "\"ids\": [\"%s\"]", id); //"ids" must be an array (only 1 element)
-    strcat(out, str);
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    // add author if present (32-bytes lowercase hex-encoded public key)
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    if (!args->author)
+    {
+    }
+    else
+    {
+      sprintf(str, ","); //add array separator 
+      strcat(out, str);
+      sprintf(str, "\"authors\": [\"%s\"]", args->author); //"authors" must be an array (only 1 element)
+      strcat(out, str);
+    }
+
+    //end object and array
     sprintf(str, "}]\n");
     strcat(out, str);
   }
 
   fprintf(stderr, "%s", out);
-  int len = strlen(out);
   strcpy(*json, out);
   return 1;
 }
@@ -1058,13 +1089,27 @@ int make_message(struct args* args, struct nostr_event* ev, char** json)
     return 6;
   }
 
+
   /////////////////////////////////////////////////////////////////////////////////////////////////////
-  // envelop is either EVENT (req 0) or REQ (req 1). If REQ return
+  // author 
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+  if (args->sec)
+  {
+    if (!decode_key(ctx, args->sec, &key))
+    {
+      return 8;
+    }
+  }
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+  // envelop is either EVENT (req 0) or REQ (req 1)
   /////////////////////////////////////////////////////////////////////////////////////////////////////
 
   if (args->req == 1)
   {
-    if (!print_request(ev, args, json))
+    if (!print_request(args, json))
     {
       fprintf(stderr, "buffer too small\n");
       return 88;

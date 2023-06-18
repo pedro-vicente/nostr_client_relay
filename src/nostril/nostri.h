@@ -44,6 +44,7 @@ struct args
   int req; // send a REQ with a filter that has the event id of the event you want to check for as the #e tag.
   int rand_req; //send a RAND REQ (test)
   const char* event_id; //event id to look up on REQ
+  const char* author; //author to look up on REQ
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -97,7 +98,7 @@ extern "C" {
   void usage();
   int parse_args(int argc, const char* argv[], struct args* args, struct nostr_event* ev);
   int make_message(struct args* args, struct nostr_event* ev, char** json);
-  int print_request(struct nostr_event* ev, struct args* args, char** json);
+  int print_request(struct args* args, char** json);
 #ifdef __cplusplus
 }
 #endif

@@ -23,7 +23,7 @@ Nostro either sends an EVENT or a REQ. Some command line options apply only to E
 *--uri* `<wss URI>`  
   WSS URI to send 
   
-*--req* 
+*--req*  
   message is a request (REQ). EVENT parameters are ignored 
   
 *--sec* `<hex seckey>`  
@@ -39,7 +39,7 @@ is set, the generated private key is dumped to standard output and can be stored
 *--id* `<hex>`  
   event id (hex) to look up on the request; if none a random id is sent
   
-*--rand*
+*--rand*  
   send a RAND request (e.g ["REQ","RAND",{"kinds": [1], "limit": 2}])
   
 ### EVENT options
@@ -176,6 +176,14 @@ Open a browser at localhost port 8080
 ```
 http://127.0.0.1/8080
 ```
+### Web interface
+
+The nostro web interface at this time allows input of a limited set of the command line options.
 
 ![Nostro on the web](https://pedro-vicente.net/images/nostro.png)
+
+It is available at
+
+[https://nostro.cloud/]
+
 

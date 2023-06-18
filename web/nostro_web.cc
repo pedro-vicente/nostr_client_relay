@@ -24,6 +24,9 @@
 #include "message.hh"
 #include "database.hh"
 
+//first Nostr relayed event id (06/15/23) 
+const std::string default_event_id("d75d56b2141b12be96421fc5c913092cda06904208ef798b51a28f1c906bbab7");
+const std::string default_author("35d26e4690cbe1");
 using WssClient = SimpleWeb::SocketClient<SimpleWeb::WSS>;
 std::string log_program_name("nostro_web");
 std::vector<std::string> store;
@@ -48,6 +51,7 @@ private:
   Wt::WLineEdit* m_edit_uri;
   Wt::WLineEdit* m_edit_key;
   Wt::WLineEdit* m_edit_event_id;
+  Wt::WLineEdit* m_edit_author;
   std::shared_ptr<Wt::WButtonGroup> m_button_message;
 
   Wt::WTable* m_table_messages;
@@ -138,7 +142,7 @@ NostroApplication::NostroApplication(const Wt::WEnvironment& env)
   group_event->addWidget(std::make_unique<Wt::WText>("Private Key"));
   group_event->addWidget(std::make_unique<Wt::WBreak>());
   m_edit_key = group_event->addWidget(std::make_unique<Wt::WLineEdit>());
-  m_edit_key->setWidth(500);
+  m_edit_key->setWidth(400);
   group_event->addWidget(std::make_unique<Wt::WBreak>());
 
   group_event->addWidget(std::make_unique<Wt::WText>("Content"));
@@ -158,7 +162,14 @@ NostroApplication::NostroApplication(const Wt::WEnvironment& env)
   group_request->addWidget(std::make_unique<Wt::WBreak>());
   m_edit_event_id = group_request->addWidget(std::make_unique<Wt::WLineEdit>());
   m_edit_event_id->setWidth(500);
-  if (mark_div) m_edit_event_id->setText("d75d56b2141b12be96421fc5c913092cda06904208ef798b51a28f1c906bbab7");
+  m_edit_event_id->setInline(false);
+  if (mark_div) m_edit_event_id->setText(default_event_id);
+
+  group_request->addWidget(std::make_unique<Wt::WText>("Author"));
+  group_request->addWidget(std::make_unique<Wt::WBreak>());
+  m_edit_author = group_request->addWidget(std::make_unique<Wt::WLineEdit>());
+  m_edit_author->setWidth(400);
+  if (mark_div) m_edit_author->setText(default_author);
 
   group_request->addWidget(std::make_unique<Wt::WBreak>());
 
@@ -320,18 +331,27 @@ void NostroApplication::make_message()
     args.sec = strdup(sec.toUTF8().c_str());
   }
 
-  int id = m_button_message->checkedId();
-  if (id == 1) args.req = 1; else args.req = 0;
+  //request or event
+  int is_req = m_button_message->checkedId();
+  if (is_req == 1) args.req = 1; else args.req = 0;
 
   //get event id
   Wt::WString event_id = m_edit_event_id->text();
-  if (event_id.toUTF8().size() && id == 1)
+  if (event_id.toUTF8().size() && is_req == 1)
   {
     args.event_id = strdup(event_id.toUTF8().c_str());
   }
 
+  //get event id
+  Wt::WString author = m_edit_author->text();
+  if (author.toUTF8().size() && is_req == 1)
+  {
+    args.author = strdup(author.toUTF8().c_str());
+  }
+
+  //random request 
   int rand_req = 0;
-  if (rand_req)
+  if (rand_req && is_req == 1)
   {
     args.rand_req = 1;
   }

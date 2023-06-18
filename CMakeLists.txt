@@ -10,8 +10,6 @@ option(BUILD_STATIC "BUILD_STATIC" OFF)
 option(BUILD_GUI "BUILD_STATIC" OFF)
 option(BUILD_WEB "BUILD_WEB" OFF)
 option(USE_OPENSSL "set OFF to build without OpenSSL" ON)
-option(WT_ROOT "Use \root location for WT (Linux only)" OFF)
-
 
 if (MSVC)
 if(BUILD_STATIC)
