@@ -1,0 +1,4 @@
+## when binding the repo to an act instance
+## since it is a docker utility
+## it is useful to let act see the repo
+!.git

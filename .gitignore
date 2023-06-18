@@ -1,3 +1,7 @@
 build
 /ext/
 /src/nostril/config.h
+
+**.DS_Store
+
+requirements.txt
