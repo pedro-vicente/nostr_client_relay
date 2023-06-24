@@ -11,10 +11,10 @@
 
 namespace database
 {
-  std::vector<event_t> read();
-  std::vector<event_t> request(const filter_t& filter);
-  int save(const std::vector<event_t>& database);
-  int append(const std::vector<event_t>& database);
+  std::vector<nostr::event_t> read();
+  std::vector<nostr::event_t> request(const nostr::filter_t& filter);
+  int save(const std::vector<nostr::event_t>& database);
+  int append(const std::vector<nostr::event_t>& database);
 }
 
 

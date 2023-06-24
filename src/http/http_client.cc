@@ -9,19 +9,8 @@ using asio::ip::tcp;
 std::string log_program_name("http_client");
 int send(const std::string& host, const std::string& json);
 std::string hex_string(int len, int to_lower = 0);
-std::string make_event(const std::string& url_relay);
+std::string make_event();
 std::string make_request();
-
-namespace request
-{
-  const std::string subscription_id("subscription_1");
-}
-
-namespace event
-{
-  const std::string pubkey("b2b41e936821bb48572c2295ec5f1741");
-  std::string id; //generated 
-}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //main
@@ -48,7 +37,7 @@ int main()
   //send an event
   /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  json = make_event(url_relay);
+  json = make_event();
   if (send(url_relay, json) < 0)
   {
   }
@@ -109,7 +98,7 @@ int send(const std::string& host, const std::string& json)
         nlohmann::json js_events = nlohmann::json::parse(json);
 
         //JSON contains an array of events
-        std::vector<event_t> events = js_events;
+        std::vector<nostr::event_t> events = js_events;
 
         std::stringstream ss;
         ss << "received " << events.size() << " events";
@@ -174,41 +163,40 @@ std::string hex_string(int len, int to_lower)
 //"sig" : <64-bytes hex of the signature of the sha256 hash of the serialized event data, which is the same as the "id" field>
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-std::string make_event(const std::string& url_relay)
+std::string make_event()
 {
+  const std::string subscription_id("subscription_1");
+  const std::string pubkey("b2b41e936821bb48572c2295ec5f1741");
+  std::string id = hex_string(32, 1);
   std::string json;
   srand(time(0));
-
   std::vector<std::vector<std::string>> tags;
-
-  //generate an event id
-  event::id = hex_string(32, 1);
 
   //"tags"
   //["e", <32-bytes hex of the id of another event>, <recommended relay URL>],
   std::vector<std::string> e;
   e.push_back("e");
   std::stringstream es;
-  es << event::id << ", " << url_relay;
+  es << id;
   e.push_back(es.str());
 
   //["p", <32-bytes hex of a pubkey>, <recommended relay URL>],
   std::vector<std::string> p;
   p.push_back("p");
   std::stringstream ep;
-  ep << event::pubkey << ", " << url_relay;
+  ep << pubkey;
   p.push_back(ep.str());
 
   tags.push_back(e);
   tags.push_back(p);
 
-  event_t ev;
+  nostr::event_t ev;
 
   //"id": <32-bytes lowercase hex - encoded sha256 of the serialized event data>
-  ev.id = event::id;
+  ev.id = id;
 
   //"pubkey" : <32-bytes lowercase hex - encoded public key of the event creator>,
-  ev.pubkey = event::pubkey;
+  ev.pubkey = pubkey;
 
   //"created_at" : <unix timestamp in seconds>,
   ev.created_at = std::time(0);
@@ -250,17 +238,19 @@ std::string make_event(const std::string& url_relay)
 
 std::string make_request()
 {
-  std::string json;
-  filter_t filter;
+  const std::string subscription_id("subscription_1");
+  const std::string pubkey("b2b41e936821bb48572c2295ec5f1741");
+  std::string id = hex_string(32, 1);
+  nostr::filter_t filter;
 
   //"ids": <a list of event ids or prefixes>,
   std::vector<std::string> ids;
-  ids.push_back(event::id); //generated in a event creation
+  ids.push_back(id); //generated in a event creation
   filter.ids = ids;
 
   //"authors" : <a list of pubkeys or prefixes, the pubkey of an event must be one of these>,
   std::vector<std::string> authors;
-  authors.push_back(event::pubkey);
+  authors.push_back(pubkey);
   filter.authors = authors;
 
   //"kinds" : <a list of a kind numbers>,
@@ -270,12 +260,12 @@ std::string make_request()
 
   //"#e" : <a list of event ids that are referenced in an "e" tag>,
   std::vector<std::string> _e;
-  _e.push_back(event::id);
+  _e.push_back(id);
   filter._e = _e;
 
   //"#p" : <a list of pubkeys that are referenced in a "p" tag>,
   std::vector<std::string> _p;
-  _p.push_back(event::pubkey);
+  _p.push_back(pubkey);
   filter._p = _p;
 
   //"since" : <an integer unix timestamp, events must be newer than this to pass>,
@@ -289,12 +279,12 @@ std::string make_request()
   filter.limit = 100;
 
   //<subscription_id> is an arbitrary, non - empty string of max length 64 chars, that should be used to represent a subscription.
-  nlohmann::json js_subscription_id = request::subscription_id;
+  nlohmann::json js_subscription_id = subscription_id;
 
   nlohmann::json js_fil;
   to_json(js_fil, filter);
-  nlohmann::json js_REQ = nlohmann::json::array({ "REQ", js_subscription_id, js_fil });
-  json = js_REQ.dump(2);
+  nlohmann::json js_req = nlohmann::json::array({ "REQ", js_subscription_id, js_fil });
+  std::string json = js_req.dump(2);
 
   std::ofstream ofs;
   ofs.open("request.json", std::ofstream::out);

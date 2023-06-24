@@ -1,0 +1,249 @@
+#include <string>
+#include <vector>
+#include <fstream> 
+#include <sstream>
+#include "client_wss.hpp"
+#include "nlohmann/json.hpp"
+
+#include "log.hh"
+#include "message.hh"
+using WssClient = SimpleWeb::SocketClient<SimpleWeb::WSS>;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+// prototypes
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+int relay_to(const std::string& uri, const std::string& json);
+int relay_all(const std::string& json);
+int make_requests(const std::string& uri);
+int read_list(const std::string& file_name);
+void dump(const std::string& msg);
+int read_lists();
+
+std::string log_program_name("test_nostro");
+std::ofstream ofs_lst;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+// Nostr constants
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+const std::string pubkey("4ea843d54a8fdab39aa45f61f19f3ff79cc19385370f6a272dda81fade0a052b");
+std::vector<std::string> relays = { "eden.nostr.land",
+"nos.lol",
+"relay.snort.social",
+"relay.damus.io",
+"nostr.wine",
+};
+
+std::vector<std::string> list = { "list_01.txt",
+"list_02.txt",
+};
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+// main
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+int main()
+{
+  ofs_lst.open("list_messages.txt", std::ofstream::trunc);
+  events::start_log();
+
+  make_requests(relays.at(1));
+
+  ofs_lst.close();
+  return 0;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+// make_requests
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+int make_requests(const std::string& uri)
+{
+  std::string subscription_id = uuid::generate_uuid_v4();
+  nostr::filter_t filter;
+  filter.authors.push_back(pubkey);
+  filter.kinds.push_back(3);
+  std::string json = make_request(subscription_id, filter);
+  events::json_to_file("send_message.json", json);
+
+  if (relay_to(uri, json) < 0)
+  {
+  }
+
+  return 0;
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+// read_lists
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+int read_lists()
+{
+  for (int idx = 0; idx < list.size(); idx++)
+  {
+    if (read_list(list.at(idx)) < 0)
+    {
+      return -1;
+    }
+  }
+  return 0;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+// read_list
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+int read_list(const std::string& file_name)
+{
+  std::ifstream ifs;
+  ifs.open(file_name);
+  if (!ifs.is_open())
+  {
+    return -1;
+  }
+  std::string json;
+  while (std::getline(ifs, json))
+  {
+    std::cout << json << std::endl;
+    nostr::Type Type = nostr::get_message_type(json);
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    // EVENT
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    if (nostr::Type::EVENT == Type)
+    {
+      std::string event_id;
+      nostr::event_t ev;
+      if (nostr::parse_event(json, event_id, ev) < 0)
+      {
+        assert(0);
+      }
+      std::cout << event_id << std::endl;
+      std::cout << ev.content << std::endl;
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    // REQ
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    else if (nostr::Type::REQ == Type)
+    {
+      std::string request_id;
+      nostr::filter_t filter;
+      if (nostr::parse_request(json, request_id, filter) < 0)
+      {
+        assert(0);
+      }
+      std::cout << request_id << std::endl;
+      if (filter.authors.size())
+      {
+        for (int idx = 0; idx < filter.authors.size(); idx++)
+        {
+          std::cout << filter.authors.at(idx) << " ";
+        }
+        std::cout << std::endl;
+      }
+    }
+  }
+  ifs.close();
+  return 0;
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+// relay_all
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+int relay_all(const std::string& json)
+{
+  for (int idx = 0; idx < relays.size(); idx++)
+  {
+    std::string uri = relays.at(idx);
+    dump(uri);
+    if (relay_to(uri, json) < 0)
+    {
+    }
+  }
+  return 0;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+// relay_to
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+int relay_to(const std::string& uri, const std::string& json)
+{
+  WssClient client(uri, false);
+  size_t count = 0;
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+  // on_message
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  client.on_message = [&](std::shared_ptr<WssClient::Connection> connection, std::shared_ptr<WssClient::InMessage> in_message)
+  {
+    std::stringstream ss;
+    std::string str = in_message->string();
+    ss << "Received: " << str;
+    dump(str);
+    events::log(ss.str());
+
+    std::stringstream s;
+    count++;
+    s << "response_" << std::to_string(count) << ".json";
+    events::json_to_file(s.str(), str);
+
+  };
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+  //on_open
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  client.on_open = [&](std::shared_ptr<WssClient::Connection> connection)
+  {
+    std::string out_message = json;
+    std::stringstream ss;
+    ss << "Sending: " << out_message;
+    events::log(ss.str());
+    dump(json);
+
+    connection->send(out_message);
+  };
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+  // on_close
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  client.on_close = [](std::shared_ptr<WssClient::Connection>, int status, const std::string&)
+  {
+    std::stringstream ss;
+    ss << "Closed: " << status;
+    events::log(ss.str());
+  };
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+  // on_error
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  client.on_error = [](std::shared_ptr<WssClient::Connection>, const SimpleWeb::error_code& ec)
+  {
+    std::stringstream ss;
+    ss << "Error: " << ec << " : " << ec.message();
+    events::log(ss.str());
+  };
+
+  client.start();
+  return 0;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+// dump
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void dump(const std::string& msg)
+{
+  ofs_lst << msg << std::endl;
+}

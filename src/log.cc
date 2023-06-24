@@ -2,6 +2,7 @@
 #include <assert.h>
 #include <iostream>
 #include <fstream>
+#include "nlohmann/json.hpp"
 #include "log.hh"
 
 std::ofstream ofs_log;
@@ -49,13 +50,24 @@ std::string events::get_time_now(const std::string& time_format)
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
-// events::save_to_file
+// events::json_to_file
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void events::save_to_file(const std::string& name, const std::string& buf)
+void events::json_to_file(const std::string& name, const std::string& buf)
 {
-  std::ofstream ofs;
-  ofs.open(name, std::ofstream::out);
-  ofs << buf;
-  ofs.close();
+  try
+  {
+    nlohmann::json js_message = nlohmann::json::parse(buf);
+    std::string json = js_message.dump(1);
+    std::ofstream ofs;
+    ofs.open(name, std::ofstream::out);
+    ofs << json;
+    ofs.close();
+
+    std::cout << json << std::endl;
+  }
+  catch (const std::exception& e)
+  {
+    events::log(e.what());
+  }
 }

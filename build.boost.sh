@@ -3,7 +3,7 @@
 remote=$(git config --get remote.origin.url)
 echo "remote repository: $remote"
 sleep 4
-if [ "$remote" == "https://github.com/pedro-vicente/nostr_client_relay" ]; then
+if [ "$remote" == "https://github.com/pedro-vicente/nostr_client_relay.git" ]; then
 git clone -b boost-1.82.0 --recursive --depth=1 https://github.com/boostorg/boost.git ext/boost_1_82_0
 fi
 sleep 4

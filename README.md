@@ -150,20 +150,6 @@ Send an EVENT with content and a private key (if no key, one is generated)
 ]
 ```
 
-### Dependencies
-
-- CMake [https://cmake.org/]
-- libsecp256k1 [https://github.com/bitcoin-core/secp256k1]
-- OpenSSL [https://www.openssl.org/] (Windows build with ext/openssl-3.0.5/build.bat)
-- Asio [https://think-async.com/Asio/AsioStandalone.html] 
-- Simple-WebSocket-Server [https://gitlab.com/eidheim/Simple-WebSocket-Server] 
-- JSON Modern C++ [https://json.nlohmann.me/] 
-
-#### For Web build
-
-- Boost [https://www.boost.org/]
-- Wt [https://www.webtoolkit.eu/wt]
-
 ### Running on web
 
 At command line

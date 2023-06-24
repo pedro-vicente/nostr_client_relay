@@ -18,7 +18,7 @@ int main()
   events::start_log();
 
   //a database is an array of events read and saved to filesystem in JSON format
-  std::vector<event_t> database;
+  std::vector<nostr::event_t> database;
 
   //start with an empty database 
   database::save(database);
@@ -57,7 +57,7 @@ int main()
 
       if (message_type.compare("EVENT") == 0)
       {
-        event_t ev;
+        nostr::event_t ev;
         from_json(js_message.at(1), ev);
         events::log("event received: " + ev.content);
 
@@ -84,12 +84,12 @@ int main()
       else if (message_type.compare("REQ") == 0)
       {
         std::string subscription_id = js_message.at(1);
-        filter_t filter;
+        nostr::filter_t filter;
         from_json(js_message.at(2), filter);
         events::log("filter received: " + subscription_id);
 
         //query database, return events that match the filter
-        std::vector<event_t> events = database::request(filter);
+        std::vector<nostr::event_t> events = database::request(filter);
 
         nlohmann::json js_events = events;
         std::string json = js_events.dump(2);

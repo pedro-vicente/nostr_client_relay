@@ -112,26 +112,17 @@ set(src ${src} src/database.cc)
 add_library(comm ${src})
 
 #//////////////////////////
-# link
+#link with libraries
+#lib_dep contains a cascade definition of all the libraries needed to link
 #//////////////////////////
 
 set(lib_dep ${lib_dep} comm)
-if (MSVC)
-  set(lib_dep ${lib_dep} Ws2_32.lib)
-endif()
-
-#//////////////////////////
-# nostril
-#//////////////////////////
-
+set(lib_dep ${lib_dep} secp256k1)
 set(lib_dep ${lib_dep} nostri)
 if (MSVC)
-  set(lib_dep ${lib_dep} ${CMAKE_BINARY_DIR}/ext/secp256k1-0.3.2/src/Debug/libsecp256k1.lib)
+  set(lib_dep ${lib_dep} Ws2_32.lib)
   set(lib_dep ${lib_dep} Bcrypt.lib)
-else()
-  set(lib_dep ${lib_dep} ${CMAKE_BINARY_DIR}/ext/secp256k1-0.3.2/src/libsecp256k1.a)
 endif()
-
 
 #//////////////////////////
 # HTTP demo
@@ -176,11 +167,14 @@ if(USE_OPENSSL)
   endif()
   if (MSVC)
     set(OPENSSL_ROOT_DIR "${CMAKE_SOURCE_DIR}/ext/openssl-3.0.5")
-    message(STATUS "OpenSSL include: ${OPENSSL_INCLUDE_DIR}")
+    message(STATUS "OpenSSL root folder: ${OPENSSL_ROOT_DIR}")
   elseif(APPLE)
-    set(OPENSSL_ROOT_DIR "/usr/local/Cellar/openssl@3/3.1.0")
-    set(OPENSSL_SSL_LIBRARY "/usr/local/Cellar/openssl@3/3.1.0/lib/libssl.dylib")
-    set(OPENSSL_CRYPTO_LIBRARY "/usr/local/Cellar/openssl@3/3.1.0/lib/libcrypto.dylib")
+    execute_process(COMMAND brew list --versions openssl OUTPUT_VARIABLE brew_version)
+    message(STATUS "OpenSSL version: ${brew_version}")
+    
+    set(OPENSSL_ROOT_DIR "/usr/local/Cellar/openssl@3/3.1.1")
+    set(OPENSSL_SSL_LIBRARY "/usr/local/Cellar/openssl@3/3.1.1/lib/libssl.dylib")
+    set(OPENSSL_CRYPTO_LIBRARY "/usr/local/Cellar/openssl@3/3.1.1/lib/libcrypto.dylib")
   endif()
   find_package(OpenSSL REQUIRED)
   message(STATUS "OpenSSL include: ${OPENSSL_INCLUDE_DIR}")
@@ -201,7 +195,19 @@ if(USE_OPENSSL)
   target_link_libraries (vostro ${lib_dep})
 endif()
 
+#//////////////////////////
+# tests
+#//////////////////////////
 
+if(USE_OPENSSL)
+  add_executable(test_nostro test/test_nostro.cc)
+  target_link_libraries (test_nostro ${lib_dep})
+  add_dependencies(test_nostro secp256k1)
+endif()
+
+message(STATUS "Copying test files to: ${CMAKE_BINARY_DIR}")
+file(COPY "${CMAKE_SOURCE_DIR}/test/list_01.txt" DESTINATION ${CMAKE_BINARY_DIR})
+file(COPY "${CMAKE_SOURCE_DIR}/test/list_02.txt" DESTINATION ${CMAKE_BINARY_DIR})
 
 #//////////////////////////
 # Wt desktop

@@ -1,0 +1,42 @@
+[
+ "EVENT",
+ "5B695BFF-2A99-48AD-AAAE-4DF13F2DB7E4",
+ {
+  "content": "{\"wss://nos.lol/\":{\"write\":true,\"read\":true}}",
+  "created_at": 1687486321,
+  "id": "b8826c41b78bf8e4545706914e0d921b77a86192393ffb3df47f5623e6fa5b8f",
+  "kind": 3,
+  "pubkey": "4ea843d54a8fdab39aa45f61f19f3ff79cc19385370f6a272dda81fade0a052b",
+  "sig": "b1d004f1c0f8e72c9ac0c4492086c4dfc60478156feb5d6e7075923bb6e0d738d69ed61d16d65503d6df1f09b363dccd8013bd56a5354ebbbb029f558363997e",
+  "tags": [
+   [
+    "p",
+    "c708943ea349519dcf56b2a5c138fd9ed064ad65ddecae6394eabd87a62f1770"
+   ],
+   [
+    "p",
+    "de7ecd1e2976a6adb2ffa5f4db81a7d812c8bb6698aa00dcf1e76adb55efd645"
+   ],
+   [
+    "p",
+    "82341f882b6eabcd2ba7f1ef90aad961cf074af15b9ef44a09f9d2a8fbfbe6a2"
+   ],
+   [
+    "p",
+    "32e1827635450ebb3c5a7d12c1f8e7b2b514439ac10a67eef3d9fd9c5c68e245"
+   ],
+   [
+    "p",
+    "3bf0c63fcb93463407af97a5e5ee64fa883d107ef9e558472c4eb9aaaefa459d"
+   ],
+   [
+    "p",
+    "787338757fc25d65cd929394d5e7713cf43638e8d259e8dcf5c73b834eb851f2"
+   ],
+   [
+    "p",
+    "fa984bd7dbb282f07e16e7ae87b26a2a7b9b90b7246a44771f0cf5ae58018f52"
+   ]
+  ]
+ }
+]

@@ -110,7 +110,7 @@ NostroApplication::NostroApplication(const Wt::WEnvironment& env)
   std::vector<std::string> relay = { "relay.snort.social",
    "relay.damus.io",
    "nostr.pleb.network" };
-  std::string uri = relay[2];
+  std::string uri = relay[0];
 
   container_top->addWidget(std::make_unique<Wt::WText>("Relay wss://"));
   m_edit_uri = container_top->addWidget(std::make_unique<Wt::WLineEdit>());
@@ -234,17 +234,15 @@ void NostroApplication::send_message()
   {
     std::stringstream ss;
     std::string str = in_message->string();
-    ss << "Received: " << "\"" << str << "\"";
+    ss << "Received: " << str;
     events::log(ss.str());
     store.push_back(str);
-
-    bool raw_message = m_check_raw->isChecked();
 
     try
     {
       nlohmann::json js_message = nlohmann::json::parse(str);
-      std::string json = js_message.dump(1);
-      events::save_to_file("message.json", json);
+      std::string json = js_message.dump();
+      events::json_to_file("on_message.json", json);
 
       //Relays can send 3 types of messages, which must also be JSON arrays, according to the following patterns:
       //["EVENT", <subscription_id>, <event JSON as defined above>], used to send events requested by clients.
@@ -254,10 +252,10 @@ void NostroApplication::send_message()
       std::string message_type = js_message.at(0);
       if (message_type.compare("EVENT") == 0)
       {
-        event_t ev;
+        nostr::event_t ev;
         from_json(js_message.at(2), ev);
         events::log("event received: " + ev.content);
-        if (raw_message == false) str = ev.content;
+        if (m_check_raw->isChecked() == false) str = ev.content;
       }
     }
     catch (const std::exception& e)
@@ -286,17 +284,18 @@ void NostroApplication::send_message()
     events::log(ss.str());
 
     Wt::WString str = m_area_input->text();
-    std::string out_message = str.toUTF8();
+    std::string message = str.toUTF8();
 
     ss.str(std::string());
     ss.clear();
-    ss << "Sending: \"" << out_message << "\"";
+    ss << "Sending: " << message;
     events::log(ss.str());
+    events::json_to_file("on_open_message.json", message);
 
     m_table_messages->clear();
     m_row = 0;
 
-    connection->send(out_message);
+    connection->send(message);
   };
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -395,7 +394,7 @@ void NostroApplication::make_message()
     nlohmann::json js_message = nlohmann::json::parse(buf);
     std::string json = js_message.dump(1);
     m_area_input->setText(json);
-    events::save_to_file("send_message.json", json);
+    events::json_to_file("send_message.json", json);
   }
   catch (const std::exception& e)
   {

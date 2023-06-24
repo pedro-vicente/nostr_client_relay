@@ -5,7 +5,6 @@
 #include "nostri.h"
 #include "log.hh"
 #include "message.hh"
-#include "database.hh"
 
 #ifdef _MSC_VER
 #pragma warning(disable: 6387)
@@ -38,7 +37,6 @@ std::vector<std::string> store;
 int main(int argc, const char* argv[])
 {
   std::string relay_vostro = "localhost:8080/nostr";
-  std::string message = R"(["REQ", "RAND", {"kinds": [1], "limit": 2}])";
   std::vector<std::string> relay = { "relay.snort.social",
     "relay.damus.io",
     "nostr.pleb.network" };
@@ -64,9 +62,7 @@ int main(int argc, const char* argv[])
   //format JSON to display
   nlohmann::json js_message = nlohmann::json::parse(buf);
   std::string json = js_message.dump(1); //indent level
-  events::save_to_file("send_message.json", json);
-
-  events::save_to_file("message.json", json);
+  events::json_to_file("send_message.json", json);
 
   WssClient client(uri, false);
 
@@ -78,10 +74,10 @@ int main(int argc, const char* argv[])
   {
     std::stringstream ss;
     std::string str = in_message->string();
-    ss << "Received: " << "\"" << str << "\"";
+    ss << "Received: " << str;
     events::log(ss.str());
     store.push_back(str);
-    events::save_to_file("response.txt", str);
+    events::json_to_file("response.txt", str);
 
     connection->send_close(1000);
   };
@@ -96,13 +92,13 @@ int main(int argc, const char* argv[])
     ss << "Opened connection: HTTP " << connection.get()->http_version << " , code " << connection.get()->status_code;
     events::log(ss.str());
 
-    std::string out_message = json;
+    std::string message = json;
     ss.str(std::string());
     ss.clear();
-    ss << "Sending: \"" << out_message << "\"";
+    ss << "Sending: " << message;
     events::log(ss.str());
 
-    connection->send(out_message);
+    connection->send(message);
   };
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -152,7 +148,7 @@ int main(int argc, const char* argv[])
   }
   js << "]";
   std::string s = js.rdbuf()->str();
-  events::save_to_file("response.json", s);
+  events::json_to_file("response.json", s);
 
   free(buf);
 }

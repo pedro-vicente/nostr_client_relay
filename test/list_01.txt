@@ -1,0 +1,3 @@
+["REQ","34E8C71B-C0FB-4D6D-9CBB-694A091D6A2D",{"authors":["4ea843d54a8fdab39aa45f61f19f3ff79cc19385370f6a272dda81fade0a052b"],"kinds":[1],"limit":1}]
+["EVENT","34E8C71B-C0FB-4D6D-9CBB-694A091D6A2D",{"content":"https://github.com/pedro-vicente/nostr_client_relay","created_at":1686887953,"id":"24d7deac8173f5e7ead51282106728ae39d44aa558ff3c5b3b236bece71684ef","kind":1,"pubkey":"4ea843d54a8fdab39aa45f61f19f3ff79cc19385370f6a272dda81fade0a052b","sig":"14d1b7ea0cd8f4275221c297d0d30f5afe2a87a13b743211ed23bcb5dac095498b2b34f645544e3c956577d6554d812fbf908ccb7857b2e920875046579a105c","tags":[]}]
+["EOSE","34E8C71B-C0FB-4D6D-9CBB-694A091D6A2D"]
