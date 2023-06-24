@@ -1,6 +1,6 @@
 
 #//////////////////////////
-# sources 
+# sources
 #//////////////////////////
 
 set(src ${src})
@@ -35,13 +35,11 @@ set(lib_dep ${lib_dep})
 #//////////////////////////
 
 add_library(nostri ${src})
+target_link_libraries (nostri secp256k1)
 set(lib_dep ${lib_dep} nostri)
-
+set(lib_dep ${lib_dep} secp256k1)
 if (MSVC)
-  set(lib_dep ${lib_dep} ${CMAKE_BINARY_DIR}/ext/secp256k1-0.3.2/src/Debug/libsecp256k1.lib)
   set(lib_dep ${lib_dep} Bcrypt.lib)
-else()
-  set(lib_dep ${lib_dep} ${CMAKE_BINARY_DIR}/ext/secp256k1-0.3.2/src/libsecp256k1.a)
 endif()
 
 #//////////////////////////

@@ -17,7 +17,7 @@ cmake --build .
 
 fi
 
-cmake --build . 
+cmake --build .
 
 popd
 pwd
@@ -29,9 +29,9 @@ remote=$(git config --get remote.origin.url)
 echo "remote repository: $remote"
 sleep 2
 if [ "$remote" == "https://github.com/pedro-vicente/nostr_client_relay.git" ]; then
-export LD_LIBRARY_PATH="$HOME/github/nostr_client_relay/ext/boost_1_82_0/stage/lib:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH="$HOME/github/nostr_client_relay/ext/boost_1_82_0/stage/lib":$LD_LIBRARY_PATH
 else
-export LD_LIBRARY_PATH="$HOME/git/nostr_client_relay/ext/boost_1_82_0/stage/lib:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH="$HOME/git/nostr_client_relay/ext/boost_1_82_0/stage/lib":$LD_LIBRARY_PATH
 fi
 if [[ "$OSTYPE" == "msys"* ]]; then
 ./Debug/nostro_web --http-address=0.0.0.0 --http-port=8080  --docroot=.

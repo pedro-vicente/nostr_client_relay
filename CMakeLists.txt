@@ -2,7 +2,7 @@ if (MSVC)
  cmake_minimum_required(VERSION 3.26)
 else()
  cmake_minimum_required(VERSION 3.15)
-endif() 
+endif()
 set(CMAKE_BUILD_TYPE Debug)
 project (nostr_client_relay LANGUAGES CXX C)
 
@@ -16,7 +16,6 @@ if(BUILD_STATIC)
   set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 endif()
 endif()
-
 
 message("-- nostr_client_relay static build: " ${BUILD_STATIC})
 message(STATUS "Source directory is " ${CMAKE_SOURCE_DIR})
@@ -78,26 +77,6 @@ if(UNIX)
 endif()
 
 #//////////////////////////
-# link with libraries
-# lib_dep contains a cascade definition of all the libraries needed to link
-#//////////////////////////
-
-set(lib_dep ${lib_dep})
-
-#//////////////////////////
-# LINUX
-# order of the link libraries matters; pthread dl
-#//////////////////////////
-
-if(LINUX)
-  set(lib_dep ${lib_dep} pthread dl)
-  set(lib_dep ${lib_dep} stdc++fs) 
-  find_program(LSB_RELEASE_EXEC lsb_release)
-  execute_process(COMMAND ${LSB_RELEASE_EXEC} -is OUTPUT_VARIABLE LSB_RELEASE_ID_SHORT OUTPUT_STRIP_TRAILING_WHITESPACE)
-  message(STATUS "Building in " ${LSB_RELEASE_ID_SHORT})
-endif()
-
-#//////////////////////////
 # common sources library
 #//////////////////////////
 
@@ -110,12 +89,14 @@ set(src ${src} src/database.hh)
 set(src ${src} src/database.cc)
 
 add_library(comm ${src})
+add_dependencies(comm configurator)
 
 #//////////////////////////
 #link with libraries
 #lib_dep contains a cascade definition of all the libraries needed to link
 #//////////////////////////
 
+set(lib_dep ${lib_dep})
 set(lib_dep ${lib_dep} comm)
 set(lib_dep ${lib_dep} secp256k1)
 set(lib_dep ${lib_dep} nostri)
@@ -123,6 +104,20 @@ if (MSVC)
   set(lib_dep ${lib_dep} Ws2_32.lib)
   set(lib_dep ${lib_dep} Bcrypt.lib)
 endif()
+
+#//////////////////////////
+# LINUX
+# order of the link libraries matters; pthread dl
+#//////////////////////////
+
+if(LINUX)
+  set(lib_dep ${lib_dep} pthread dl)
+  set(lib_dep ${lib_dep} stdc++fs)
+  find_program(LSB_RELEASE_EXEC lsb_release)
+  execute_process(COMMAND ${LSB_RELEASE_EXEC} -is OUTPUT_VARIABLE LSB_RELEASE_ID_SHORT OUTPUT_STRIP_TRAILING_WHITESPACE)
+  message(STATUS "Building in " ${LSB_RELEASE_ID_SHORT})
+endif()
+
 
 #//////////////////////////
 # HTTP demo
@@ -139,7 +134,6 @@ target_link_libraries (http_relay ${lib_dep})
 
 set_target_properties(http_client PROPERTIES FOLDER "http")
 set_target_properties(http_relay PROPERTIES FOLDER "http")
-
 
 #//////////////////////////
 #SSL certificates
@@ -171,7 +165,7 @@ if(USE_OPENSSL)
   elseif(APPLE)
     execute_process(COMMAND brew list --versions openssl OUTPUT_VARIABLE brew_version)
     message(STATUS "OpenSSL version: ${brew_version}")
-    
+
     set(OPENSSL_ROOT_DIR "/usr/local/Cellar/openssl@3/3.1.1")
     set(OPENSSL_SSL_LIBRARY "/usr/local/Cellar/openssl@3/3.1.1/lib/libssl.dylib")
     set(OPENSSL_CRYPTO_LIBRARY "/usr/local/Cellar/openssl@3/3.1.1/lib/libcrypto.dylib")
@@ -202,7 +196,6 @@ endif()
 if(USE_OPENSSL)
   add_executable(test_nostro test/test_nostro.cc)
   target_link_libraries (test_nostro ${lib_dep})
-  add_dependencies(test_nostro secp256k1)
 endif()
 
 message(STATUS "Copying test files to: ${CMAKE_BINARY_DIR}")
@@ -215,7 +208,7 @@ file(COPY "${CMAKE_SOURCE_DIR}/test/list_02.txt" DESTINATION ${CMAKE_BINARY_DIR}
 
 if (BUILD_GUI)
   add_subdirectory(desktop)
-endif() 
+endif()
 
 #//////////////////////////
 # Wt web
