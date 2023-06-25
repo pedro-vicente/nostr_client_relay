@@ -2,7 +2,7 @@
 #include <future>
 #include "nostri.h"
 #include "log.hh"
-#include "message.hh"
+#include "nostr.hh"
 #include "database.hh"
 using WssServer = SimpleWeb::SocketServer<SimpleWeb::WSS>;
 std::string log_program_name("vostro");

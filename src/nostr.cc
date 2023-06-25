@@ -1,8 +1,12 @@
 #include <random>
 #include <sstream>
-
-#include "message.hh"
+#include <fstream> 
+#include <iostream>
+#include "client_wss.hpp"
+#include "nlohmann/json.hpp"
 #include "log.hh"
+#include "nostr.hh"
+using WssClient = SimpleWeb::SocketClient<SimpleWeb::WSS>;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //event_t
@@ -255,48 +259,63 @@ int nostr::parse_request(const std::string& json, std::string& request_id, nostr
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
-// uuid
+// relay_to
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-namespace uuid
+int nostr::relay_to(const std::string& uri, const std::string& json)
 {
-  static std::random_device rd;
-  static std::mt19937 gen(rd());
-  static std::uniform_int_distribution<> dis(0, 15);
-  static std::uniform_int_distribution<> dis2(8, 11);
+  WssClient client(uri, false);
+  size_t count = 0;
+  std::ofstream log;
+  log.open("messages.txt", std::ofstream::trunc);
 
-  std::string generate_uuid_v4()
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+  // on_message
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  client.on_message = [&](std::shared_ptr<WssClient::Connection> connection, std::shared_ptr<WssClient::InMessage> in_message)
   {
+    std::string str = in_message->string();
+    log << "Received: " << str << std::endl;
+
     std::stringstream ss;
-    int i;
-    ss << std::hex;
-    for (i = 0; i < 8; i++)
-    {
-      ss << dis(gen);
-    }
-    ss << "-";
-    for (i = 0; i < 4; i++)
-    {
-      ss << dis(gen);
-    }
-    ss << "-4";
-    for (i = 0; i < 3; i++)
-    {
-      ss << dis(gen);
-    }
-    ss << "-";
-    ss << dis2(gen);
-    for (i = 0; i < 3; i++)
-    {
-      ss << dis(gen);
-    }
-    ss << "-";
-    for (i = 0; i < 12; i++)
-    {
-      ss << dis(gen);
-    };
-    std::string str = ss.str();
-    std::transform(str.begin(), str.end(), str.begin(), ::toupper);
-    return str;
-  }
+    count++;
+    ss << "message_" << std::to_string(count) << ".json";
+    events::json_to_file(ss.str(), str);
+
+  };
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+  //on_open
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  client.on_open = [&](std::shared_ptr<WssClient::Connection> connection)
+  {
+    std::string out_message = json;
+    log << "Sending: " << out_message << std::endl;
+
+    connection->send(out_message);
+  };
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+  // on_close
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  client.on_close = [&](std::shared_ptr<WssClient::Connection>, int status, const std::string&)
+  {
+    log << "Closed: " << status << std::endl;
+  };
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+  // on_error
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  client.on_error = [&](std::shared_ptr<WssClient::Connection>, const SimpleWeb::error_code& ec)
+  {
+    log << "Error: " << ec << " : " << ec.message() << std::endl;
+  };
+
+  client.start();
+  return 0;
 }
+

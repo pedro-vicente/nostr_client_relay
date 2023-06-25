@@ -3,7 +3,7 @@
 
 #include <string>
 #include <vector>
-#include "message.hh"
+#include "nostr.hh"
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //a database is an array of events read and saved to filesystem in JSON format

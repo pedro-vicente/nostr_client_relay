@@ -1,7 +1,7 @@
 #include "asio.hpp"
 #include "log.hh"
 #include "http.hh"
-#include "message.hh"
+#include "nostr.hh"
 #include "database.hh"
 
 using asio::ip::tcp;

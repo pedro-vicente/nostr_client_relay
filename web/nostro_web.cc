@@ -21,7 +21,7 @@
 
 #include "nostri.h"
 #include "log.hh"
-#include "message.hh"
+#include "nostr.hh"
 #include "database.hh"
 
 //first Nostr relayed event id (06/15/23) 

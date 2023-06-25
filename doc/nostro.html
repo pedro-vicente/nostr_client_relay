@@ -3,6 +3,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/3/w3.css">
+<script type="module" src="https://md-block.verou.me/md-block.js"></script>
+<script src="prism.js"></script>
+<link rel="stylesheet" type="text/css" href="prism.css" />
 <link rel="stylesheet" type="text/css" href="me.css" />
 <title>Nostro</title>
 <body>
@@ -16,19 +19,44 @@ It is open sourced on <a href="https://github.com/pedro-vicente/nostr_client_rel
 
 <h3 class="w3-wide">API</h3>
 
-<pre class="cpp">
-<code>
+
+<md-block>
+```cpp
 std::string make_request(const std::string& subscription_id, const filter_t& filter);
+```
+</md-block>
+
+
+<md-block>
+```cpp
+std::string make_request(const std::string& subscription_id, const filter_t& filter);
+```
+</md-block>
+
+<md-block>
+```cpp
 Type get_message_type(const std::string& json);
+```
+</md-block>
+
+<md-block>
+```cpp
 int parse_event(const std::string& json, std::string& event_id, nostr::event_t& ev);
+```
+</md-block>
+
+
+<md-block>
+```cpp
 int parse_request(const std::string& json, std::string& request_id, nostr::filter_t& filter);
-</code>
-</pre>
+```
+</md-block>
+
 
 <h3 class="w3-wide">Contacts</h3>
 
-<pre class="cpp">
-<code>
+<md-block>
+```json
 [
  "EVENT",
  "5B695BFF-2A99-48AD-AAAE-4DF13F2DB7E4",
@@ -51,8 +79,8 @@ int parse_request(const std::string& json, std::string& request_id, nostr::filte
   ]
  }
 ]
-</code>
-</pre>
+```
+</md-block>
 
 
 
@@ -64,6 +92,10 @@ const date = new Date(document.lastModified);
 document.getElementById("id_date").innerHTML = date;
 </script>
 
+<div class="w3-container">
+<a href="index.html" class="w3-button w3-teal">Home</a>
+</div>
 </section>
 </body>
 </html>
+

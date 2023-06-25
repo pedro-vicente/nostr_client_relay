@@ -3,7 +3,7 @@
 #include "asio.hpp"
 #include "log.hh"
 #include "http.hh"
-#include "message.hh"
+#include "nostr.hh"
 
 using asio::ip::tcp;
 std::string log_program_name("http_client");

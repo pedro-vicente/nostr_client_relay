@@ -1,27 +1,23 @@
 #include <string>
 #include <vector>
 #include <fstream> 
+#include <iostream>
 #include <sstream>
-#include "client_wss.hpp"
-#include "nlohmann/json.hpp"
-
+#include "uuid.hh"
 #include "log.hh"
-#include "message.hh"
-using WssClient = SimpleWeb::SocketClient<SimpleWeb::WSS>;
+#include "nostr.hh"
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 // prototypes
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-int relay_to(const std::string& uri, const std::string& json);
+
 int relay_all(const std::string& json);
 int make_requests(const std::string& uri);
 int read_list(const std::string& file_name);
-void dump(const std::string& msg);
 int read_lists();
 
 std::string log_program_name("test_nostro");
-std::ofstream ofs_lst;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 // Nostr constants
@@ -45,12 +41,10 @@ std::vector<std::string> list = { "list_01.txt",
 
 int main()
 {
-  ofs_lst.open("list_messages.txt", std::ofstream::trunc);
   events::start_log();
 
   make_requests(relays.at(1));
 
-  ofs_lst.close();
   return 0;
 }
 
@@ -67,7 +61,7 @@ int make_requests(const std::string& uri)
   std::string json = make_request(subscription_id, filter);
   events::json_to_file("send_message.json", json);
 
-  if (relay_to(uri, json) < 0)
+  if (nostr::relay_to(uri, json) < 0)
   {
   }
 
@@ -162,88 +156,10 @@ int relay_all(const std::string& json)
   for (int idx = 0; idx < relays.size(); idx++)
   {
     std::string uri = relays.at(idx);
-    dump(uri);
-    if (relay_to(uri, json) < 0)
+    if (nostr::relay_to(uri, json) < 0)
     {
     }
   }
   return 0;
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-// relay_to
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
-int relay_to(const std::string& uri, const std::string& json)
-{
-  WssClient client(uri, false);
-  size_t count = 0;
-
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
-  // on_message
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
-
-  client.on_message = [&](std::shared_ptr<WssClient::Connection> connection, std::shared_ptr<WssClient::InMessage> in_message)
-  {
-    std::stringstream ss;
-    std::string str = in_message->string();
-    ss << "Received: " << str;
-    dump(str);
-    events::log(ss.str());
-
-    std::stringstream s;
-    count++;
-    s << "response_" << std::to_string(count) << ".json";
-    events::json_to_file(s.str(), str);
-
-  };
-
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
-  //on_open
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
-
-  client.on_open = [&](std::shared_ptr<WssClient::Connection> connection)
-  {
-    std::string out_message = json;
-    std::stringstream ss;
-    ss << "Sending: " << out_message;
-    events::log(ss.str());
-    dump(json);
-
-    connection->send(out_message);
-  };
-
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
-  // on_close
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
-
-  client.on_close = [](std::shared_ptr<WssClient::Connection>, int status, const std::string&)
-  {
-    std::stringstream ss;
-    ss << "Closed: " << status;
-    events::log(ss.str());
-  };
-
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
-  // on_error
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
-
-  client.on_error = [](std::shared_ptr<WssClient::Connection>, const SimpleWeb::error_code& ec)
-  {
-    std::stringstream ss;
-    ss << "Error: " << ec << " : " << ec.message();
-    events::log(ss.str());
-  };
-
-  client.start();
-  return 0;
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-// dump
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
-void dump(const std::string& msg)
-{
-  ofs_lst << msg << std::endl;
-}

@@ -83,8 +83,10 @@ endif()
 set(src ${src})
 set(src ${src} src/log.hh)
 set(src ${src} src/log.cc)
-set(src ${src} src/message.hh)
-set(src ${src} src/message.cc)
+set(src ${src} src/nostr.hh)
+set(src ${src} src/nostr.cc)
+set(src ${src} src/uuid.cc)
+set(src ${src} src/uuid.hh)
 set(src ${src} src/database.hh)
 set(src ${src} src/database.cc)
 
@@ -118,33 +120,6 @@ if(LINUX)
   message(STATUS "Building in " ${LSB_RELEASE_ID_SHORT})
 endif()
 
-
-#//////////////////////////
-# HTTP demo
-#//////////////////////////
-
-add_executable(http_client src/http/http.hh src/http/http.cc src/http/http_client.cc)
-add_executable(http_relay src/http/http.hh src/http/http.cc src/http/http_relay.cc)
-target_link_libraries (http_client ${lib_dep})
-target_link_libraries (http_relay ${lib_dep})
-
-#//////////////////////////
-# IDE project virtual folders
-#//////////////////////////
-
-set_target_properties(http_client PROPERTIES FOLDER "http")
-set_target_properties(http_relay PROPERTIES FOLDER "http")
-
-#//////////////////////////
-#SSL certificates
-#//////////////////////////
-
-if(USE_OPENSSL)
-  message(STATUS "Copying SSL certificates to: ${CMAKE_BINARY_DIR}")
-  file(COPY "${CMAKE_SOURCE_DIR}/resources/server.key" DESTINATION ${CMAKE_BINARY_DIR})
-  file(COPY "${CMAKE_SOURCE_DIR}/resources/server.crt" DESTINATION ${CMAKE_BINARY_DIR})
-endif(USE_OPENSSL)
-
 #//////////////////////////
 #OpenSSL
 #//////////////////////////
@@ -176,6 +151,33 @@ if(USE_OPENSSL)
   include_directories(${OPENSSL_INCLUDE_DIR})
   set(lib_dep ${lib_dep} ${OPENSSL_LIBRARIES})
 endif()
+
+
+#//////////////////////////
+# HTTP demo
+#//////////////////////////
+
+add_executable(http_client src/http/http.hh src/http/http.cc src/http/http_client.cc)
+add_executable(http_relay src/http/http.hh src/http/http.cc src/http/http_relay.cc)
+target_link_libraries (http_client ${lib_dep})
+target_link_libraries (http_relay ${lib_dep})
+
+#//////////////////////////
+# IDE project virtual folders
+#//////////////////////////
+
+set_target_properties(http_client PROPERTIES FOLDER "http")
+set_target_properties(http_relay PROPERTIES FOLDER "http")
+
+#//////////////////////////
+#SSL certificates
+#//////////////////////////
+
+if(USE_OPENSSL)
+  message(STATUS "Copying SSL certificates to: ${CMAKE_BINARY_DIR}")
+  file(COPY "${CMAKE_SOURCE_DIR}/resources/server.key" DESTINATION ${CMAKE_BINARY_DIR})
+  file(COPY "${CMAKE_SOURCE_DIR}/resources/server.crt" DESTINATION ${CMAKE_BINARY_DIR})
+endif(USE_OPENSSL)
 
 
 #//////////////////////////

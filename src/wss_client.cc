@@ -4,7 +4,7 @@
 #include <strstream>
 #include "nostri.h"
 #include "log.hh"
-#include "message.hh"
+#include "nostr.hh"
 
 #ifdef _MSC_VER
 #pragma warning(disable: 6387)

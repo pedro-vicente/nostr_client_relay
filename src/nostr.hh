@@ -1,14 +1,9 @@
-#ifndef MESSAGE_HH
-#define MESSAGE_HH
+#ifndef NOSTR_HH
+#define NOSTR_HH
 
 #include <string>
 #include <vector>
 #include "nlohmann/json.hpp"
-
-namespace uuid
-{
-  std::string generate_uuid_v4();
-}
 
 namespace nostr
 {
@@ -118,6 +113,7 @@ namespace nostr
   Type get_message_type(const std::string& json);
   int parse_event(const std::string& json, std::string& event_id, nostr::event_t& ev);
   int parse_request(const std::string& json, std::string& request_id, nostr::filter_t& filter);
+  int relay_to(const std::string& uri, const std::string& json);
 
 }
 

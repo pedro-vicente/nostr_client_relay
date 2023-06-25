@@ -3,6 +3,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/3/w3.css">
+<script type="module" src="https://md-block.verou.me/md-block.js"></script>
+<script src="prism.js"></script>
+<link rel="stylesheet" type="text/css" href="prism.css" />
 <link rel="stylesheet" type="text/css" href="me.css" />
 <title>Nostr</title>
 <body>
@@ -42,8 +45,10 @@ The protocol is defined in documents called NIPs (Nostr Implementation Possibili
 Aside from the first NIP, <a href="https://github.com/nostr-protocol/nips/blob/master/01.md">NIP-01</a>, 
 which describes the basic protocol, all NIPs are optional. Here is one example of an NIP-01 event:
 </p>
-<pre class="cpp">
-<code>
+
+<md-block>
+```json
+[
 {
   "id": "4376c65d2f232afbe9b882a35baa4f6fe8667c4e684749af565f981833ed6a65",
   "pubkey": "6e468422dfb74a5738702a8823b9b28168abab8655faacb6853cd0ee15deee93",
@@ -56,18 +61,25 @@ which describes the basic protocol, all NIPs are optional. Here is one example o
   ],
   "sig": "908a15e46fb4d8675bab026fc230a0e3542bfade63da02d542fb78b2a8513fcd0092619a2c8c1221e581946e0191f2af505dfdf8657a414dbca329186f009262"
 }
-</code>
-</pre>
+```
+</md-block>
 
 
-<hr>
-Last modified:
-<div id="id_date"></div>
-<script>
-const date = new Date(document.lastModified);
-document.getElementById("id_date").innerHTML = date;
-</script>
+<p class="w3-justify">
 
+<p class="w3-center">
+<a href="https://fiatjaf.com/nostr.html">Notes and Other Stuff Transmitted by Relays</a> 
+<br>
+<a href="https://wiki.wellorder.net/post/nostr-intro/">Nostr, an Introduction</a>
+</p>
+
+
+</p>
+
+<div class="w3-container">
+<a href="index.html" class="w3-button w3-teal">Home</a>
+</div>
 </section>
 </body>
 </html>
+
