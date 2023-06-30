@@ -41,7 +41,7 @@ struct args
   const char* content;
   uint64_t created_at;
   const char* uri; // --uri URI to send
-  int req; // send a REQ with a filter that has the event id of the event you want to check for as the #e tag.
+  int req; 
   int rand_req; //send a RAND REQ (test)
   const char* event_id; //event id to look up on REQ
   const char* author; //author to look up on REQ
@@ -98,7 +98,6 @@ extern "C" {
   void usage();
   int parse_args(int argc, const char* argv[], struct args* args, struct nostr_event* ev);
   int make_message(struct args* args, struct nostr_event* ev, char** json);
-  int print_request(struct args* args, char** json);
 #ifdef __cplusplus
 }
 #endif

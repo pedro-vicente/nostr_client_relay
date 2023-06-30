@@ -9,22 +9,21 @@
 <link rel="stylesheet" type="text/css" href="me.css" />
 <title>Nostro</title>
 <body>
-<section class="w3-container w3-center w3-content" style="max-width:800px">
+<section class="w3-container w3-center w3-content" style="max-width:1400px">
 <h2 class="w3-wide">Nostr client relay</h2>
 
 <p class="w3-justify">
 Nostr_client_relay is a Nostr C++ engine that allows to build Nostr applications for command line, desktop or web.
-It is open sourced on <a href="https://github.com/pedro-vicente/nostr_client_relay">GitHub</a> 
+It is available on <a href="https://github.com/pedro-vicente/nostr_client_relay">GitHub</a> 
 </p>
 
 <h3 class="w3-wide">API</h3>
 
-
-<md-block>
-```cpp
-std::string make_request(const std::string& subscription_id, const filter_t& filter);
-```
-</md-block>
+<p class="w3-justify">
+Nostr_client_relay allows an easy integration between C++ objects like strings and vectors and Nostr JSON entities like events and filters, 
+defined in <a href="https://github.com/nostr-protocol/nips/blob/master/01.md"> NIP-01 </a>, using the 
+<a href="https://github.com/nlohmann/json"> JSON for modern C++ library.</a> 
+</p>
 
 
 <md-block>
@@ -52,8 +51,73 @@ int parse_request(const std::string& json, std::string& request_id, nostr::filte
 ```
 </md-block>
 
+<md-block>
+```cpp
+int relay_to(const std::string& uri, const std::string& json)
+```
+</md-block>
 
-<h3 class="w3-wide">Contacts</h3>
+
+<h3 class="w3-wide">Examples</h3>
+
+<h4 class="w3-wide">Get list of follows</h4>
+
+<p class="w3-justify">
+
+To get a list of follows we start with a public key that we want to get the follows from and a relay where the list is stored
+
+<md-block>
+```cpp
+const std::string pubkey("4ea843d54a8fdab39aa45f61f19f3ff79cc19385370f6a272dda81fade0a052b");
+const std::string relay("nos.lol");
+```
+</md-block>
+
+To define the request (REQ) we define a filter that has as "authors" our public key and has kind "3", defined as list of contacts in 
+<a href="https://github.com/nostr-protocol/nips/blob/master/02.md"> NIP-02 </a>. A random and unique subscription ID for the request must also
+ge generated, with:
+
+<md-block>
+```cpp
+std::string subscription_id = uuid::generate_uuid_v4();
+nostr::filter_t filter;
+filter.authors.push_back(pubkey);
+filter.kinds.push_back(3);
+```
+</md-block>
+
+This generates the following JSON, optinally formatted for display with indentation 
+
+<md-block>
+```json
+[
+ "REQ",
+ "9B874BC0-8372-4A41-9F5B-3DD6859F37F0",
+ {
+  "authors": [
+   "4ea843d54a8fdab39aa45f61f19f3ff79cc19385370f6a272dda81fade0a052b"
+  ],
+  "kinds": [
+   3
+  ],
+  "limit": 1
+ }
+]
+```
+</md-block>
+
+Finally the JSON string can be generated from the C++ objects and sent to the wire simply with
+
+<md-block>
+```cpp
+std::string json = nostr::make_request(subscription_id, filter);
+nostr::relay_to(uri, json);
+```
+</md-block>
+
+And for that request a response is obtained according to <a href="https://github.com/nostr-protocol/nips/blob/master/02.md"> NIP-02 </a>
+
+</p>
 
 <md-block>
 ```json

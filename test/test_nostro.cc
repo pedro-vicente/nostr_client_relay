@@ -25,11 +25,12 @@ std::string log_program_name("test_nostro");
 
 const std::string pubkey("4ea843d54a8fdab39aa45f61f19f3ff79cc19385370f6a272dda81fade0a052b");
 std::vector<std::string> relays = { "eden.nostr.land",
-"nos.lol",
-"relay.snort.social",
-"relay.damus.io",
-"nostr.wine",
+  "nos.lol",
+  "relay.snort.social",
+  "relay.damus.io",
+  "nostr.wine",
 };
+
 
 std::vector<std::string> list = { "list_01.txt",
 "list_02.txt",
@@ -58,7 +59,7 @@ int make_requests(const std::string& uri)
   nostr::filter_t filter;
   filter.authors.push_back(pubkey);
   filter.kinds.push_back(3);
-  std::string json = make_request(subscription_id, filter);
+  std::string json = nostr::make_request(subscription_id, filter);
   events::json_to_file("send_message.json", json);
 
   if (nostr::relay_to(uri, json) < 0)
