@@ -1,10 +1,10 @@
 ## Nostr client and relay
 
-Nostr client and relay is a Nostr [https://nostr.com/]  C++ engine that allows to build Nostr applications for command line, desktop or web.
+Nostr client and relay is a [https://nostr.com/](https://nostr.com/)  C++ engine that allows to build Nostr applications for command line, desktop or web.
 
-https://github.com/pedro-vicente/nostr_client_relay
+[https://github.com/pedro-vicente/nostr_client_relay](https://github.com/pedro-vicente/nostr_client_relay)
 
-A modified version of Nostril [https://github.com/jb55/nostril] is used for event and request generation.
+A modified version of [Nostril](https://github.com/jb55/nostril) is used for event and request generation.
 
 **ATTENTION DEVELOPERS**
 
@@ -15,67 +15,7 @@ See [BUILDING.md](./BUILDING.md) for source code build instructions. There are 3
 Nostro and Vostro are command line client and relay programs. Start a shell with 'nostro' and another shell with 'vostro'. Vostro is currently an echo server. 
 Nostro allows to connect to Vostro on localhost(localhost:8080/nostr) or to any publicly available Nostr relay. 
 
-## Options
-
-Nostro either sends an EVENT or a REQ. Some command line options apply only to EVENT, others to REQ.
-
-### Common options
-
-*--uri* `<wss URI>`  
-  WSS URI to send 
-  
-*--req*  
-  message is a request (REQ). EVENT parameters are ignored 
-  
-*--sec* `<hex seckey>`  
-  set the secret key for signing, otherwise one will be randomly generated
-  
-#### Generate pair private/public keys
-
-Nostro can be used to generate the 2 sets of keys needed for the Nostr network (private/public keys). If no --sec parameter
-is set, the generated private key is dumped to standard output and can be stored for later use.
-  
-### REQ options
-
-*--id* `<hex>`  
-  event id (hex) to look up on the request
-  
-*--rand*  
-  send a RAND request (e.g ["REQ","RAND",{"kinds": [1], "limit": 2}])
-  
-### EVENT options
-
-*--content* `<string>`     
-  The text contents of the note
-
-*--dm* `<hex pubkey>`      
-  Create a direct message. This will create a kind-4 note with the contents encrypted
-
-*--kind* `<number>`     
-  Set the kind of the note
-
-*--created-at* `<unix timestamp>`      
-  Set the created at. Optional, this is set automatically.
-
-*--mine-pubkey*  
-  Mine a pubkey. This may or may not be cryptographically dubious.
-
-*--pow* `<difficulty>`    
-  Number of leading 0 bits of the id the mine for proof-of-work.
-
-*--tag* `<key value>`      
-  Add a tag with a single value
-
-*-t*
-  Shorthand for --tag t `<hashtag>`     
-
-*-p*
-  Shorthand for --tag p `<hex pubkey>`      
-
-*-e*
-  Shorthand for --tag e `<note id>`    
-
-## Usage
+## Usage examples 
 
 ### Requests
 
@@ -163,7 +103,7 @@ Open a browser at localhost port 8080
 ```
 http://127.0.0.1/8080
 ```
-### Web interface
+## Web interface
 
 The nostro web interface at this time allows input of a limited set of the command line options.
 
@@ -172,5 +112,109 @@ The nostro web interface at this time allows input of a limited set of the comma
 It is available at
 
 [https://nostro.cloud/]
+
+## API
+
+Nostr_client_relay allows an easy integration between C++ objects like strings and vectors and Nostr JSON entities like events and filters, 
+defined in [NIP-01](https://github.com/nostr-protocol/nips/blob/master/01.md), using the [JSON for modern C++ library](https://github.com/nlohmann/json)
+
+```cpp
+std::string make_request(const std::string& subscription_id, const filter_t& filter);
+```
+
+```cpp
+Type get_message_type(const std::string& json);
+```
+
+```cpp
+int parse_event(const std::string& json, std::string& event_id, nostr::event_t& ev);
+```
+
+```cpp
+int parse_request(const std::string& json, std::string& request_id, nostr::filter_t& filter);
+```
+
+```cpp
+int relay_to(const std::string& uri, const std::string& json)
+```
+
+
+
+## Examples
+
+### Get list of follows
+
+To get a list of follows we start with a public key that we want to get the follows from and a relay address where the list is stored
+
+```cpp
+const std::string pubkey("4ea843d54a8fdab39aa45f61f19f3ff79cc19385370f6a272dda81fade0a052b");
+const std::string uri("nos.lol");
+```
+
+To define the request (REQ) we define a filter that has as "authors" our public key and has kind "3", defined as list of contacts in 
+[NIP-02](https://github.com/nostr-protocol/nips/blob/master/02.md). A random and unique subscription ID for the request must also
+ge generated, with:
+
+```cpp
+std::string subscription_id = uuid::generate_uuid_v4();
+nostr::filter_t filter;
+filter.authors.push_back(pubkey);
+filter.kinds.push_back(3);
+```
+
+This generates the following JSON, optinally formatted for display with indentation 
+
+```json
+[
+ "REQ",
+ "9B874BC0-8372-4A41-9F5B-3DD6859F37F0",
+ {
+  "authors": [
+   "4ea843d54a8fdab39aa45f61f19f3ff79cc19385370f6a272dda81fade0a052b"
+  ],
+  "kinds": [
+   3
+  ],
+  "limit": 1
+ }
+]
+```
+
+Finally the JSON string can be generated from the C++ objects and sent to the wire simply with
+
+```cpp
+std::string json = nostr::make_request(subscription_id, filter);
+nostr::relay_to(uri, json);
+```
+
+And for that request a response is obtained according to <a href="https://github.com/nostr-protocol/nips/blob/master/02.md"> NIP-02 </a>
+
+
+```json
+[
+ "EVENT",
+ "5B695BFF-2A99-48AD-AAAE-4DF13F2DB7E4",
+ {
+  "content": "{\"wss://nos.lol/\":{\"write\":true,\"read\":true}}",
+  "created_at": 1687486321,
+  "id": "b8826c41b78bf8e4545706914e0d921b77a86192393ffb3df47f5623e6fa5b8f",
+  "kind": 3,
+  "pubkey": "4ea843d54a8fdab39aa45f61f19f3ff79cc19385370f6a272dda81fade0a052b",
+  "sig": "b1d004f1c0f8e72c9ac0c4492086c4dfc60478156feb5d6e7075923bb6e0d738d69ed61d16d65503d6df1f09b363dccd8013bd56a5354ebbbb029f558363997e",
+  "tags": [
+   [
+    "p",
+    "c708943ea349519dcf56b2a5c138fd9ed064ad65ddecae6394eabd87a62f1770"
+   ],
+   [
+    "p",
+    "fa984bd7dbb282f07e16e7ae87b26a2a7b9b90b7246a44771f0cf5ae58018f52"
+   ]
+  ]
+ }
+]
+```
+
+
 
 
