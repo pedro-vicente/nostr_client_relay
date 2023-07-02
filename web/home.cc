@@ -212,8 +212,7 @@ void ContainerHome::send_message()
         events::log("event received: " + ev.content);
         if (m_check_raw->isChecked() == false) str = ev.content;
       }
-
-      else if (message_type.compare("EOSE") == 0)
+      else
       {
         connection->send_close(1000);
       }

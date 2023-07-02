@@ -6,6 +6,8 @@
 #include "nlohmann/json.hpp"
 #include "log.hh"
 #include "nostr.hh"
+#include "uuid.hh"
+
 using WssClient = SimpleWeb::SocketClient<SimpleWeb::WSS>;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -262,12 +264,9 @@ int nostr::parse_request(const std::string& json, std::string& request_id, nostr
 // relay_to
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-int nostr::relay_to(const std::string& uri, const std::string& json)
+int nostr::relay_to(const std::string& uri, const std::string& json, std::vector<std::string>& store)
 {
   WssClient client(uri, false);
-  size_t count = 0;
-  std::ofstream log;
-  log.open("messages.txt", std::ofstream::trunc);
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////
   // on_message
@@ -276,13 +275,8 @@ int nostr::relay_to(const std::string& uri, const std::string& json)
   client.on_message = [&](std::shared_ptr<WssClient::Connection> connection, std::shared_ptr<WssClient::InMessage> in_message)
   {
     std::string str = in_message->string();
-    log << "Received: " << str << std::endl;
-
-    std::stringstream ss;
-    count++;
-    ss << "message_" << std::to_string(count) << ".json";
-    events::json_to_file(ss.str(), str);
-
+    store.push_back(str);
+    connection->send_close(1000);
   };
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -291,31 +285,125 @@ int nostr::relay_to(const std::string& uri, const std::string& json)
 
   client.on_open = [&](std::shared_ptr<WssClient::Connection> connection)
   {
-    std::string out_message = json;
-    log << "Sending: " << out_message << std::endl;
-
-    connection->send(out_message);
+    connection->send(json);
   };
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////
   // on_close
   /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  client.on_close = [&](std::shared_ptr<WssClient::Connection>, int status, const std::string&)
+  client.on_close = [](std::shared_ptr<WssClient::Connection>, int status, const std::string&)
   {
-    log << "Closed: " << status << std::endl;
   };
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////
   // on_error
   /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  client.on_error = [&](std::shared_ptr<WssClient::Connection>, const SimpleWeb::error_code& ec)
+  client.on_error = [](std::shared_ptr<WssClient::Connection>, const SimpleWeb::error_code& ec)
   {
-    log << "Error: " << ec << " : " << ec.message() << std::endl;
   };
 
   client.start();
+  return 0;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+// get_follows
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+int nostr::get_follows(const std::string& uri, const std::string& pubkey, std::vector<std::string>& response)
+{
+  std::vector<std::string> responses;
+  std::vector< nostr::event_t> subs_events;
+
+  {
+    std::string subscription_id = uuid::generate_uuid_v4();
+    nostr::filter_t filter;
+    filter.authors.push_back(pubkey);
+    filter.kinds.push_back(3);
+    std::string json = nostr::make_request(subscription_id, filter);
+    if (nostr::relay_to(uri, json, responses) < 0)
+    {
+    }
+  }
+
+  for (int idx = 0; idx < responses.size(); idx++)
+  {
+    std::string message = responses.at(idx);
+
+    try
+    {
+      nlohmann::json js = nlohmann::json::parse(message);
+
+      //Relays can send 3 types of messages, which must also be JSON arrays, according to the following patterns:
+      //["EVENT", <subscription_id>, <event JSON as defined above>], used to send events requested by clients.
+      //["EOSE", <subscription_id>], used to indicate the end of stored events and the beginning of events newly received in real - time.
+      //["NOTICE", <message>], used to send human - readable error messages or other things to clients.
+
+      std::string type = js.at(0);
+      if (type.compare("EVENT") == 0)
+      {
+        nostr::event_t ev;
+        from_json(js.at(2), ev);
+        subs_events.push_back(ev);
+      }
+    }
+    catch (const std::exception& e)
+    {
+      events::log(e.what());
+    }
+  }
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+  // get follows info (1 event only should be returned)
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  nostr::event_t ev = subs_events.at(0);
+  for (int idx = 0; idx < ev.tags.size(); idx++)
+  {
+    std::vector<std::string> tag = ev.tags.at(idx);
+    std::string pubkey = tag.at(1);
+
+    std::string subscription_id = uuid::generate_uuid_v4();
+    nostr::filter_t filter;
+    filter.authors.push_back(pubkey);
+    filter.kinds.push_back(1);
+    filter.limit = 1;
+    std::string json = nostr::make_request(subscription_id, filter);
+
+    std::vector<std::string> info;
+    if (nostr::relay_to(uri, json, info) < 0)
+    {
+    }
+
+    for (int idx = 0; idx < info.size(); idx++)
+    {
+      std::string message = info.at(idx);
+
+#ifdef LOG_EVENTS
+      try
+      {
+        nlohmann::json js = nlohmann::json::parse(message);
+        std::string type = js.at(0);
+        if (type.compare("EVENT") == 0)
+        {
+          nostr::event_t ev;
+          from_json(js.at(2), ev); events::log("event received: " + ev.content);
+          std::string json = js.dump();
+          events::json_to_file("event_follow.json", json);
+        }
+      }
+      catch (const std::exception& e)
+      {
+        events::log(e.what());
+      }
+#endif
+
+      response.push_back(message);
+    }
+  }
+
   return 0;
 }
 

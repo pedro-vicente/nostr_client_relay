@@ -13,8 +13,7 @@ public:
   ContainerFeed();
   Wt::WTable* m_table_messages;
   void row_text(const Wt::WString& s);
-  int m_row;
-
+  std::vector< nostr::event_t> m_events;
 };
 
 #endif

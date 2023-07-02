@@ -7,30 +7,22 @@
 #include "log.hh"
 #include "nostr.hh"
 
+std::string log_program_name("test_nostro");
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 // prototypes
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-int relay_all(const std::string& json);
-int make_requests(const std::string& uri);
 int read_list(const std::string& file_name);
 int read_lists();
+int relay_all(const std::string& json);
 
-std::string log_program_name("test_nostro");
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-// Nostr constants
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
-const std::string pubkey("4ea843d54a8fdab39aa45f61f19f3ff79cc19385370f6a272dda81fade0a052b");
 std::vector<std::string> relays = { "eden.nostr.land",
   "nos.lol",
   "relay.snort.social",
   "relay.damus.io",
   "nostr.wine",
 };
-
 
 std::vector<std::string> list = { "list_01.txt",
 "list_02.txt",
@@ -42,33 +34,41 @@ std::vector<std::string> list = { "list_01.txt",
 
 int main()
 {
+  const std::string pubkey("4ea843d54a8fdab39aa45f61f19f3ff79cc19385370f6a272dda81fade0a052b");
+
   events::start_log();
 
-  make_requests(relays.at(1));
+  std::vector<std::string> response;
+  nostr::get_follows(relays.at(1), pubkey, response);
 
-  return 0;
-}
+  std::vector<nostr::event_t> events;
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-// make_requests
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
-int make_requests(const std::string& uri)
-{
-  std::string subscription_id = uuid::generate_uuid_v4();
-  nostr::filter_t filter;
-  filter.authors.push_back(pubkey);
-  filter.kinds.push_back(3);
-  std::string json = nostr::make_request(subscription_id, filter);
-  events::json_to_file("send_message.json", json);
-
-  if (nostr::relay_to(uri, json) < 0)
+  for (int idx = 0; idx < response.size(); idx++)
   {
+    std::string message = response.at(idx);
+
+    try
+    {
+      nlohmann::json js = nlohmann::json::parse(message);
+      std::string type = js.at(0);
+      if (type.compare("EVENT") == 0)
+      {
+        nostr::event_t ev;
+        from_json(js.at(2), ev);
+        events.push_back(ev);
+        events::log("event received: " + ev.content);
+        std::string json = js.dump();
+        events::json_to_file("event_follow.json", json);
+      }
+    }
+    catch (const std::exception& e)
+    {
+      events::log(e.what());
+    }
   }
 
   return 0;
 }
-
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 // read_lists
@@ -157,7 +157,8 @@ int relay_all(const std::string& json)
   for (int idx = 0; idx < relays.size(); idx++)
   {
     std::string uri = relays.at(idx);
-    if (nostr::relay_to(uri, json) < 0)
+    std::vector<std::string> store;
+    if (nostr::relay_to(uri, json, store) < 0)
     {
     }
   }
