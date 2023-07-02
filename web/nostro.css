@@ -1,5 +1,21 @@
-.yellow_box {
+.yellow-box {
   background-color: #FFE4C4;
+  border: 1px solid black;
+  margin-top: 1ex;
+  margin-bottom: 1ex;
+}
+
+.green-box {
+  background-color: #c4ffb4;
+  max-height: 100px;
+  text-align: left;
+  border: 1px solid black;
+  margin-top: 1ex;
+  margin-bottom: 1ex;
+}
+
+.blue-box {
+  background-color: #65dae8;
   border: 1px solid black;
   margin-top: 1ex;
   margin-bottom: 1ex;

@@ -1,0 +1,90 @@
+#include "web.hh"
+#include "home.hh"
+#include "feed.hh"
+
+std::string log_program_name("nostro_web");
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+//main
+// --docroot=. --http-port=80 --http-address=0.0.0.0 
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+std::unique_ptr<Wt::WApplication> create_application(const Wt::WEnvironment& env)
+{
+  return std::make_unique<NostroApplication>(env);
+}
+
+int main(int argc, char** argv)
+{
+  try
+  {
+    events::start_log();
+    Wt::WServer server(argc, argv);
+    server.addEntryPoint(Wt::EntryPointType::Application, create_application);
+    server.run();
+  }
+  catch (std::exception& e)
+  {
+    events::log(e.what());
+  }
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+//NostroApplication
+// CSS layout: by default, the widget corresponds to a <div> tag.
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+NostroApplication::NostroApplication(const Wt::WEnvironment& env)
+  : WApplication(env)
+{
+  useStyleSheet("nostro.css");
+  setTitle("Nostro");
+  root()->setStyleClass("yellow-box");
+
+  auto container = std::make_unique<Wt::WContainerWidget>();
+  m_layout = container->setLayout(std::make_unique<Wt::WHBoxLayout>());
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+  //menu
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  auto container_menu = std::make_unique<Wt::WContainerWidget>();
+  m_menu = container_menu->addNew<Wt::WMenu>();
+  m_menu->setStyleClass("green-box");
+  m_menu->setWidth(100);
+  m_menu->addItem("Home", std::make_unique<Wt::WAnchor>(Wt::WLink(Wt::LinkType::InternalPath, "home")));
+  m_menu->addItem("Feed", std::make_unique<Wt::WAnchor>(Wt::WLink(Wt::LinkType::InternalPath, "feed")));
+  m_menu->itemSelected().connect(this, &NostroApplication::selected);
+  m_layout->addWidget(std::move(container_menu));
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+  //home
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  auto container_home = std::make_unique<ContainerHome>();
+  m_layout->addWidget(std::move(container_home), 1);
+
+  root()->addWidget(std::move(container));
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+//selected
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void NostroApplication::selected()
+{
+  Wt::WLayoutItem* item = m_layout->itemAt(1);
+  m_layout->removeItem(item);
+  int index = m_menu->currentIndex();
+  if (index == 0)
+  {
+    auto container = std::make_unique<ContainerHome>();
+    m_layout->addWidget(std::move(container), 1);
+  }
+  else if (index == 1)
+  {
+    auto container = std::make_unique<ContainerFeed>();
+    m_layout->addWidget(std::move(container), 1);
+  }
+}
+

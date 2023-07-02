@@ -1,0 +1,20 @@
+#ifndef NOSTRO_WEB_FEED_HH
+#define NOSTRO_WEB_FEED_HH
+
+#include "web.hh"
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+//ContainerFeed
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class ContainerFeed : public Wt::WContainerWidget
+{
+public:
+  ContainerFeed();
+  Wt::WTable* m_table_messages;
+  void row_text(const Wt::WString& s);
+  int m_row;
+
+};
+
+#endif

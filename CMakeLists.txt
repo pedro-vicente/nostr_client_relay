@@ -71,10 +71,9 @@ if(UNIX AND NOT APPLE)
   set(LINUX TRUE)
 endif()
 
-if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-declarations -Wno-nonnull")
-elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated -Wno-deprecated-declarations -Wno-nonnull")
+if(UNIX)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -Wno-deprecated -Wno-deprecated-declarations -Wno-nonnull -Wno-psabi")
+  message(STATUS "Compiler flags: ${CMAKE_CXX_FLAGS}")
 endif()
 
 #//////////////////////////

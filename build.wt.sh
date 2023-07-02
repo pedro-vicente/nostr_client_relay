@@ -9,7 +9,7 @@ pushd build
 
 if [[ "$OSTYPE" == "msys" ]]; then
 
-cmake .. --fresh -DCMAKE_INSTALL_PREFIX=C:/wt_install -DBOOST_PREFIX=N:/nostr_client_relay/ext/boost_1_82_0
+cmake .. --fresh -DCMAKE_INSTALL_PREFIX=C:/wt_install -DBOOST_PREFIX=N:/nostr_client_relay/ext/boost_1_82_0 -DINSTALL_EXAMPLES=ON
 cmake --build . --parallel 9
 cmake --install . --config Debug
 

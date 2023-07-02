@@ -6,7 +6,17 @@ message(STATUS "Build directory is " ${CMAKE_CURRENT_BINARY_DIR})
 include_directories(${WT_INCLUDE})
 include_directories(${WT_CONFIG_H})
 
-add_executable(nostro_web nostro_web.cc)
+#//////////////////////////
+# common sources library
+#//////////////////////////
+
+set(web ${web})
+set(web ${web} feed.hh)
+set(web ${web} feed.cc)
+set(web ${web} home.hh)
+set(web ${web} home.cc)
+
+add_executable(nostro_web web.cc web.hh ${web})
 
 #//////////////////////////
 #link with libraries

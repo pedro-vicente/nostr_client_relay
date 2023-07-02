@@ -17,6 +17,7 @@ cmake --build .
 
 fi
 
+sleep 3
 cmake --build .
 
 popd
