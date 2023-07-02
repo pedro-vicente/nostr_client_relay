@@ -43,15 +43,17 @@ ContainerFeed::ContainerFeed()
         nostr::event_t ev;
         from_json(js.at(2), ev);
         events.push_back(ev);
-        events::log("event received: " + ev.content);
-        std::string json = js.dump();
-        events::json_to_file("event_follow.json", json);
+        std::string json = js.dump(1);
+        std::stringstream s;
+        s << "follow." << row + 1 << ".json";
+        events::json_to_file(s.str(), json);
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////
-        // add complete message to HTML table 
+        // add complete JSON formatted message to HTML table 
         /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        Wt::WText* wtext = m_table_messages->elementAt(row, 0)->addNew<Wt::WText>(message);
+        Wt::WText* wtext = m_table_messages->elementAt(row, 0)->addNew<Wt::WText>(json);
+        wtext->setHeight(100);
         wtext->clicked().connect([=]()
           {
             row_text(wtext->text());

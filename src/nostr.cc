@@ -380,26 +380,6 @@ int nostr::get_follows(const std::string& uri, const std::string& pubkey, std::v
     for (int idx = 0; idx < info.size(); idx++)
     {
       std::string message = info.at(idx);
-
-#ifdef LOG_EVENTS
-      try
-      {
-        nlohmann::json js = nlohmann::json::parse(message);
-        std::string type = js.at(0);
-        if (type.compare("EVENT") == 0)
-        {
-          nostr::event_t ev;
-          from_json(js.at(2), ev); events::log("event received: " + ev.content);
-          std::string json = js.dump();
-          events::json_to_file("event_follow.json", json);
-        }
-      }
-      catch (const std::exception& e)
-      {
-        events::log(e.what());
-      }
-#endif
-
       response.push_back(message);
     }
   }
