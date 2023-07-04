@@ -42,7 +42,7 @@ std::string http::get_method(const std::string& header)
   size_t pos = header.find(" ");
   if (pos == std::string::npos)
   {
-    events::log("HTTP bad format");
+    comm::log("HTTP bad format");
     return method;
   }
   method = header.substr(0, pos);
@@ -66,7 +66,7 @@ std::string http::get_url(const std::string& header)
   size_t ver_pos = header.find(" HTTP");
   if (pos == std::string::npos)
   {
-    events::log("HTTP bad format");
+    comm::log("HTTP bad format");
     return url;
   }
   if (pos == ver_pos)
@@ -126,7 +126,7 @@ int http::parse(asio::ip::tcp::socket& sock, http_msg_t& http)
         }
         catch (std::invalid_argument&)
         {
-          events::log("invalid Content-Length");
+          comm::log("invalid Content-Length");
           return -1;
         }
         http.content_size = content_size;
@@ -158,7 +158,7 @@ int http::parse(asio::ip::tcp::socket& sock, http_msg_t& http)
   }
   catch (std::exception& e)
   {
-    events::log(e.what());
+    comm::log(e.what());
     return -1;
   }
   http.msg = ss.str();

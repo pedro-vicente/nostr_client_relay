@@ -10,20 +10,77 @@
 <title>Nostro</title>
 <body>
 <section class="w3-container w3-center w3-content" style="max-width:1400px">
-<h2 class="w3-wide">Nostr client relay</h2>
+<h1 class="w3-left-align">Nostr client relay</h1>
 
-<p class="w3-justify">
+<p class="w3-left-align">
 Nostr_client_relay is a Nostr C++ engine that allows to build Nostr applications for command line, desktop or web.
 It is available on <a href="https://github.com/pedro-vicente/nostr_client_relay">GitHub</a> 
 </p>
 
-<h3 class="w3-wide">API</h3>
+<h2 class="w3-left-align">JSON</h2>
 
-<p class="w3-justify">
+<p class="w3-left-align">
+Nostr uses <a href="https://www.json.org">JSON</a> as data format. JSON is data-interchange format easy for humans to read and write. JSON is built on two structures:
+a collection of name/value pairs, called an object, and an ordered list of values, called an array (or vector). Object vales can be strings, numbers and a boolean value for true or false.
+</p>
+
+<h2 class="w3-left-align">API</h2>
+
+<p class="w3-left-align">
 Nostr_client_relay allows an easy integration between C++ objects like strings and vectors and Nostr JSON entities like events and filters, 
 defined in <a href="https://github.com/nostr-protocol/nips/blob/master/01.md"> NIP-01 </a>, using the 
 <a href="https://github.com/nlohmann/json"> JSON for modern C++ library.</a> 
 </p>
+
+
+<h2 class="w3-left-align">Data structures</h2>
+
+
+<p class="w3-left-align">
+A data structure is a storage that is used to store and organize data. Nostr uses the JSON data structures: arrays and objects with string and integer values. 
+An array is a collection of like variables that share a single name. Strings are a sequence of characters, used to store human-readable text, like words.
+A Nostr event <a href="https://github.com/nostr-protocol/nips/blob/master/01.md"> (NIP-01) </a> is defined as 
+</p>
+
+<md-block>
+```cpp
+class event_t
+{
+  std::string id;
+  std::string pubkey;
+  std::time_t created_at;
+  int kind;
+  std::vector&ltstd::vector&ltstd::string&gt&gt tags;
+  std::string content;
+  std::string sig;
+};
+```
+</md-block>
+
+<p class="w3-left-align">
+A filter is defined as 
+</p>
+
+<md-block>
+```cpp
+class filter_t
+{
+  std::vector&ltstd::string&gt ids;
+  std::vector&ltstd::string&gt authors;
+  std::vector&ltint&gt kinds;
+  std::vector&ltstd::string&gt e;
+  std::vector&ltstd::string&gt p;
+  std::time_t since;
+  std::time_t until;
+  size_t limit;
+};
+```
+</md-block>
+
+
+<h2 class="w3-left-align">Functions</h2>
+
+<h3 class="w3-left-align">Make request </h3>
 
 
 <md-block>
@@ -32,17 +89,98 @@ std::string make_request(const std::string& subscription_id, const filter_t& fil
 ```
 </md-block>
 
+<p class="w3-left-align">
+The function make_request generates the JSON REQ to transmit to a relay. It accepts a string with a subscription identifier and a filter. 
+</p>
+
+<md-block>
+```cpp
+const std::string pubkey("4ea843d54a8fdab39aa45f61f19f3ff79cc19385370f6a272dda81fade0a052b");
+std::string subscription_id = "my_id";
+nostr::filter_t filter;
+filter.authors.push_back(pubkey);
+filter.kinds.push_back(1);
+filter.limit = 1;
+std::string json = nostr::make_request(subscription_id, filter);
+```
+</md-block>
+
+<p class="w3-left-align">
+The following JSON is generated, where the pubkey was inserted as an item in the filter's authors array. 
+</p>
+
+<md-block>
+```json
+[
+ "REQ",
+ "my_id",
+ {
+  "authors": [
+   "4ea843d54a8fdab39aa45f61f19f3ff79cc19385370f6a272dda81fade0a052b"
+  ],
+  "kinds": [
+   1
+  ],
+  "limit": 1
+ }
+]
+```
+</md-block>
+
+<p class="w3-left-align">
+<b>Note</b>: the utility functions json_to_file and from_file can be used to save formatted JSON to a text file and to read it from file.
+</p>
+
+<md-block>
+```cpp
+std::string json;
+comm::json_to_file("request.json", json);
+comm::from_file("request.json", json);
+```
+
+
+<h3 class="w3-left-align">Get message type</h3>
+
 <md-block>
 ```cpp
 Type get_message_type(const std::string& json);
 ```
 </md-block>
 
+<p class="w3-left-align">
+The function get_message_type returns an identifier for the kind of Nostr message: 
+</p>
+
 <md-block>
 ```cpp
-int parse_event(const std::string& json, std::string& event_id, nostr::event_t& ev);
+enum class Type
+{
+EVENT,
+REQ,
+CLOSE,
+EOSE,
+NOTICE,
+UNKNOWN
+};
 ```
 </md-block>
+
+<p class="w3-left-align">
+All Nostr messages are JSON arrays, so the identifier (string "EVENT" at array position zero, the first position) is obtained by inspecting array index positions with
+</p>
+
+<md-block>
+```cpp
+nlohmann::json js_message = nlohmann::json::parse(json);
+std::string type = js_message.at(0);
+if (type.compare("EVENT") == 0)
+{
+  return nostr::Type::EVENT;
+}
+```
+</md-block>
+
+<h3 class="w3-left-align">Parse request</h3>
 
 
 <md-block>
@@ -51,20 +189,171 @@ int parse_request(const std::string& json, std::string& request_id, nostr::filte
 ```
 </md-block>
 
+<p class="w3-left-align">
+The function parse_request is used to parse a request. To read the JSON used above in the function make_request
+</p>
+
 <md-block>
 ```cpp
-int relay_to(const std::string& uri, const std::string& json)
+std::string json = R"([
+ "REQ",
+ "34E8C71B-C0FB-4D6D-9CBB-694A091D6A2D",
+ {
+  "authors": [
+   "4ea843d54a8fdab39aa45f61f19f3ff79cc19385370f6a272dda81fade0a052b"
+  ],
+  "kinds": [
+   1
+  ],
+  "limit": 1
+ }
+])";
+std::string request_id;
+nostr::filter_t filter;
+nostr::parse_request(json, request_id, filter);
+std::cout << request_id << std::endl;
+std::cout << filter.authors.at(0) << std::endl;
+```
+</md-block>
+
+<h3 class="w3-left-align">Parse event</h3>
+
+<md-block>
+```cpp
+int parse_event(const std::string& json, std::string& event_id, nostr::event_t& ev);
+```
+</md-block>
+
+<p class="w3-left-align">
+The function parse_event is used to parse an event.
+</p>
+
+
+<md-block>
+```cpp
+std::string json = R"([
+ "EVENT",
+ "34E8C71B-C0FB-4D6D-9CBB-694A091D6A2D",
+ {
+  "content": "https://github.com/pedro-vicente/nostr_client_relay",
+  "created_at": 1686887953,
+  "id": "24d7deac8173f5e7ead51282106728ae39d44aa558ff3c5b3b236bece71684ef",
+  "kind": 1,
+  "pubkey": "4ea843d54a8fdab39aa45f61f19f3ff79cc19385370f6a272dda81fade0a052b",
+  "sig": "14d1b7ea0cd8f4275221c297d0d30f5afe2a87a13b743211ed23bcb5dac095498b2b34f645544e3c956577d6554d812fbf908ccb7857b2e920875046579a105c",
+  "tags": []
+ }
+])";
+std::string event_id;
+nostr::event_t ev;
+nostr::parse_event(json, event_id, ev);
+std::cout << event_id << std::endl;
+std::cout << ev.content << std::endl;
 ```
 </md-block>
 
 
-<h3 class="w3-wide">Examples</h3>
+<h3 class="w3-left-align">Relay to</h3>
 
-<h4 class="w3-wide">Get list of follows</h4>
+<md-block>
+```cpp
+relay_to(const std::string& uri, const std::string& json, std::vector<std::string>& store);
+```
+</md-block>
 
-<p class="w3-justify">
+<p class="w3-left-align">
+The function relay_to is used to send a Nostr message (REQ or EVENT) to a relay and return the responses in a array of strings.
+</p>
 
+
+<md-block>
+```cpp
+std::string json = R"([
+ "REQ",
+ "34E8C71B-C0FB-4D6D-9CBB-694A091D6A2D",
+ {
+  "authors": [
+   "4ea843d54a8fdab39aa45f61f19f3ff79cc19385370f6a272dda81fade0a052b"
+  ],
+  "kinds": [
+   1
+  ],
+  "limit": 1
+ }
+])";
+std::string uri = "nos.lol";
+std::vector<std::string> response;
+nostr::relay_to(uri, json, response);
+comm::to_file("response.txt", response);
+for (int idx = 0; idx < response.size(); idx++)
+{
+  std::string message = response.at(idx);
+  std::cout << message << std::endl;
+}
+```
+
+<p class="w3-left-align">
+The above call returned these 2 messages 
+</p>
+
+<md-block>
+```json
+["EVENT","34E8C71B-C0FB-4D6D-9CBB-694A091D6A2D",{"content":"API version 1 released. Nostr_client_relay is a Nostr C++ engine that allows to build Nostr applications for command line, desktop or web. https://pedro-vicente.net/nostro.html","created_at":1688194430,"id":"9d05a7d271e63dd47dcda1f7c7058f1ce4c903fd24dfe6fdfd72034a040a9923","kind":1,"pubkey":"4ea843d54a8fdab39aa45f61f19f3ff79cc19385370f6a272dda81fade0a052b","sig":"c0aeca949da8b444f80009c81120b2d0059516c0c324b0d6cf523dfd1a20f78bdceec0324d0d3f9940d74b146d7e2d45b105dddd38658c4b07ec2b37ec89ff12","tags":[]}]
+["EOSE","34E8C71B-C0FB-4D6D-9CBB-694A091D6A2D"]
+```
+</md-block>
+
+
+<h3 class="w3-left-align">Get follows</h3>
+
+<md-block>
+```cpp
+int get_follows(const std::string& uri, const std::string& pubkey, std::vector&ltstd::string&gt& response);
+```
+</md-block>
+
+<p class="w3-left-align">
+The function get_follows is a more elaborated higher level function that returns a list of Nostr accounts followed
+from a public key input.
+</p>
+
+
+<md-block>
+```cpp
+std::vector<std::string> response;
+std::string uri = "nos.lol";
+const std::string pubkey("4ea843d54a8fdab39aa45f61f19f3ff79cc19385370f6a272dda81fade0a052b");
+nostr::get_follows(uri, pubkey, response);
+comm::to_file("response.txt", response);
+for (int idx = 0; idx < response.size(); idx++)
+{
+  std::string message = response.at(idx);
+  std::cout << message << std::endl;
+}
+```
+</md-block>
+
+
+<p class="w3-left-align">
+The above call returns messages in the form of EVENTS and EOSE
+</p>
+
+<md-block>
+```json
+["EVENT","731E4775-80AF-4819-81D6-F21BF3A1B296",{"content":"that needs to be listed on nostr.watch and then it will appear in NADAR.","created_at":1680047175,"id":"e730f566d2d992af7e8efbc1f48d15d316b5b07feb5274d5a2cb75014c538435","kind":1,"pubkey":"c708943ea349519dcf56b2a5c138fd9ed064ad65ddecae6394eabd87a62f1770","sig":"9704b9087879222c492226ab417de9cce436bb18d3022298f0ee1f076b07817022597a051b6a72cfdf68b52be9dcd2a7654b48d2b2b705d1a820444ad114324a","tags":[["e","f6fd01e5d1ba4fc343b27524e4d602f487a800b9c32cd4a0c2521cfdd348eca8","","root"],["e","404e611879f22c07b80c9e387e4c2c777d75af80d73cef15af98cfe52fed736a","","reply"],["p","d030bd233a1347e510c372b1878e00204b228072814361451623707896435da9"],["p","f4f377146e5f784dd0da0814bd95fa42d0ed7ce000d229299a7e8f95c640966f"]]}]
+["EOSE","731E4775-80AF-4819-81D6-F21BF3A1B296"]
+```
+</md-block>
+
+
+
+<h2 class="w3-left-align">Examples</h2>
+
+<h3 class="w3-left-align">Get list of follows</h3>
+
+<p class="w3-left-align">
 To get a list of follows we start with a public key that we want to get the follows from and a relay address where the list is stored
+</p>
 
 <md-block>
 ```cpp
@@ -86,7 +375,9 @@ filter.kinds.push_back(3);
 ```
 </md-block>
 
-This generates the following JSON, optinally formatted for display with indentation 
+<p class="w3-left-align">
+This generates the following JSON
+</p>
 
 <md-block>
 ```json
@@ -106,7 +397,9 @@ This generates the following JSON, optinally formatted for display with indentat
 ```
 </md-block>
 
+<p class="w3-left-align">
 Finally the JSON string can be generated from the C++ objects and sent to the wire simply with
+</p>
 
 <md-block>
 ```cpp
@@ -115,8 +408,8 @@ nostr::relay_to(uri, json);
 ```
 </md-block>
 
+<p class="w3-left-align">
 And for that request a response is obtained according to <a href="https://github.com/nostr-protocol/nips/blob/master/02.md"> NIP-02 </a>
-
 </p>
 
 <md-block>
@@ -145,6 +438,7 @@ And for that request a response is obtained according to <a href="https://github
 ]
 ```
 </md-block>
+
 
 
 

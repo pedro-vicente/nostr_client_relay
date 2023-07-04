@@ -46,7 +46,7 @@ ContainerFeed::ContainerFeed()
         std::string json = js.dump(1);
         std::stringstream s;
         s << "follow." << row + 1 << ".json";
-        events::json_to_file(s.str(), json);
+        comm::json_to_file(s.str(), json);
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////
         // add complete JSON formatted message to HTML table 
@@ -73,7 +73,7 @@ ContainerFeed::ContainerFeed()
     }
     catch (const std::exception& e)
     {
-      events::log(e.what());
+      comm::log(e.what());
     }
   }
 
@@ -91,11 +91,11 @@ void ContainerFeed::row_text(const Wt::WString& s)
   {
     nlohmann::json js = nlohmann::json::parse(message);
     std::string json = js.dump(1);
-    events::json_to_file("row_text.json", json);
+    comm::json_to_file("row_text.json", json);
   }
   catch (const std::exception& e)
   {
-    events::log(e.what());
+    comm::log(e.what());
   }
 
 }

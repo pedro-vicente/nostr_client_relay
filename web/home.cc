@@ -190,14 +190,14 @@ void ContainerHome::send_message()
     std::stringstream ss;
     std::string str = in_message->string();
     ss << "Received: " << str;
-    events::log(ss.str());
+    comm::log(ss.str());
     store.push_back(str);
 
     try
     {
       nlohmann::json js_message = nlohmann::json::parse(str);
       std::string json = js_message.dump();
-      events::json_to_file("on_message.json", json);
+      comm::json_to_file("on_message.json", json);
 
       //Relays can send 3 types of messages, which must also be JSON arrays, according to the following patterns:
       //["EVENT", <subscription_id>, <event JSON as defined above>], used to send events requested by clients.
@@ -209,7 +209,7 @@ void ContainerHome::send_message()
       {
         nostr::event_t ev;
         from_json(js_message.at(2), ev);
-        events::log("event received: " + ev.content);
+        comm::log("event received: " + ev.content);
         if (m_check_raw->isChecked() == false) str = ev.content;
       }
       else
@@ -219,7 +219,7 @@ void ContainerHome::send_message()
     }
     catch (const std::exception& e)
     {
-      events::log(e.what());
+      comm::log(e.what());
     }
 
     Wt::WText* wtext = m_table_messages->elementAt(m_row, 0)->addNew<Wt::WText>(str);
@@ -239,15 +239,15 @@ void ContainerHome::send_message()
   {
     std::stringstream ss;
     ss << "Opened connection: HTTP " << connection.get()->http_version << " , code " << connection.get()->status_code;
-    events::log(ss.str());
+    comm::log(ss.str());
 
     std::string message = m_area_message->text().toUTF8();
 
     ss.str(std::string());
     ss.clear();
     ss << "Sending: " << message;
-    events::log(ss.str());
-    events::json_to_file("on_open_message.json", message);
+    comm::log(ss.str());
+    comm::json_to_file("on_open_message.json", message);
 
     m_table_messages->clear();
     m_row = 0;
@@ -263,7 +263,7 @@ void ContainerHome::send_message()
   {
     std::stringstream ss;
     ss << "Closed: " << status;
-    events::log(ss.str());
+    comm::log(ss.str());
   };
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -274,7 +274,7 @@ void ContainerHome::send_message()
   {
     std::stringstream ss;
     ss << "Error: " << ec << " : " << ec.message();
-    events::log(ss.str());
+    comm::log(ss.str());
   };
 
 
@@ -286,11 +286,11 @@ void ContainerHome::send_message()
 
   std::stringstream ss;
   ss << "Received " << store.size() << " messages: ";
-  events::log(ss.str());
+  comm::log(ss.str());
 
   for (int idx = 0; idx < store.size(); idx++)
   {
-    events::log(store.at(idx));
+    comm::log(store.at(idx));
   }
 }
 
@@ -403,11 +403,11 @@ void ContainerHome::make_message()
     nlohmann::json js_message = nlohmann::json::parse(json_message);
     std::string json_indent = js_message.dump(1);
     m_area_message->setText(json_indent);
-    events::json_to_file("send_message.json", json_indent);
+    comm::json_to_file("send_message.json", json_indent);
   }
   catch (const std::exception& e)
   {
-    events::log(e.what());
+    comm::log(e.what());
   }
 
   free(buf);
@@ -424,10 +424,10 @@ void ContainerHome::row_text(const Wt::WString& s)
   {
     nlohmann::json js = nlohmann::json::parse(message);
     std::string json = js.dump(1);
-    events::json_to_file("row_text.json", json);
+    comm::json_to_file("row_text.json", json);
   }
   catch (const std::exception& e)
   {
-    events::log(e.what());
+    comm::log(e.what());
   }
 }

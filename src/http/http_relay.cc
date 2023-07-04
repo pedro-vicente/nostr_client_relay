@@ -15,7 +15,7 @@ int main()
 {
   const std::string port_relay("2000"); //listens on 2000
   unsigned short port_num = std::atoi(port_relay.c_str());
-  events::start_log();
+  comm::start_log();
 
   //a database is an array of events read and saved to filesystem in JSON format
   std::vector<nostr::event_t> database;
@@ -30,7 +30,7 @@ int main()
   asio::io_service io_service;
   tcp::acceptor acceptor(io_service, tcp::endpoint(tcp::v4(), port_num));
   acceptor.set_option(asio::ip::tcp::acceptor::reuse_address(true));
-  events::log("Listening on port:" + std::to_string(port_num));
+  comm::log("Listening on port:" + std::to_string(port_num));
 
   while (1)
   {
@@ -43,10 +43,10 @@ int main()
       http_msg_t http;
       if (http::parse(sock, http) < 0)
       {
-        events::log("HTTP parse failed");
+        comm::log("HTTP parse failed");
       }
 
-      events::log("received POST from " + client_ip + " " + std::to_string(http.msg.size()) + " bytes");
+      comm::log("received POST from " + client_ip + " " + std::to_string(http.msg.size()) + " bytes");
       nlohmann::json js_message = nlohmann::json::parse(http.msg);
       std::string message_type = js_message.at(0);
 
@@ -59,7 +59,7 @@ int main()
       {
         nostr::event_t ev;
         from_json(js_message.at(1), ev);
-        events::log("event received: " + ev.content);
+        comm::log("event received: " + ev.content);
 
         //add event to list
         database.push_back(ev);
@@ -72,7 +72,7 @@ int main()
         std::string response("HTTP/1.1 200 OK\r\n\r\n");
         asio::write(sock, asio::buffer(response, response.size()));
         ss << "send response: " << client_ip;
-        events::log(ss.str());
+        comm::log(ss.str());
       }
 
       /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -86,7 +86,7 @@ int main()
         std::string subscription_id = js_message.at(1);
         nostr::filter_t filter;
         from_json(js_message.at(2), filter);
-        events::log("filter received: " + subscription_id);
+        comm::log("filter received: " + subscription_id);
 
         //query database, return events that match the filter
         std::vector<nostr::event_t> events = database::request(filter);
@@ -99,12 +99,12 @@ int main()
         asio::write(sock, asio::buffer(response_http, response_http.size()));
         std::stringstream ss;
         ss << "send response: " << client_ip;
-        events::log(ss.str());
+        comm::log(ss.str());
       }
     }
     catch (std::exception& e)
     {
-      events::log(std::string(e.what()));
+      comm::log(std::string(e.what()));
     }
   }
 

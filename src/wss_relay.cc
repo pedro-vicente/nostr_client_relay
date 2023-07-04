@@ -13,7 +13,7 @@ std::string log_program_name("vostro");
 
 int main()
 {
-  events::start_log();
+  comm::start_log();
 
   WssServer server("server.crt", "server.key");
   server.config.port = 8080;
@@ -28,7 +28,7 @@ int main()
     std::stringstream ss;
     std::string msg = in_message->string();
     ss << "Server: Message received: \"" << msg << "\" from " << connection.get();
-    events::log(ss.str());
+    comm::log(ss.str());
 
     connection->send(msg, [](const SimpleWeb::error_code& ec)
       {
@@ -36,7 +36,7 @@ int main()
         {
           std::stringstream s;
           s << "Error sending message: " << ec << " : " << ec.message();
-          events::log(s.str());
+          comm::log(s.str());
         }
       });
   };
@@ -49,7 +49,7 @@ int main()
   {
     std::stringstream ss;
     ss << "Opened connection: " << connection.get();
-    events::log(ss.str());
+    comm::log(ss.str());
   };
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -60,7 +60,7 @@ int main()
   {
     std::stringstream ss;
     ss << "Closed connection: " << connection.get() << " code " << status;
-    events::log(ss.str());
+    comm::log(ss.str());
   };
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -80,7 +80,7 @@ int main()
   {
     std::stringstream ss;
     ss << "Error: " << connection.get() << ". " << ec << " : " << ec.message() << std::endl;
-    events::log(ss.str());
+    comm::log(ss.str());
   };
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -98,6 +98,6 @@ int main()
 
   std::stringstream ss;
   ss << "Listening on port: " << server_port.get_future().get();
-  events::log(ss.str());
+  comm::log(ss.str());
   server_thread.join();
 }

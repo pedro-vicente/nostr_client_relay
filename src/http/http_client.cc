@@ -26,7 +26,7 @@ int main()
 {
   std::string json;
   std::string url_relay("127.0.0.1");
-  events::start_log();
+  comm::start_log();
 
   //wait for server (test locally)
 #if defined _MSC_VER
@@ -72,21 +72,21 @@ int send(const std::string& host, const std::string& json)
     asio::write(sock, asio::buffer(buf_http, buf_http.size()));
     std::stringstream s;
     s << "sent " << buf_http.size() << " bytes";
-    events::log(s.str());
+    comm::log(s.str());
 
     //receive response
     http_msg_t http;
     if (http::parse(sock, http) < 0)
     {
-      events::log("HTTP parse failed");
+      comm::log("HTTP parse failed");
     }
     else
     {
       for (size_t idx = 0; idx < http.header.size(); idx++)
       {
-        events::log("header: " + http.header.at(idx));
+        comm::log("header: " + http.header.at(idx));
       }
-      events::log("message: " + http.msg);
+      comm::log("message: " + http.msg);
       std::string line = http.header.at(0);
       if (line.find("HTTP/1.1 200 OK\r") != std::string::npos)
       {
@@ -102,16 +102,16 @@ int send(const std::string& host, const std::string& json)
 
         std::stringstream ss;
         ss << "received " << events.size() << " events";
-        events::log(ss.str());
+        comm::log(ss.str());
         for (size_t idx = 0; idx < events.size(); idx++)
         {
-          events::log(events.at(idx).content);
+          comm::log(events.at(idx).content);
         }
       }
 
       else
       {
-        events::log("received empty message");  //from an event sent
+        comm::log("received empty message");  //from an event sent
       }
     }
 
@@ -121,7 +121,7 @@ int send(const std::string& host, const std::string& json)
   }
   catch (std::exception& e)
   {
-    events::log(std::string(e.what()));
+    comm::log(std::string(e.what()));
   }
 
   return 0;

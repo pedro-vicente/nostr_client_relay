@@ -44,7 +44,7 @@ int main(int argc, const char* argv[])
   struct args args = { 0 };
   struct nostr_event ev = { 0 };
 
-  events::start_log();
+  comm::start_log();
 
   if (!parse_args(argc, argv, &args, &ev))
   {
@@ -62,7 +62,7 @@ int main(int argc, const char* argv[])
   //format JSON to display
   nlohmann::json js_message = nlohmann::json::parse(buf);
   std::string json = js_message.dump(1); //indent level
-  events::json_to_file("send_message.json", json);
+  comm::json_to_file("send_message.json", json);
 
   WssClient client(uri, false);
 
@@ -75,9 +75,9 @@ int main(int argc, const char* argv[])
     std::stringstream ss;
     std::string str = in_message->string();
     ss << "Received: " << str;
-    events::log(ss.str());
+    comm::log(ss.str());
     store.push_back(str);
-    events::json_to_file("response.txt", str);
+    comm::json_to_file("response.txt", str);
 
     connection->send_close(1000);
   };
@@ -90,13 +90,13 @@ int main(int argc, const char* argv[])
   {
     std::stringstream ss;
     ss << "Opened connection: HTTP " << connection.get()->http_version << " , code " << connection.get()->status_code;
-    events::log(ss.str());
+    comm::log(ss.str());
 
     std::string message = json;
     ss.str(std::string());
     ss.clear();
     ss << "Sending: " << message;
-    events::log(ss.str());
+    comm::log(ss.str());
 
     connection->send(message);
   };
@@ -109,7 +109,7 @@ int main(int argc, const char* argv[])
   {
     std::stringstream ss;
     ss << "Closed: " << status;
-    events::log(ss.str());
+    comm::log(ss.str());
   };
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -120,7 +120,7 @@ int main(int argc, const char* argv[])
   {
     std::stringstream ss;
     ss << "Error: " << ec << " : " << ec.message();
-    events::log(ss.str());
+    comm::log(ss.str());
   };
 
   client.start();
@@ -131,11 +131,11 @@ int main(int argc, const char* argv[])
 
   std::stringstream ss;
   ss << "Received " << store.size() << " messages: ";
-  events::log(ss.str());
+  comm::log(ss.str());
 
   for (int idx = 0; idx < store.size(); idx++)
   {
-    events::log(store.at(idx));
+    comm::log(store.at(idx));
   }
 
   std::stringstream js;
@@ -148,7 +148,7 @@ int main(int argc, const char* argv[])
   }
   js << "]";
   std::string s = js.rdbuf()->str();
-  events::json_to_file("response.json", s);
+  comm::json_to_file("response.json", s);
 
   free(buf);
 }

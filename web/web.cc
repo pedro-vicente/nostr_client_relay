@@ -18,14 +18,14 @@ int main(int argc, char** argv)
 {
   try
   {
-    events::start_log();
+    comm::start_log();
     Wt::WServer server(argc, argv);
     server.addEntryPoint(Wt::EntryPointType::Application, create_application);
     server.run();
   }
   catch (std::exception& e)
   {
-    events::log(e.what());
+    comm::log(e.what());
   }
 }
 

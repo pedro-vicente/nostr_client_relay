@@ -156,7 +156,7 @@ std::string nostr::make_request(const std::string& subscription_id, const nostr:
   }
   catch (const std::exception& e)
   {
-    events::log(e.what());
+    comm::log(e.what());
   }
   return json;
 }
@@ -201,7 +201,7 @@ nostr::Type nostr::get_message_type(const std::string& json)
   }
   catch (const std::exception& e)
   {
-    events::log(e.what());
+    comm::log(e.what());
     return nostr::Type::UNKNOWN;
   }
   return nostr::Type::UNKNOWN;
@@ -228,7 +228,7 @@ int nostr::parse_event(const std::string& json, std::string& subscription_id, no
   }
   catch (const std::exception& e)
   {
-    events::log(e.what());
+    comm::log(e.what());
   }
   return -1;
 }
@@ -254,7 +254,7 @@ int nostr::parse_request(const std::string& json, std::string& request_id, nostr
   }
   catch (const std::exception& e)
   {
-    events::log(e.what());
+    comm::log(e.what());
   }
   return -1;
 }
@@ -351,7 +351,7 @@ int nostr::get_follows(const std::string& uri, const std::string& pubkey, std::v
     }
     catch (const std::exception& e)
     {
-      events::log(e.what());
+      comm::log(e.what());
     }
   }
 
@@ -371,6 +371,23 @@ int nostr::get_follows(const std::string& uri, const std::string& pubkey, std::v
     filter.kinds.push_back(1);
     filter.limit = 1;
     std::string json = nostr::make_request(subscription_id, filter);
+
+    try
+    {
+      nlohmann::json js = nlohmann::json::parse(json);
+      std::string type = js.at(0);
+      if (type.compare("REQ") == 0)
+      {
+        std::string request_id = js.at(1);
+        from_json(js.at(2), filter);
+        std::string json = js.dump(1);
+        comm::json_to_file("req_follow.json", json);
+      }
+    }
+    catch (const std::exception& e)
+    {
+      comm::log(e.what());
+    }
 
     std::vector<std::string> info;
     if (nostr::relay_to(uri, json, info) < 0)
