@@ -1,9 +1,9 @@
 #include "server_wss.hpp"
 #include <future>
-#include "nostri.h"
 #include "log.hh"
 #include "nostr.hh"
 #include "database.hh"
+
 using WssServer = SimpleWeb::SocketServer<SimpleWeb::WSS>;
 std::string log_program_name("vostro");
 
@@ -17,7 +17,7 @@ int main()
 
   WssServer server("server.crt", "server.key");
   server.config.port = 8080;
-  auto& endpoint = server.endpoint["^/nostr/?$"];
+  auto& endpoint = server.endpoint["/"];
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////
   // on_message
@@ -30,7 +30,9 @@ int main()
     ss << "Server: Message received: \"" << msg << "\" from " << connection.get();
     comm::log(ss.str());
 
-    connection->send(msg, [](const SimpleWeb::error_code& ec)
+    std::string resp = relay::make_response(msg);
+
+    connection->send(resp, [](const SimpleWeb::error_code& ec)
       {
         if (ec)
         {

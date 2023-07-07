@@ -4,6 +4,10 @@
 #include <iostream>
 #include "client_wss.hpp"
 #include "nlohmann/json.hpp"
+
+#include "nostri.h"
+#include "hex.h"
+
 #include "log.hh"
 #include "nostr.hh"
 #include "uuid.hh"
@@ -402,5 +406,93 @@ int nostr::get_follows(const std::string& uri, const std::string& pubkey, std::v
   }
 
   return 0;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+// make_event
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+std::string nostr::make_event(nostr::event_t& ev, const std::optional<std::string>& seckey)
+{
+  std::string json;
+  struct key key;
+  secp256k1_context* ctx;
+
+  if (!init_secp_context(&ctx))
+  {
+    return json;
+  }
+
+  if (seckey.has_value())
+  {
+    std::string sec = seckey.value();
+    if (!decode_key(ctx, sec.c_str(), &key))
+    {
+      return json;
+    }
+  }
+  else
+  {
+    int* difficulty = NULL;
+    if (!generate_key(ctx, &key, difficulty))
+    {
+      comm::log("could not generate key");
+      return json;
+    }
+    fprintf(stderr, "secret_key ");
+    print_hex(key.secret, sizeof(key.secret));
+    fprintf(stderr, "\n");
+  }
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+  // generate event ID, signature, pubkey
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  nostr_event nev = { 0 };
+  char pubkey[65];
+  char id[65];
+  char sig[129];
+  nev.created_at = ev.created_at;
+  nev.content = ev.content.c_str();
+  nev.kind = ev.kind;
+  memcpy(nev.pubkey, key.pubkey, 32);
+
+  if (!generate_event_id(&nev))
+  {
+    comm::log("could not generate event id");
+    return json;
+  }
+
+  if (!sign_event(ctx, &key, &nev))
+  {
+    comm::log("could not sign event");
+    return json;
+  }
+
+  if (hex_encode(nev.id, sizeof(nev.id), id, sizeof(id)) < 0)
+  {
+    comm::log("could not encode event id");
+    return json;
+  }
+  if (hex_encode(nev.pubkey, sizeof(nev.pubkey), pubkey, sizeof(pubkey)) < 0)
+  {
+    comm::log("could not encode event pubkey");
+    return json;
+  }
+  if (hex_encode(nev.sig, sizeof(nev.sig), sig, sizeof(sig)) < 0)
+  {
+    comm::log("could not encode event signature");
+    return json;
+  }
+
+  ev.pubkey = std::string(pubkey);
+  ev.id = std::string(id);
+  ev.sig = std::string(sig);
+  nlohmann::json js;
+  to_json(js, ev);
+  //envelop the JSON event object 
+  nlohmann::json js_ev = nlohmann::json::array({ "EVENT", js });
+  json = js_ev.dump();
+  return json;
 }
 

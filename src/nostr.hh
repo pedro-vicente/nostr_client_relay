@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <optional>
 #include "nlohmann/json.hpp"
 
 namespace nostr
@@ -39,6 +40,9 @@ namespace nostr
   class event_t
   {
   public:
+    event_t() : kind(1), created_at(std::time(0))
+    {
+    }
     std::string id;
     std::string pubkey;
     std::time_t created_at;
@@ -67,10 +71,8 @@ namespace nostr
   class filter_t
   {
   public:
-    filter_t() : limit(0)
+    filter_t() : limit(0), since(0), until(std::time(0))
     {
-      since = 1643873040;
-      until = std::time(0);
     };
     std::vector<std::string> ids;
     std::vector<std::string> authors;
@@ -110,11 +112,19 @@ namespace nostr
   /////////////////////////////////////////////////////////////////////////////////////////////////////
 
   std::string make_request(const std::string& subscription_id, const filter_t& filter);
+  std::string make_event(nostr::event_t& ev, const std::optional<std::string>& seckey);
   Type get_message_type(const std::string& json);
   int parse_event(const std::string& json, std::string& event_id, nostr::event_t& ev);
   int parse_request(const std::string& json, std::string& request_id, nostr::filter_t& filter);
   int relay_to(const std::string& uri, const std::string& json, std::vector<std::string>& store);
   int get_follows(const std::string& uri, const std::string& pubkey, std::vector<std::string>& response);
+  
+
+}
+
+namespace relay
+{
+  std::string make_response(const std::string& msg);
 
 }
 

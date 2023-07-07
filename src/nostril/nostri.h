@@ -95,8 +95,6 @@ extern "C" {
   int sign_event(secp256k1_context* ctx, struct key* key, struct nostr_event* ev);
   int print_event(struct nostr_event* ev, char** json);
 
-  void usage();
-  int parse_args(int argc, const char* argv[], struct args* args, struct nostr_event* ev);
   int make_message(struct args* args, struct nostr_event* ev, char** json);
 #ifdef __cplusplus
 }

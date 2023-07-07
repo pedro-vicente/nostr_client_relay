@@ -20,7 +20,7 @@ It is available on <a href="https://github.com/pedro-vicente/nostr_client_relay"
 <h2 class="w3-left-align">JSON</h2>
 
 <p class="w3-left-align">
-Nostr uses <a href="https://www.json.org">JSON</a> as data format. JSON is data-interchange format easy for humans to read and write. JSON is built on two structures:
+Nostr uses <a href="https://www.json.org">JSON</a> as data format. JSON is a data-interchange format easy for humans to read and write. JSON is built on two structures:
 a collection of name/value pairs, called an object, and an ordered list of values, called an array (or vector). Object vales can be strings, numbers and a boolean value for true or false.
 </p>
 
@@ -90,7 +90,8 @@ std::string make_request(const std::string& subscription_id, const filter_t& fil
 </md-block>
 
 <p class="w3-left-align">
-The function make_request generates the JSON REQ to transmit to a relay. It accepts a string with a subscription identifier and a filter. 
+The function make_request generates the JSON REQ to transmit to a relay. It accepts as input parameters a string with a subscription 
+identifier and a filter. The output (return value of the function) is the JSON as a string.
 </p>
 
 <md-block>
@@ -137,7 +138,57 @@ std::string json;
 comm::json_to_file("request.json", json);
 comm::from_file("request.json", json);
 ```
+</md-block>
 
+
+<h3 class="w3-left-align">Make event </h3>
+
+<md-block>
+```cpp
+std::string make_event(nostr::event_t& ev, const std::optional&ltstd::string&gt& seckey);
+```
+</md-block>
+
+<p class="w3-left-align">
+The function make_event generates the JSON EVENT to transmit to a relay. It accepts as input parameters an event data structure
+and an optional secret key to sign the event. If no key is supplied, a random key is generated. This function generates:
+</p>
+<ul style="width:15%">
+  <li>the public key</li>
+  <li>the event ID</li>
+  <li>the signature</li>
+</ul>
+
+<md-block>
+```cpp
+std::optional<std::string> seckey;
+nostr::event_t ev;
+ev.content = "hello world";
+ev.kind = 1;
+std::string json = nostr::make_event(ev, seckey);
+```
+</md-block>
+
+<p class="w3-left-align">
+The following JSON is generated
+</p>
+
+<md-block>
+```json
+[
+ "EVENT",
+ {
+  "content": "hello world",
+  "created_at": 1688543634,
+  "id": "d4675a05eb2720b44bee08bd7c1131786f2d17ef7c1f35ee69005d5ca3377242",
+  "kind": 1,
+  "pubkey": "e7328fe0f6b936457b0d3fdc0e1a264e8ac80e0416f239009345750609fdc0d8",
+  "sig": "472acc460529a2cf56a4ff45f6726d5aa84ff556635fc56855911ee20f055689c508f05d3c64067e919d4335076e9014f47614cd2e7d5b66ba31d8c19973b21c",
+  "tags": []
+ }
+]
+```
+</md-block>
 
 <h3 class="w3-left-align">Get message type</h3>
 
@@ -190,7 +241,9 @@ int parse_request(const std::string& json, std::string& request_id, nostr::filte
 </md-block>
 
 <p class="w3-left-align">
-The function parse_request is used to parse a request. To read the JSON used above in the function make_request
+The function parse_request is used to parse a request. It has as input parameters the JSON REQ as a string,
+and a request identifier. The output is a filter on the parameter list with the parsed JSON objects as C++ 
+objects. To read the JSON used above in the function make_request
 </p>
 
 <md-block>
@@ -215,6 +268,20 @@ std::cout << request_id << std::endl;
 std::cout << filter.authors.at(0) << std::endl;
 ```
 </md-block>
+
+<p class="w3-left-align">
+<b>Note:</b> The functions returns an integer value for success (0) or failure (-1). The function success can be tested with 
+</p>
+
+<md-block>
+```cpp
+if (nostr::parse_request(json, request_id, filter) < 0)
+{
+   std::cout << "something went wrong";
+}
+```
+</md-block>
+
 
 <h3 class="w3-left-align">Parse event</h3>
 
@@ -362,9 +429,11 @@ const std::string uri("nos.lol");
 ```
 </md-block>
 
+<p class="w3-left-align">
 To define the request (REQ) we define a filter that has as "authors" our public key and has kind "3", defined as list of contacts in 
 <a href="https://github.com/nostr-protocol/nips/blob/master/02.md"> NIP-02 </a>. A random and unique subscription ID for the request must also
 ge generated, with:
+</p>
 
 <md-block>
 ```cpp

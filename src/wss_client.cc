@@ -6,63 +6,90 @@
 #include "log.hh"
 #include "nostr.hh"
 
-#ifdef _MSC_VER
-#pragma warning(disable: 6387)
-#endif
-
 using WssClient = SimpleWeb::SocketClient<SimpleWeb::WSS>;
 std::string log_program_name("nostro");
 std::vector<std::string> store;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
-// usage examples
-// ./nostro --uri relay.damus.io --content hello 
-// ./nostro --content hello --sec 7f612229528369d91ddcaae527f097ab4c7cacd0058fa46d5857f74f88ad1a5e 
-// ./nostro --content hello --mine-pubkey --pow 1 
-// 
-// relays 
-// wss://relay.snort.social
-// wss://relay.damus.io
-// wss://eden.nostr.land
-// wss://nostr-pub.wellorder.net
-// wss://nos.lol
-// 
-// real event ids for testing REQ
-// 92cae1df88a32fe9ffa43cf81219404039125b155458885dd083af06b4bd3363 @jack
-// ./nostro --uri relay.snort.social --req --id 92cae1df88a32fe9ffa43cf81219404039125b155458885dd083af06b4bd3363
-// ./nostro --uri relay.damus.io --req --rand
-// ./nostro --uri nostr.pleb.network --req --id d75d56b2141b12be96421fc5c913092cda06904208ef798b51a28f1c906bbab7
+// Nostro
+// A Nostr client
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void usage()
+{
+  std::cout << "./nostro [OPTIONS]" << std::endl;
+  std::cout << " [OPTIONS]:" << std::endl;
+  std::cout << "  --uri <wss URI>        Wss URI to send" << std::endl;
+  std::cout << "  --content <string>     the content of the note" << std::endl;
+  std::cout << "  --kind <number>        set kind" << std::endl;
+  std::cout << "  --sec <hex seckey>     set the secret key for signing, otherwise one will be randomly generated" << std::endl;
+  exit(0);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+// main
+// --uri relay.damus.io --content hello
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main(int argc, const char* argv[])
 {
-  std::string relay_vostro = "localhost:8080/nostr";
-  std::vector<std::string> relay = { "relay.snort.social",
-    "relay.damus.io",
-    "nostr.pleb.network" };
-  char* buf = (char*)malloc(102400);
-  struct args args = { 0 };
-  struct nostr_event ev = { 0 };
+  std::string relay_vostro = "localhost:8080";
+  std::string uri;
+  std::string content;
+  std::optional<std::string> seckey;
+  int kind = 1;
 
   comm::start_log();
 
-  if (!parse_args(argc, argv, &args, &ev))
+  for (int i = 1; i < argc; ++i) 
   {
-    usage();
-    return 10;
+    std::string arg = argv[i];
+    if (arg == "--help") 
+    {
+      usage();
+      return 0;
+    }
+    else if (arg == "--uri") 
+    {
+      uri = argv[++i];
+    }
+    else if (arg == "--content")
+    {
+      content = argv[++i];
+    }
+    else if (arg == "--seckey")
+    {
+      seckey = argv[++i];
+    }
+    else if (arg == "--kind")
+    {
+      kind = std::stoi(argv[++i]);
+    }
   }
 
-  if (make_message(&args, &ev, &buf) < 0)
+  if (!uri.size())
   {
-    return 0;
+    uri = relay_vostro;
   }
 
-  std::string uri(args.uri);
+  comm::log(uri);
+  comm::log(content);
+  if (seckey.has_value()) comm::log(seckey.value());
+  comm::log(std::to_string(kind));
 
-  //format JSON to display
-  nlohmann::json js_message = nlohmann::json::parse(buf);
-  std::string json = js_message.dump(1); //indent level
-  comm::json_to_file("send_message.json", json);
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+  // generate the JSON message
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  nostr::event_t ev;
+  ev.content = content;
+  ev.kind = kind;
+  std::string json = nostr::make_event(ev, seckey);
+  comm::json_to_file("nostro.json", json);
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+  // relay to
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
 
   WssClient client(uri, false);
 
@@ -138,17 +165,4 @@ int main(int argc, const char* argv[])
     comm::log(store.at(idx));
   }
 
-  std::stringstream js;
-  js << "[";
-  for (int idx = 0; idx < store.size(); idx++)
-  {
-    js << store.at(idx);
-    std::string c = (idx < store.size() - 1) ? " ,\n" : "\n";
-    js << c;
-  }
-  js << "]";
-  std::string s = js.rdbuf()->str();
-  comm::json_to_file("response.json", s);
-
-  free(buf);
 }
