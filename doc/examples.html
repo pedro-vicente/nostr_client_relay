@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/3/w3.css">
+<script type="module" src="https://md-block.verou.me/md-block.js"></script>
+<script src="prism.js"></script>
+<link rel="stylesheet" type="text/css" href="prism.css" />
+<title>Nostr examples</title>
+<body>
+<section class="w3-container w3-content" style="max-width:1400px">
+<h1 class="w3-left-align">Nostr examples</h1>
+
+<h3 class="w3-left-align">Get list of follows</h3>
+
+<p class="w3-left-align">
+To get a list of follows we start with a public key that we want to get the follows from and a relay address where the list is stored
+</p>
+
+<md-block>
+```cpp
+const std::string pubkey("4ea843d54a8fdab39aa45f61f19f3ff79cc19385370f6a272dda81fade0a052b");
+const std::string uri("nos.lol");
+```
+</md-block>
+
+<p class="w3-left-align">
+To define the request (REQ) we define a filter that has as "authors" our public key and has kind "3", defined as list of contacts in 
+<a href="https://github.com/nostr-protocol/nips/blob/master/02.md"> NIP-02 </a>. A random and unique subscription ID for the request must also
+ge generated, with:
+</p>
+
+<md-block>
+```cpp
+std::string subscription_id = uuid::generate_uuid_v4();
+nostr::filter_t filter;
+filter.authors.push_back(pubkey);
+filter.kinds.push_back(3);
+```
+</md-block>
+
+<p class="w3-left-align">
+This generates the following JSON
+</p>
+
+<md-block>
+```json
+[
+ "REQ",
+ "9B874BC0-8372-4A41-9F5B-3DD6859F37F0",
+ {
+  "authors": [
+   "4ea843d54a8fdab39aa45f61f19f3ff79cc19385370f6a272dda81fade0a052b"
+  ],
+  "kinds": [
+   3
+  ],
+  "limit": 1
+ }
+]
+```
+</md-block>
+
+<p class="w3-left-align">
+Finally the JSON string can be generated from the C++ objects and sent to the wire simply with
+</p>
+
+<md-block>
+```cpp
+std::string json = nostr::make_request(subscription_id, filter);
+nostr::relay_to(uri, json);
+```
+</md-block>
+
+<p class="w3-left-align">
+And for that request a response is obtained according to <a href="https://github.com/nostr-protocol/nips/blob/master/02.md"> NIP-02 </a>
+</p>
+
+<md-block>
+```json
+[
+ "EVENT",
+ "5B695BFF-2A99-48AD-AAAE-4DF13F2DB7E4",
+ {
+  "content": "{\"wss://nos.lol/\":{\"write\":true,\"read\":true}}",
+  "created_at": 1687486321,
+  "id": "b8826c41b78bf8e4545706914e0d921b77a86192393ffb3df47f5623e6fa5b8f",
+  "kind": 3,
+  "pubkey": "4ea843d54a8fdab39aa45f61f19f3ff79cc19385370f6a272dda81fade0a052b",
+  "sig": "b1d004f1c0f8e72c9ac0c4492086c4dfc60478156feb5d6e7075923bb6e0d738d69ed61d16d65503d6df1f09b363dccd8013bd56a5354ebbbb029f558363997e",
+  "tags": [
+   [
+    "p",
+    "c708943ea349519dcf56b2a5c138fd9ed064ad65ddecae6394eabd87a62f1770"
+   ],
+   [
+    "p",
+    "fa984bd7dbb282f07e16e7ae87b26a2a7b9b90b7246a44771f0cf5ae58018f52"
+   ]
+  ]
+ }
+]
+```
+</md-block>
+
+</section>
+
+<section class="w3-container w3-center w3-content" style="max-width:1400px">
+<hr>
+Last modified:
+<div id="id_date"></div>
+<script>
+const date = new Date(document.lastModified);
+document.getElementById("id_date").innerHTML = date;
+</script>
+
+<div class="w3-container">
+<a href="nostr.html" class="w3-button w3-teal">Home</a>
+</div>
+</section>
+</body>
+</html>
+

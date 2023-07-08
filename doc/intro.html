@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/3/w3.css">
+<script type="module" src="https://md-block.verou.me/md-block.js"></script>
+<script src="prism.js"></script>
+<link rel="stylesheet" type="text/css" href="prism.css" />
+<title>Nostr</title>
+<body>
+<section class="w3-container w3-center w3-content" style="max-width:800px">
+<h2 class="w3-wide">Nostr</h2>
+<p class="w3-justify">
+<a href="https://nostr.com/">Nostr</a> is a Internet protocol developed in 2019, that enables global, decentralized, and censorship-resistant social media. 
+
+From 
+<a href="https://wiki.wellorder.net/post/nostr-intro/">Nostr, an Introduction</a>
+
+
+<blockquote class="w3-panel w3-leftbar w3-light-grey">
+<i>
+"Nostr is a new system that brings me joy to work on and use, so I’d like to take a few moments to share a few words about it. 
+Nostr tries to solve the problem of publishing short notes ('and other stuff') on the Internet. 
+Twitter solved this problem neatly, then complicated it through API and client restrictions, advertising, and a clumsy interface. 
+Finally, they fully unsolved it by inserting themselves as the arbiters of what speech is allowed. 
+That’s fine, their platform, their rules; clumsy censorship is just a feature I don’t want."
+</i>
+</blockquote> 
+</p>
+
+Like the World Wide Web, Nostr is based on the client-server model. A client computer inquires data residing on a remote computer, the server. In Nostr, a server is called 
+a relay. Some basic rules are:
+<div class="w3-container w3-left-align">
+<ul>
+<li>Each user runs a client. Anyone can run a relay.</li>
+<li>Clients fetch data from relays of their choice and publish data to relays of their choice. Relays don't talk to one another, only directly to users.</li>
+<li>Every user is identified by a public key. Every post is signed. Every client validates these signatures.</li>
+</ul>
+</div> 
+
+<p class="w3-justify">
+Transport is done by Websockects. Data format is JSON. Events represent the basic structure of anything that's being sent to/from relays. 
+The protocol is defined in documents called NIPs (Nostr Implementation Possibilities). 
+Aside from the first NIP, <a href="https://github.com/nostr-protocol/nips/blob/master/01.md">NIP-01</a>, 
+which describes the basic protocol, all NIPs are optional. Here is one example of an NIP-01 event:
+</p>
+
+<md-block>
+```json
+[
+{
+  "id": "4376c65d2f232afbe9b882a35baa4f6fe8667c4e684749af565f981833ed6a65",
+  "pubkey": "6e468422dfb74a5738702a8823b9b28168abab8655faacb6853cd0ee15deee93",
+  "created_at": 1673347337,
+  "kind": 1,
+  "content": "Walled gardens became prisons, and nostr is the first step towards tearing down the prison walls.",
+  "tags": [
+    ["e", "3da979448d9ba263864c4d6f14984c423a3838364ec255f03c7904b1ae77f206"],
+    ["p", "bf2376e17ba4ec269d10fcc996a4746b451152be9031fa48e74553dde5526bce"]
+  ],
+  "sig": "908a15e46fb4d8675bab026fc230a0e3542bfade63da02d542fb78b2a8513fcd0092619a2c8c1221e581946e0191f2af505dfdf8657a414dbca329186f009262"
+}
+```
+</md-block>
+
+
+<p class="w3-justify">
+
+<p class="w3-center">
+<a href="https://fiatjaf.com/nostr.html">Notes and Other Stuff Transmitted by Relays</a> 
+<br>
+<a href="https://wiki.wellorder.net/post/nostr-intro/">Nostr, an Introduction</a>
+</p>
+
+
+</p>
+
+<div class="w3-container">
+<a href="nostr.html" class="w3-button w3-teal">Home</a>
+</div>
+</section>
+</body>
+</html>
+
