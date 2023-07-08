@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/3/w3.css">
+<script type="module" src="https://md-block.verou.me/md-block.js"></script>
+<script src="prism.js"></script>
+<link rel="stylesheet" type="text/css" href="prism.css" />
+<title>Nostro</title>
+<body>
+
+
+<div class="w3-container">
+<h2>Nostr clients and Nostr relays</h2>
+<p>
+Nostr_client_relay allows to build Nostr clients and Nostr relays. It includes a Nostr client, Nostro, and a Nostr relay, Vostro.
+</p>
+</div>
+
+
+<div class="w3-container">
+<h2>Nostro</h2>
+<p>
+Nostro is a Nostr command line client. Usage is:
+</p>
+</div>
+
+<pre class="w3-panel w3-leftbar w3-sand">
+./nostro [OPTIONS]
+[OPTIONS]:
+  --uri &ltwss URI&gt Wss URI to send
+  --req message is a request (REQ). EVENT parameters are ignored
+REQ OPTIONS: These are for the REQ filter, per NIP-01
+  --authors &ltstring&gt a list of pubkeys or prefixes
+EVENT OPTIONS: These are to publish an EVENT, per NIP-01
+  --content &ltstring&gt the content of the note
+  --kind &ltnumber&gt set kind
+  --sec &lthex seckey&gt set the secret key for signing, otherwise one will be randomly generated
+</pre>
+
+
+<div class="w3-container">
+<h2>Vostro</h2>
+<p>
+Vostro is a Nostr relay. At the momment it uses a plain text JSON database (for development purposes).
+A database is a JSON array of events read and saved to filesystem in JSON format. Vostro is a command line
+application. To start Vostro, open a shell and do (the output is from the Vostro log output, Vostro
+is a WebSockects server):
+</p>
+</div>
+
+<pre class="w3-panel w3-leftbar w3-sand">
+./vostro
+vostro:04:23:00 Listening on port: 8080
+</pre>
+
+<div class="w3-container">
+<h2>Examples</h2>
+<p>
+This example shows 2 Nostro calls: publishing an EVENT and doing a REQ on the relay database. 
+The parameter <code>--uri</code> specifies the URI of a relay to publish. 
+If no <code>--uri</code> parameter is set, then Nostro publishes to a Nostr relay listening in <code>localhost</code>.
+In this example, we use Vostro listening in <code>localhost</code>.
+To publish an event signed with your private key, with the content 'hello world', we use 
+</p>
+
+
+<pre class="w3-panel w3-leftbar w3-sand">
+./nostro --sec &lthex seckey&gt --content 'hello world' --kind 1
+</pre>
+
+This call generated the following entry on the Vostro JSON database. To note that the key 'pubkey'
+is the Nostr public key associated with the private key used by Nostro to sign the event. 
+
+<md-block>
+```json
+[
+  {
+    "content": "hello world",
+    "created_at": 1688794190,
+    "id": "c3a4a0a20712db7249aa4d07598d5f88e31d77f95a4cc8e7bb41bd64348011f8",
+    "kind": 1,
+    "pubkey": "4ea843d54a8fdab39aa45f61f19f3ff79cc19385370f6a272dda81fade0a052b",
+    "sig": "4337b5361f11decd00b96bc37a87324f707f370687a7cab066c4e001145d5ee3312a3f1c1cfa6f3638e3461c8dec77468fcf35b465a16c6358ef313fca748730",
+    "tags": []
+  }
+]
+```
+</md-block>
+
+<p>
+To query for the event we just inserted in the datbase, we do
+</p>
+<pre class="w3-panel w3-leftbar w3-sand">
+./nostro  --req --authors 4ea843d54a8fdab39aa45f61f19f3ff79cc19385370f6a272dda81fade0a052b
+</pre>
+
+<p>
+where the <code>--authors</code> paramenter is the public key corresponding to the private key used to sign the event.
+(The public key in the databse entry). This call generates the following message to send 
+</p>
+
+<md-block>
+```json
+[
+ "REQ",
+ "5FBD876B-EA8C-454C-9E6F-590A8A5B6DC0",
+ {
+  "authors": [
+   "4ea843d54a8fdab39aa45f61f19f3ff79cc19385370f6a272dda81fade0a052b"
+  ],
+  "kinds": [
+   1
+  ],
+  "limit": 0
+ }
+]
+```
+</md-block>
+
+<p>
+Vostro responds withe following EVENT, that was found in the database by comparing the <code>--authors</code> field.
+</p>
+
+
+<md-block>
+```json
+[
+ "EVENT",
+ "031007A3-FC06-452F-8727-8160F4B9A17A",
+ {
+  "content": "hello world",
+  "created_at": 1688794190,
+  "id": "c3a4a0a20712db7249aa4d07598d5f88e31d77f95a4cc8e7bb41bd64348011f8",
+  "kind": 1,
+  "pubkey": "4ea843d54a8fdab39aa45f61f19f3ff79cc19385370f6a272dda81fade0a052b",
+  "sig": "4337b5361f11decd00b96bc37a87324f707f370687a7cab066c4e001145d5ee3312a3f1c1cfa6f3638e3461c8dec77468fcf35b465a16c6358ef313fca748730",
+  "tags": []
+ }
+]
+```
+</md-block>
+
+
+</div>
+
+
+<section class="w3-container w3-center w3-content" style="max-width:1400px">
+<hr>
+Last modified:
+<div id="id_date"></div>
+<script>
+const date = new Date(document.lastModified);
+document.getElementById("id_date").innerHTML = date;
+</script>
+<div class="w3-container">
+<a href="index.html" class="w3-button w3-teal">Home</a>
+</div>
+</section>
+
+</body>
+</html>

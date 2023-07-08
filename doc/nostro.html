@@ -6,7 +6,6 @@
 <script type="module" src="https://md-block.verou.me/md-block.js"></script>
 <script src="prism.js"></script>
 <link rel="stylesheet" type="text/css" href="prism.css" />
-<link rel="stylesheet" type="text/css" href="me.css" />
 <title>Nostro</title>
 <body>
 <section class="w3-container w3-center w3-content" style="max-width:1400px">
@@ -283,16 +282,16 @@ if (nostr::parse_request(json, request_id, filter) < 0)
 </md-block>
 
 
-<h3 class="w3-left-align">Parse event</h3>
+<h3 class="w3-left-align">Parse relay event</h3>
 
 <md-block>
 ```cpp
-int parse_event(const std::string& json, std::string& event_id, nostr::event_t& ev);
+int parse_relay_event(const std::string& json, std::string& event_id, nostr::event_t& ev);
 ```
 </md-block>
 
 <p class="w3-left-align">
-The function parse_event is used to parse an event.
+The function parse_relay_event is used to parse an event sent by a relay.
 </p>
 
 
@@ -313,7 +312,7 @@ std::string json = R"([
 ])";
 std::string event_id;
 nostr::event_t ev;
-nostr::parse_event(json, event_id, ev);
+nostr::parse_relay_event(json, event_id, ev);
 std::cout << event_id << std::endl;
 std::cout << ev.content << std::endl;
 ```
