@@ -108,25 +108,19 @@ namespace nostr
   };
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////
-  //API
+  // public API
   /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  std::string make_request(const std::string& subscription_id, const filter_t& filter);
-  std::string make_event(nostr::event_t& ev, const std::optional<std::string>& seckey);
   Type get_message_type(const std::string& json);
-  int parse_event(const std::string& json, std::string& event_id, nostr::event_t& ev);
+  std::string make_request(const std::string& subscription_id, const nostr::filter_t& filter);
+  std::string make_event(nostr::event_t& ev, const std::optional<std::string>& seckey);
+  int parse_client_event(const std::string& json, nostr::event_t& ev);
+  int parse_relay_event(const std::string& json, std::string& event_id, nostr::event_t& ev);
   int parse_request(const std::string& json, std::string& request_id, nostr::filter_t& filter);
   int relay_to(const std::string& uri, const std::string& json, std::vector<std::string>& store);
   int get_follows(const std::string& uri, const std::string& pubkey, std::vector<std::string>& response);
-  
-
 }
 
-namespace relay
-{
-  std::string make_response(const std::string& msg);
-
-}
 
 #endif
 

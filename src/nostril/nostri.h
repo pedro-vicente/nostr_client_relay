@@ -30,7 +30,7 @@ struct key
 // args
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-struct args
+struct args 
 {
   unsigned int flags;
   int kind;
@@ -40,11 +40,6 @@ struct args
   const char* tags;
   const char* content;
   uint64_t created_at;
-  const char* uri; // --uri URI to send
-  int req; 
-  int rand_req; //send a RAND REQ (test)
-  const char* event_id; //event id to look up on REQ
-  const char* author; //author to look up on REQ
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////

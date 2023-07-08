@@ -1,8 +1,10 @@
 #include "server_wss.hpp"
 #include <future>
+
 #include "log.hh"
 #include "nostr.hh"
 #include "database.hh"
+#include "relay.hh"
 
 using WssServer = SimpleWeb::SocketServer<SimpleWeb::WSS>;
 std::string log_program_name("vostro");
@@ -15,6 +17,8 @@ int main()
 {
   comm::start_log();
 
+  relay_t relay;
+
   WssServer server("server.crt", "server.key");
   server.config.port = 8080;
   auto& endpoint = server.endpoint["/"];
@@ -23,14 +27,14 @@ int main()
   // on_message
   /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  endpoint.on_message = [](std::shared_ptr<WssServer::Connection> connection, std::shared_ptr<WssServer::InMessage> in_message)
+  endpoint.on_message = [&](std::shared_ptr<WssServer::Connection> connection, std::shared_ptr<WssServer::InMessage> in_message)
   {
     std::stringstream ss;
     std::string msg = in_message->string();
     ss << "Server: Message received: \"" << msg << "\" from " << connection.get();
     comm::log(ss.str());
 
-    std::string resp = relay::make_response(msg);
+    std::string resp = relay.make_response(msg);
 
     connection->send(resp, [](const SimpleWeb::error_code& ec)
       {

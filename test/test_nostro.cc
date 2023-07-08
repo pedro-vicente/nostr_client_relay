@@ -86,7 +86,7 @@ int read_list(const std::string& file_name)
     {
       std::string event_id;
       nostr::event_t ev;
-      if (nostr::parse_event(json, event_id, ev) < 0)
+      if (nostr::parse_relay_event(json, event_id, ev) < 0)
       {
         assert(0);
       }
@@ -260,7 +260,7 @@ int send_messages()
     ])";
     std::string event_id;
     nostr::event_t ev;
-    nostr::parse_event(json, event_id, ev);
+    nostr::parse_relay_event(json, event_id, ev);
     std::cout << event_id << std::endl;
     std::cout << ev.content << std::endl;
   }

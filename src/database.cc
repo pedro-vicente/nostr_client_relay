@@ -1,4 +1,5 @@
 #include <fstream>
+#include "log.hh"
 #include "database.hh"
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -7,10 +8,20 @@
 
 std::vector<nostr::event_t> database::read()
 {
-  std::ifstream ifs("database.json");
-  nlohmann::json js_database = nlohmann::json::parse(ifs);
-  ifs.close();
-  std::vector<nostr::event_t> database = js_database;
+  std::vector<nostr::event_t> database;
+
+  try
+  {
+    std::ifstream ifs("database.json");
+    nlohmann::json js_database = nlohmann::json::parse(ifs);
+    ifs.close();
+    database = js_database;
+  }
+  catch (const std::exception& e)
+  {
+    comm::log(e.what());
+  }
+
   return database;
 }
 
@@ -20,13 +31,21 @@ std::vector<nostr::event_t> database::read()
 
 int database::save(const std::vector<nostr::event_t>& database)
 {
-  nlohmann::json js_database = database;
-  std::string json = js_database.dump(2);
-  std::ofstream ofs;
-  ofs.open("database.json", std::ofstream::out);
-  ofs << json;
-  ofs.close();
-  return 0;
+  try
+  {
+    nlohmann::json js_database = database;
+    std::string json = js_database.dump(2);
+    std::ofstream ofs;
+    ofs.open("database.json", std::ofstream::out);
+    ofs << json;
+    ofs.close();
+    return 0;
+  }
+  catch (const std::exception& e)
+  {
+    comm::log(e.what());
+    return -1;
+  }
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -35,24 +54,33 @@ int database::save(const std::vector<nostr::event_t>& database)
 
 int database::append(const std::vector<nostr::event_t>& events)
 {
-  //read current database
-  std::vector<nostr::event_t> database = database::read();
-
-  //append events
-  for (int idx = 0; idx < events.size(); idx++)
+  try
   {
-    nostr::event_t ev = events.at(idx);
-    database.push_back(ev);
-  }
+    //read current database
+    std::vector<nostr::event_t> database = database::read();
 
-  //save
-  nlohmann::json js_database = database;
-  std::string json = js_database.dump(2);
-  std::ofstream ofs;
-  ofs.open("database.json", std::ofstream::out);
-  ofs << json;
-  ofs.close();
-  return 0;
+    //append events
+    for (int idx = 0; idx < events.size(); idx++)
+    {
+      nostr::event_t ev = events.at(idx);
+      database.push_back(ev);
+    }
+
+    //save
+    nlohmann::json js_database = database;
+    std::string json = js_database.dump(2);
+    std::ofstream ofs;
+    ofs.open("database.json", std::ofstream::out);
+    ofs << json;
+    ofs.close();
+    return 0;
+
+  }
+  catch (const std::exception& e)
+  {
+    comm::log(e.what());
+    return -1;
+  }
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -66,25 +94,33 @@ std::vector<nostr::event_t> database::request(const nostr::filter_t& filter)
 {
   std::vector<nostr::event_t> events;
 
-  //read current database
-  std::vector<nostr::event_t> database = database::read();
-
-  //query
-  for (int idx_dbs = 0; idx_dbs < database.size(); idx_dbs++)
+  try
   {
-    nostr::event_t ev = database.at(idx_dbs);
+    //read current database
+    std::vector<nostr::event_t> database = database::read();
 
-    //"authors" : <a list of pubkeys or prefixes, the pubkey of an event must be one of these>,
-    //match with pubkey (only)
-    for (int idx_aut = 0; idx_aut < filter.authors.size(); idx_aut++)
+    //query
+    for (int idx_dbs = 0; idx_dbs < database.size(); idx_dbs++)
     {
-      std::string author = filter.authors.at(idx_aut);
-      if (ev.pubkey.compare(author) == 0)
+      nostr::event_t ev = database.at(idx_dbs);
+
+      //"authors" : <a list of pubkeys or prefixes, the pubkey of an event must be one of these>,
+      //match with pubkey (only)
+      for (int idx_aut = 0; idx_aut < filter.authors.size(); idx_aut++)
       {
-        events.push_back(ev);
-        break;
+        std::string author = filter.authors.at(idx_aut);
+        if (ev.pubkey.compare(author) == 0)
+        {
+          events.push_back(ev);
+          break;
+        }
       }
     }
+  }
+
+  catch (const std::exception& e)
+  {
+    comm::log(e.what());
   }
 
   return events;

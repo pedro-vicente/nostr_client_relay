@@ -5,6 +5,7 @@
 #include "nostri.h"
 #include "log.hh"
 #include "nostr.hh"
+#include "uuid.hh"
 
 using WssClient = SimpleWeb::SocketClient<SimpleWeb::WSS>;
 std::string log_program_name("nostro");
@@ -13,16 +14,22 @@ std::vector<std::string> store;
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 // Nostro
 // A Nostr client
+// --sec <hex seckey> --content hello --kind 1
+// --req --authors 4ea843d54a8fdab39aa45f61f19f3ff79cc19385370f6a272dda81fade0a052b
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void usage()
 {
   std::cout << "./nostro [OPTIONS]" << std::endl;
-  std::cout << " [OPTIONS]:" << std::endl;
-  std::cout << "  --uri <wss URI>        Wss URI to send" << std::endl;
-  std::cout << "  --content <string>     the content of the note" << std::endl;
-  std::cout << "  --kind <number>        set kind" << std::endl;
-  std::cout << "  --sec <hex seckey>     set the secret key for signing, otherwise one will be randomly generated" << std::endl;
+  std::cout << "[OPTIONS]:" << std::endl;
+  std::cout << "  --uri <wss URI>      Wss URI to send" << std::endl;
+  std::cout << "  --req                message is a request (REQ). EVENT parameters are ignored" << std::endl;
+  std::cout << "REQ OPTIONS: These are for the REQ filter, per NIP-01" << std::endl;
+  std::cout << "  --authors <string>   a list of pubkeys or prefixes" << std::endl;
+  std::cout << "EVENT OPTIONS: These are to publish an EVENT, per NIP-01" << std::endl;
+  std::cout << "  --content <string>   the content of the note" << std::endl;
+  std::cout << "  --kind <number>      set kind" << std::endl;
+  std::cout << "  --sec <hex seckey>   set the secret key for signing, otherwise one will be randomly generated" << std::endl;
   exit(0);
 }
 
@@ -36,28 +43,39 @@ int main(int argc, const char* argv[])
   std::string relay_vostro = "localhost:8080";
   std::string uri;
   std::string content;
+  std::string authors;
   std::optional<std::string> seckey;
   int kind = 1;
+  int is_req = 0;
+  std::string json;
 
   comm::start_log();
 
-  for (int i = 1; i < argc; ++i) 
+  for (int i = 1; i < argc; ++i)
   {
     std::string arg = argv[i];
-    if (arg == "--help") 
+    if (arg == "--help")
     {
       usage();
       return 0;
     }
-    else if (arg == "--uri") 
+    else if (arg == "--req")
+    {
+      is_req = 1;
+    }
+    else if (arg == "--uri")
     {
       uri = argv[++i];
+    }
+    else if (arg == "--authors")
+    {
+      authors = argv[++i];
     }
     else if (arg == "--content")
     {
       content = argv[++i];
     }
-    else if (arg == "--seckey")
+    else if (arg == "--sec")
     {
       seckey = argv[++i];
     }
@@ -70,6 +88,7 @@ int main(int argc, const char* argv[])
   if (!uri.size())
   {
     uri = relay_vostro;
+    std::this_thread::sleep_for(std::chrono::seconds(1));
   }
 
   comm::log(uri);
@@ -78,14 +97,29 @@ int main(int argc, const char* argv[])
   comm::log(std::to_string(kind));
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////
-  // generate the JSON message
+  // generate the JSON message (REQ or EVENT)
   /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  nostr::event_t ev;
-  ev.content = content;
-  ev.kind = kind;
-  std::string json = nostr::make_event(ev, seckey);
-  comm::json_to_file("nostro.json", json);
+  if (is_req)
+  {
+    std::string subscription_id = uuid::generate_uuid_v4();
+    nostr::filter_t filter;
+    if (authors.size())
+    {
+      filter.authors.push_back(authors);
+      filter.kinds.push_back(1);
+    }
+    json = nostr::make_request(subscription_id, filter);
+    comm::json_to_file("nostro_request.json", json);
+  }
+  else
+  {
+    nostr::event_t ev;
+    ev.content = content;
+    ev.kind = kind;
+    json = nostr::make_event(ev, seckey);
+    comm::json_to_file("nostro_event.json", json);
+  }
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////
   // relay to

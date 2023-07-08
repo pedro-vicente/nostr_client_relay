@@ -307,7 +307,6 @@ void ContainerHome::make_message()
 
   //request or event
   int is_req = m_button_message->checkedId();
-  if (is_req) args.req = 1; else args.req = 0;
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////
   //REQ
@@ -319,35 +318,15 @@ void ContainerHome::make_message()
     int kind = 0;
     if (index == 0) kind = 1;
     else if (index == 1) kind = 3;
-    else assert(0);
 
     //get event id
     std::string event_id = m_edit_event_id->text().toUTF8();
-    if (event_id.size())
-    {
-      args.event_id = strdup(event_id.c_str());
-    }
 
     //get author
     std::string author = m_edit_author->text().toUTF8();
-    if (author.size())
-    {
-      args.author = strdup(author.c_str());
-    }
-
-    //random request 
-    int rand_req = 0;
-    if (rand_req)
-    {
-      args.rand_req = 1;
-    }
 
     //get pubkey
     std::string pubkey = m_edit_pubkey->text().toUTF8();
-
-    /////////////////////////////////////////////////////////////////////////////////////////////////////
-    //generate request 
-    /////////////////////////////////////////////////////////////////////////////////////////////////////
 
     std::string subscription_id = uuid::generate_uuid_v4();
 

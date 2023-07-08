@@ -1,0 +1,11 @@
+[
+  {
+    "content": "hello",
+    "created_at": 1688794190,
+    "id": "c3a4a0a20712db7249aa4d07598d5f88e31d77f95a4cc8e7bb41bd64348011f8",
+    "kind": 1,
+    "pubkey": "4ea843d54a8fdab39aa45f61f19f3ff79cc19385370f6a272dda81fade0a052b",
+    "sig": "4337b5361f11decd00b96bc37a87324f707f370687a7cab066c4e001145d5ee3312a3f1c1cfa6f3638e3461c8dec77468fcf35b465a16c6358ef313fca748730",
+    "tags": []
+  }
+]

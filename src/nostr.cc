@@ -7,7 +7,6 @@
 
 #include "nostri.h"
 #include "hex.h"
-
 #include "log.hh"
 #include "nostr.hh"
 #include "uuid.hh"
@@ -144,28 +143,6 @@ void nostr::from_json(const nlohmann::json& j, nostr::filter_t& s)
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
-//make_request
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
-std::string nostr::make_request(const std::string& subscription_id, const nostr::filter_t& filter)
-{
-  std::string json;
-  try
-  {
-    nlohmann::json js_subscription_id = subscription_id;
-    nlohmann::json js_filter;
-    to_json(js_filter, filter);
-    nlohmann::json js_req = nlohmann::json::array({ "REQ", js_subscription_id, js_filter });
-    json = js_req.dump();
-  }
-  catch (const std::exception& e)
-  {
-    comm::log(e.what());
-  }
-  return json;
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
 //get_message_type
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -211,11 +188,61 @@ nostr::Type nostr::get_message_type(const std::string& json)
   return nostr::Type::UNKNOWN;
 }
 
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////
-//parse_event
+//make_request
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-int nostr::parse_event(const std::string& json, std::string& subscription_id, nostr::event_t& ev)
+std::string nostr::make_request(const std::string& subscription_id, const nostr::filter_t& filter)
+{
+  std::string json;
+  try
+  {
+    nlohmann::json js_subscription_id = subscription_id;
+    nlohmann::json js_filter;
+    to_json(js_filter, filter);
+    nlohmann::json js_req = nlohmann::json::array({ "REQ", js_subscription_id, js_filter });
+    json = js_req.dump();
+  }
+  catch (const std::exception& e)
+  {
+    comm::log(e.what());
+  }
+  return json;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+// parse_client_event
+// note: relay events do not have a subscription string at array index 1)
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+int nostr::parse_client_event(const std::string& json, nostr::event_t& ev)
+{
+  try
+  {
+    //all Nostr messages are JSON arrays
+    nlohmann::json js_message = nlohmann::json::parse(json);
+
+    std::string type = js_message.at(0);
+    if (type.compare("EVENT") == 0)
+    {
+      from_json(js_message.at(1), ev);
+      return 0;
+    }
+  }
+  catch (const std::exception& e)
+  {
+    comm::log(e.what());
+  }
+  return -1;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+// parse_relay_event
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+int nostr::parse_relay_event(const std::string& json, std::string& subscription_id, nostr::event_t& ev)
 {
   try
   {
@@ -495,4 +522,3 @@ std::string nostr::make_event(nostr::event_t& ev, const std::optional<std::strin
   json = js_ev.dump();
   return json;
 }
-

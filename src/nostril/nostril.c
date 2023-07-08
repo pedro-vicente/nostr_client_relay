@@ -15,18 +15,13 @@ int parse_args(int argc, const char* argv[], struct args* args, struct nostr_eve
 
 void usage()
 {
-  printf("usage: nostro [OPTIONS]\n");
+  printf("usage: nostril [OPTIONS]\n");
   printf("\n");
   printf("  OPTIONS\n");
   printf("\n");
-  printf("      --uri <wss URI>                 WSS URI to send (e.g 'relay.damus.io', 'localhost:8080/nostr' for vostro listening)\n");
-  printf("      --rand                          send a RAND request \n");
-  printf("      Request parameters\n");
-  printf("      --req                           message is a request (REQ). EVENT parameters are ignored\n");
-  printf("      --id <hex>                      event id (hex) to look up on the request\n");
-  printf("      Event parameters (no --req)\n");
   printf("      --content <string>              the content of the note\n");
   printf("      --dm <hex pubkey>               make an encrypted dm to said pubkey. sets kind and tags.\n");
+  printf("      --envelope                      wrap in [\"EVENT\",...] for easy relaying\n");
   printf("      --kind <number>                 set kind\n");
   printf("      --created-at <unix timestamp>   set a specific created-at time\n");
   printf("      --sec <hex seckey>              set the secret key for signing, otherwise one will be randomly generated\n");
@@ -36,8 +31,7 @@ void usage()
   printf("      -e <event_id>                   shorthand for --tag e <event_id>\n");
   printf("      -p <pubkey>                     shorthand for --tag p <pubkey>\n");
   printf("      -t <hashtag>                    shorthand for --tag t <hashtag>\n");
-  printf("\n");
-  exit(0);
+  exit(1);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -174,17 +168,6 @@ int parse_args(int argc, const char* argv[], struct args* args, struct nostr_eve
   const char* arg, * arg2;
   uint64_t n;
   int has_added_tags = 0;
-  int req_mode = 0;
-
-  //detect REQ mode
-  for (int idx = 1; idx < argc; idx++)
-  {
-    if (strcmp(argv[idx], "--req") == 0)
-    {
-      req_mode = 1;
-      break;
-    }
-  }
 
   argv++; argc--;
   for (; argc; )
@@ -196,39 +179,11 @@ int parse_args(int argc, const char* argv[], struct args* args, struct nostr_eve
       usage();
     }
 
-    if (!argc && req_mode == 0)
+    if (!argc)
     {
       fprintf(stderr, "expected argument: '%s'\n", arg);
       return 0;
     }
-
-    /////////////////////////////////////////////////////////////////////////////////////////////////////
-    // new arguments
-    /////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    if (!strcmp(arg, "--uri"))
-    {
-      args->uri = *argv++; argc--;
-    }
-
-    else if (!strcmp(arg, "--req"))
-    {
-      args->req = 1;
-    }
-
-    else if (!strcmp(arg, "--rand"))
-    {
-      args->rand_req = 1;
-    }
-
-    else if (!strcmp(arg, "--id"))
-    {
-      args->event_id = *argv++; argc--;
-    }
-
-    /////////////////////////////////////////////////////////////////////////////////////////////////////
-    // original arguments (Note: --envelope is always used) 
-    /////////////////////////////////////////////////////////////////////////////////////////////////////
 
     else if (!strcmp(arg, "--sec"))
     {

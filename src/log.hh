@@ -2,6 +2,7 @@
 #define LOG_HH
 
 #include <string>
+#include <vector>
 
 namespace comm
 {

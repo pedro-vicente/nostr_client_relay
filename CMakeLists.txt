@@ -77,7 +77,7 @@ if(UNIX)
 endif()
 
 #//////////////////////////
-# common sources library
+# Nostr library
 #//////////////////////////
 
 set(src ${src})
@@ -85,22 +85,23 @@ set(src ${src} src/log.hh)
 set(src ${src} src/log.cc)
 set(src ${src} src/nostr.hh)
 set(src ${src} src/nostr.cc)
+set(src ${src} src/relay.hh)
 set(src ${src} src/relay.cc)
 set(src ${src} src/uuid.cc)
 set(src ${src} src/uuid.hh)
 set(src ${src} src/database.hh)
 set(src ${src} src/database.cc)
 
-add_library(comm ${src})
-add_dependencies(comm configurator)
+add_library(nostr ${src})
+add_dependencies(nostr configurator)
 
 #//////////////////////////
-#link with libraries
-#lib_dep contains a cascade definition of all the libraries needed to link
+# link with libraries
+# lib_dep contains a cascade definition of all the libraries needed to link
 #//////////////////////////
 
 set(lib_dep ${lib_dep})
-set(lib_dep ${lib_dep} comm)
+set(lib_dep ${lib_dep} nostr)
 set(lib_dep ${lib_dep} secp256k1)
 set(lib_dep ${lib_dep} nostri)
 if (MSVC)
@@ -169,6 +170,11 @@ target_link_libraries (http_relay ${lib_dep})
 
 set_target_properties(http_client PROPERTIES FOLDER "http")
 set_target_properties(http_relay PROPERTIES FOLDER "http")
+set_target_properties(nostri PROPERTIES FOLDER "nostril")
+set_target_properties(nostril PROPERTIES FOLDER "nostril")
+set_target_properties(configurator PROPERTIES FOLDER "nostril")
+set_target_properties(secp256k1 PROPERTIES FOLDER "nostril")
+set_target_properties(secp256k1_precomputed PROPERTIES FOLDER "nostril")
 
 #//////////////////////////
 #SSL certificates
@@ -201,9 +207,15 @@ if(USE_OPENSSL)
   target_link_libraries (test_nostro ${lib_dep})
 endif()
 
-message(STATUS "Copying test files to: ${CMAKE_BINARY_DIR}")
+message(STATUS "Copying data files to: ${CMAKE_BINARY_DIR}")
 file(COPY "${CMAKE_SOURCE_DIR}/test/list_01.txt" DESTINATION ${CMAKE_BINARY_DIR})
 file(COPY "${CMAKE_SOURCE_DIR}/test/list_02.txt" DESTINATION ${CMAKE_BINARY_DIR})
+
+#//////////////////////////
+# database
+#//////////////////////////
+
+file(COPY "${CMAKE_SOURCE_DIR}/database/database.json" DESTINATION ${CMAKE_BINARY_DIR})
 
 #//////////////////////////
 # Wt desktop

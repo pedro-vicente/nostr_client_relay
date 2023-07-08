@@ -1,0 +1,12 @@
+[
+ "EVENT",
+ {
+  "content": "hello",
+  "created_at": 1688792639,
+  "id": "8df21ad0b11c28f1c9b69fccc68cd3799e935a7d0ddf9d2362fc39749c03fade",
+  "kind": 1,
+  "pubkey": "4ea843d54a8fdab39aa45f61f19f3ff79cc19385370f6a272dda81fade0a052b",
+  "sig": "c3a0fca407ff35aedee62ae68cd69799749f91db557971e220820d51a27ff5dd460e16e848167bd7b65a56e0bd9b39e71e735006407f5805e572c54dfb8b94a8",
+  "tags": []
+ }
+]
