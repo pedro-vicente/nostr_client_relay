@@ -165,6 +165,29 @@ target_link_libraries (http_client ${lib_dep})
 target_link_libraries (http_relay ${lib_dep})
 
 #//////////////////////////
+# executables
+#//////////////////////////
+
+add_executable(nostro src/wss_client.cc)
+add_executable(vostro src/wss_relay.cc)
+target_link_libraries (nostro ${lib_dep})
+target_link_libraries (vostro ${lib_dep})
+
+#//////////////////////////
+# tests
+#//////////////////////////
+
+add_executable(tests test/tests.cc)
+target_link_libraries (tests ${lib_dep})
+
+#//////////////////////////
+# examples
+#//////////////////////////
+
+add_executable(examples examples/examples.cc)
+target_link_libraries (examples ${lib_dep})
+
+#//////////////////////////
 # IDE project virtual folders
 #//////////////////////////
 
@@ -176,45 +199,11 @@ set_target_properties(configurator PROPERTIES FOLDER "nostril")
 set_target_properties(secp256k1 PROPERTIES FOLDER "nostril")
 set_target_properties(secp256k1_precomputed PROPERTIES FOLDER "nostril")
 
-#//////////////////////////
-#SSL certificates
-#//////////////////////////
-
-if(USE_OPENSSL)
-  message(STATUS "Copying SSL certificates to: ${CMAKE_BINARY_DIR}")
-  file(COPY "${CMAKE_SOURCE_DIR}/resources/server.key" DESTINATION ${CMAKE_BINARY_DIR})
-  file(COPY "${CMAKE_SOURCE_DIR}/resources/server.crt" DESTINATION ${CMAKE_BINARY_DIR})
-endif(USE_OPENSSL)
-
-
-#//////////////////////////
-# executables
-#//////////////////////////
-
-if(USE_OPENSSL)
-  add_executable(nostro src/wss_client.cc)
-  add_executable(vostro src/wss_relay.cc)
-  target_link_libraries (nostro ${lib_dep})
-  target_link_libraries (vostro ${lib_dep})
-endif()
-
-#//////////////////////////
-# tests
-#//////////////////////////
-
-if(USE_OPENSSL)
-  add_executable(test_nostro test/test_nostro.cc)
-  target_link_libraries (test_nostro ${lib_dep})
-endif()
-
 message(STATUS "Copying data files to: ${CMAKE_BINARY_DIR}")
 file(COPY "${CMAKE_SOURCE_DIR}/test/list_01.txt" DESTINATION ${CMAKE_BINARY_DIR})
 file(COPY "${CMAKE_SOURCE_DIR}/test/list_02.txt" DESTINATION ${CMAKE_BINARY_DIR})
-
-#//////////////////////////
-# database
-#//////////////////////////
-
+file(COPY "${CMAKE_SOURCE_DIR}/resources/server.key" DESTINATION ${CMAKE_BINARY_DIR})
+file(COPY "${CMAKE_SOURCE_DIR}/resources/server.crt" DESTINATION ${CMAKE_BINARY_DIR})
 file(COPY "${CMAKE_SOURCE_DIR}/database/database.json" DESTINATION ${CMAKE_BINARY_DIR})
 
 #//////////////////////////
