@@ -206,6 +206,8 @@ file(COPY "${CMAKE_SOURCE_DIR}/resources/server.key" DESTINATION ${CMAKE_BINARY_
 file(COPY "${CMAKE_SOURCE_DIR}/resources/server.crt" DESTINATION ${CMAKE_BINARY_DIR})
 file(COPY "${CMAKE_SOURCE_DIR}/database/database.json" DESTINATION ${CMAKE_BINARY_DIR})
 
+file(COPY "${CMAKE_SOURCE_DIR}/resources/wt_config.xml" DESTINATION ${CMAKE_BINARY_DIR}/web)
+
 #//////////////////////////
 # Wt desktop
 #//////////////////////////

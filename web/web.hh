@@ -43,19 +43,10 @@ class NostroApplication : public Wt::WApplication
 public:
   NostroApplication(const Wt::WEnvironment& env);
 
-  std::string pubkey;
-
   Wt::WMenu* m_menu;
   Wt::WHBoxLayout* m_layout;
 
   void selected();
-
-  std::vector<std::string> relays = { "eden.nostr.land",
-  "nos.lol",
-  "relay.snort.social",
-  "relay.damus.io",
-  "nostr.wine",
-  };
 };
 
 #endif

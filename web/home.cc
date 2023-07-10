@@ -1,5 +1,8 @@
 #include "home.hh"
 
+extern std::string pubkey;
+extern std::vector<std::string> relays;
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //ContainerHome
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -12,8 +15,8 @@ ContainerHome::ContainerHome() : m_row(0)
   const std::string event_id("d75d56b2141b12be96421fc5c913092cda06904208ef798b51a28f1c906bbab7");
   const std::string def_pubkey("4ea843d54a8fdab39aa45f61f19f3ff79cc19385370f6a272dda81fade0a052b");
 
-  auto app = dynamic_cast<NostroApplication*>(Wt::WApplication::instance());
-  std::string uri = app->relays.at(1);
+  std::string uri = relays.at(1);
+  pubkey = def_pubkey;
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////
   //top container input
@@ -58,7 +61,11 @@ ContainerHome::ContainerHome() : m_row(0)
   wtext_pubkey->setMargin(10, Wt::Side::Right);
   m_edit_pubkey = container_top->addWidget(std::make_unique<Wt::WLineEdit>());
   m_edit_pubkey->setWidth(500);
-  m_edit_pubkey->setText(def_pubkey);
+  m_edit_pubkey->setText(pubkey);
+  m_edit_pubkey->changed().connect([=]
+    {
+      pubkey = m_edit_pubkey->text().toUTF8();
+    });
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////
   //containers for EVENT and REQ

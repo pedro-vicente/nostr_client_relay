@@ -11,11 +11,6 @@ class ContainerHome : public Wt::WContainerWidget
 {
 public:
   ContainerHome();
-  ~ContainerHome()
-  {
-    auto app = dynamic_cast<NostroApplication*>(Wt::WApplication::instance());
-    app->pubkey = m_edit_pubkey->text().toUTF8();
-  }
 
 private:
   Wt::WTextArea* m_area_content;

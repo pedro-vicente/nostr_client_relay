@@ -4,6 +4,15 @@
 
 std::string log_program_name("nostro_web");
 
+std::string pubkey;
+
+std::vector<std::string> relays = { "eden.nostr.land",
+"nos.lol",
+"relay.snort.social",
+"relay.damus.io",
+"nostr.wine",
+};
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //main
 // --docroot=. --http-port=80 --http-address=0.0.0.0 
