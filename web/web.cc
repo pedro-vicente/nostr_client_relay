@@ -2,7 +2,7 @@
 #include "home.hh"
 #include "feed.hh"
 
-std::string log_program_name("nostro_web");
+std::string log_program_name("wostro");
 
 std::string pubkey;
 

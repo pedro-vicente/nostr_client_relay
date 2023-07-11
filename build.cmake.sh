@@ -39,9 +39,9 @@ else
 export LD_LIBRARY_PATH="$HOME/git/nostr_client_relay/ext/boost_1_82_0/stage/lib":$LD_LIBRARY_PATH
 fi
 if [[ "$OSTYPE" == "msys"* ]]; then
-./Debug/nostro_web --http-address=0.0.0.0 --http-port=8080  --docroot=.
+./Debug/wostro --http-address=0.0.0.0 --http-port=8080  --docroot=.
 else
-./nostro_web --http-address=0.0.0.0 --http-port=8080  --docroot=.
+./wostro --http-address=0.0.0.0 --http-port=8080  --docroot=.
 fi
 
 exit

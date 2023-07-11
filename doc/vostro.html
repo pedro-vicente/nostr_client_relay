@@ -47,7 +47,7 @@ EVENT OPTIONS: These are to publish an EVENT, per NIP-01
 Vostro is a Nostr relay. At the momment it uses a plain text JSON database (for development purposes).
 A database is a JSON array of events read and saved to filesystem in JSON format. Vostro is a command line
 application. To start Vostro, open a shell and do (the output is from the Vostro log output, Vostro
-is a WebSockects server):
+is a WebSockets server):
 </p>
 </div>
 
@@ -99,7 +99,7 @@ To query for the event we just inserted in the datbase, we do
 
 <p>
 where the <code>--authors</code> paramenter is the public key corresponding to the private key used to sign the event.
-(The public key in the databse entry). This call generates the following message to send 
+(The public key in the database entry). This call generates the following message to send 
 </p>
 
 <md-block>
