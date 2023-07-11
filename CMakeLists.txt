@@ -10,6 +10,7 @@ option(BUILD_STATIC "BUILD_STATIC" OFF)
 option(BUILD_GUI "BUILD_STATIC" OFF)
 option(BUILD_WEB "BUILD_WEB" OFF)
 option(USE_OPENSSL "set OFF to build without OpenSSL" ON)
+option(DEV_MODE "BUILD_WEB" ON)
 
 if (MSVC)
 if(BUILD_STATIC)
@@ -29,6 +30,13 @@ include_directories(${CMAKE_SOURCE_DIR}/ext/asio-1.18.1/include)
 include_directories(${CMAKE_SOURCE_DIR}/ext/json-3.11.2/single_include)
 include_directories(${CMAKE_SOURCE_DIR}/ext/secp256k1-0.3.2/include)
 add_subdirectory(${CMAKE_SOURCE_DIR}/ext/secp256k1-0.3.2)
+
+if (BUILD_WEB)
+if(DEV_MODE)
+  set(BOOST_PREFIX ${CMAKE_SOURCE_DIR}/ext/boost_1_82_0)
+  add_subdirectory(${CMAKE_SOURCE_DIR}/ext/wt-4.10.0)
+endif()
+endif()
 
 #//////////////////////////
 # nostril
@@ -199,13 +207,20 @@ set_target_properties(configurator PROPERTIES FOLDER "nostril")
 set_target_properties(secp256k1 PROPERTIES FOLDER "nostril")
 set_target_properties(secp256k1_precomputed PROPERTIES FOLDER "nostril")
 
+if (BUILD_WEB)
+if(DEV_MODE)
+  set_target_properties(wt PROPERTIES FOLDER "wt")
+  set_target_properties(wthttp PROPERTIES FOLDER "wt")
+  set_target_properties(wtisapi PROPERTIES FOLDER "wt")
+endif()
+endif()
+
 message(STATUS "Copying data files to: ${CMAKE_BINARY_DIR}")
 file(COPY "${CMAKE_SOURCE_DIR}/test/list_01.txt" DESTINATION ${CMAKE_BINARY_DIR})
 file(COPY "${CMAKE_SOURCE_DIR}/test/list_02.txt" DESTINATION ${CMAKE_BINARY_DIR})
 file(COPY "${CMAKE_SOURCE_DIR}/resources/server.key" DESTINATION ${CMAKE_BINARY_DIR})
 file(COPY "${CMAKE_SOURCE_DIR}/resources/server.crt" DESTINATION ${CMAKE_BINARY_DIR})
 file(COPY "${CMAKE_SOURCE_DIR}/database/database.json" DESTINATION ${CMAKE_BINARY_DIR})
-
 file(COPY "${CMAKE_SOURCE_DIR}/resources/wt_config.xml" DESTINATION ${CMAKE_BINARY_DIR}/web)
 
 #//////////////////////////
