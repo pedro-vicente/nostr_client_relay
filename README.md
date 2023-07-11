@@ -180,7 +180,6 @@ std::string json = nostr::make_request(subscription_id, filter);
 
 The following JSON is generated, where the pubkey was inserted as an item in the filter's authors array. 
 
-<md-block>
 ```json
 [
  "REQ",
@@ -209,7 +208,6 @@ std::string json = nostr::make_event(ev, seckey);
 
 The following JSON is generated
 
-<md-block>
 ```json
 [
  "EVENT",
