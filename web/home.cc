@@ -217,7 +217,10 @@ void ContainerHome::send_message()
         nostr::event_t ev;
         from_json(js_message.at(2), ev);
         comm::log("event received: " + ev.content);
-        if (m_check_raw->isChecked() == false) str = ev.content;
+        if (m_check_raw->isChecked() == false)
+        {
+          str = ev.content;
+        }
       }
       else
       {

@@ -290,7 +290,6 @@ int nostr::parse_request(const std::string& json, std::string& request_id, nostr
   return -1;
 }
 
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 // relay_to
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -336,94 +335,6 @@ int nostr::relay_to(const std::string& uri, const std::string& json, std::vector
   };
 
   client.start();
-  return 0;
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-// get_follows
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
-int nostr::get_follows(const std::string& uri, const std::string& pubkey, std::vector<std::string>& response)
-{
-  std::vector<std::string> responses;
-  std::vector< nostr::event_t> subs_events;
-
-  {
-    std::string subscription_id = uuid::generate_uuid_v4();
-    nostr::filter_t filter;
-    filter.authors.push_back(pubkey);
-    filter.kinds.push_back(3);
-    filter.limit = 1;
-    std::string json = nostr::make_request(subscription_id, filter);
-    comm::json_to_file("follows_request.json", json);
-    if (nostr::relay_to(uri, json, responses) < 0)
-    {
-    }
-  }
-
-  for (int idx = 0; idx < responses.size(); idx++)
-  {
-    std::string message = responses.at(idx);
-
-    try
-    {
-      nlohmann::json js = nlohmann::json::parse(message);
-
-      //Relays can send 3 types of messages, which must also be JSON arrays, according to the following patterns:
-      //["EVENT", <subscription_id>, <event JSON as defined above>], used to send events requested by clients.
-      //["EOSE", <subscription_id>], used to indicate the end of stored events and the beginning of events newly received in real - time.
-      //["NOTICE", <message>], used to send human - readable error messages or other things to clients.
-
-      std::string type = js.at(0);
-      if (type.compare("EVENT") == 0)
-      {
-        nostr::event_t ev;
-        from_json(js.at(2), ev);
-        subs_events.push_back(ev);
-        comm::json_to_file("follows_event.json", message);
-      }
-    }
-    catch (const std::exception& e)
-    {
-      comm::log(e.what());
-    }
-  }
-
-  if (!subs_events.size())
-  {
-    return 0;
-  }
-
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
-  // get follows info (1 event only should be returned)
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
-
-  nostr::event_t ev = subs_events.at(0);
-  for (int idx = 0; idx < ev.tags.size(); idx++)
-  {
-    std::vector<std::string> tag = ev.tags.at(idx);
-    std::string pubkey = tag.at(1);
-
-    std::string subscription_id = uuid::generate_uuid_v4();
-    nostr::filter_t filter;
-    filter.authors.push_back(pubkey);
-    filter.kinds.push_back(1);
-    filter.limit = 5;
-    std::string json = nostr::make_request(subscription_id, filter);
-    comm::json_to_file("req_follow.json", json);
-
-    std::vector<std::string> info;
-    if (nostr::relay_to(uri, json, info) < 0)
-    {
-    }
-
-    for (int idx = 0; idx < info.size(); idx++)
-    {
-      std::string message = info.at(idx);
-      response.push_back(message);
-    }
-  }
-
   return 0;
 }
 
@@ -513,4 +424,124 @@ std::string nostr::make_event(nostr::event_t& ev, const std::optional<std::strin
   nlohmann::json js_ev = nlohmann::json::array({ "EVENT", js });
   json = js_ev.dump();
   return json;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+// get_follows
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+int nostr::get_follows(const std::string& uri, const std::string& pubkey, std::vector<std::string>& pubkeys)
+{
+  std::vector<std::string> responses;
+  std::vector< nostr::event_t> subs_events;
+
+  {
+    std::string subscription_id = uuid::generate_uuid_v4();
+    nostr::filter_t filter;
+    filter.authors.push_back(pubkey);
+    filter.kinds.push_back(3);
+    filter.limit = 1;
+    std::string json = nostr::make_request(subscription_id, filter);
+    comm::json_to_file("follows_request.json", json);
+    if (nostr::relay_to(uri, json, responses) < 0)
+    {
+    }
+  }
+
+  for (int idx = 0; idx < responses.size(); idx++)
+  {
+    std::string message = responses.at(idx);
+
+    try
+    {
+      nlohmann::json js = nlohmann::json::parse(message);
+
+      //Relays can send 3 types of messages, which must also be JSON arrays, according to the following patterns:
+      //["EVENT", <subscription_id>, <event JSON as defined above>], used to send events requested by clients.
+      //["EOSE", <subscription_id>], used to indicate the end of stored events and the beginning of events newly received in real - time.
+      //["NOTICE", <message>], used to send human - readable error messages or other things to clients.
+
+      std::string type = js.at(0);
+      if (type.compare("EVENT") == 0)
+      {
+        nostr::event_t ev;
+        from_json(js.at(2), ev);
+        subs_events.push_back(ev);
+        comm::json_to_file("follows_event.json", message);
+      }
+    }
+    catch (const std::exception& e)
+    {
+      comm::log(e.what());
+    }
+  }
+
+  if (!subs_events.size())
+  {
+    return 0;
+  }
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+  // get follows info (1 event only should be returned)
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  nostr::event_t ev = subs_events.at(0);
+  for (int idx = 0; idx < ev.tags.size(); idx++)
+  {
+    std::vector<std::string> tag = ev.tags.at(idx);
+    std::string pubkey = tag.at(1);
+    pubkeys.push_back(pubkey);
+  }
+
+  return 0;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+// get_feed
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+int nostr::get_feed(const std::string& uri, const std::string& pubkey, std::vector<std::string>& response)
+{
+  std::string subscription_id = uuid::generate_uuid_v4();
+  nostr::filter_t filter;
+  filter.authors.push_back(pubkey);
+  filter.kinds.push_back(1);
+  filter.limit = 5;
+  std::string json = nostr::make_request(subscription_id, filter);
+  comm::json_to_file("req_feed.json", json);
+
+  std::vector<std::string> messages;
+  if (nostr::relay_to(uri, json, messages) < 0)
+  {
+  }
+
+  for (int idx = 0; idx < messages.size(); idx++)
+  {
+    std::string message = messages.at(idx);
+
+    try
+    {
+      nlohmann::json js = nlohmann::json::parse(message);
+
+      //Relays can send 3 types of messages, which must also be JSON arrays, according to the following patterns:
+      //["EVENT", <subscription_id>, <event JSON as defined above>], used to send events requested by clients.
+      //["EOSE", <subscription_id>], used to indicate the end of stored events and the beginning of events newly received in real - time.
+      //["NOTICE", <message>], used to send human - readable error messages or other things to clients.
+
+      std::string type = js.at(0);
+      if (type.compare("EVENT") == 0)
+      {
+        nostr::event_t ev;
+        from_json(js.at(2), ev);
+        response.push_back(message);
+        comm::json_to_file("follows_event.json", message);
+      }
+    }
+    catch (const std::exception& e)
+    {
+      comm::log(e.what());
+    }
+  }
+
+  return 0;
 }

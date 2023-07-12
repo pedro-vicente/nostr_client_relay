@@ -11,9 +11,10 @@ class ContainerFeed : public Wt::WContainerWidget
 {
 public:
   ContainerFeed();
+  Wt::WCheckBox* m_check_raw;
   Wt::WTable* m_table_messages;
   void row_text(const Wt::WString& s);
-  std::vector< nostr::event_t> m_events;
+  void get_follows();
 };
 
 #endif

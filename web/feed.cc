@@ -11,73 +11,111 @@ ContainerFeed::ContainerFeed()
 {
   this->setStyleClass("blue-box");
 
-  std::string uri = relays.at(1);
+  auto container = std::make_unique<Wt::WContainerWidget>();
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+  // options for table
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  m_check_raw = container->addNew<Wt::WCheckBox>("Raw message");
+  m_check_raw->setChecked(true);
+
+  auto button_follows = container->addWidget(std::make_unique<Wt::WPushButton>("Get Feed"));
+  button_follows->setInline(false);
+  button_follows->clicked().connect(this, &ContainerFeed::get_follows);
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////
   // table for events
   /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  auto container = std::make_unique<Wt::WContainerWidget>();
   m_table_messages = container->addWidget(std::make_unique<Wt::WTable>());
   m_table_messages->setStyleClass("table_messages");
 
   this->addWidget(std::move(container));
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+//ContainerFeed::get_follows
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void ContainerFeed::get_follows()
+{
+  m_table_messages->clear();
+
+  std::string uri = relays.at(1);
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////
-  // get follows
+  // get follows returns an array of pubkeys
   /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  std::vector<nostr::event_t> events;
-  std::vector<std::string> response;
-  nostr::get_follows(uri, pubkey, response);
-  int row = 0;
-
-  for (int idx = 0; idx < response.size(); idx++)
+  std::vector<std::string> pubkeys;
+  if (nostr::get_follows(uri, pubkey, pubkeys) < 0)
   {
-    std::string message = response.at(idx);
-    try
-    {
-      nlohmann::json js = nlohmann::json::parse(message);
-      std::string type = js.at(0);
-      if (type.compare("EVENT") == 0)
-      {
-        nostr::event_t ev;
-        from_json(js.at(2), ev);
-        events.push_back(ev);
-        std::string json = js.dump(1);
-        std::stringstream s;
-        s << "follow." << row + 1 << ".json";
-        comm::json_to_file(s.str(), json);
-
-        /////////////////////////////////////////////////////////////////////////////////////////////////////
-        // add complete JSON formatted message to HTML table 
-        /////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        Wt::WText* wtext = m_table_messages->elementAt(row, 0)->addNew<Wt::WText>(json);
-        wtext->setHeight(100);
-        wtext->clicked().connect([=]()
-          {
-            row_text(wtext->text());
-          });
-        row++;
-
-        /////////////////////////////////////////////////////////////////////////////////////////////////////
-        // parse tags
-        /////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        for (int idx = 0; idx < ev.tags.size(); idx++)
-        {
-          std::vector<std::string> tag = ev.tags.at(idx);
-          std::string pubkey = tag.at(1);
-        }
-      }
-    }
-    catch (const std::exception& e)
-    {
-      comm::log(e.what());
-    }
   }
 
+  comm::to_file("pubkeys.txt", pubkeys);
+
+  int row = 0;
+  for (int idx_key = 0; idx_key < pubkeys.size(); idx_key++)
+  {
+    std::string pubkey = pubkeys.at(idx_key);
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    // get feed returns an array of JSON events 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    std::vector<std::string> events;
+    if (nostr::get_feed(uri, pubkey, events) < 0)
+    {
+    }
+
+    for (int idx_eve = 0; idx_eve < events.size(); idx_eve++)
+    {
+      std::string message = events.at(idx_eve);
+      try
+      {
+        nlohmann::json js = nlohmann::json::parse(message);
+        std::string type = js.at(0);
+        if (type.compare("EVENT") == 0)
+        {
+          nostr::event_t ev;
+          from_json(js.at(2), ev);
+          std::string json = js.dump();
+          std::stringstream s;
+          s << "follow." << row + 1 << ".json";
+          comm::json_to_file(s.str(), json);
+
+          /////////////////////////////////////////////////////////////////////////////////////////////////////
+          // add complete JSON formatted message to HTML table or just contents
+          /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+          Wt::WText* wtext;
+          if (m_check_raw->isChecked() == true)
+          {
+            wtext = m_table_messages->elementAt(row, 0)->addNew<Wt::WText>(json);
+          }
+          else
+          {
+            std::string content = ev.content;
+            wtext = m_table_messages->elementAt(row, 0)->addNew<Wt::WText>(pubkey);
+            wtext = m_table_messages->elementAt(row, 1)->addNew<Wt::WText>(content);
+          }
+
+
+          wtext->setHeight(100);
+          wtext->clicked().connect([=]()
+            {
+              row_text(wtext->text());
+            });
+          row++;
+        }
+      }
+      catch (const std::exception& e)
+      {
+        comm::log(e.what());
+      }
+    } //events
+  } //pubkeys
 
 }
 
@@ -98,6 +136,5 @@ void ContainerFeed::row_text(const Wt::WString& s)
   {
     comm::log(e.what());
   }
-
 }
 

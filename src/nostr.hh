@@ -118,7 +118,8 @@ namespace nostr
   int parse_relay_event(const std::string& json, std::string& event_id, nostr::event_t& ev);
   int parse_request(const std::string& json, std::string& request_id, nostr::filter_t& filter);
   int relay_to(const std::string& uri, const std::string& json, std::vector<std::string>& store);
-  int get_follows(const std::string& uri, const std::string& pubkey, std::vector<std::string>& response);
+  int get_follows(const std::string& uri, const std::string& pubkey, std::vector<std::string>& pubkeys);
+  int get_feed(const std::string& uri, const std::string& pubkey, std::vector<std::string>& response);
 }
 
 
