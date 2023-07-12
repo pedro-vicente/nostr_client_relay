@@ -353,7 +353,9 @@ int nostr::get_follows(const std::string& uri, const std::string& pubkey, std::v
     nostr::filter_t filter;
     filter.authors.push_back(pubkey);
     filter.kinds.push_back(3);
+    filter.limit = 1;
     std::string json = nostr::make_request(subscription_id, filter);
+    comm::json_to_file("follows_request.json", json);
     if (nostr::relay_to(uri, json, responses) < 0)
     {
     }
@@ -378,6 +380,7 @@ int nostr::get_follows(const std::string& uri, const std::string& pubkey, std::v
         nostr::event_t ev;
         from_json(js.at(2), ev);
         subs_events.push_back(ev);
+        comm::json_to_file("follows_event.json", message);
       }
     }
     catch (const std::exception& e)
@@ -405,25 +408,9 @@ int nostr::get_follows(const std::string& uri, const std::string& pubkey, std::v
     nostr::filter_t filter;
     filter.authors.push_back(pubkey);
     filter.kinds.push_back(1);
-    filter.limit = 1;
+    filter.limit = 5;
     std::string json = nostr::make_request(subscription_id, filter);
-
-    try
-    {
-      nlohmann::json js = nlohmann::json::parse(json);
-      std::string type = js.at(0);
-      if (type.compare("REQ") == 0)
-      {
-        std::string request_id = js.at(1);
-        from_json(js.at(2), filter);
-        std::string json = js.dump(1);
-        comm::json_to_file("req_follow.json", json);
-      }
-    }
-    catch (const std::exception& e)
-    {
-      comm::log(e.what());
-    }
+    comm::json_to_file("req_follow.json", json);
 
     std::vector<std::string> info;
     if (nostr::relay_to(uri, json, info) < 0)

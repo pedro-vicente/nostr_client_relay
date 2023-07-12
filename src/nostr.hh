@@ -71,7 +71,7 @@ namespace nostr
   class filter_t
   {
   public:
-    filter_t() : limit(0), since(0), until(std::time(0))
+    filter_t() : limit(1), since(0), until(std::time(0))
     {
     };
     std::vector<std::string> ids;
