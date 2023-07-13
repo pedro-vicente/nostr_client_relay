@@ -1,13 +1,13 @@
-#include "feed.hh"
+#include "follows.hh"
 
 extern std::string pubkey;
 extern std::vector<std::string> relays;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
-//ContainerFeed
+//ContainerFollows
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-ContainerFeed::ContainerFeed()
+ContainerFollows::ContainerFollows()
 {
   this->setStyleClass("blue-box");
 
@@ -19,10 +19,7 @@ ContainerFeed::ContainerFeed()
 
   m_check_raw = container->addNew<Wt::WCheckBox>("Raw message");
   m_check_raw->setChecked(true);
-
-  auto button_follows = container->addWidget(std::make_unique<Wt::WPushButton>("Get Feed"));
-  button_follows->setInline(false);
-  button_follows->clicked().connect(this, &ContainerFeed::get_feed);
+  m_check_raw->clicked().connect(this, &ContainerFollows::get_follows);
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////
   // table for events
@@ -31,14 +28,20 @@ ContainerFeed::ContainerFeed()
   m_table_messages = container->addWidget(std::make_unique<Wt::WTable>());
   m_table_messages->setStyleClass("table_messages");
 
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+  // get_follows
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  get_follows();
+
   this->addWidget(std::move(container));
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
-//ContainerFeed::get_feed
+//ContainerFollows::get_follows
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void ContainerFeed::get_feed()
+void ContainerFollows::get_follows()
 {
   m_table_messages->clear();
 
@@ -61,11 +64,11 @@ void ContainerFeed::get_feed()
     std::string pubkey = pubkeys.at(idx_key);
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////
-    // get feed returns an array of JSON events 
+    // get metadata returns an array of JSON events 
     /////////////////////////////////////////////////////////////////////////////////////////////////////
 
     std::vector<std::string> events;
-    if (nostr::get_feed(uri, pubkey, events) < 0)
+    if (nostr::get_metadata(uri, pubkey, events) < 0)
     {
     }
 
@@ -81,9 +84,9 @@ void ContainerFeed::get_feed()
           nostr::event_t ev;
           from_json(js.at(2), ev);
           std::string json = js.dump(1);
-          std::stringstream s;
-          s << "follow." << row + 1 << ".json";
-          comm::json_to_file(s.str(), json);
+          std::stringstream ss;
+          ss << "follow." << row + 1 << ".json";
+          comm::json_to_file(ss.str(), json);
 
           /////////////////////////////////////////////////////////////////////////////////////////////////////
           // add complete JSON formatted message to HTML table or just contents
@@ -99,6 +102,10 @@ void ContainerFeed::get_feed()
             std::string content = ev.content;
             wtext = m_table_messages->elementAt(row, 0)->addNew<Wt::WText>(pubkey);
             wtext = m_table_messages->elementAt(row, 1)->addNew<Wt::WText>(content);
+
+            std::stringstream s;
+            s << "content." << row + 1 << ".json";
+            comm::json_to_file(s.str(), content);
           }
 
 
@@ -120,10 +127,10 @@ void ContainerFeed::get_feed()
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
-//ContainerFeed::row_text
+//ContainerFollows::row_text
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void ContainerFeed::row_text(const Wt::WString& s)
+void ContainerFollows::row_text(const Wt::WString& s)
 {
   std::string message = s.toUTF8();
   try
@@ -137,4 +144,3 @@ void ContainerFeed::row_text(const Wt::WString& s)
     comm::log(e.what());
   }
 }
-

@@ -15,6 +15,8 @@ set(web ${web} feed.hh)
 set(web ${web} feed.cc)
 set(web ${web} home.hh)
 set(web ${web} home.cc)
+set(web ${web} follows.hh)
+set(web ${web} follows.cc)
 
 add_executable(wostro web.cc web.hh ${web})
 

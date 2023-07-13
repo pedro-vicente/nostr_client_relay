@@ -1,20 +1,20 @@
-#ifndef NOSTRO_WEB_FEED_HH
-#define NOSTRO_WEB_FEED_HH
+#ifndef WOSTRO_FOLLOWS_HH
+#define WOSTRO_FOLLOWS_HH
 
 #include "web.hh"
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
-//ContainerFeed
+//ContainerFollows
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-class ContainerFeed : public Wt::WContainerWidget
+class ContainerFollows : public Wt::WContainerWidget
 {
 public:
-  ContainerFeed();
+  ContainerFollows();
   Wt::WCheckBox* m_check_raw;
   Wt::WTable* m_table_messages;
   void row_text(const Wt::WString& s);
-  void get_feed();
+  void get_follows();
 };
 
 #endif

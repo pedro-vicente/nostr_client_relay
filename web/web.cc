@@ -1,6 +1,7 @@
 #include "web.hh"
 #include "home.hh"
 #include "feed.hh"
+#include "follows.hh"
 
 std::string log_program_name("wostro");
 
@@ -63,6 +64,7 @@ NostroApplication::NostroApplication(const Wt::WEnvironment& env)
   m_menu->setWidth(100);
   m_menu->addItem("Home", std::make_unique<Wt::WAnchor>(Wt::WLink(Wt::LinkType::InternalPath, "home")));
   m_menu->addItem("Feed", std::make_unique<Wt::WAnchor>(Wt::WLink(Wt::LinkType::InternalPath, "feed")));
+  m_menu->addItem("Follows", std::make_unique<Wt::WAnchor>(Wt::WLink(Wt::LinkType::InternalPath, "follows")));
   m_menu->itemSelected().connect(this, &NostroApplication::selected);
   m_layout->addWidget(std::move(container_menu));
 
@@ -85,15 +87,13 @@ void NostroApplication::selected()
   Wt::WLayoutItem* item = m_layout->itemAt(1);
   m_layout->removeItem(item);
   int index = m_menu->currentIndex();
-  if (index == 0)
+  std::unique_ptr<Wt::WContainerWidget> container;
+  switch (index)
   {
-    auto container = std::make_unique<ContainerHome>();
-    m_layout->addWidget(std::move(container), 1);
+  case 0: container = std::make_unique<ContainerHome>(); break;
+  case 1: container = std::make_unique<ContainerFeed>(); break;
+  case 2: container = std::make_unique<ContainerFollows>(); break;
   }
-  else if (index == 1)
-  {
-    auto container = std::make_unique<ContainerFeed>();
-    m_layout->addWidget(std::move(container), 1);
-  }
+  m_layout->addWidget(std::move(container), 1);
 }
 

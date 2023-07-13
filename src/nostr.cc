@@ -561,21 +561,7 @@ int nostr::get_metadata(const std::string& uri, const std::string& pubkey, std::
   for (int idx = 0; idx < messages.size(); idx++)
   {
     std::string message = messages.at(idx);
-    try
-    {
-      nlohmann::json js = nlohmann::json::parse(message);
-      std::string type = js.at(0);
-      if (type.compare("EVENT") == 0)
-      {
-        nostr::event_t ev;
-        from_json(js.at(2), ev);
-        response.push_back(message);
-      }
-    }
-    catch (const std::exception& e)
-    {
-      comm::log(e.what());
-    }
+    response.push_back(message);
   }
 
   return 0;
