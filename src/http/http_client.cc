@@ -255,7 +255,7 @@ std::string make_request()
 
   //"kinds" : <a list of a kind numbers>,
   std::vector<int> kinds;
-  kinds.push_back(1);
+  kinds.push_back(nostr::kind_1);
   filter.kinds = kinds;
 
   //"#e" : <a list of event ids that are referenced in an "e" tag>,

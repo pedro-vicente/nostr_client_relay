@@ -8,6 +8,15 @@
 
 namespace nostr
 {
+
+  enum 
+  {
+    kind_0 = 0, // Metadata 
+    kind_1 = 1, // Short Text Note
+    kind_3 = 3, // Contacts
+  };
+
+
   //event
   const std::string ids("ids");
   const std::string authors("authors");
@@ -120,6 +129,7 @@ namespace nostr
   int relay_to(const std::string& uri, const std::string& json, std::vector<std::string>& store);
   int get_follows(const std::string& uri, const std::string& pubkey, std::vector<std::string>& pubkeys);
   int get_feed(const std::string& uri, const std::string& pubkey, std::vector<std::string>& response);
+  int get_metadata(const std::string& uri, const std::string& pubkey, std::vector<std::string>& response);
 }
 
 

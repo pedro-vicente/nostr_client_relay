@@ -107,7 +107,7 @@ int main(int argc, const char* argv[])
     if (authors.size())
     {
       filter.authors.push_back(authors);
-      filter.kinds.push_back(1);
+      filter.kinds.push_back(nostr::kind_1);
     }
     json = nostr::make_request(subscription_id, filter);
     comm::json_to_file("nostro_request.json", json);

@@ -24,6 +24,7 @@
 .table_messages td, .table_messages th {
   border: 1px solid #ddd;
   padding: 8px;
+  white-space: pre;
 }
 
 .table_messages tr:nth-child(even) {

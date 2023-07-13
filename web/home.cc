@@ -347,12 +347,12 @@ void ContainerHome::make_message()
 
     nostr::filter_t filter;
     filter.kinds.push_back(kind);
-    if (kind == 3) //contacts
+    if (kind == nostr::kind_3) //contacts
     {
       filter.authors.push_back(pubkey);
       filter.limit = 1;
     }
-    else if (kind == 1)
+    else if (kind == nostr::kind_1)
     {
       if (author.size()) filter.authors.push_back(author);
       filter.limit = 50;

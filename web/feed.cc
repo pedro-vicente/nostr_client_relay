@@ -80,7 +80,7 @@ void ContainerFeed::get_follows()
         {
           nostr::event_t ev;
           from_json(js.at(2), ev);
-          std::string json = js.dump();
+          std::string json = js.dump(1);
           std::stringstream s;
           s << "follow." << row + 1 << ".json";
           comm::json_to_file(s.str(), json);

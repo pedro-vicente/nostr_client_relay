@@ -427,7 +427,7 @@ std::string nostr::make_event(nostr::event_t& ev, const std::optional<std::strin
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
-// get_follows
+// get_follows returns a list of pubkeys
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 int nostr::get_follows(const std::string& uri, const std::string& pubkey, std::vector<std::string>& pubkeys)
@@ -435,17 +435,15 @@ int nostr::get_follows(const std::string& uri, const std::string& pubkey, std::v
   std::vector<std::string> responses;
   std::vector< nostr::event_t> subs_events;
 
+  std::string subscription_id = uuid::generate_uuid_v4();
+  nostr::filter_t filter;
+  filter.authors.push_back(pubkey);
+  filter.kinds.push_back(nostr::kind_3);
+  filter.limit = 1;
+  std::string json = nostr::make_request(subscription_id, filter);
+  comm::json_to_file("follows_request.json", json);
+  if (nostr::relay_to(uri, json, responses) < 0)
   {
-    std::string subscription_id = uuid::generate_uuid_v4();
-    nostr::filter_t filter;
-    filter.authors.push_back(pubkey);
-    filter.kinds.push_back(3);
-    filter.limit = 1;
-    std::string json = nostr::make_request(subscription_id, filter);
-    comm::json_to_file("follows_request.json", json);
-    if (nostr::relay_to(uri, json, responses) < 0)
-    {
-    }
   }
 
   for (int idx = 0; idx < responses.size(); idx++)
@@ -455,12 +453,6 @@ int nostr::get_follows(const std::string& uri, const std::string& pubkey, std::v
     try
     {
       nlohmann::json js = nlohmann::json::parse(message);
-
-      //Relays can send 3 types of messages, which must also be JSON arrays, according to the following patterns:
-      //["EVENT", <subscription_id>, <event JSON as defined above>], used to send events requested by clients.
-      //["EOSE", <subscription_id>], used to indicate the end of stored events and the beginning of events newly received in real - time.
-      //["NOTICE", <message>], used to send human - readable error messages or other things to clients.
-
       std::string type = js.at(0);
       if (type.compare("EVENT") == 0)
       {
@@ -483,14 +475,23 @@ int nostr::get_follows(const std::string& uri, const std::string& pubkey, std::v
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////
   // get follows info (1 event only should be returned)
+  // A special event with kind 3, meaning "contact list" is defined as having a list of p tags, 
+  // one for each of the followed/known profiles one is following.
+  // Each tag entry should contain the key for the profile, a relay URL where events from that key can be found
+  // (can be set to an empty string if not needed), and a local name(or "petname") 
+  // for that profile(can also be set to an empty string or not provided), 
+  // i.e., ["p", <32 - bytes hex key>, <main relay URL>, <petname>].
   /////////////////////////////////////////////////////////////////////////////////////////////////////
 
   nostr::event_t ev = subs_events.at(0);
   for (int idx = 0; idx < ev.tags.size(); idx++)
   {
     std::vector<std::string> tag = ev.tags.at(idx);
-    std::string pubkey = tag.at(1);
-    pubkeys.push_back(pubkey);
+    if (tag.size() > 1 && tag.at(0).compare("p") == 0)
+    {
+      std::string pubkey = tag.at(1);
+      pubkeys.push_back(pubkey);
+    }
   }
 
   return 0;
@@ -505,7 +506,7 @@ int nostr::get_feed(const std::string& uri, const std::string& pubkey, std::vect
   std::string subscription_id = uuid::generate_uuid_v4();
   nostr::filter_t filter;
   filter.authors.push_back(pubkey);
-  filter.kinds.push_back(1);
+  filter.kinds.push_back(nostr::kind_1);
   filter.limit = 5;
   std::string json = nostr::make_request(subscription_id, filter);
   comm::json_to_file("req_feed.json", json);
@@ -518,16 +519,9 @@ int nostr::get_feed(const std::string& uri, const std::string& pubkey, std::vect
   for (int idx = 0; idx < messages.size(); idx++)
   {
     std::string message = messages.at(idx);
-
     try
     {
       nlohmann::json js = nlohmann::json::parse(message);
-
-      //Relays can send 3 types of messages, which must also be JSON arrays, according to the following patterns:
-      //["EVENT", <subscription_id>, <event JSON as defined above>], used to send events requested by clients.
-      //["EOSE", <subscription_id>], used to indicate the end of stored events and the beginning of events newly received in real - time.
-      //["NOTICE", <message>], used to send human - readable error messages or other things to clients.
-
       std::string type = js.at(0);
       if (type.compare("EVENT") == 0)
       {
@@ -535,6 +529,47 @@ int nostr::get_feed(const std::string& uri, const std::string& pubkey, std::vect
         from_json(js.at(2), ev);
         response.push_back(message);
         comm::json_to_file("follows_event.json", message);
+      }
+    }
+    catch (const std::exception& e)
+    {
+      comm::log(e.what());
+    }
+  }
+
+  return 0;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+// get_metadata
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+int nostr::get_metadata(const std::string& uri, const std::string& pubkey, std::vector<std::string>& response)
+{
+  std::string subscription_id = uuid::generate_uuid_v4();
+  nostr::filter_t filter;
+  filter.authors.push_back(pubkey);
+  filter.kinds.push_back(nostr::kind_0);
+  std::string json = nostr::make_request(subscription_id, filter);
+  comm::json_to_file("req_metadata.json", json);
+
+  std::vector<std::string> messages;
+  if (nostr::relay_to(uri, json, messages) < 0)
+  {
+  }
+
+  for (int idx = 0; idx < messages.size(); idx++)
+  {
+    std::string message = messages.at(idx);
+    try
+    {
+      nlohmann::json js = nlohmann::json::parse(message);
+      std::string type = js.at(0);
+      if (type.compare("EVENT") == 0)
+      {
+        nostr::event_t ev;
+        from_json(js.at(2), ev);
+        response.push_back(message);
       }
     }
     catch (const std::exception& e)

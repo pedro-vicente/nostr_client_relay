@@ -16,7 +16,8 @@ std::string log_program_name("tests");
 int read_list(const std::string& file_name);
 int read_lists();
 int relay_all(const std::string& json);
-int get_follows();
+int get_feed();
+int get_metadata();
 
 std::vector<std::string> relays = { "eden.nostr.land",
   "nos.lol",
@@ -35,8 +36,9 @@ std::vector<std::string> list = { "list_01.txt",
 
 int main()
 {
+  comm::start_log();
 
-  read_lists();
+  get_metadata();
 
   return 0;
 }
@@ -138,26 +140,71 @@ int relay_all(const std::string& json)
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
-// get_follows
+// get_feed
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-int get_follows()
+int get_feed()
 {
+  std::vector<std::string> pubkeys;
+  std::string uri = "nos.lol";
   const std::string pubkey("4ea843d54a8fdab39aa45f61f19f3ff79cc19385370f6a272dda81fade0a052b");
 
-  comm::start_log();
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+  // get_follows returns a list of pubkeys
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  std::vector<std::string> response;
-  nostr::get_follows(relays.at(1), pubkey, response);
+  nostr::get_follows(uri, pubkey, pubkeys);
+  comm::to_file("pubkeys.txt", pubkeys);
 
-  std::vector<nostr::event_t> events;
-  std::vector<std::string> follows;
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+  // get feed returns an array of JSON events 
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  int row = 0;
-  for (int idx = 0; idx < response.size(); idx++)
+  for (int idx_key = 0; idx_key < pubkeys.size(); idx_key++)
   {
-    std::string message = response.at(idx);
+    std::string pubkey = pubkeys.at(idx_key);
 
+    std::vector<std::string> events;
+    if (nostr::get_feed(uri, pubkey, events) < 0)
+    {
+    }
+  }
+
+  return 0;
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+// get_metadata
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+int get_metadata()
+{
+  std::vector<std::string> pubkeys;
+  std::string uri = "nos.lol";
+  const std::string pubkey("4ea843d54a8fdab39aa45f61f19f3ff79cc19385370f6a272dda81fade0a052b");
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+  // get_follows returns a list of pubkeys
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  nostr::get_follows(uri, pubkey, pubkeys);
+  comm::to_file("pubkeys.txt", pubkeys);
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+  // metadata
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  for (int idx_key = 0; idx_key < pubkeys.size(); idx_key++)
+  {
+    std::string pubkey = pubkeys.at(idx_key);
+
+    std::vector<std::string> metadata;
+    if (nostr::get_metadata(uri, pubkey, metadata) < 0)
+    {
+    }
+
+    std::string message = metadata.at(0);
     try
     {
       nlohmann::json js = nlohmann::json::parse(message);
@@ -166,16 +213,9 @@ int get_follows()
       {
         nostr::event_t ev;
         from_json(js.at(2), ev);
-        events.push_back(ev);
-        comm::log("event received: " + ev.content);
-
-        std::string json = js.dump(1);
         std::stringstream s;
-        s << "follow." << row + 1 << ".json";
-        comm::json_to_file(s.str(), json);
-        row++;
-
-        follows.push_back(ev.pubkey);
+        s << "metadata_content." << idx_key + 1 << ".json";
+        comm::json_to_file(s.str(), ev.content);
       }
     }
     catch (const std::exception& e)
@@ -184,7 +224,6 @@ int get_follows()
     }
   }
 
-  comm::to_file("follows.txt", follows);
-
   return 0;
 }
+

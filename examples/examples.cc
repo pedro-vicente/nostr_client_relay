@@ -25,7 +25,7 @@ int main()
     std::string subscription_id = "my_id";
     nostr::filter_t filter;
     filter.authors.push_back(pubkey);
-    filter.kinds.push_back(1);
+    filter.kinds.push_back(nostr::kind_1);
     filter.limit = 1;
     std::string json = nostr::make_request(subscription_id, filter);
 
