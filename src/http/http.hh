@@ -1,3 +1,7 @@
+// This file is part of 'Nostr_client_relay' 
+// Copyright (c) 2023, Space Research Software LLC, Pedro Vicente. All rights reserved.
+// See file LICENSE for full license details.
+
 #ifndef HTTP_HH
 #define HTTP_HH
 

@@ -1,3 +1,7 @@
+# This file is part of 'Nostr_client_relay' 
+# Copyright (c) 2023, Space Research Software LLC, Pedro Vicente. All rights reserved.
+# See file LICENSE for full license details.
+
 message(STATUS "WT_INCLUDE: " ${WT_INCLUDE})
 message(STATUS "WT_CONFIG_H: " ${WT_CONFIG_H})
 message(STATUS "Source directory is " ${CMAKE_SOURCE_DIR})
