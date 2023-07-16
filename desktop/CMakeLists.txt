@@ -32,6 +32,9 @@ endif()
 #//////////////////////////
 
 set(src_extra ${src_extra})
+set(src_extra ${src_extra} ${CMAKE_SOURCE_DIR}/desktop/gnostro.hh)
+set(src_extra ${src_extra} ${CMAKE_SOURCE_DIR}/desktop/gnostro.cc)
+
 if (MSVC)
   set(src_extra ${src_extra} ${CMAKE_SOURCE_DIR}/desktop/sample.rc)
 elseif(APPLE AND NOT IPHONE)
@@ -42,7 +45,7 @@ endif()
 # gnostro executable
 #//////////////////////////
 
-add_executable(gnostro WIN32 MACOSX_BUNDLE ${CMAKE_SOURCE_DIR}/desktop/gnostro.cc ${src_extra})
+add_executable(gnostro WIN32 MACOSX_BUNDLE ${src_extra})
 
 #//////////////////////////
 # gnostro link 
@@ -55,15 +58,13 @@ if (MSVC)
 endif()
 
 if (LINUX)
-
-set(lib_dep ${lib_dep} wx_gtk3u_xrc-3.2 wx_gtk3u_qa-3.2 wx_baseu_net-3.2 wx_gtk3u_html-3.2 wx_gtk3u_core-3.2)
+  set(lib_dep ${lib_dep} wx_gtk3u_xrc-3.2 wx_gtk3u_qa-3.2 wx_baseu_net-3.2 wx_gtk3u_html-3.2 wx_gtk3u_core-3.2)
   set(lib_dep ${lib_dep} wx_baseu_xml-3.2 wx_baseu-3.2 wx_gtk3u_core-3.2 ${CMAKE_DL_LIBS})
   set(lib_dep ${lib_dep} wxscintilla-3.2 wx_gtk3u_stc-3.2)
   set(lib_dep ${lib_dep} gtk-3 gdk-3 pangocairo-1.0 pango-1.0 harfbuzz atk-1.0 cairo-gobject cairo)
   set(lib_dep ${lib_dep} gdk_pixbuf-2.0 gio-2.0 gobject-2.0 glib-2.0)
   set(lib_dep ${lib_dep} Xtst X11)
   set(lib_dep ${lib_dep} jpeg png z wx_baseu-3.2 expat pcre2-32 c)
-
 endif()
 
 if(APPLE)

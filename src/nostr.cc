@@ -511,7 +511,7 @@ int nostr::get_feed(const std::string& uri, const std::string& pubkey, std::vect
   nostr::filter_t filter;
   filter.authors.push_back(pubkey);
   filter.kinds.push_back(nostr::kind_1);
-  filter.limit = 5;
+  filter.limit = 2;
   std::string json = nostr::make_request(subscription_id, filter);
   comm::json_to_file("req_feed.json", json);
 

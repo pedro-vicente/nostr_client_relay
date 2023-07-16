@@ -1,10 +1,4 @@
-#include "wx/wxprec.h"
-#include "wx/wx.h"
-#include "sample.xpm"
-#include "wx/splitter.h"
-#include <wx/display.h>
-#include "wx/stc/stc.h"
-
+#include "gnostro.hh"
 #include "client_wss.hpp"
 #include <future>
 #include "nostri.h"
@@ -13,96 +7,20 @@
 
 using WssClient = SimpleWeb::SocketClient<SimpleWeb::WSS>;
 std::string log_program_name("gnostro");
-std::vector<std::string> store;
 wxSize frame_size;
+const std::string def_pubkey("4ea843d54a8fdab39aa45f61f19f3ff79cc19385370f6a272dda81fade0a052b");
+void get_feed(const std::string& pubkey, const std::string& uri, std::vector<std::string>& response);
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-//widget IDs
-/////////////////////////////////////////////////////////////////////////////////////////////////////
+std::string pubkey;
 
-enum
-{
-  ID_BUTTON_SEND_EVENT = wxID_HIGHEST + 1,
-  ID_TEXT_EVENT
-};
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-//wxPanelInput
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
-class wxPanelInput : public wxPanel
-{
-public:
-  wxPanelInput(wxWindow* parent);
-  void OnButtonSendEvent(wxCommandEvent& event);
-
-protected:
-  wxStyledTextCtrl* m_text_ctrl;
-  std::string m_out_message;
-
-  DECLARE_EVENT_TABLE()
-};
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-//PanelInput
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
-class PanelInput : public wxPanel
-{
-public:
-  PanelInput(wxWindow* parent);
-
-private:
-  DECLARE_EVENT_TABLE()
-};
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-//PanelOutput
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
-class PanelOutput : public wxPanel
-{
-public:
-  PanelOutput(wxWindow* parent);
-
-private:
-  DECLARE_EVENT_TABLE()
-};
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-//wxAppNostro
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
-class wxAppNostro : public wxApp
-{
-public:
-  virtual bool OnInit() wxOVERRIDE;
+std::vector<std::string> relays = { "eden.nostr.land",
+"nos.lol",
+"relay.snort.social",
+"relay.damus.io",
+"nostr.wine",
 };
 
 wxIMPLEMENT_APP(wxAppNostro);
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-//wxFrameMain
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
-class wxFrameMain : public wxFrame
-{
-public:
-  wxFrameMain(const wxString& title, wxPoint position, wxSize size);
-  void OnQuit(wxCommandEvent& event);
-  void OnAbout(wxCommandEvent& event);
-
-  wxSplitterWindow* m_splitter;
-  wxWindow* m_pane_input, * m_pane_output;
-
-private:
-  wxDECLARE_EVENT_TABLE();
-};
-
-wxBEGIN_EVENT_TABLE(wxFrameMain, wxFrame)
-EVT_MENU(wxID_EXIT, wxFrameMain::OnQuit)
-EVT_MENU(wxID_ABOUT, wxFrameMain::OnAbout)
-wxEND_EVENT_TABLE()
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //wxAppNostro::OnInit()
@@ -132,6 +50,13 @@ bool wxAppNostro::OnInit()
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //wxFrameMain::wxFrameMain
 /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+wxBEGIN_EVENT_TABLE(wxFrameMain, wxFrame)
+EVT_MENU(wxID_EXIT, wxFrameMain::OnQuit)
+EVT_MENU(wxID_ABOUT, wxFrameMain::OnAbout)
+EVT_BUTTON(ID_BUTTON_SEND_EVENT, wxFrameMain::OnButtonSendEvent)
+EVT_BUTTON(ID_BUTTON_GET_FEED, wxFrameMain::OnButtonGetFeed)
+wxEND_EVENT_TABLE()
 
 wxFrameMain::wxFrameMain(const wxString& title, wxPoint position, wxSize size)
   : wxFrame(NULL, wxID_ANY, title, position, size)
@@ -163,19 +88,23 @@ wxFrameMain::wxFrameMain(const wxString& title, wxPoint position, wxSize size)
   // huge amount when it's resized from its initial default size to its real
   // size when the frame lays it out. This wouldn't be necessary if default
   // zero gravity were used (although it would do no harm either).
+
   m_splitter->SetSize(GetClientSize());
   m_splitter->SetSashGravity(1.0);
   m_splitter->SetSashInvisible(true);
 
   m_pane_input = new PanelInput(m_splitter);
-  m_pane_input->SetBackgroundColour(wxColour(128, 128, 128));
   m_pane_input->SetToolTip("Input");
 
-  m_pane_output = new PanelOutput(m_splitter);
-  m_pane_output->SetBackgroundColour(wxColour(128, 128, 128));
-  m_pane_output->SetToolTip("Output");
+  //empty panel
+  wxPanel* panel = new wxPanel(m_splitter, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxDOUBLE_BORDER);
 
-  m_splitter->SplitVertically(m_pane_input, m_pane_output, 500);
+  m_splitter->SplitVertically(m_pane_input, panel, 300);
+
+#if defined DEV_MODE
+  m_pane_input->SetBackgroundColour(wxColour(128, 128, 128));
+  m_pane_output->SetBackgroundColour(wxColour(128, 128, 128));
+#endif
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -197,25 +126,60 @@ void wxFrameMain::OnAbout(wxCommandEvent& WXUNUSED(event))
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
-// wxPanelInput
+//PanelInput::PanelInput
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-wxBEGIN_EVENT_TABLE(wxPanelInput, wxPanel)
-EVT_BUTTON(ID_BUTTON_SEND_EVENT, wxPanelInput::OnButtonSendEvent)
+wxBEGIN_EVENT_TABLE(PanelInput, wxPanel)
 wxEND_EVENT_TABLE()
 
-wxPanelInput::wxPanelInput(wxWindow* parent) :
+PanelInput::PanelInput(wxWindow* parent) :
   wxPanel(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxDOUBLE_BORDER)
 {
+  wxSizer* const sizer = new wxBoxSizer(wxVERTICAL);
+
   m_out_message = R"(["REQ", "RAND", {"kinds": [1], "limit": 3}])";
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////
-  //populate input
+  //buttons
   /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  wxSizer* const sizer = new wxBoxSizer(wxVERTICAL);
-  wxSizer* const sizer_row_1 = new wxBoxSizer(wxHORIZONTAL);
-  wxSizer* const sizer_row_2 = new wxBoxSizer(wxHORIZONTAL);
+  wxSizer* const sizer_btn = new wxBoxSizer(wxHORIZONTAL);
+  sizer_btn->Add(new wxButton(this, ID_BUTTON_SEND_EVENT, wxT("Send"), wxDefaultPosition, wxDefaultSize), wxSizerFlags(0).Expand().Border());
+  sizer_btn->Add(new wxButton(this, ID_BUTTON_GET_FEED, wxT("Get Feed"), wxDefaultPosition, wxDefaultSize), wxSizerFlags(0).Expand().Border());
+  sizer->Add(sizer_btn);
+
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+  // Relay
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  wxStaticBox* static_rel = new wxStaticBox(this, wxID_ANY, wxT("Relay"));
+  wxSizer* const sizer_rel = new wxBoxSizer(wxHORIZONTAL);
+  wxStaticBoxSizer* const sizer_static_rel = new wxStaticBoxSizer(static_rel, wxHORIZONTAL);
+  sizer_static_rel->Add(new wxStaticText(this, wxID_ANY, wxEmptyString), wxSizerFlags(0).Expand().Border());
+
+  m_text_relay = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(700, 40));
+  m_text_relay->SetValue(relays.at(1));
+
+  sizer_static_rel->Add(m_text_relay, wxSizerFlags(0).Expand().Border());
+  sizer_rel->Add(sizer_static_rel);
+  sizer->Add(sizer_rel, wxSizerFlags(0).Expand().Border());
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+  //Key
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  wxStaticBox* static_ids = new wxStaticBox(this, wxID_ANY, wxT("Pub Key"));
+  wxSizer* const sizer_ids = new wxBoxSizer(wxHORIZONTAL);
+  wxStaticBoxSizer* const sizer_static_ids = new wxStaticBoxSizer(static_ids, wxHORIZONTAL);
+  sizer_static_ids->Add(new wxStaticText(this, wxID_ANY, wxEmptyString), wxSizerFlags(0).Expand().Border());
+
+  m_text_key = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(700, 40));
+  m_text_key->SetValue(def_pubkey);
+
+  sizer_static_ids->Add(m_text_key, wxSizerFlags(0).Expand().Border());
+  sizer_ids->Add(sizer_static_ids);
+  sizer->Add(sizer_ids, wxSizerFlags(0).Expand().Border());
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////
   // text event input
@@ -249,48 +213,50 @@ wxPanelInput::wxPanelInput(wxWindow* parent) :
   text->StyleSetForeground(wxSTC_MSSQL_COLUMN_NAME_2, wxColour(0, 0, 255));
   m_text_ctrl = text;
 
-  sizer_row_2->Add(m_text_ctrl), wxSizerFlags(0).Expand().Border();
-
   /////////////////////////////////////////////////////////////////////////////////////////////////////
-  // button send event
+  //Content
   /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  wxSizer* const sizer_btn_rep = new wxBoxSizer(wxHORIZONTAL);
-  wxSize size_button(169, 44);
-  size_button *= 2;
-  wxButton* b = new wxButton(this,
-    ID_BUTTON_SEND_EVENT,
-    wxT("Send Event "),
-    wxDefaultPosition,
-    size_button);
-  sizer_btn_rep->Add(b, wxSizerFlags(0).Expand().Border());
-  sizer_row_1->Add(sizer_btn_rep);
+  wxStaticBox* static_cnt = new wxStaticBox(this, wxID_ANY, wxT("Message"));
+  wxSizer* const sizer_cnt = new wxBoxSizer(wxHORIZONTAL);
+  wxStaticBoxSizer* const sizer_static_cnt = new wxStaticBoxSizer(static_cnt, wxHORIZONTAL); 
+  sizer_static_cnt->Add(new wxStaticText(this, wxID_ANY, wxEmptyString), wxSizerFlags(0).Expand().Border());
+  sizer_static_cnt->Add(m_text_ctrl);
+  sizer_cnt->Add(sizer_static_cnt);
+  sizer->Add(sizer_cnt, wxSizerFlags(0).Expand().Border());
 
-  //sizers
-  sizer->Add(sizer_row_1);
-  sizer->Add(sizer_row_2);
-  SetSizer(sizer);
-  SetClientSize(GetBestSize());
-  SetSizeHints(GetSize());
-
-  m_out_message = R"(["REQ", "RAND", {"kinds": [1], "limit": 3}])";
-  m_text_ctrl->SetValue(m_out_message);
+  SetSizerAndFit(sizer);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
-// wxPanelInput::OnButtonSendEvent
+// wxFrameMain::OnButtonSendEvent
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void wxPanelInput::OnButtonSendEvent(wxCommandEvent& WXUNUSED(eve))
+void wxFrameMain::OnButtonGetFeed(wxCommandEvent& event)
 {
-  // wss://relay.snort.social
-  // wss://relay.damus.io
-  // wss://eden.nostr.land
-  // wss://nostr-pub.wellorder.net
-  // wss://nos.lol
+  PanelInput* panel = m_pane_input;
+  std::string message = panel->m_text_ctrl->GetText().ToStdString();
+  std::string uri = panel->m_text_relay->GetValue().ToStdString();
+  pubkey = panel->m_text_key->GetValue().ToStdString();
 
-  // default uri
-  std::string uri = "localhost:8080/nostr";
+  std::vector<std::string> response;
+  get_feed(pubkey, uri, response);
+  this->CreateGrid(response);
+
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+// wxFrameMain::OnButtonSendEvent
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void wxFrameMain::OnButtonSendEvent(wxCommandEvent& WXUNUSED(eve))
+{
+  PanelInput* panel = m_pane_input;
+  std::string message = panel->m_text_ctrl->GetText().ToStdString();
+  std::string uri = panel->m_text_relay->GetValue().ToStdString();
+  pubkey = panel->m_text_key->GetValue().ToStdString();
+
+  std::vector<std::string> store;
 
   WssClient client(uri, false);
 
@@ -298,7 +264,7 @@ void wxPanelInput::OnButtonSendEvent(wxCommandEvent& WXUNUSED(eve))
   // on_message
   /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  client.on_message = [](std::shared_ptr<WssClient::Connection> connection, std::shared_ptr<WssClient::InMessage> in_message)
+  client.on_message = [&](std::shared_ptr<WssClient::Connection> connection, std::shared_ptr<WssClient::InMessage> in_message)
   {
     std::stringstream ss;
     std::string str = in_message->string();
@@ -319,14 +285,12 @@ void wxPanelInput::OnButtonSendEvent(wxCommandEvent& WXUNUSED(eve))
     ss << "Opened connection: HTTP " << connection.get()->http_version << " , code " << connection.get()->status_code;
     comm::log(ss.str());
 
-    m_text_ctrl->SetValue(m_out_message);
-
     ss.str(std::string());
     ss.clear();
-    ss << "Sending: \"" << m_out_message << "\"";
+    ss << "Sending: \"" << message << "\"";
     comm::log(ss.str());
 
-    connection->send(m_out_message);
+    connection->send(message);
   };
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -365,58 +329,22 @@ void wxPanelInput::OnButtonSendEvent(wxCommandEvent& WXUNUSED(eve))
   {
     comm::log(store.at(idx));
   }
+
+  this->CreateGrid(store);
 }
 
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////
-//PanelInput::PanelInput
+//PanelOutput::CreateGrid
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-wxBEGIN_EVENT_TABLE(PanelInput, wxPanel)
-
-wxEND_EVENT_TABLE()
-
-PanelInput::PanelInput(wxWindow* parent) :
-  wxPanel(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxDOUBLE_BORDER)
+void wxFrameMain::CreateGrid(const std::vector<std::string>& store)
 {
-  wxSizer* const sizer = new wxBoxSizer(wxVERTICAL);
+  m_pane_output = (PanelOutput*)m_splitter->GetWindow2();
+  PanelOutput* panel = new PanelOutput(m_splitter, store);
+  m_splitter->ReplaceWindow(m_pane_output, panel);
+  m_pane_output->Destroy();
+  m_pane_output = panel;
 
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
-  //buttons
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
-
-  wxSizer* const sizer_btn = new wxBoxSizer(wxHORIZONTAL);
-  sizer_btn->Add(new wxButton(this, ID_BUTTON_SEND_EVENT, wxT("Send"), wxDefaultPosition, wxDefaultSize), wxSizerFlags(0).Expand().Border());
-  sizer->Add(sizer_btn);
-
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
-  //Key
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
-
-  wxStaticBox* static_ids = new wxStaticBox(this, wxID_ANY, wxT("Key"));
-  wxSizer* const sizer_ids = new wxBoxSizer(wxHORIZONTAL);
-  wxStaticBoxSizer* const sizer_static_ids = new wxStaticBoxSizer(static_ids, wxHORIZONTAL);
-  sizer_static_ids->Add(new wxStaticText(this, wxID_ANY, wxEmptyString), wxSizerFlags(0).Expand().Border());
-  sizer_static_ids->Add(new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(700, 40)), wxSizerFlags(0).Expand().Border());
-  sizer_ids->Add(sizer_static_ids);
-  sizer->Add(sizer_ids, wxSizerFlags(0).Expand().Border());
-
-
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
-  //Content
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
-
-  wxStaticBox* static_cnt = new wxStaticBox(this, wxID_ANY, wxT("Content"));
-  wxSizer* const sizer_cnt = new wxBoxSizer(wxHORIZONTAL);
-  wxStaticBoxSizer* const sizer_static_cnt = new wxStaticBoxSizer(static_cnt, wxHORIZONTAL);
-  sizer_static_cnt->Add(new wxStaticText(this, wxID_ANY, wxEmptyString), wxSizerFlags(0).Expand().Border());
-  sizer_static_cnt->Add(new wxTextCtrl(this, ID_TEXT_EVENT, wxEmptyString, wxDefaultPosition, wxSize(1000, 700)), wxSizerFlags(0).Expand().Border());
-  sizer_cnt->Add(sizer_static_cnt);
-  sizer->Add(sizer_cnt, wxSizerFlags(0).Expand().Border());
-
-
-
-  SetSizerAndFit(sizer);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -427,8 +355,116 @@ wxBEGIN_EVENT_TABLE(PanelOutput, wxPanel)
 
 wxEND_EVENT_TABLE()
 
-PanelOutput::PanelOutput(wxWindow* parent) :
+PanelOutput::PanelOutput(wxWindow* parent, const std::vector<std::string>& store) :
   wxPanel(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxDOUBLE_BORDER)
 {
   wxSizer* const sizer = new wxBoxSizer(wxVERTICAL);
+
+  m_grid = new GridResponse(this);
+  size_t nbr_rows = store.size();
+  m_grid->CreateGrid(nbr_rows, 1);
+  m_grid->SetColLabelValue(0, "Response");
+  m_grid->SetColSize(0, 1000);
+  m_grid->EnableEditing(false);
+
+  for (int idx = 0; idx < nbr_rows; idx++)
+  {
+    std::string msg = store.at(idx);
+    wxString str(msg);
+    wxLogDebug("%s", str.c_str());
+    m_grid->SetRowSize(idx, 300);
+    m_grid->SetCellValue(idx, 0, str);
+  }
+
+  sizer->Add(m_grid, wxSizerFlags(0).Expand().Border());
+
+  SetSizerAndFit(sizer);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+//GridResponse::GridResponse
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+wxBEGIN_EVENT_TABLE(GridResponse, wxGrid)
+EVT_GRID_SELECT_CELL(GridResponse::OnSelectCell)
+wxEND_EVENT_TABLE()
+
+GridResponse::GridResponse(wxWindow* parent) :
+  wxGrid(parent, wxID_GRID_OUTPUT_PROCESS, wxDefaultPosition, wxDefaultSize, wxBORDER_SIMPLE),
+  m_selected_row(0)
+{
+  AutoSize();
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+//GridResponse::OnSelectCell
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void GridResponse::OnSelectCell(wxGridEvent& ev)
+{
+  m_selected_row = ev.GetRow();
+  SelectRow(m_selected_row);
+  if (GetNumberRows())
+  {
+  }
+  ev.Skip();
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+//get_feed
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void get_feed(const std::string& pubkey, const std::string& uri, std::vector<std::string>& response)
+{
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+  // get_follows returns an array of pubkeys 
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  std::vector<std::string> pubkeys;
+  nostr::get_follows(uri, pubkey, pubkeys);
+  comm::to_file("pubkeys.txt", pubkeys);
+
+  for (int idx_key = 0; idx_key < pubkeys.size(); idx_key++)
+  {
+    std::string pubkey = pubkeys.at(idx_key);
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    // get feed returns an array of JSON events 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    std::vector<std::string> events;
+    if (nostr::get_feed(uri, pubkey, events) < 0)
+    {
+    }
+
+    int row = 0;
+    for (int idx_eve = 0; idx_eve < events.size(); idx_eve++)
+    {
+      std::string message = events.at(idx_eve);
+      try
+      {
+        nlohmann::json js = nlohmann::json::parse(message);
+        std::string type = js.at(0);
+        if (type.compare("EVENT") == 0)
+        {
+          nostr::event_t ev;
+          from_json(js.at(2), ev);
+          std::string json = js.dump(1);
+
+          response.push_back(json);
+
+          std::stringstream s;
+          s << "follow." << row + 1 << ".json";
+          comm::json_to_file(s.str(), json);
+          row++;
+        }
+      }
+      catch (const std::exception& e)
+      {
+        comm::log(e.what());
+      }
+    } //events
+  } //pubkeys
+
 }
