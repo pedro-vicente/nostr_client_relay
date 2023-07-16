@@ -1,13 +1,11 @@
-
 message("-- nostr_client_relay static build: " ${BUILD_STATIC})
 message(STATUS "Source directory is " ${CMAKE_SOURCE_DIR})
 message(STATUS "Build directory is " ${CMAKE_CURRENT_BINARY_DIR})
 
-
 #//////////////////////////
 # GUI WxWidgets, gnostro
+# /home/pvn/git/nostr_client_relay/build/ext/wxWidgets-3.2.2.1/wx-config --libs
 # wx-config --cppflags
-# wx-config --libs
 #//////////////////////////
 
 if (LINUX)
@@ -57,13 +55,15 @@ if (MSVC)
 endif()
 
 if (LINUX)
-  set(lib_dep ${lib_dep} wx_gtk3u_xrc-3.2 wx_gtk3u_qa-3.2 wx_baseu_net-3.2 wx_gtk3u_html-3.2 wx_gtk3u_core-3.2)
+
+set(lib_dep ${lib_dep} wx_gtk3u_xrc-3.2 wx_gtk3u_qa-3.2 wx_baseu_net-3.2 wx_gtk3u_html-3.2 wx_gtk3u_core-3.2)
   set(lib_dep ${lib_dep} wx_baseu_xml-3.2 wx_baseu-3.2 wx_gtk3u_core-3.2 ${CMAKE_DL_LIBS})
-   set(lib_dep ${lib_dep} wxscintilla-3.2 wx_gtk3u_stc-3.2)
+  set(lib_dep ${lib_dep} wxscintilla-3.2 wx_gtk3u_stc-3.2)
   set(lib_dep ${lib_dep} gtk-3 gdk-3 pangocairo-1.0 pango-1.0 harfbuzz atk-1.0 cairo-gobject cairo)
-  set(lib_dep ${lib_dep} gdk_pixbuf-2.0 gio-2.0 gobject-2.0 glib-2.0) 
-set(lib_dep ${lib_dep} Xtst X11)
-set(lib_dep ${lib_dep} wxjpeg-3.2 png z wx_baseu-3.2 expat pcre2-32 c)
+  set(lib_dep ${lib_dep} gdk_pixbuf-2.0 gio-2.0 gobject-2.0 glib-2.0)
+  set(lib_dep ${lib_dep} Xtst X11)
+  set(lib_dep ${lib_dep} jpeg png z wx_baseu-3.2 expat pcre2-32 c)
+
 endif()
 
 if(APPLE)
@@ -80,7 +80,7 @@ if(APPLE)
   find_library(COCOA Cocoa)
   find_library(IOKIT IOKit)
   find_library(WEBKIT WebKit)
-  find_library(QUARTZCORE QuartzCore)  
+  find_library(QUARTZCORE QuartzCore)
   set(lib_dep ${lib_dep} ${COREFOUNDATION} ${SECURITY} ${CARBON} ${COCOA} ${IOKIT} ${WEBKIT} ${QUARTZCORE})
 endif()
 

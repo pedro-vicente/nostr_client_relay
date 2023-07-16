@@ -4,7 +4,8 @@
 
 #include "client_wss.hpp"
 #include <future>
-#include <fstream> 
+#include <fstream>
+#include<thread>
 #include <strstream>
 #include "nostri.h"
 #include "log.hh"

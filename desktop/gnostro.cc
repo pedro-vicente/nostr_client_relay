@@ -9,11 +9,7 @@
 #include <future>
 #include "nostri.h"
 #include "log.hh"
-#include "message.hh"
 #include "database.hh"
-
-// nostr developer
-// 0b889799eab6851ecd93aca010dbd85cc9aacd51b3569aa02f933b3ad23d6b24
 
 using WssClient = SimpleWeb::SocketClient<SimpleWeb::WSS>;
 std::string log_program_name("gnostro");
@@ -114,7 +110,7 @@ wxEND_EVENT_TABLE()
 
 bool wxAppNostro::OnInit()
 {
-  events::start_log();
+  comm::start_log();
 
   if (!wxApp::OnInit())
   {
@@ -307,7 +303,7 @@ void wxPanelInput::OnButtonSendEvent(wxCommandEvent& WXUNUSED(eve))
     std::stringstream ss;
     std::string str = in_message->string();
     ss << "Received: " << "\"" << str << "\"";
-    events::log(ss.str());
+    comm::log(ss.str());
     store.push_back(str);
 
     connection->send_close(1000);
@@ -321,14 +317,14 @@ void wxPanelInput::OnButtonSendEvent(wxCommandEvent& WXUNUSED(eve))
   {
     std::stringstream ss;
     ss << "Opened connection: HTTP " << connection.get()->http_version << " , code " << connection.get()->status_code;
-    events::log(ss.str());
+    comm::log(ss.str());
 
     m_text_ctrl->SetValue(m_out_message);
 
     ss.str(std::string());
     ss.clear();
     ss << "Sending: \"" << m_out_message << "\"";
-    events::log(ss.str());
+    comm::log(ss.str());
 
     connection->send(m_out_message);
   };
@@ -341,7 +337,7 @@ void wxPanelInput::OnButtonSendEvent(wxCommandEvent& WXUNUSED(eve))
   {
     std::stringstream ss;
     ss << "Closed: " << status;
-    events::log(ss.str());
+    comm::log(ss.str());
   };
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -352,7 +348,7 @@ void wxPanelInput::OnButtonSendEvent(wxCommandEvent& WXUNUSED(eve))
   {
     std::stringstream ss;
     ss << "Error: " << ec << " : " << ec.message();
-    events::log(ss.str());
+    comm::log(ss.str());
   };
 
   client.start();
@@ -363,11 +359,11 @@ void wxPanelInput::OnButtonSendEvent(wxCommandEvent& WXUNUSED(eve))
 
   std::stringstream ss;
   ss << "Received " << store.size() << " messages: ";
-  events::log(ss.str());
+  comm::log(ss.str());
 
   for (int idx = 0; idx < store.size(); idx++)
   {
-    events::log(store.at(idx));
+    comm::log(store.at(idx));
   }
 }
 

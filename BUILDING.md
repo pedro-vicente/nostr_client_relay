@@ -12,14 +12,41 @@
 - Boost [https://www.boost.org/]
 - Wt [https://www.webtoolkit.eu/wt]
 
+### For GUI desktop build
+
+- WxWidgets [https://www.wxwidgets.org/]
+
 ## Building
 
-The CMake build utility is used. There are 3 modes of build. Default is command line only. To enable desktop and web builds, define at command line 
+The CMake build utility is used. There are 3 modes of build. Default is command line only. To build with defaults, use
+on a shell
+
+```
+cmake -S . -B build
+cd build
+cmake --build . 
+
+```
+
+This builds the software on folder named 'build'. There you can find the executables and your code editor of choice
+generated projects, like projects for Microsof Visual Studio (in Windows).
+
+## Building for web and desktop
+
+To enable desktop and web builds, define at command line 
 
 ```
 cmake -DBUILD_WEB=ON -DBUILD_GUI=ON
 
 ```
+
+but these require extra parameters to locate dependencies. Use the bash script to build and see examples 
+
+``` cmd
+./build.cmake.sh
+```
+
+## Install dependencies
 
 To install dependencies on Mac and Linux
 
@@ -38,10 +65,6 @@ sudo apt-get install build-essential libgtk-3-dev
 sudo apt-get install libssl-dev 
 ```
 
-``` cmd
-./build.cmake.sh
-```
-
 For web, dependencies boost and wt are needed 
 
 ``` cmd
@@ -49,65 +72,6 @@ For web, dependencies boost and wt are needed
 ./build.wt.sh
 ```
 
-## Options
-
-Nostro either sends an EVENT or a REQ. Some command line options apply only to EVENT, others to REQ.
-
-### Common options
-
-*--uri* `<wss URI>`  
-  WSS URI to send 
-  
-*--req*  
-  message is a request (REQ). EVENT parameters are ignored 
-  
-*--sec* `<hex seckey>`  
-  set the secret key for signing, otherwise one will be randomly generated
-  
-#### Generate pair private/public keys
-
-Nostro can be used to generate the 2 sets of keys needed for the Nostr network (private/public keys). If no --sec parameter
-is set, the generated private key is dumped to standard output and can be stored for later use.
-  
-### REQ options
-
-*--id* `<hex>`  
-  event id (hex) to look up on the request
-  
-*--rand*  
-  send a RAND request (e.g ["REQ","RAND",{"kinds": [1], "limit": 2}])
-  
-### EVENT options
-
-*--content* `<string>`     
-  The text contents of the note
-
-*--dm* `<hex pubkey>`      
-  Create a direct message. This will create a kind-4 note with the contents encrypted
-
-*--kind* `<number>`     
-  Set the kind of the note
-
-*--created-at* `<unix timestamp>`      
-  Set the created at. Optional, this is set automatically.
-
-*--mine-pubkey*  
-  Mine a pubkey. This may or may not be cryptographically dubious.
-
-*--pow* `<difficulty>`    
-  Number of leading 0 bits of the id the mine for proof-of-work.
-
-*--tag* `<key value>`      
-  Add a tag with a single value
-
-*-t*
-  Shorthand for --tag t `<hashtag>`     
-
-*-p*
-  Shorthand for --tag p `<hex pubkey>`      
-
-*-e*
-  Shorthand for --tag e `<note id>`    
 
 ### Boost
 

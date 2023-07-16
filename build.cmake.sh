@@ -8,15 +8,16 @@ mkdir -p build
 pushd build
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 
-cmake .. -DWT_INCLUDE="$HOME/wt_install/include" -DWT_CONFIG_H="$HOME/wt_install/include" -DBUILD_WEB=ON
+cmake .. -DWT_INCLUDE="$HOME/wt_install/include" -DWT_CONFIG_H="$HOME/wt_install/include" -DBUILD_WEB=ON -DBUILD_GUI=ON
 
 elif [[ "$OSTYPE" == "darwin"* ]]; then
 
-cmake .. -DWT_INCLUDE="$HOME/wt_install/include" -DWT_CONFIG_H="$HOME/wt_install/include" -DBUILD_WEB=ON
+cmake .. -DWT_INCLUDE="$HOME/wt_install/include" -DWT_CONFIG_H="$HOME/wt_install/include" -DBUILD_WEB=ON -DBUILD_GUI=ON
 
 elif [[ "$OSTYPE" == "msys" ]]; then
 
-cmake .. --fresh -DBUILD_STATIC=OFF -DWT_INCLUDE="$dir/ext/wt-4.10.0/src" -DWT_CONFIG_H="$dir/ext/wt-4.10.0/build" -DBUILD_WEB=ON
+cmake .. --fresh -DBUILD_STATIC=OFF -DWT_INCLUDE="$dir/ext/wt-4.10.0/src" -DWT_CONFIG_H="$dir/ext/wt-4.10.0/build" \
+-DBUILD_WEB=ON -DBUILD_GUI=ON
 cmake --build .
 
 fi
