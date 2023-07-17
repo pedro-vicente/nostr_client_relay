@@ -18,10 +18,23 @@
 
 ## Building
 
+All dependencies except boost are included in the repository. To clone a copy with Boost, do at a shell prompt
+
+```
+ git clone --recurse-submodules https://github.com/pedro-vicente/nostr_client_relay
+```
+
+Or without Boost (Boost clone can be done later)
+
+```
+ git clone  https://github.com/pedro-vicente/nostr_client_relay
+```
+
 The CMake build utility is used. There are 3 modes of build. Default is command line only. To build with defaults, use
 on a shell
 
 ```
+cd nostr_client_relay
 cmake -S . -B build
 cd build
 cmake --build . 
@@ -65,30 +78,17 @@ sudo apt-get install build-essential libgtk-3-dev
 sudo apt-get install libssl-dev 
 ```
 
-For web, dependencies boost and wt are needed 
+For web, dependencies boost and wt are needed, build with bash shell scripts
 
 ``` cmd
 ./build.boost.sh
 ./build.wt.sh
 ```
 
-
 ### Boost
 
-Note: All dependencies except boost are included. Script ./build.boost.sh does a git clone of the boost repository, according to
-
-https://github.com/boostorg/wiki/wiki/Getting-Started%3A-Overview
-
-with 
+All dependencies except Boost are included. To clone Boost individually, do
 
 ```
 git clone -b boost-1.82.0 --recursive --depth=1 https://github.com/boostorg/boost.git ext/boost_1_82_0
 ```
-
-to run the script a second time, folder ext/boost_1_82_0 must be emptied with
-
-```
-cd ext/boost_1_82_0
-find . -name . -o -prune -exec rm -rf -- {} +
-```
-
