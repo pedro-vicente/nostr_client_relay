@@ -85,10 +85,12 @@ endif()
 
 if(UNIX AND NOT APPLE)
   set(LINUX TRUE)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -Wno-deprecated -Wno-deprecated-declarations -Wno-nonnull -Wno-psabi")
+  message(STATUS "Compiler flags: ${CMAKE_CXX_FLAGS}")
 endif()
 
-if(UNIX)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -Wno-deprecated -Wno-deprecated-declarations -Wno-nonnull -Wno-psabi")
+if(UNIX AND APPLE)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -Wno-deprecated -Wno-deprecated-declarations -Wno-nonnull")
   message(STATUS "Compiler flags: ${CMAKE_CXX_FLAGS}")
 endif()
 
@@ -196,9 +198,10 @@ target_link_libraries (tests ${lib_dep})
 #//////////////////////////
 # examples
 #//////////////////////////
-
+if(UNIX AND NOT APPLE)
 add_executable(examples examples/examples.cc)
 target_link_libraries (examples ${lib_dep})
+endif()
 
 #//////////////////////////
 # IDE project virtual folders
