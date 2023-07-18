@@ -1,4 +1,4 @@
-# This file is part of 'Nostr_client_relay' 
+# This file is part of 'Nostr_client_relay'
 # Copyright (c) 2023, Space Research Software LLC, Pedro Vicente. All rights reserved.
 # See file LICENSE for full license details.
 
@@ -154,13 +154,10 @@ if(USE_OPENSSL)
   if (MSVC)
     set(OPENSSL_ROOT_DIR "${CMAKE_SOURCE_DIR}/ext/openssl-3.0.5")
     message(STATUS "OpenSSL root folder: ${OPENSSL_ROOT_DIR}")
-  elseif(APPLE)
-    execute_process(COMMAND brew list --versions openssl OUTPUT_VARIABLE brew_version)
-    message(STATUS "OpenSSL version: ${brew_version}")
-
-    set(OPENSSL_ROOT_DIR "/usr/local/Cellar/openssl@3/3.1.1")
-    set(OPENSSL_SSL_LIBRARY "/usr/local/Cellar/openssl@3/3.1.1/lib/libssl.dylib")
-    set(OPENSSL_CRYPTO_LIBRARY "/usr/local/Cellar/openssl@3/3.1.1/lib/libcrypto.dylib")
+	#elseif(APPLE)
+  	#  set(OPENSSL_ROOT_DIR "${CMAKE_SOURCE_DIR}/ext/openssl-3.0.5")
+  	#  set(OPENSSL_ROOT_DIR "${CMAKE_SOURCE_DIR}/ext/openssl-3.0.5/lib/libssl.dylib")
+  	#  set(OPENSSL_CRYPTO_LIBRARY "${CMAKE_SOURCE_DIR}/ext/openssl-3.0.5/lib/libcrypo.dylib")
   endif()
   find_package(OpenSSL REQUIRED)
   message(STATUS "OpenSSL include: ${OPENSSL_INCLUDE_DIR}")
