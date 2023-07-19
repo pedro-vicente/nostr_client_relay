@@ -2,3 +2,14 @@
 ## since it is a docker utility
 ## it is useful to let act see the repo
 !.git
+!ext/*
+!test/*
+!database/*
+!resources/*
+!database/database.json
+!resources/server.crt
+!resources/server.key
+!test/list_01.txt
+!test/list_02.txt
+##act container needs fresh config
+CMakeCache.txt
