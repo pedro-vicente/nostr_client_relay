@@ -38,13 +38,13 @@ endif
 export BIND
 
 ifeq ($(token),)
-GH_ACT_TOKEN                            :=$(shell cat ~/GH_ACT_TOKEN.txt || echo "0")
+GITHUB_TOKEN                        :=$(shell cat ~/GITHUB_TOKEN.txt || echo "0")
 else
-GH_ACT_TOKEN                            :=$(shell echo $(token))
+GITHUB_TOKEN                        :=$(shell echo $(token))
 endif
-export GH_ACT_TOKEN
+export GITHUB_TOKEN
 
-export $(cat ~/GH_ACT_TOKEN) && make act
+export $(cat ~/GITHUB_TOKEN) && make act
 
 PYTHON                                  := $(shell which python)
 export PYTHON
@@ -130,7 +130,7 @@ export GIT_REPO_PATH
 .PHONY:- help
 -:
 	@awk 'BEGIN {FS = ":.*?###"} /^[a-zA-Z_-]+:.*?###/ {printf "\033[36m%-15s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
-help:###	more verbose help
+help-verbose:###	more verbose help
 	@awk 'BEGIN {FS = ":.*?##"} /^[a-zA-Z_-]+:.*?##/ {printf "\033[36m%-15s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
 report:###	report
@@ -149,9 +149,26 @@ report:###	report
 	@echo 'GIT_REPO_PATH=${GIT_REPO_PATH}'
 
 extra:## 	additional
+##extra
 	@echo "example: add additional make commands"
 submodules:###	recursively initialize git submodules
-	type -P git && git submodule update --init --recursive
+##submodules
+	git submodule update --init --recursive || echo "install git..."
+
+cmake:submodules## 	cmake .
+##cmake
+	cmake . && make all
+.PHONY:ext/openssl
+ext/openssl:
+##ext/openssl
+	cd $(PWD)/$@-3.0.5 && \
+		./Configure \
+		--prefix=/usr/local/ssl \
+		--openssldir=/usr/local/ssl \
+		'-Wl,-rpath,$(LIBRPATH)' && $(MAKE) all
+.PHONY:openssl
+openssl:ext/openssl cmake## 	openssl
+##openssl
 
 ## include Makefile if exists
 -include Makefile
