@@ -1,4 +1,4 @@
-# This file is part of 'Nostr_client_relay' 
+# This file is part of 'Nostr_client_relay'
 # Copyright (c) 2023, Space Research Software LLC, Pedro Vicente. All rights reserved.
 # See file LICENSE for full license details.
 
@@ -30,6 +30,7 @@ message(STATUS "Build directory is " ${CMAKE_CURRENT_BINARY_DIR})
 # external dependencies
 #//////////////////////////
 
+include_directories(${CMAKE_SOURCE_DIR}/ext/openssl-3.0.5/include)
 include_directories(${CMAKE_SOURCE_DIR}/ext/asio-1.18.1/include)
 include_directories(${CMAKE_SOURCE_DIR}/ext/json-3.11.2/single_include)
 include_directories(${CMAKE_SOURCE_DIR}/ext/secp256k1-0.3.2/include)
@@ -88,8 +89,8 @@ if(UNIX AND NOT APPLE)
   message(STATUS "Compiler flags: ${CMAKE_CXX_FLAGS}")
 endif()
 
-if(UNIX)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -Wno-deprecated -Wno-deprecated-declarations -Wno-nonnull -Wno-psabi")
+if(UNIX AND APPLE)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -Wno-deprecated -Wno-deprecated-declarations -Wno-nonnull")
   message(STATUS "Compiler flags: ${CMAKE_CXX_FLAGS}")
 endif()
 
@@ -150,25 +151,22 @@ if(USE_OPENSSL)
 endif()
 
 if(USE_OPENSSL)
-  if (MSVC)
-    set(lib_dep ${lib_dep} crypt32.lib)
-  endif()
-  if (MSVC)
-    set(OPENSSL_ROOT_DIR "${CMAKE_SOURCE_DIR}/ext/openssl-3.0.5")
-    message(STATUS "OpenSSL root folder: ${OPENSSL_ROOT_DIR}")
-  elseif(APPLE)
-    execute_process(COMMAND brew list --versions openssl OUTPUT_VARIABLE brew_version)
-    message(STATUS "OpenSSL version: ${brew_version}")
-
-    set(OPENSSL_ROOT_DIR "/usr/local/Cellar/openssl@3/3.1.1")
-    set(OPENSSL_SSL_LIBRARY "/usr/local/Cellar/openssl@3/3.1.1/lib/libssl.dylib")
-    set(OPENSSL_CRYPTO_LIBRARY "/usr/local/Cellar/openssl@3/3.1.1/lib/libcrypto.dylib")
-  endif()
   find_package(OpenSSL REQUIRED)
   message(STATUS "OpenSSL include: ${OPENSSL_INCLUDE_DIR}")
   message(STATUS "OpenSSL libraries: ${OPENSSL_LIBRARIES}")
   include_directories(${OPENSSL_INCLUDE_DIR})
   set(lib_dep ${lib_dep} ${OPENSSL_LIBRARIES})
+  if (MSVC)
+    set(lib_dep ${lib_dep} crypt32.lib)
+  endif()
+  if (MSVC)
+	set(OPENSSL_ROOT_DIR "${CMAKE_SOURCE_DIR}/ext/openssl-3.0.5")
+	message(STATUS "OpenSSL include: ${OPENSSL_INCLUDE_DIR}")
+  else (UNIX OR APPLE)
+	set(OPENSSL_ROOT_DIR "${CMAKE_SOURCE_DIR}/ext/openssl-3.0.5")
+	set(OPENSSL_ROOT_DIR "${CMAKE_SOURCE_DIR}/ext/openssl-3.0.5/libssl.dylib")
+	set(OPENSSL_CRYPTO_LIBRARY "${CMAKE_SOURCE_DIR}/ext/openssl-3.0.5/libcrypto.3.dylib")
+  endif()
 endif()
 
 
@@ -200,9 +198,10 @@ target_link_libraries (tests ${lib_dep})
 #//////////////////////////
 # examples
 #//////////////////////////
-
+if(UNIX AND NOT APPLE)
 add_executable(examples examples/examples.cc)
 target_link_libraries (examples ${lib_dep})
+endif()
 
 #//////////////////////////
 # IDE project virtual folders
