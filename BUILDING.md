@@ -65,9 +65,12 @@ To install dependencies on Mac and Linux
 
 Mac
 
+###### **NOTE: brew install openssl@3 installs an incorrect version**
+
 ``` cmd 
 brew install cmake
-brew install openssl
+brew install openssl@3.0
+brew link openssl@3.0
 ```
 
 Linux
