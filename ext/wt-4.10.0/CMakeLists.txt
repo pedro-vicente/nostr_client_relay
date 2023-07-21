@@ -255,6 +255,7 @@ set(HPDF_ROOT ${HARU_PREFIX})
 find_package(HPDF)
 
 ## <<<<<<< HEAD
+## <<<<<<< HEAD
 set(OPENSSL_ROOT_DIR ${SSL_PREFIX})
 find_package(OpenSSL)
 ## =======
@@ -274,6 +275,22 @@ find_package(OpenSSL)
 ##
 ##
 ## >>>>>>> 559c1748 (Initial commit)
+## =======
+
+
+
+find_package(OpenSSL)
+find_package(OpenSSL REQUIRED)
+message(STATUS "OpenSSL include: ${OPENSSL_INCLUDE_DIR}")
+message(STATUS "OpenSSL libraries: ${OPENSSL_LIBRARIES}")
+include_directories(${OPENSSL_INCLUDE_DIR})
+add_subdirectory(${CMAKE_SOURCE_DIR}/ext/openssl-3.0.5)
+set(lib_dep ${lib_dep} ${OPENSSL_LIBRARIES})
+##set(OPENSSL_ROOT_DIR ${SSL_PREFIX})
+
+
+
+>>>>>>> 765f4460 (CMakeLists.txt:OPENSSL config)
 
 IF (ENABLE_SAML)
   find_package(OpenSAML)
