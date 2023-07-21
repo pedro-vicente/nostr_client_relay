@@ -151,6 +151,7 @@ if(USE_OPENSSL)
 endif()
 
 if(USE_OPENSSL)
+## <<<<<<< HEAD
 
 	set(OPENSSL_ROOT_DIR "${CMAKE_SOURCE_DIR}/ext/openssl-3.0.5")
 	find_package(OpenSSL REQUIRED)
@@ -171,6 +172,22 @@ if(USE_OPENSSL)
   if (MSVC)
     set(lib_dep ${lib_dep} crypt32.lib)
   endif()
+=======
+  if (MSVC)
+    set(lib_dep ${lib_dep} crypt32.lib)
+  endif()
+  if (MSVC)
+	set(OPENSSL_ROOT_DIR "${CMAKE_SOURCE_DIR}/ext/openssl-3.0.5")
+	message(STATUS "OpenSSL include: ${OPENSSL_INCLUDE_DIR}")
+  else (UNIX OR APPLE)
+		  set(OPENSSL_ROOT_DIR "${CMAKE_SOURCE_DIR}/ext/openssl-3.0.5")
+		  find_package(OpenSSL REQUIRED)
+		  message(STATUS "OpenSSL include: ${OPENSSL_INCLUDE_DIR}")
+		  message(STATUS "OpenSSL libraries: ${OPENSSL_LIBRARIES}")
+		  include_directories(${OPENSSL_INCLUDE_DIR})
+		  set(lib_dep ${lib_dep} ${OPENSSL_LIBRARIES})
+  endif()
+## >>>>>>> e5f272ab (ext/wt-4.10.0/CMakeLists.txt: include_directories(../openssl-3.0.5))
 endif()
 
 

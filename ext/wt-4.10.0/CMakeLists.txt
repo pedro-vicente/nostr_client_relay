@@ -284,7 +284,7 @@ find_package(OpenSSL REQUIRED)
 message(STATUS "OpenSSL include: ${OPENSSL_INCLUDE_DIR}")
 message(STATUS "OpenSSL libraries: ${OPENSSL_LIBRARIES}")
 include_directories(${OPENSSL_INCLUDE_DIR})
-add_subdirectory(${CMAKE_SOURCE_DIR}/ext/openssl-3.0.5)
+include_directories(../openssl-3.0.5)
 set(lib_dep ${lib_dep} ${OPENSSL_LIBRARIES})
 ##set(OPENSSL_ROOT_DIR ${SSL_PREFIX})
 
