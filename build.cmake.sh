@@ -124,7 +124,7 @@ sleep 3
 cmake --build .
 
 popd
-<<<<<<< HEAD
+## <<<<<<< HEAD
 ## <<<<<<< HEAD
 ## pwd
 ## =======
@@ -164,8 +164,15 @@ fi
 if [[ "$OSTYPE" == "msys"* ]]; then
 ./Debug/vostro --http-address=0.0.0.0 --http-port=8080  --docroot=.
 else
+## <<<<<<< HEAD
 $SCRIPTPATH/build/./vostro --http-address=0.0.0.0 --http-port=$PORT  --docroot=. || echo "port busy?"
 ## >>>>>>> 87be3f46 (build.cmake.sh: detect vostro on port -p)
+## =======
+$SCRIPTPATH/build/./vostro \
+--http-address=0.0.0.0 \
+--http-port=$PORT  \
+--docroot=. || echo "port busy?"
+## >>>>>>> d72b47b4 (build.cmake.sh:)
 fi
 
 exit
