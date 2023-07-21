@@ -1,3 +1,4 @@
+##<<<<<<< HEAD
 ## <<<<<<< HEAD
 ## #!/bin/bash
 ##
@@ -33,6 +34,10 @@ export WX_PREFIX
 
 sleep 3
 
+## =======
+#!/bin/bash
+PORT=8080
+## >>>>>>> 575cd8ad (build.cmake.sh: detect vostro on port 8080)
 #echo ${!#}
 if [[ $1 == "-p" ]];then
 PORT=${!#}
