@@ -39,6 +39,9 @@ docker-start:## 	start docker
 ## Try:
 ## make ubuntu-matrix reuse=true bind=true
 ubuntu-matrix:submodules docker-start### 	run act/github workflow
+###ubuntu-matrix
+### 	TRY:
+### 	make ubuntu-matrix bind=true reuse=true verbose=true
 	@type -P act || echo -e "Install act local CI tool.\nTry:\napt install act or brew install act\n"
 	@export $(cat ~/gh_token.txt) && act -v $(REUSE) $(BIND) -C $(PWD)  -W $(PWD)/.github/workflows/$@.yml
 
