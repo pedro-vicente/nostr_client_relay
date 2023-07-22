@@ -1,5 +1,17 @@
 #!/bin/bash
 
+with_gui="$1"
+if [ -z "$with_gui" ] 
+then
+ echo "Building without GUI"
+ opt=OFF
+else
+ echo "Building with GUI"
+ opt=ON
+fi
+
+sleep 3
+
 if [[ "$OSTYPE" == "msys" ]]; then
 dir=$PWD
 fi
@@ -8,16 +20,16 @@ mkdir -p build
 pushd build
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 
-cmake .. -DWT_INCLUDE="$HOME/wt_install/include" -DWT_CONFIG_H="$HOME/wt_install/include" -DBUILD_WEB=ON -DBUILD_GUI=ON
+cmake .. -DWT_INCLUDE="$HOME/wt_install/include" -DWT_CONFIG_H="$HOME/wt_install/include" -DBUILD_WEB=$opt -DBUILD_GUI=$opt
 
 elif [[ "$OSTYPE" == "darwin"* ]]; then
 
-cmake .. -DWT_INCLUDE="$HOME/wt_install/include" -DWT_CONFIG_H="$HOME/wt_install/include" -DBUILD_WEB=ON -DBUILD_GUI=ON
+cmake .. -DWT_INCLUDE="$HOME/wt_install/include" -DWT_CONFIG_H="$HOME/wt_install/include" -DBUILD_WEB=$opt -DBUILD_GUI=$opt
 
 elif [[ "$OSTYPE" == "msys" ]]; then
 
 cmake .. --fresh -DBUILD_STATIC=OFF -DWT_INCLUDE="$dir/ext/wt-4.10.0/src" -DWT_CONFIG_H="$dir/ext/wt-4.10.0/build" \
--DBUILD_WEB=ON -DBUILD_GUI=ON
+-DBUILD_WEB=$opt -DBUILD_GUI=$opt
 cmake --build .
 
 fi

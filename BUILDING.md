@@ -46,17 +46,24 @@ generated projects, like projects for Microsof Visual Studio (in Windows).
 
 ## Building for web and desktop
 
-To enable desktop and web builds, define at command line 
+To enable desktop and web builds, 2 CMake variables are used
 
 ```
-cmake -DBUILD_WEB=ON -DBUILD_GUI=ON
+-DBUILD_WEB=ON -DBUILD_GUI=ON
 
 ```
 
-but these require extra parameters to locate dependencies. Use the bash script to build and see examples 
+Dependencies boost and wt are needed, build with bash shell scripts
 
 ``` cmd
-./build.cmake.sh
+./build.boost.sh
+./build.wt.sh
+```
+
+Use the bash script to build with an extra parameter ON
+
+``` cmd
+./build.cmake.sh ON
 ```
 
 ## Install dependencies
@@ -79,13 +86,6 @@ Linux
 sudo apt-get install cmake
 sudo apt-get install build-essential libgtk-3-dev 
 sudo apt-get install libssl-dev 
-```
-
-For web, dependencies boost and wt are needed, build with bash shell scripts
-
-``` cmd
-./build.boost.sh
-./build.wt.sh
 ```
 
 ### Boost
