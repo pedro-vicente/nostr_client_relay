@@ -3,6 +3,8 @@
 ## it is useful to let act see the repo
 !.git
 !ext/*
+!ext/sec**
+!ext/boost**
 !test/*
 !database/*
 !resources/*
@@ -12,4 +14,5 @@
 !test/list_01.txt
 !test/list_02.txt
 ##act container needs fresh config
+!GNUmakefile
 CMakeCache.txt
