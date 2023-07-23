@@ -54,8 +54,8 @@ add_executable(gnostro WIN32 MACOSX_BUNDLE ${src_extra})
 #//////////////////////////
 
 if (MSVC)
-  set(lib_dep ${lib_dep} wxbase32ud wxmsw32ud_core wxmsw32ud_webview wxbase32ud_net wxpngd wxzlibd wxregexud wxmsw32ud_html)
-  set(lib_dep ${lib_dep} wxscintillad wxmsw32ud_stc)
+  set(lib_dep ${lib_dep} wxbase33ud wxmsw33ud_core wxmsw33ud_webview wxbase33ud_net wxpngd wxzlibd wxregexud wxmsw33ud_html)
+  set(lib_dep ${lib_dep} wxscintillad wxlexillad wxmsw33ud_stc)
   set(lib_dep ${lib_dep} odbc32.lib odbccp32.lib comctl32.lib rpcrt4.lib ws2_32.lib)
 endif()
 
