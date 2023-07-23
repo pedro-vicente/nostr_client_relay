@@ -30,7 +30,6 @@ message(STATUS "Build directory is " ${CMAKE_CURRENT_BINARY_DIR})
 # external dependencies
 #//////////////////////////
 
-include_directories(${CMAKE_SOURCE_DIR}/ext/openssl-3.0.5/include)
 include_directories(${CMAKE_SOURCE_DIR}/ext/asio-1.18.1/include)
 include_directories(${CMAKE_SOURCE_DIR}/ext/json-3.11.2/single_include)
 include_directories(${CMAKE_SOURCE_DIR}/ext/secp256k1-0.3.2/include)
@@ -162,11 +161,6 @@ if(USE_OPENSSL)
   set(lib_dep ${lib_dep} ${OPENSSL_LIBRARIES})
   if (MSVC)
     set(lib_dep ${lib_dep} crypt32.lib)
-  endif()
-  if (UNIX OR APPLE)
-    set(OPENSSL_ROOT_DIR "${CMAKE_SOURCE_DIR}/ext/openssl-3.0.5")
-    set(OPENSSL_ROOT_DIR "${CMAKE_SOURCE_DIR}/ext/openssl-3.0.5/libssl.dylib")
-    set(OPENSSL_CRYPTO_LIBRARY "${CMAKE_SOURCE_DIR}/ext/openssl-3.0.5/libcrypto.3.dylib")
   endif()
 endif()
 
