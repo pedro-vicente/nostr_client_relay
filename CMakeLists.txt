@@ -11,7 +11,7 @@ set(CMAKE_BUILD_TYPE Debug)
 project (nostr_client_relay LANGUAGES CXX C)
 
 option(BUILD_STATIC "BUILD_STATIC" OFF)
-option(BUILD_GUI "BUILD_STATIC" OFF)
+option(BUILD_DESKTOP "BUILD_STATIC" OFF)
 option(BUILD_WEB "BUILD_WEB" OFF)
 option(USE_OPENSSL "set OFF to build without OpenSSL" ON)
 option(DEV_MODE "DEV_MODE" OFF)
@@ -232,7 +232,7 @@ file(COPY "${CMAKE_SOURCE_DIR}/resources/wt_config.xml" DESTINATION ${CMAKE_BINA
 # Wt desktop
 #//////////////////////////
 
-if (BUILD_GUI)
+if (BUILD_DESKTOP)
   add_subdirectory(desktop)
 endif()
 
@@ -243,3 +243,12 @@ endif()
 if (BUILD_WEB)
  add_subdirectory(web)
 endif()
+
+#//////////////////////////
+# iOS, Android
+#//////////////////////////
+
+if (BUILD_MOBILE)
+ add_subdirectory(mobile)
+endif()
+
