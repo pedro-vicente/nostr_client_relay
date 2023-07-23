@@ -570,3 +570,63 @@ int nostr::get_metadata(const std::string& uri, const std::string& pubkey, std::
 
   return 0;
 }
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+//get_events
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void nostr::get_events(const std::string& pubkey, const std::string& uri, std::vector<std::string>& response)
+{
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+  // get_follows returns an array of pubkeys 
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  std::vector<std::string> pubkeys;
+  nostr::get_follows(uri, pubkey, pubkeys);
+  comm::to_file("pubkeys.txt", pubkeys);
+
+  for (int idx_key = 0; idx_key < pubkeys.size(); idx_key++)
+  {
+    std::string pubkey = pubkeys.at(idx_key);
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    // get feed returns an array of JSON events 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    std::vector<std::string> events;
+    if (nostr::get_feed(uri, pubkey, events) < 0)
+    {
+    }
+
+    int row = 0;
+    for (int idx_eve = 0; idx_eve < events.size(); idx_eve++)
+    {
+      std::string message = events.at(idx_eve);
+      try
+      {
+        nlohmann::json js = nlohmann::json::parse(message);
+        std::string type = js.at(0);
+        if (type.compare("EVENT") == 0)
+        {
+          nostr::event_t ev;
+          from_json(js.at(2), ev);
+          std::string json = js.dump(1);
+
+          response.push_back(json);
+
+          std::stringstream s;
+          s << "follow." << row + 1 << ".json";
+          comm::json_to_file(s.str(), json);
+          row++;
+        }
+      }
+      catch (const std::exception& e)
+      {
+        comm::log(e.what());
+      }
+    } //events
+  } //pubkeys
+
+}
