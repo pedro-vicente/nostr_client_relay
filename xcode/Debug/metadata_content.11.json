@@ -1,0 +1,20 @@
+{
+ "about": "Insights on security, privacy, technology, & money · Casa Co-founder & CTO · https://bitcoin.page",
+ "banner": "https://nostr.build/i/7051d66a7bdd7a54e836c1302fa8c57f3f9974723e4f90261e477a9a3b2bfe06.jpg",
+ "displayName": "Jameson Lopp",
+ "display_name": "Jameson Lopp",
+ "identities": [
+  {
+   "claim": "jlopp",
+   "proof": "https://github.com/jlopp",
+   "type": "github"
+  }
+ ],
+ "lud06": "",
+ "lud16": "0x44c9f7435090eeec@ln.tips",
+ "name": "lopp",
+ "nip05": "lopp@lopp.net",
+ "picture": "https://nostr.build/i/1be833f57e9a0874a17befaa364ff98e78ae99a2e8f7feb0898ec55694cb6829.png",
+ "username": "lopp",
+ "website": "https://lopp.net"
+}

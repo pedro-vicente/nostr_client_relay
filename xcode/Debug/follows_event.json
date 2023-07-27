@@ -1,0 +1,74 @@
+[
+ "EVENT",
+ "370D1846-EE15-43C9-8FA9-0B4475D7AB52",
+ {
+  "content": "{\"wss://nos.lol/\":{\"write\":true,\"read\":true},\"wss://eden.nostr.land\":{\"write\":true,\"read\":true},\"wss://nostr.wine\":{\"write\":true,\"read\":true}}",
+  "created_at": 1690482272,
+  "id": "d3b012a798568866ba35d1882895b72304f34c0bc791c3f18c5781669795b236",
+  "kind": 3,
+  "pubkey": "4ea843d54a8fdab39aa45f61f19f3ff79cc19385370f6a272dda81fade0a052b",
+  "sig": "6128cb23f9c31d542325ff8c51555dbe0365a6fa81db067ce9d1658f2d4d09bac3cff2775195debfb567102394c1886447c268f89470a55a004d29bc046fc3c1",
+  "tags": [
+   [
+    "p",
+    "de7ecd1e2976a6adb2ffa5f4db81a7d812c8bb6698aa00dcf1e76adb55efd645"
+   ],
+   [
+    "p",
+    "82341f882b6eabcd2ba7f1ef90aad961cf074af15b9ef44a09f9d2a8fbfbe6a2"
+   ],
+   [
+    "p",
+    "32e1827635450ebb3c5a7d12c1f8e7b2b514439ac10a67eef3d9fd9c5c68e245"
+   ],
+   [
+    "p",
+    "3bf0c63fcb93463407af97a5e5ee64fa883d107ef9e558472c4eb9aaaefa459d"
+   ],
+   [
+    "p",
+    "787338757fc25d65cd929394d5e7713cf43638e8d259e8dcf5c73b834eb851f2"
+   ],
+   [
+    "p",
+    "20986fb83e775d96d188ca5c9df10ce6d613e0eb7e5768a0f0b12b37cdac21b3"
+   ],
+   [
+    "p",
+    "04c915daefee38317fa734444acee390a8269fe5810b2241e5e6dd343dfbecc9"
+   ],
+   [
+    "p",
+    "af9d70407464247d19fd243cf1bee81e6df1e639217dc66366bf37aa42d05d35"
+   ],
+   [
+    "p",
+    "7cc328a08ddb2afdf9f9be77beff4c83489ff979721827d628a542f32a247c0e"
+   ],
+   [
+    "p",
+    "60cd46aa1053ba281b96540fc9378ade2423b3f97b0230cae27ffe284f9e97f1"
+   ],
+   [
+    "p",
+    "f728d9e6e7048358e70930f5ca64b097770d989ccd86854fe618eda9c8a38106"
+   ],
+   [
+    "p",
+    "a9385f5cac7f4865692b2493a884082b7386668237cafc33be0825b58cedea6e"
+   ],
+   [
+    "p",
+    "4523be58d395b1b196a9b8c82b038b6895cb02b683d0c253a955068dba1facd0"
+   ],
+   [
+    "p",
+    "6e468422dfb74a5738702a8823b9b28168abab8655faacb6853cd0ee15deee93"
+   ],
+   [
+    "p",
+    "91c9a5e1a9744114c6fe2d61ae4de82629eaaa0fb52f48288093c7e7e036f832"
+   ]
+  ]
+ }
+]

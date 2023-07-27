@@ -1,0 +1,11 @@
+{
+ "about": "YakiHonne is a Nostr-based decentralized content media protocol, which supports free curation, creation, publishing, and reporting by various media.",
+ "banner": "https://yakihonne.s3.ap-east-1.amazonaws.com/20986fb83e775d96d188ca5c9df10ce6d613e0eb7e5768a0f0b12b37cdac21b3/files/1689821737509-YAKIHONNES3.png",
+ "display_name": "YakiHonne",
+ "lud06": "lnurl1dp68gurn8ghj7em9w3skccne9e3k7mf09emk2mrv944kummhdchkcmn4wfk8qtmev94kj6r0dehx2zz5rzs",
+ "lud16": "yakihonne@getalby.com",
+ "name": "YakiHonne",
+ "nip05": "_@yakihonne.com",
+ "picture": "https://pbs.twimg.com/profile_images/1650865610061156353/Xxtar8Ra_400x400.jpg",
+ "website": "https://yakihonne.com/"
+}

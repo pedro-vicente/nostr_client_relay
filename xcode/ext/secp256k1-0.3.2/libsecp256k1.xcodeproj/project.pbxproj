@@ -1,0 +1,1021 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		44DC7BB380AB412FA60BB880 /* ALL_BUILD */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 8E81861607B74C31B8F4C024 /* Build configuration list for PBXAggregateTarget "ALL_BUILD" */;
+			buildPhases = (
+				45C03153C9A4FEFB82F0CF7C /* Generate CMakeFiles/ALL_BUILD */,
+			);
+			dependencies = (
+				1DB3AC00CE4D4E8888E72AEA /* PBXTargetDependency */,
+				746DD8622B1D498B9CE923BE /* PBXTargetDependency */,
+			);
+			name = ALL_BUILD;
+			productName = ALL_BUILD;
+		};
+		9F0C24B87BCD4A44BA683436 /* ZERO_CHECK */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = B41805E284C04C2A802E8E8A /* Build configuration list for PBXAggregateTarget "ZERO_CHECK" */;
+			buildPhases = (
+				32E5902E740A3FB1CD147053 /* Generate CMakeFiles/ZERO_CHECK */,
+			);
+			dependencies = (
+			);
+			name = ZERO_CHECK;
+			productName = ZERO_CHECK;
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXBuildFile section */
+		747AA32C40874017BAAB2DEA /* /Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/ext/secp256k1-0.3.2/src/secp256k1.c */ = {isa = PBXBuildFile; fileRef = B3CFB067686B46B59B907EE3 /* /Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/ext/secp256k1-0.3.2/src/secp256k1.c */; };
+		790B7F3C991048E7984283E3 /* /Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/ext/secp256k1-0.3.2/src/precomputed_ecmult_gen.c */ = {isa = PBXBuildFile; fileRef = C60858A09CD542CE93381464 /* /Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/ext/secp256k1-0.3.2/src/precomputed_ecmult_gen.c */; };
+		B019BDD2DD5940EFAEDE73C4 /* /Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/ext/secp256k1-0.3.2/src/precomputed_ecmult.c */ = {isa = PBXBuildFile; fileRef = 0F9CA2848174461FB5F71CBE /* /Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/ext/secp256k1-0.3.2/src/precomputed_ecmult.c */; };
+		BB894D871E814E2CB5A04970 /* /Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/ext/secp256k1-0.3.2/src/CMakeLists.txt */ = {isa = PBXBuildFile; fileRef = FFA67937CC2842459DBC8E61 /* /Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/ext/secp256k1-0.3.2/src/CMakeLists.txt */; };
+		EE2BF2BBB8C5407AAB89823A /* /Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/ext/secp256k1-0.3.2/src/CMakeLists.txt */ = {isa = PBXBuildFile; fileRef = 7B9A50B694E94E5EBD788F69 /* /Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/ext/secp256k1-0.3.2/src/CMakeLists.txt */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXBuildStyle section */
+		0DAD91A58B8445AEA4F9C66B /* Coverage */ = {
+			isa = PBXBuildStyle;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+			};
+			name = Coverage;
+		};
+		191FCBB694154720862D5346 /* RelWithDebInfo */ = {
+			isa = PBXBuildStyle;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+			};
+			name = RelWithDebInfo;
+		};
+		24CE99789DEC4AE8AC5A98BE /* Release */ = {
+			isa = PBXBuildStyle;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+			};
+			name = Release;
+		};
+		6CAB0782E4CB4402921D0B04 /* MinSizeRel */ = {
+			isa = PBXBuildStyle;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+			};
+			name = MinSizeRel;
+		};
+		E05949CBDB654B20943DFF2C /* Debug */ = {
+			isa = PBXBuildStyle;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+			};
+			name = Debug;
+		};
+/* End PBXBuildStyle section */
+
+/* Begin PBXContainerItemProxy section */
+		90A288FFC3FB4A8EA1E30DC5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0A14EF09EC414AB48CB70F4C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DA29646B437347628D88FEA3;
+			remoteInfo = secp256k1_precomputed;
+		};
+		C702B7F349244EADA032A397 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0A14EF09EC414AB48CB70F4C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1C4928ABEA41429E9FC84642;
+			remoteInfo = secp256k1;
+		};
+		D1883336FA5D46FD97C39364 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0A14EF09EC414AB48CB70F4C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9F0C24B87BCD4A44BA683436;
+			remoteInfo = ZERO_CHECK;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0F9CA2848174461FB5F71CBE /* /Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/ext/secp256k1-0.3.2/src/precomputed_ecmult.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 4; name = precomputed_ecmult.c; path = src/precomputed_ecmult.c; sourceTree = SOURCE_ROOT; };
+		7B9A50B694E94E5EBD788F69 /* /Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/ext/secp256k1-0.3.2/src/CMakeLists.txt */ = {isa = PBXFileReference; explicitFileType = sourcecode.text; fileEncoding = 4; name = CMakeLists.txt; path = src/CMakeLists.txt; sourceTree = SOURCE_ROOT; };
+		B3CFB067686B46B59B907EE3 /* /Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/ext/secp256k1-0.3.2/src/secp256k1.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 4; name = secp256k1.c; path = src/secp256k1.c; sourceTree = SOURCE_ROOT; };
+		BCD1396551F14256A68D16C4 /* secp256k1_precomputed */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libsecp256k1_precomputed.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		C60858A09CD542CE93381464 /* /Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/ext/secp256k1-0.3.2/src/precomputed_ecmult_gen.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 4; name = precomputed_ecmult_gen.c; path = src/precomputed_ecmult_gen.c; sourceTree = SOURCE_ROOT; };
+		DF362A46A1704936AB1AFED1 /* /Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/ext/secp256k1-0.3.2/CMakeLists.txt */ = {isa = PBXFileReference; explicitFileType = sourcecode.text; fileEncoding = 4; name = CMakeLists.txt; path = CMakeLists.txt; sourceTree = SOURCE_ROOT; };
+		F55A1AF87468493F9F52ADF5 /* secp256k1 */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libsecp256k1.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		FFA67937CC2842459DBC8E61 /* /Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/ext/secp256k1-0.3.2/src/CMakeLists.txt */ = {isa = PBXFileReference; explicitFileType = sourcecode.text; fileEncoding = 4; name = CMakeLists.txt; path = src/CMakeLists.txt; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		153AFB4C833944F283F1ACEF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B66A72F534A94FE4B793CE4A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		004FCDA39EB740B59003AC54 /* secp256k1_precomputed */ = {
+			isa = PBXGroup;
+			children = (
+				24F548FC585941FAB8B063BB /* Source Files */,
+				FFA67937CC2842459DBC8E61 /* /Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/ext/secp256k1-0.3.2/src/CMakeLists.txt */,
+			);
+			name = secp256k1_precomputed;
+			sourceTree = "<group>";
+		};
+		062AF420B1B3444C8C76C442 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F55A1AF87468493F9F52ADF5 /* secp256k1 */,
+				BCD1396551F14256A68D16C4 /* secp256k1_precomputed */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		24F548FC585941FAB8B063BB /* Source Files */ = {
+			isa = PBXGroup;
+			children = (
+				0F9CA2848174461FB5F71CBE /* /Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/ext/secp256k1-0.3.2/src/precomputed_ecmult.c */,
+				C60858A09CD542CE93381464 /* /Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/ext/secp256k1-0.3.2/src/precomputed_ecmult_gen.c */,
+			);
+			name = "Source Files";
+			sourceTree = "<group>";
+		};
+		26ADBC27274543E1B6F11001 /* ALL_BUILD */ = {
+			isa = PBXGroup;
+			children = (
+				27A7A6DF995C4880A342FDD9 /* CMake Rules */,
+				DF362A46A1704936AB1AFED1 /* /Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/ext/secp256k1-0.3.2/CMakeLists.txt */,
+			);
+			name = ALL_BUILD;
+			sourceTree = "<group>";
+		};
+		27A7A6DF995C4880A342FDD9 /* CMake Rules */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "CMake Rules";
+			sourceTree = "<group>";
+		};
+		522CA57A0D8449609682A4ED /* secp256k1 */ = {
+			isa = PBXGroup;
+			children = (
+				FD1A62DE95BE4DDEB3A75707 /* Source Files */,
+				7B9A50B694E94E5EBD788F69 /* /Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/ext/secp256k1-0.3.2/src/CMakeLists.txt */,
+			);
+			name = secp256k1;
+			sourceTree = "<group>";
+		};
+		D0C590CAF6E8460392BD5AB5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DBED88C28B7B4D69AA8DEDF0 /* nostril */ = {
+			isa = PBXGroup;
+			children = (
+				004FCDA39EB740B59003AC54 /* secp256k1_precomputed */,
+				522CA57A0D8449609682A4ED /* secp256k1 */,
+			);
+			name = nostril;
+			sourceTree = "<group>";
+		};
+		EF44A39337804DFFA3342A16 = {
+			isa = PBXGroup;
+			children = (
+				26ADBC27274543E1B6F11001 /* ALL_BUILD */,
+				DBED88C28B7B4D69AA8DEDF0 /* nostril */,
+				062AF420B1B3444C8C76C442 /* Products */,
+				D0C590CAF6E8460392BD5AB5 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		FD1A62DE95BE4DDEB3A75707 /* Source Files */ = {
+			isa = PBXGroup;
+			children = (
+				B3CFB067686B46B59B907EE3 /* /Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/ext/secp256k1-0.3.2/src/secp256k1.c */,
+			);
+			name = "Source Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1C4928ABEA41429E9FC84642 /* secp256k1 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A02D2A677BC74E2C9B99ABF4 /* Build configuration list for PBXNativeTarget "secp256k1" */;
+			buildPhases = (
+				1BB47D5E31594C18AEBED165 /* Sources */,
+				153AFB4C833944F283F1ACEF /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8F534CC619A74CF2BB49118C /* PBXTargetDependency */,
+			);
+			name = secp256k1;
+			productName = secp256k1;
+			productReference = F55A1AF87468493F9F52ADF5 /* secp256k1 */;
+			productType = "com.apple.product-type.library.static";
+		};
+		DA29646B437347628D88FEA3 /* secp256k1_precomputed */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8BB004BC7F024B64837A04C2 /* Build configuration list for PBXNativeTarget "secp256k1_precomputed" */;
+			buildPhases = (
+				54C5DB390B9C42E8B4F858C6 /* Sources */,
+				B66A72F534A94FE4B793CE4A /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = secp256k1_precomputed;
+			productName = secp256k1_precomputed;
+			productReference = BCD1396551F14256A68D16C4 /* secp256k1_precomputed */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0A14EF09EC414AB48CB70F4C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1240;
+			};
+			buildConfigurationList = 16BDF65528AF473CBFEDB970 /* Build configuration list for PBXProject "libsecp256k1" */;
+			buildSettings = {
+			};
+			buildStyles = (
+				191FCBB694154720862D5346 /* RelWithDebInfo */,
+				24CE99789DEC4AE8AC5A98BE /* Release */,
+				E05949CBDB654B20943DFF2C /* Debug */,
+				6CAB0782E4CB4402921D0B04 /* MinSizeRel */,
+				0DAD91A58B8445AEA4F9C66B /* Coverage */,
+			);
+			compatibilityVersion = "Xcode 3.2";
+			hasScannedForEncodings = 0;
+			mainGroup = EF44A39337804DFFA3342A16;
+			projectDirPath = "/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/ext/secp256k1-0.3.2";
+			projectRoot = "";
+			targets = (
+				44DC7BB380AB412FA60BB880 /* ALL_BUILD */,
+				9F0C24B87BCD4A44BA683436 /* ZERO_CHECK */,
+				1C4928ABEA41429E9FC84642 /* secp256k1 */,
+				DA29646B437347628D88FEA3 /* secp256k1_precomputed */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		32E5902E740A3FB1CD147053 /* Generate CMakeFiles/ZERO_CHECK */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Generate CMakeFiles/ZERO_CHECK";
+			outputPaths = (
+"/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/osx-build/ext/secp256k1-0.3.2/CMakeFiles/ZERO_CHECK"			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e
+if test \"$CONFIGURATION\" = \"RelWithDebInfo\"; then :
+  cd /Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/osx-build/ext/secp256k1-0.3.2
+  make -f /Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/osx-build/ext/secp256k1-0.3.2/CMakeScripts/ReRunCMake.make
+fi
+if test \"$CONFIGURATION\" = \"Release\"; then :
+  cd /Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/osx-build/ext/secp256k1-0.3.2
+  make -f /Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/osx-build/ext/secp256k1-0.3.2/CMakeScripts/ReRunCMake.make
+fi
+if test \"$CONFIGURATION\" = \"Debug\"; then :
+  cd /Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/osx-build/ext/secp256k1-0.3.2
+  make -f /Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/osx-build/ext/secp256k1-0.3.2/CMakeScripts/ReRunCMake.make
+fi
+if test \"$CONFIGURATION\" = \"MinSizeRel\"; then :
+  cd /Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/osx-build/ext/secp256k1-0.3.2
+  make -f /Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/osx-build/ext/secp256k1-0.3.2/CMakeScripts/ReRunCMake.make
+fi
+if test \"$CONFIGURATION\" = \"Coverage\"; then :
+  cd /Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/osx-build/ext/secp256k1-0.3.2
+  make -f /Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/osx-build/ext/secp256k1-0.3.2/CMakeScripts/ReRunCMake.make
+fi
+";
+			showEnvVarsInLog = 0;
+		};
+		3C0110FC8322DE7E50886E21 = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# shell script goes here
+exit 0";
+			showEnvVarsInLog = 0;
+		};
+		45C03153C9A4FEFB82F0CF7C /* Generate CMakeFiles/ALL_BUILD */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Generate CMakeFiles/ALL_BUILD";
+			outputPaths = (
+"/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/osx-build/ext/secp256k1-0.3.2/CMakeFiles/ALL_BUILD"			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e
+if test \"$CONFIGURATION\" = \"RelWithDebInfo\"; then :
+  cd /Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/osx-build/ext/secp256k1-0.3.2
+  echo Build\\ all\\ projects
+fi
+if test \"$CONFIGURATION\" = \"Release\"; then :
+  cd /Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/osx-build/ext/secp256k1-0.3.2
+  echo Build\\ all\\ projects
+fi
+if test \"$CONFIGURATION\" = \"Debug\"; then :
+  cd /Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/osx-build/ext/secp256k1-0.3.2
+  echo Build\\ all\\ projects
+fi
+if test \"$CONFIGURATION\" = \"MinSizeRel\"; then :
+  cd /Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/osx-build/ext/secp256k1-0.3.2
+  echo Build\\ all\\ projects
+fi
+if test \"$CONFIGURATION\" = \"Coverage\"; then :
+  cd /Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/osx-build/ext/secp256k1-0.3.2
+  echo Build\\ all\\ projects
+fi
+";
+			showEnvVarsInLog = 0;
+		};
+		9B50530E35CC49C82C2FACCF = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# shell script goes here
+exit 0";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1BB47D5E31594C18AEBED165 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				747AA32C40874017BAAB2DEA /* /Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/ext/secp256k1-0.3.2/src/secp256k1.c */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		54C5DB390B9C42E8B4F858C6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B019BDD2DD5940EFAEDE73C4 /* /Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/ext/secp256k1-0.3.2/src/precomputed_ecmult.c */,
+				790B7F3C991048E7984283E3 /* /Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/ext/secp256k1-0.3.2/src/precomputed_ecmult_gen.c */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		1DB3AC00CE4D4E8888E72AEA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9F0C24B87BCD4A44BA683436 /* ZERO_CHECK */;
+			targetProxy = D1883336FA5D46FD97C39364 /* PBXContainerItemProxy */;
+		};
+		746DD8622B1D498B9CE923BE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1C4928ABEA41429E9FC84642 /* secp256k1 */;
+			targetProxy = C702B7F349244EADA032A397 /* PBXContainerItemProxy */;
+		};
+		8F534CC619A74CF2BB49118C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DA29646B437347628D88FEA3 /* secp256k1_precomputed */;
+			targetProxy = 90A288FFC3FB4A8EA1E30DC5 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		015CFACDDE7E400A963FE266 /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = "/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/osx-build/build/secp256k1_precomputed.build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","'ENABLE_MODULE_ECDH=1'","'ENABLE_MODULE_SCHNORRSIG=1'","'ENABLE_MODULE_EXTRAKEYS=1'","'ECMULT_WINDOW_SIZE=15'","'ECMULT_GEN_PREC_BITS=4'","'USE_ASM_X86_64=1'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = ("/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/ext/asio-1.18.1/include","/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/ext/json-3.11.2/single_include","/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/ext/secp256k1-0.3.2/include","$(inherited)");
+				INSTALL_PATH = "";
+				LIBRARY_STYLE = STATIC;
+				OTHER_CFLAGS = ("     '-std=c90' -fvisibility=hidden -pedantic -Wall -Wcast-align -Wconditional-uninitialized -Wextra -Wnested-externs -Wno-long-long -Wno-overlength-strings -Wno-unused-function -Wshadow -Wstrict-prototypes -Wundef ","$(inherited)");
+				OTHER_LIBTOOLFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = secp256k1_precomputed;
+				SECTORDER_FLAGS = "";
+				TARGET_TEMP_DIR = "/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/osx-build/build/secp256k1_precomputed.build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = MinSizeRel;
+		};
+		0AA370BBA59E4E96BAA10B62 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ALL_BUILD;
+				SECTORDER_FLAGS = "";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Release;
+		};
+		18C2516F3186429BA49BE4D9 /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ZERO_CHECK;
+				SECTORDER_FLAGS = "";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = MinSizeRel;
+		};
+		1D5AD306D20E43B0A8990915 /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = "/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/osx-build/build/secp256k1_precomputed.build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 2;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","'ENABLE_MODULE_ECDH=1'","'ENABLE_MODULE_SCHNORRSIG=1'","'ENABLE_MODULE_EXTRAKEYS=1'","'ECMULT_WINDOW_SIZE=15'","'ECMULT_GEN_PREC_BITS=4'","'USE_ASM_X86_64=1'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = ("/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/ext/asio-1.18.1/include","/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/ext/json-3.11.2/single_include","/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/ext/secp256k1-0.3.2/include","$(inherited)");
+				INSTALL_PATH = "";
+				LIBRARY_STYLE = STATIC;
+				OTHER_CFLAGS = ("        '-std=c90' -fvisibility=hidden -pedantic -Wall -Wcast-align -Wconditional-uninitialized -Wextra -Wnested-externs -Wno-long-long -Wno-overlength-strings -Wno-unused-function -Wshadow -Wstrict-prototypes -Wundef ","$(inherited)");
+				OTHER_LIBTOOLFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = secp256k1_precomputed;
+				SECTORDER_FLAGS = "";
+				TARGET_TEMP_DIR = "/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/osx-build/build/secp256k1_precomputed.build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = RelWithDebInfo;
+		};
+		217CA22FCCB04B13B33192DB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ALL_BUILD;
+				SECTORDER_FLAGS = "";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Debug;
+		};
+		2AE0DBA87D044A9D9776AC1F /* Coverage */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ALL_BUILD;
+				SECTORDER_FLAGS = "";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Coverage;
+		};
+		41FB16F0339E4882BF244062 /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ZERO_CHECK;
+				SECTORDER_FLAGS = "";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = RelWithDebInfo;
+		};
+		4E960AEBEA0046C2AA2ED47E /* Coverage */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = "/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/osx-build/build/secp256k1_precomputed.build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","'ENABLE_MODULE_ECDH=1'","'ENABLE_MODULE_SCHNORRSIG=1'","'ENABLE_MODULE_EXTRAKEYS=1'","'ECMULT_WINDOW_SIZE=15'","'ECMULT_GEN_PREC_BITS=4'","'USE_ASM_X86_64=1'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = ("/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/ext/asio-1.18.1/include","/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/ext/json-3.11.2/single_include","/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/ext/secp256k1-0.3.2/include","$(inherited)");
+				INSTALL_PATH = "";
+				LIBRARY_STYLE = STATIC;
+				OTHER_CFLAGS = ("            -DCOVERAGE=1 --coverage '-std=c90' -fvisibility=hidden -pedantic -Wall -Wcast-align -Wconditional-uninitialized -Wextra -Wnested-externs -Wno-long-long -Wno-overlength-strings -Wno-unused-function -Wshadow -Wstrict-prototypes -Wundef ","$(inherited)");
+				OTHER_LIBTOOLFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = secp256k1_precomputed;
+				SECTORDER_FLAGS = "";
+				TARGET_TEMP_DIR = "/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/osx-build/build/secp256k1_precomputed.build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Coverage;
+		};
+		575EEE09567242A8B44969DC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = "/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/osx-build/build/secp256k1_precomputed.build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","'ENABLE_MODULE_ECDH=1'","'ENABLE_MODULE_SCHNORRSIG=1'","'ENABLE_MODULE_EXTRAKEYS=1'","'ECMULT_WINDOW_SIZE=15'","'ECMULT_GEN_PREC_BITS=4'","'USE_ASM_X86_64=1'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = ("/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/ext/asio-1.18.1/include","/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/ext/json-3.11.2/single_include","/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/ext/secp256k1-0.3.2/include","$(inherited)");
+				INSTALL_PATH = "";
+				LIBRARY_STYLE = STATIC;
+				OTHER_CFLAGS = ("   '-std=c90' -fvisibility=hidden -pedantic -Wall -Wcast-align -Wconditional-uninitialized -Wextra -Wnested-externs -Wno-long-long -Wno-overlength-strings -Wno-unused-function -Wshadow -Wstrict-prototypes -Wundef ","$(inherited)");
+				OTHER_LIBTOOLFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = secp256k1_precomputed;
+				SECTORDER_FLAGS = "";
+				TARGET_TEMP_DIR = "/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/osx-build/build/secp256k1_precomputed.build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Debug;
+		};
+		89815FEEB8BA47DD9290E2E9 /* Coverage */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = "/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/osx-build/ext/secp256k1-0.3.2/src/Coverage";
+				EXECUTABLE_PREFIX = lib;
+				EXECUTABLE_SUFFIX = .a;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","'ENABLE_MODULE_ECDH=1'","'ENABLE_MODULE_SCHNORRSIG=1'","'ENABLE_MODULE_EXTRAKEYS=1'","'ECMULT_WINDOW_SIZE=15'","'ECMULT_GEN_PREC_BITS=4'","'USE_ASM_X86_64=1'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = ("/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/ext/asio-1.18.1/include","/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/ext/json-3.11.2/single_include","/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/ext/secp256k1-0.3.2/include","$(inherited)");
+				INSTALL_PATH = "";
+				LIBRARY_STYLE = STATIC;
+				OTHER_CFLAGS = ("            -DCOVERAGE=1 --coverage '-std=c90' -fvisibility=hidden -pedantic -Wall -Wcast-align -Wconditional-uninitialized -Wextra -Wnested-externs -Wno-long-long -Wno-overlength-strings -Wno-unused-function -Wshadow -Wstrict-prototypes -Wundef ","$(inherited)");
+				OTHER_LIBTOOLFLAGS = ("","/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/osx-build/build/secp256k1_precomputed.build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/$(OBJECT_FILE_DIR_normal:base)/x86_64/precomputed_ecmult.o","/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/osx-build/build/secp256k1_precomputed.build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/$(OBJECT_FILE_DIR_normal:base)/x86_64/precomputed_ecmult_gen.o");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = secp256k1;
+				SECTORDER_FLAGS = "";
+				TARGET_TEMP_DIR = "/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/osx-build/build/secp256k1.build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Coverage;
+		};
+		8D55D464D92C4AEAA950D8A7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = "/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/osx-build/ext/secp256k1-0.3.2/src/Debug";
+				EXECUTABLE_PREFIX = lib;
+				EXECUTABLE_SUFFIX = .a;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","'ENABLE_MODULE_ECDH=1'","'ENABLE_MODULE_SCHNORRSIG=1'","'ENABLE_MODULE_EXTRAKEYS=1'","'ECMULT_WINDOW_SIZE=15'","'ECMULT_GEN_PREC_BITS=4'","'USE_ASM_X86_64=1'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = ("/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/ext/asio-1.18.1/include","/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/ext/json-3.11.2/single_include","/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/ext/secp256k1-0.3.2/include","$(inherited)");
+				INSTALL_PATH = "";
+				LIBRARY_STYLE = STATIC;
+				OTHER_CFLAGS = ("   '-std=c90' -fvisibility=hidden -pedantic -Wall -Wcast-align -Wconditional-uninitialized -Wextra -Wnested-externs -Wno-long-long -Wno-overlength-strings -Wno-unused-function -Wshadow -Wstrict-prototypes -Wundef ","$(inherited)");
+				OTHER_LIBTOOLFLAGS = ("","/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/osx-build/build/secp256k1_precomputed.build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/$(OBJECT_FILE_DIR_normal:base)/x86_64/precomputed_ecmult.o","/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/osx-build/build/secp256k1_precomputed.build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/$(OBJECT_FILE_DIR_normal:base)/x86_64/precomputed_ecmult_gen.o");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = secp256k1;
+				SECTORDER_FLAGS = "";
+				TARGET_TEMP_DIR = "/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/osx-build/build/secp256k1.build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Debug;
+		};
+		906AAD5B63274B4390ACB6D2 /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = "/Users/Shared/XcodeVersions/Xcode@12.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SYMROOT = "/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/osx-build/build";
+			};
+			name = MinSizeRel;
+		};
+		932FC6F0092A4AD59325E5DD /* Coverage */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ZERO_CHECK;
+				SECTORDER_FLAGS = "";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Coverage;
+		};
+		94308651325047239053A5FE /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = "/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/osx-build/ext/secp256k1-0.3.2/src/RelWithDebInfo";
+				EXECUTABLE_PREFIX = lib;
+				EXECUTABLE_SUFFIX = .a;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 2;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","'ENABLE_MODULE_ECDH=1'","'ENABLE_MODULE_SCHNORRSIG=1'","'ENABLE_MODULE_EXTRAKEYS=1'","'ECMULT_WINDOW_SIZE=15'","'ECMULT_GEN_PREC_BITS=4'","'USE_ASM_X86_64=1'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = ("/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/ext/asio-1.18.1/include","/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/ext/json-3.11.2/single_include","/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/ext/secp256k1-0.3.2/include","$(inherited)");
+				INSTALL_PATH = "";
+				LIBRARY_STYLE = STATIC;
+				OTHER_CFLAGS = ("        '-std=c90' -fvisibility=hidden -pedantic -Wall -Wcast-align -Wconditional-uninitialized -Wextra -Wnested-externs -Wno-long-long -Wno-overlength-strings -Wno-unused-function -Wshadow -Wstrict-prototypes -Wundef ","$(inherited)");
+				OTHER_LIBTOOLFLAGS = ("","/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/osx-build/build/secp256k1_precomputed.build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/$(OBJECT_FILE_DIR_normal:base)/x86_64/precomputed_ecmult.o","/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/osx-build/build/secp256k1_precomputed.build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/$(OBJECT_FILE_DIR_normal:base)/x86_64/precomputed_ecmult_gen.o");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = secp256k1;
+				SECTORDER_FLAGS = "";
+				TARGET_TEMP_DIR = "/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/osx-build/build/secp256k1.build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = RelWithDebInfo;
+		};
+		B1198AAC03AD4C2E9A4002C7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ZERO_CHECK;
+				SECTORDER_FLAGS = "";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Release;
+		};
+		B1881F93C4C64B02BBB4BC16 /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ALL_BUILD;
+				SECTORDER_FLAGS = "";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = RelWithDebInfo;
+		};
+		B399E4A850E741A0B60C6DB0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ZERO_CHECK;
+				SECTORDER_FLAGS = "";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Debug;
+		};
+		C243A9E52A0B48FA8F82E558 /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = "/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/osx-build/ext/secp256k1-0.3.2/src/MinSizeRel";
+				EXECUTABLE_PREFIX = lib;
+				EXECUTABLE_SUFFIX = .a;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","'ENABLE_MODULE_ECDH=1'","'ENABLE_MODULE_SCHNORRSIG=1'","'ENABLE_MODULE_EXTRAKEYS=1'","'ECMULT_WINDOW_SIZE=15'","'ECMULT_GEN_PREC_BITS=4'","'USE_ASM_X86_64=1'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = ("/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/ext/asio-1.18.1/include","/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/ext/json-3.11.2/single_include","/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/ext/secp256k1-0.3.2/include","$(inherited)");
+				INSTALL_PATH = "";
+				LIBRARY_STYLE = STATIC;
+				OTHER_CFLAGS = ("     '-std=c90' -fvisibility=hidden -pedantic -Wall -Wcast-align -Wconditional-uninitialized -Wextra -Wnested-externs -Wno-long-long -Wno-overlength-strings -Wno-unused-function -Wshadow -Wstrict-prototypes -Wundef ","$(inherited)");
+				OTHER_LIBTOOLFLAGS = ("","/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/osx-build/build/secp256k1_precomputed.build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/$(OBJECT_FILE_DIR_normal:base)/x86_64/precomputed_ecmult.o","/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/osx-build/build/secp256k1_precomputed.build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/$(OBJECT_FILE_DIR_normal:base)/x86_64/precomputed_ecmult_gen.o");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = secp256k1;
+				SECTORDER_FLAGS = "";
+				TARGET_TEMP_DIR = "/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/osx-build/build/secp256k1.build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = MinSizeRel;
+		};
+		C5925572A40D44B7A50E7E32 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = "/Users/Shared/XcodeVersions/Xcode@12.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SYMROOT = "/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/osx-build/build";
+			};
+			name = Release;
+		};
+		C6CF27C9E9CE4D9C866B5239 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = "/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/osx-build/build/secp256k1_precomputed.build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 2;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","'ENABLE_MODULE_ECDH=1'","'ENABLE_MODULE_SCHNORRSIG=1'","'ENABLE_MODULE_EXTRAKEYS=1'","'ECMULT_WINDOW_SIZE=15'","'ECMULT_GEN_PREC_BITS=4'","'USE_ASM_X86_64=1'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = ("/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/ext/asio-1.18.1/include","/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/ext/json-3.11.2/single_include","/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/ext/secp256k1-0.3.2/include","$(inherited)");
+				INSTALL_PATH = "";
+				LIBRARY_STYLE = STATIC;
+				OTHER_CFLAGS = ("    '-std=c90' -fvisibility=hidden -pedantic -Wall -Wcast-align -Wconditional-uninitialized -Wextra -Wnested-externs -Wno-long-long -Wno-overlength-strings -Wno-unused-function -Wshadow -Wstrict-prototypes -Wundef ","$(inherited)");
+				OTHER_LIBTOOLFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = secp256k1_precomputed;
+				SECTORDER_FLAGS = "";
+				TARGET_TEMP_DIR = "/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/osx-build/build/secp256k1_precomputed.build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Release;
+		};
+		E7B9B385EC9B4E638AE5FD6B /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = "/Users/Shared/XcodeVersions/Xcode@12.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SYMROOT = "/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/osx-build/build";
+			};
+			name = RelWithDebInfo;
+		};
+		E93A344EC7184A21AB349F5F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = "/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/osx-build/ext/secp256k1-0.3.2/src/Release";
+				EXECUTABLE_PREFIX = lib;
+				EXECUTABLE_SUFFIX = .a;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 2;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","'ENABLE_MODULE_ECDH=1'","'ENABLE_MODULE_SCHNORRSIG=1'","'ENABLE_MODULE_EXTRAKEYS=1'","'ECMULT_WINDOW_SIZE=15'","'ECMULT_GEN_PREC_BITS=4'","'USE_ASM_X86_64=1'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = ("/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/ext/asio-1.18.1/include","/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/ext/json-3.11.2/single_include","/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/ext/secp256k1-0.3.2/include","$(inherited)");
+				INSTALL_PATH = "";
+				LIBRARY_STYLE = STATIC;
+				OTHER_CFLAGS = ("    '-std=c90' -fvisibility=hidden -pedantic -Wall -Wcast-align -Wconditional-uninitialized -Wextra -Wnested-externs -Wno-long-long -Wno-overlength-strings -Wno-unused-function -Wshadow -Wstrict-prototypes -Wundef ","$(inherited)");
+				OTHER_LIBTOOLFLAGS = ("","/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/osx-build/build/secp256k1_precomputed.build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/$(OBJECT_FILE_DIR_normal:base)/x86_64/precomputed_ecmult.o","/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/osx-build/build/secp256k1_precomputed.build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/$(OBJECT_FILE_DIR_normal:base)/x86_64/precomputed_ecmult_gen.o");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = secp256k1;
+				SECTORDER_FLAGS = "";
+				TARGET_TEMP_DIR = "/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/osx-build/build/secp256k1.build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Release;
+		};
+		EB3AA0B83C984FBC9817C0EF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = "/Users/Shared/XcodeVersions/Xcode@12.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk";
+				SYMROOT = "/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/osx-build/build";
+			};
+			name = Debug;
+		};
+		F4B8F47780D54F319A31033E /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ALL_BUILD;
+				SECTORDER_FLAGS = "";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = MinSizeRel;
+		};
+		FF9A20BEF91A4FA9B55CF790 /* Coverage */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = "/Users/Shared/XcodeVersions/Xcode@12.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SYMROOT = "/Users/Shared/gnostr.org/gnostr/deps/gnostr-relay/osx-build/build";
+			};
+			name = Coverage;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		16BDF65528AF473CBFEDB970 /* Build configuration list for PBXProject "libsecp256k1" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E7B9B385EC9B4E638AE5FD6B /* RelWithDebInfo */,
+				C5925572A40D44B7A50E7E32 /* Release */,
+				EB3AA0B83C984FBC9817C0EF /* Debug */,
+				906AAD5B63274B4390ACB6D2 /* MinSizeRel */,
+				FF9A20BEF91A4FA9B55CF790 /* Coverage */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = RelWithDebInfo;
+		};
+		8BB004BC7F024B64837A04C2 /* Build configuration list for PBXNativeTarget "secp256k1_precomputed" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D5AD306D20E43B0A8990915 /* RelWithDebInfo */,
+				C6CF27C9E9CE4D9C866B5239 /* Release */,
+				575EEE09567242A8B44969DC /* Debug */,
+				015CFACDDE7E400A963FE266 /* MinSizeRel */,
+				4E960AEBEA0046C2AA2ED47E /* Coverage */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = RelWithDebInfo;
+		};
+		8E81861607B74C31B8F4C024 /* Build configuration list for PBXAggregateTarget "ALL_BUILD" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B1881F93C4C64B02BBB4BC16 /* RelWithDebInfo */,
+				0AA370BBA59E4E96BAA10B62 /* Release */,
+				217CA22FCCB04B13B33192DB /* Debug */,
+				F4B8F47780D54F319A31033E /* MinSizeRel */,
+				2AE0DBA87D044A9D9776AC1F /* Coverage */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = RelWithDebInfo;
+		};
+		A02D2A677BC74E2C9B99ABF4 /* Build configuration list for PBXNativeTarget "secp256k1" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				94308651325047239053A5FE /* RelWithDebInfo */,
+				E93A344EC7184A21AB349F5F /* Release */,
+				8D55D464D92C4AEAA950D8A7 /* Debug */,
+				C243A9E52A0B48FA8F82E558 /* MinSizeRel */,
+				89815FEEB8BA47DD9290E2E9 /* Coverage */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = RelWithDebInfo;
+		};
+		B41805E284C04C2A802E8E8A /* Build configuration list for PBXAggregateTarget "ZERO_CHECK" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				41FB16F0339E4882BF244062 /* RelWithDebInfo */,
+				B1198AAC03AD4C2E9A4002C7 /* Release */,
+				B399E4A850E741A0B60C6DB0 /* Debug */,
+				18C2516F3186429BA49BE4D9 /* MinSizeRel */,
+				932FC6F0092A4AD59325E5DD /* Coverage */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = RelWithDebInfo;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0A14EF09EC414AB48CB70F4C /* Project object */;
+}
