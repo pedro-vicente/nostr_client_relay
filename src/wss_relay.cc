@@ -26,8 +26,8 @@ std::string log_program_name("vostro");
 int main(int argc, char * argv[])
 {
     argparse::ArgumentParser program("main");
-    program.add_argument("port")
-        .help("display the square of a given number")
+    program.add_argument("port").default_value<int>(8080)
+        .help("select relay port")
         .scan<'i', int>();
     program.add_argument("--verbose").default_value(false).implicit_value(true);
     try {
@@ -46,17 +46,12 @@ int main(int argc, char * argv[])
 //    std::cout << (input * input) << std::endl;
 //  }
 
-//>>>>>>> 559c1748 (Initial commit)
   comm::start_log();
 
   relay_t relay;
 
   WssServer server("server.crt", "server.key");
-//<<<<<<< HEAD
-//  server.config.port = 8080;
-//=======
   server.config.port = port;
-//>>>>>>> 559c1748 (Initial commit)
   auto& endpoint = server.endpoint["/"];
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////
