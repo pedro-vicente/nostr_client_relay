@@ -20,8 +20,21 @@
 #include <windows.h>
 #include <ntstatus.h>
 #include <bcrypt.h>
-#elif defined(__linux__) || defined(__APPLE__) || defined(__FreeBSD__)
+#elif defined(__linux__) || defined(__FreeBSD__)
 #include <sys/random.h>
+#elif defined(__APPLE__)
+  #include <TargetConditionals.h>
+  #if TARGET_IPHONE_SIMULATOR
+  #elif TARGET_OS_MACCATALYST
+  #elif TARGET_OS_IPHONE
+    #include <CommonCrypto/CommonRandom.h>
+    #include <Security/Security.h>
+  #elif TARGET_OS_MAC
+    #include <sys/random.h>
+  #else
+  #   error "Unknown Apple platform"
+  #endif
+#elif __ANDROID__
 #elif defined(__OpenBSD__)
 #include <unistd.h>
 #else
@@ -57,10 +70,14 @@ static int fill_random(unsigned char* data, size_t size)
   {
     return 1;
   }
-#elif defined(__APPLE__) || defined(__OpenBSD__)
-  /* If `getentropy(2)` is not available you should fallback to either
+#elif defined(__APPLE__)
+ /* If `getentropy(2)` is not available you should fallback to either
    * `SecRandomCopyBytes` or /dev/urandom */
-  int res = getentropy(data, size);
+  #if TARGET_OS_IPHONE
+   int res = SecRandomCopyBytes(kSecRandomDefault, 8, data);
+  #elif TARGET_OS_MAC
+   int res = getentropy(data, size);
+  #endif
   if (res == 0)
   {
     return 1;

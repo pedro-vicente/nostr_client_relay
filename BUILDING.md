@@ -16,6 +16,10 @@
 
 - WxWidgets [https://www.wxwidgets.org/]
 
+## For iOS
+
+- Qt [https://www.qt.io/]
+
 ## Install dependencies
 
 To install dependencies on Mac and Linux
@@ -38,7 +42,7 @@ sudo apt-get install libssl-dev
 
 # Building
 
-All dependencies except boost and wxWidgets are included in the repository. To clone a copy with Boost, do at a shell prompt
+All dependencies except boost, wxWidgets and Qt are included in the repository. To clone a copy with Boost, do at a shell prompt
 
 ```
  git clone --recurse-submodules https://github.com/pedro-vicente/nostr_client_relay
@@ -119,11 +123,17 @@ or build with bash shell script
 ./build.widgets.sh
 ```
 
-## Building for iOS, Android
+## Building for iOS
 
 To enable mobile build, use 
 
 ```
 cmake -DBUILD_MOBILE=ON
 
+```
+
+or build with bash shell script (requires a Qt cross compile iOS builds on MacOS) 
+
+``` cmd
+./build.mobile.sh
 ```

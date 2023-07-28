@@ -14,7 +14,7 @@ Nostr_client_relay allows to build Nostr clients and Nostr relays. It includes:
 - a command line Nostr relay, **Vostro**
 - a web interface for a client, **Wostro**
 - a native desktop client, **Gnostro** (for Mac, Linux, Windows)
-- a native mobile client, **Mostro** (for iOS, Android) :warning: coming soon :warning:
+- a native mobile client, **Mostro** (for iOS) :warning: Android coming soon :warning:
 
 ## Nostro
 
@@ -118,8 +118,6 @@ Vostro responds withe following EVENT, that was found in the database by compari
  }
 ]
 ```
-
-
 
 ### Running on web
 
@@ -360,9 +358,9 @@ And for that request a response is obtained according to <a href="https://github
 
 ---
 
-This file is part of 'Nostr_client_relay' 
-Copyright (c) 2023, Space Research Software LLC, Pedro Vicente. All rights reserved.
-See file LICENSE for full license details.
+This file is part of 'Nostr_client_relay'  
+Copyright (c) 2023, Space Research Software LLC, Pedro Vicente. All rights reserved.  
+See file LICENSE for full license details.  
 
 
 

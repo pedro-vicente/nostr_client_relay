@@ -9,6 +9,7 @@ requirements.txt
 **.a
 
 #cmake artifacts
+CMakeLists.txt.user
 CMakeCache.txt
 CMakeFiles/
 Makefile

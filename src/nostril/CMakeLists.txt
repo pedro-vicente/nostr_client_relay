@@ -46,6 +46,8 @@ endif()
 # executables
 #//////////////////////////
 
+if (NOT BUILD_MOBILE)
+
 # tool to generate file 'config.h' , generate from a shell with 
 # configurator.exe > config.h
 add_executable(configurator configurator.c)
@@ -64,4 +66,6 @@ add_custom_command(
     COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_BINARY_DIR}/src/nostril/config.h" ${CMAKE_SOURCE_DIR}/src/nostril
     COMMENT "Generating config.h"
 )
+
+endif(NOT BUILD_MOBILE)
 

@@ -13,6 +13,7 @@ project (nostr_client_relay LANGUAGES CXX C)
 option(BUILD_STATIC "BUILD_STATIC" OFF)
 option(BUILD_DESKTOP "BUILD_STATIC" OFF)
 option(BUILD_WEB "BUILD_WEB" OFF)
+option(BUILD_MOBILE "BUILD_MOBILE" OFF)
 option(USE_OPENSSL "set OFF to build without OpenSSL" ON)
 option(DEV_MODE "DEV_MODE" OFF)
 
@@ -82,16 +83,22 @@ endif()
 # Linux/Mac
 #//////////////////////////
 
+if(APPLE)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -Wno-deprecated -Wno-deprecated-declarations -Wno-nonnull")
+  if (APPLE_IOS_TARGET)
+    message(STATUS "iOS build")
+  else()
+    message(STATUS "Mac build")
+  endif()
+endif()
+
 if(UNIX AND NOT APPLE)
   set(LINUX TRUE)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -Wno-deprecated -Wno-deprecated-declarations -Wno-nonnull -Wno-psabi")
-  message(STATUS "Compiler flags: ${CMAKE_CXX_FLAGS}")
+  message(STATUS "Linux build")
 endif()
 
-if(UNIX AND APPLE)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -Wno-deprecated -Wno-deprecated-declarations -Wno-nonnull")
-  message(STATUS "Compiler flags: ${CMAKE_CXX_FLAGS}")
-endif()
+message(STATUS "Compiler flags: ${CMAKE_CXX_FLAGS}")
 
 #//////////////////////////
 # Nostr library
@@ -110,7 +117,9 @@ set(src ${src} src/database.hh)
 set(src ${src} src/database.cc)
 
 add_library(nostr ${src})
-add_dependencies(nostr configurator)
+if (NOT BUILD_MOBILE)
+  add_dependencies(nostr configurator)
+endif()
 
 #//////////////////////////
 # link with libraries
@@ -140,7 +149,7 @@ if(LINUX)
 endif()
 
 #//////////////////////////
-#OpenSSL
+# OpenSSL
 #//////////////////////////
 
 if(USE_OPENSSL)
@@ -154,6 +163,14 @@ if(USE_OPENSSL)
     set(OPENSSL_ROOT_DIR "${CMAKE_SOURCE_DIR}/ext/openssl-3.0.5")
     message(STATUS "OpenSSL include: ${OPENSSL_INCLUDE_DIR}")
   endif()
+
+ if (APPLE_IOS_TARGET)
+   set(OPENSSL_ROOT_DIR "/Users/pvn/dev/openssl-apple/bin/iPhoneOS16.4-arm64.sdk")
+   message(STATUS "iOS OpenSSL include: ${OPENSSL_INCLUDE_DIR}")
+   include_directories("/Users/pvn/dev/openssl-apple/bin/iPhoneOS16.4-arm64.sdk/include/openssl")
+   link_directories("/Users/pvn/dev/openssl-apple/bin/iPhoneOS16.4-arm64.sdk/lib/")
+ endif()
+
   find_package(OpenSSL REQUIRED)
   message(STATUS "OpenSSL include: ${OPENSSL_INCLUDE_DIR}")
   message(STATUS "OpenSSL libraries: ${OPENSSL_LIBRARIES}")
@@ -164,51 +181,59 @@ if(USE_OPENSSL)
   endif()
 endif()
 
-
 #//////////////////////////
 # HTTP demo
 #//////////////////////////
 
-add_executable(http_client src/http/http.hh src/http/http.cc src/http/http_client.cc)
-add_executable(http_relay src/http/http.hh src/http/http.cc src/http/http_relay.cc)
-target_link_libraries (http_client ${lib_dep})
-target_link_libraries (http_relay ${lib_dep})
+if (NOT BUILD_MOBILE)
+  add_executable(http_client src/http/http.hh src/http/http.cc src/http/http_client.cc)
+  add_executable(http_relay src/http/http.hh src/http/http.cc src/http/http_relay.cc)
+  target_link_libraries (http_client ${lib_dep})
+  target_link_libraries (http_relay ${lib_dep})
+endif()
 
 #//////////////////////////
 # executables
 #//////////////////////////
 
-add_executable(nostro src/wss_client.cc)
-add_executable(vostro src/wss_relay.cc)
-target_link_libraries (nostro ${lib_dep})
-target_link_libraries (vostro ${lib_dep})
+if (NOT BUILD_MOBILE)
+  add_executable(nostro src/wss_client.cc)
+  add_executable(vostro src/wss_relay.cc)
+  target_link_libraries (nostro ${lib_dep})
+  target_link_libraries (vostro ${lib_dep})
+endif()
 
 #//////////////////////////
 # tests
 #//////////////////////////
 
-add_executable(tests test/tests.cc)
-target_link_libraries (tests ${lib_dep})
+if (NOT BUILD_MOBILE)
+  add_executable(tests test/tests.cc)
+  target_link_libraries (tests ${lib_dep})
+endif()
 
 #//////////////////////////
 # examples
 #//////////////////////////
-if(UNIX AND NOT APPLE)
-add_executable(examples examples/examples.cc)
-target_link_libraries (examples ${lib_dep})
+
+if (NOT BUILD_MOBILE)
+  add_executable(examples examples/examples.cc)
+  target_link_libraries (examples ${lib_dep})
 endif()
 
 #//////////////////////////
 # IDE project virtual folders
 #//////////////////////////
 
-set_target_properties(http_client PROPERTIES FOLDER "http")
-set_target_properties(http_relay PROPERTIES FOLDER "http")
-set_target_properties(nostri PROPERTIES FOLDER "nostril")
-set_target_properties(nostril PROPERTIES FOLDER "nostril")
-set_target_properties(configurator PROPERTIES FOLDER "nostril")
-set_target_properties(secp256k1 PROPERTIES FOLDER "nostril")
-set_target_properties(secp256k1_precomputed PROPERTIES FOLDER "nostril")
+if (NOT BUILD_MOBILE)
+  set_target_properties(http_client PROPERTIES FOLDER "http")
+  set_target_properties(http_relay PROPERTIES FOLDER "http")
+  set_target_properties(nostri PROPERTIES FOLDER "nostril")
+  set_target_properties(nostril PROPERTIES FOLDER "nostril")
+  set_target_properties(configurator PROPERTIES FOLDER "nostril")
+  set_target_properties(secp256k1 PROPERTIES FOLDER "nostril")
+  set_target_properties(secp256k1_precomputed PROPERTIES FOLDER "nostril")
+endif()
 
 if(BUILD_WEB)
 if(MSVC)
