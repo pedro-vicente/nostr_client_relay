@@ -16,6 +16,7 @@ std::vector<std::string> relays = { "eden.nostr.land",
 "relay.snort.social",
 "relay.damus.io",
 "nostr.wine",
+"soloco.nl",
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
