@@ -10,6 +10,12 @@ endif()
 set(CMAKE_BUILD_TYPE Debug)
 project (nostr_client_relay LANGUAGES CXX C)
 
+option(BUILD_RELEASE "BUILD_RELEASE" ON)
+
+if(BUILD_RELEASE)
+    set(CMAKE_BUILD_TYPE Release)
+endif()
+
 option(BUILD_STATIC "BUILD_STATIC" OFF)
 option(BUILD_GUI "BUILD_STATIC" OFF)
 option(BUILD_WEB "BUILD_WEB" OFF)
@@ -187,10 +193,10 @@ target_link_libraries (http_relay ${lib_dep})
 # executables
 #//////////////////////////
 
-add_executable(nostro src/wss_client.cc)
-add_executable(vostro src/wss_relay.cc)
-target_link_libraries (nostro ${lib_dep})
-target_link_libraries (vostro ${lib_dep})
+add_executable(gnostr-client src/wss_client.cc)
+add_executable(gnostr-gnode src/wss_relay.cc)
+target_link_libraries (gnostr-client ${lib_dep})
+target_link_libraries (gnostr-gnode ${lib_dep})
 
 #//////////////////////////
 # tests
@@ -204,7 +210,7 @@ target_link_libraries (tests ${lib_dep})
 #//////////////////////////
 if(UNIX AND NOT APPLE)
 add_executable(examples examples/examples.cc)
-target_link_libraries (examples ${lib_dep})
+target_link_libraries (examples ${l/ib_dep})
 endif()
 
 #//////////////////////////
@@ -252,3 +258,23 @@ endif()
 if (BUILD_WEB)
  add_subdirectory(web)
 endif()
+
+
+#//////////////////////////
+# Install
+#//////////////////////////
+
+install(TARGETS gnostr-gnode
+        CONFIGURATIONS Debug
+        RUNTIME DESTINATION ${CMAKE_SOURCE_DIR}/bin)
+install(TARGETS gnostr-gnode
+        CONFIGURATIONS Release
+        RUNTIME DESTINATION /usr/local/bin)
+install(TARGETS gnostr-client
+        CONFIGURATIONS Debug
+        RUNTIME DESTINATION ${CMAKE_SOURCE_DIR}/debug)
+install(TARGETS gnostr-client
+        CONFIGURATIONS Release
+        RUNTIME DESTINATION /usr/local/bin)
+
+
