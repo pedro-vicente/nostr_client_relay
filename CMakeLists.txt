@@ -194,8 +194,11 @@ target_link_libraries (http_relay ${lib_dep})
 #//////////////////////////
 
 add_executable(gnostr-client src/wss_client.cc)
+add_executable(gnostr-req src/wss_req.cc)
 add_executable(gnostr-gnode src/wss_relay.cc)
+
 target_link_libraries (gnostr-client ${lib_dep})
+target_link_libraries (gnostr-req ${lib_dep})
 target_link_libraries (gnostr-gnode ${lib_dep})
 
 #//////////////////////////
@@ -270,10 +273,18 @@ install(TARGETS gnostr-gnode
 install(TARGETS gnostr-gnode
         CONFIGURATIONS Release
         RUNTIME DESTINATION /usr/local/bin)
+
 install(TARGETS gnostr-client
         CONFIGURATIONS Debug
         RUNTIME DESTINATION ${CMAKE_SOURCE_DIR}/debug)
 install(TARGETS gnostr-client
+        CONFIGURATIONS Release
+        RUNTIME DESTINATION /usr/local/bin)
+
+install(TARGETS gnostr-req
+        CONFIGURATIONS Debug
+        RUNTIME DESTINATION ${CMAKE_SOURCE_DIR}/debug)
+install(TARGETS gnostr-req
         CONFIGURATIONS Release
         RUNTIME DESTINATION /usr/local/bin)
 
