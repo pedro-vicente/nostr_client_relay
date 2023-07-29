@@ -75,7 +75,7 @@ generated projects, like projects for Microsof Visual Studio (in Windows).
 To enable web build, use 
 
 ```
--DBUILD_WEB=ON
+cmake -DBUILD_WEB=ON
 
 ```
 
@@ -109,7 +109,7 @@ git clone --recurse-submodules https://github.com/wxWidgets/wxWidgets.git ext/wx
 To enable desktop build, use 
 
 ```
--DBUILD_GUI=ON
+cmake -DBUILD_DESKTOP=ON
 
 ```
 
@@ -117,4 +117,13 @@ or build with bash shell script
 
 ``` cmd
 ./build.widgets.sh
+```
+
+## Building for iOS, Android
+
+To enable mobile build, use 
+
+```
+cmake -DBUILD_MOBILE=ON
+
 ```

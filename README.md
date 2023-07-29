@@ -14,6 +14,7 @@ Nostr_client_relay allows to build Nostr clients and Nostr relays. It includes:
 - a command line Nostr relay, **Vostro**
 - a web interface for a client, **Wostro**
 - a native desktop client, **Gnostro** (for Mac, Linux, Windows)
+- a native mobile client, **Mostro** (for iOS, Android) :warning: coming soon :warning:
 
 ## Nostro
 
