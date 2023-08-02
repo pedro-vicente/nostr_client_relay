@@ -4,6 +4,7 @@ pushd build
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 
 cmake .. -DBUILD_MOBILE=ON
+cmake --build . 
 
 elif [[ "$OSTYPE" == "darwin"* ]]; then
 
@@ -20,13 +21,14 @@ cmake .. -DBUILD_MOBILE=ON \
 -DCMAKE_TOOLCHAIN_FILE=mobile/ios.toolchain.cmake \
 -DPLATFORM=OS64
 
+cmake --build . --config Release
+
 elif [[ "$OSTYPE" == "msys" ]]; then
 
-cmake .. --fresh -DBUILD_MOBILE=ON 
+cmake .. -DBUILD_MOBILE=ON
+cmake --build . 
 
 fi
-
-cmake --build . --config Release
 
 popd
 pwd
