@@ -42,16 +42,15 @@ if (MSVC)
   set(lib_dep ${lib_dep} Bcrypt.lib)
 endif()
 
+if (NOT BUILD_MOBILE)
+
 #//////////////////////////
 # executables
 #//////////////////////////
 
-if (NOT BUILD_MOBILE)
-
 # tool to generate file 'config.h' , generate from a shell with 
 # configurator.exe > config.h
 add_executable(configurator configurator.c)
-
 add_executable(nostril nostril.c)
 target_link_libraries (nostril ${lib_dep})
 
@@ -67,5 +66,4 @@ add_custom_command(
     COMMENT "Generating config.h"
 )
 
-endif(NOT BUILD_MOBILE)
-
+endif()
