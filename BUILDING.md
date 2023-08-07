@@ -59,7 +59,7 @@ The CMake build utility is used. There are 4 modes of build.
 - command line (default)
 - web 
 - desktop 
-- mobile (coming soon)
+- mobile 
 
 Default is command line only. To build the source code, use on a shell
 
@@ -74,6 +74,16 @@ cmake --build .
 This builds the software on folder named 'build'. There you can find the executables and your code editor of choice
 generated projects, like projects for Microsof Visual Studio (in Windows).
 
+## :warning: Building dependency libraries
+
+Dependencies boost, Wt, WxWidgets are needed for desktop and web build. Build with bash shell scripts
+
+``` cmd
+./build.boost.sh
+./build.wt.sh
+./build.widgets.sh
+```
+
 ## Building for web 
 
 To enable web build, use 
@@ -83,17 +93,10 @@ cmake -DBUILD_WEB=ON
 
 ```
 
-Dependencies boost and wt are needed, build with bash shell scripts
+Use the bash script to build 
 
 ``` cmd
-./build.boost.sh
-./build.wt.sh
-```
-
-Use the bash script to build with an extra parameter ON
-
-``` cmd
-./build.cmake.sh ON
+./build.desktop.sh 
 ```
 
 To clone Boost individually, do
@@ -120,7 +123,7 @@ cmake -DBUILD_DESKTOP=ON
 or build with bash shell script
 
 ``` cmd
-./build.widgets.sh
+./build.desktop.sh 
 ```
 
 ## Building for iOS
