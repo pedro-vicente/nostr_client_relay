@@ -20,7 +20,8 @@ cmake .. -DWT_INCLUDE="$HOME/wt_install/include" -DWT_CONFIG_H="$HOME/wt_install
 elif [[ "$OSTYPE" == "msys" ]]; then
 
 cmake .. --fresh -DBUILD_STATIC=OFF -DWT_INCLUDE="$dir/ext/wt-4.10.0/src" -DWT_CONFIG_H="$dir/ext/wt-4.10.0/build" \
--DBUILD_WEB=$opt -DBUILD_DESKTOP=$opt -DBUILD_MOBILE=OFF
+-DBUILD_WEB=$opt -DBUILD_DESKTOP=$opt -DBUILD_MOBILE=OFF \
+-DOPENSSL_ROOT_DIR="F:/nostr_client_relay/ext/openssl-3.0.5"
 cmake --build .
 
 fi
