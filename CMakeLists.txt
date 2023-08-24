@@ -224,7 +224,7 @@ endif()
 # examples
 #//////////////////////////
 
-if (NOT BUILD_MOBILE)
+if (NOT BUILD_MOBILE AND NOT APPLE)
   add_executable(examples examples/examples.cc)
   target_link_libraries (examples ${lib_dep})
 endif()
