@@ -1,10 +1,8 @@
 ## Nostr client and relay
 
-Nostr client and relay is a [https://nostr.com/](https://nostr.com/)  C++ engine that allows to build Nostr applications for command line, desktop or web.
+Nostr client and relay is a [nostr](https://nostr.com/)  C++ engine that allows to build Nostr applications for command line, desktop or web.
 
 [https://github.com/pedro-vicente/nostr_client_relay](https://github.com/pedro-vicente/nostr_client_relay)
-
- :warning: **ATTENTION DEVELOPERS** :warning:
 
 See [BUILDING.md](./BUILDING.md) for source code build instructions. There are 3 non exclusive modes of build (command line, desktop and web). Default is command line only.
 
@@ -12,9 +10,9 @@ Nostr_client_relay allows to build Nostr clients and Nostr relays. It includes:
 
 - a command line Nostr client, **Nostro**
 - a command line Nostr relay, **Vostro**
-- a web interface for a client, **Wostro**
 - a native desktop client, **Gnostro** (for Mac, Linux, Windows)
-- a native mobile client, **Mostro** (for iOS) :warning: Android coming soon :warning:
+- a web interface for a client, **Wostro** 
+- a native mobile client, **Mostro** (deprecated)
 
 ## Nostro
 
