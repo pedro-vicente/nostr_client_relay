@@ -3,7 +3,12 @@
 #define CCAN_ENDIAN_H
 #include <stdint.h>
 
+#ifdef _MSC_VER
+#define HAVE_LITTLE_ENDIAN 1
+#else
 #include "config.h"
+#endif
+
 #include "cursor.h"
 
 /**

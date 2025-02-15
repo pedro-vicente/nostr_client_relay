@@ -1,0 +1,1052 @@
+[
+  {
+    "content": "hello",
+    "created_at": 1688794190,
+    "id": "c3a4a0a20712db7249aa4d07598d5f88e31d77f95a4cc8e7bb41bd64348011f8",
+    "kind": 1,
+    "pubkey": "4ea843d54a8fdab39aa45f61f19f3ff79cc19385370f6a272dda81fade0a052b",
+    "sig": "4337b5361f11decd00b96bc37a87324f707f370687a7cab066c4e001145d5ee3312a3f1c1cfa6f3638e3461c8dec77468fcf35b465a16c6358ef313fca748730",
+    "tags": []
+  },
+  {
+    "content": "hello",
+    "created_at": 1688794190,
+    "id": "c3a4a0a20712db7249aa4d07598d5f88e31d77f95a4cc8e7bb41bd64348011f8",
+    "kind": 1,
+    "pubkey": "4ea843d54a8fdab39aa45f61f19f3ff79cc19385370f6a272dda81fade0a052b",
+    "sig": "4337b5361f11decd00b96bc37a87324f707f370687a7cab066c4e001145d5ee3312a3f1c1cfa6f3638e3461c8dec77468fcf35b465a16c6358ef313fca748730",
+    "tags": []
+  },
+  {
+    "content": "Good watch, thanks for the share.  Maybe 80% correct 20% wrong, some of it was a bit too simplistic.  Hopefully we'll soon have AI that can go through each factiod and cross reference it with everything else.  If you like this take on history, it's worth looking up Caroll Quigley.",
+    "created_at": 1711034945,
+    "id": "7c6abd77a58947a556fce0058debf3ee551a938083d1efd70f625cbdee0f864d",
+    "kind": 1,
+    "pubkey": "de7ecd1e2976a6adb2ffa5f4db81a7d812c8bb6698aa00dcf1e76adb55efd645",
+    "sig": "7318f048af08405ad1807c107d6e6313136c8104b6bfd2ecc81f3165e90aa990911bd8bfeb266afbdb0969b35cc07f0cd537f0fe93036215e2e60d2668c8c17f",
+    "tags": [
+      [
+        "e",
+        "954418f9691f235b13c8ec39ab6b224440c95691792506a4f4a002970419bf56",
+        "",
+        "root"
+      ],
+      [
+        "p",
+        "82341f882b6eabcd2ba7f1ef90aad961cf074af15b9ef44a09f9d2a8fbfbe6a2"
+      ]
+    ]
+  },
+  {
+    "content": "https://m.primal.net/Hmba.png ",
+    "created_at": 1710898278,
+    "id": "0ac834b7e7515a3a8a73dc9800d49ea2fe7c6caeb8779fecf01c77918ce7ffca",
+    "kind": 1,
+    "pubkey": "de7ecd1e2976a6adb2ffa5f4db81a7d812c8bb6698aa00dcf1e76adb55efd645",
+    "sig": "754e96b7323c189e3c2cfc3a042229aba9bcc0c0c3387166d544d193df0822ff1bde313952d6391ad15bffbb44c00accd3e30dec0405bdd1758f1e63f1c64647",
+    "tags": []
+  },
+  {
+    "content": "tweet through it",
+    "created_at": 1712270439,
+    "id": "04e79c48ccdb4d1939f27e6f742ae28f9aafc2e89d98364aa6953edaf1daf13e",
+    "kind": 1,
+    "pubkey": "82341f882b6eabcd2ba7f1ef90aad961cf074af15b9ef44a09f9d2a8fbfbe6a2",
+    "sig": "ed941550f9d6c74544a37d21847ce59ef7fe9c7de3c733d76843ad6cafe9208fe3de703ef22adefccbca7ae53bafe3903865444882b9d4fe1946b5d46da0f26f",
+    "tags": []
+  },
+  {
+    "content": "best SB halftime ever https://youtu.be/gdsUKphmB3Y",
+    "created_at": 1712269200,
+    "id": "6fabd2364e283f97095154c2f7200b39ceb5000d951005f3583dd590c4f4d317",
+    "kind": 1,
+    "pubkey": "82341f882b6eabcd2ba7f1ef90aad961cf074af15b9ef44a09f9d2a8fbfbe6a2",
+    "sig": "8e91c396ca78230abf5aa2773e860c337f71930f823c0742bccaaa1ec9b5086b822d8570621bcf89686d9d81c09c5b672fe08e26bf60d544ebddf00e20c03780",
+    "tags": []
+  },
+  {
+    "content": "I saved it right. Maybe this is a new bug with nostr build 🤔",
+    "created_at": 1712276637,
+    "id": "a1bb15cc2d24fb9e1914bfefff1253d18fcef0e0cbe49a9792bcb2a190e21c7b",
+    "kind": 1,
+    "pubkey": "32e1827635450ebb3c5a7d12c1f8e7b2b514439ac10a67eef3d9fd9c5c68e245",
+    "sig": "83c8494cf38a9db5cad0d4c61a17f25ea70b5e885f7fb7b6cdb3c8e73e56edb2e0155fbbce3719e4fc4d7f75ee1f46776c8614b7ab09e7b4268d96d9c607a2f7",
+    "tags": [
+      [
+        "e",
+        "2f9d695bf84b5ce89db822bd8104f5b50d7897deceee19a1672c0574682f4c8e"
+      ],
+      [
+        "e",
+        "4c466767132dd55c7568d925611e37cd4b4a03e37cf86a095262677192e21254"
+      ],
+      [
+        "p",
+        "50d94fc2d8580c682b071a542f8b1e31a200b0508bab95a33bef0855df281d63"
+      ],
+      [
+        "p",
+        "de14fe62f97e09429581f9e8fec3170f3ce5e7936a2134bf70c87c5ff229e53a"
+      ]
+    ]
+  },
+  {
+    "content": "ok who broke gif uploads",
+    "created_at": 1712276343,
+    "id": "40cf495d5d20724ccbbaea01d0ea5524118dc3c370374b0d599cf2192f5f982b",
+    "kind": 1,
+    "pubkey": "32e1827635450ebb3c5a7d12c1f8e7b2b514439ac10a67eef3d9fd9c5c68e245",
+    "sig": "f53f443673b62eb4492cd5de8e3ae0137d1df9688cb85cc06650e7e787920eaf1cb51ccd460a9a90e074ed2bee36c754dd6e70f62b11fe7891fe26a2629b7e0e",
+    "tags": [
+      [
+        "e",
+        "2f9d695bf84b5ce89db822bd8104f5b50d7897deceee19a1672c0574682f4c8e"
+      ],
+      [
+        "e",
+        "9b8a46d4662b4c56d3b6a1617e807d583ee1363b3b567d14265346ebdd6b6660"
+      ],
+      [
+        "p",
+        "50d94fc2d8580c682b071a542f8b1e31a200b0508bab95a33bef0855df281d63"
+      ]
+    ]
+  },
+  {
+    "content": "Satoshi has literally vanished not only from Twitter, but from the internet entirely.",
+    "created_at": 1712240888,
+    "id": "d9cfb94763e31f65ac19bdc46a5a81ba79d7f9741dd323b51e1b4366d1730e8a",
+    "kind": 1,
+    "pubkey": "3bf0c63fcb93463407af97a5e5ee64fa883d107ef9e558472c4eb9aaaefa459d",
+    "sig": "c7329ebad603111f296caa041fc28486ab1674fdac63ce34ff36adb36a293bf36469de050d964f73728235b1594b85e2a223769250b697c430eeb5ab9223b0df",
+    "tags": [
+      [
+        "client",
+        "gossip"
+      ],
+      [
+        "p",
+        "04c915daefee38317fa734444acee390a8269fe5810b2241e5e6dd343dfbecc9"
+      ],
+      [
+        "e",
+        "b00800a3d4fa90eff1d86be87cb7c6a8bdd17a67175f375305373e0089af3b7a",
+        "wss://nos.lol/",
+        "root"
+      ]
+    ]
+  },
+  {
+    "content": "nostr:npub16c0nh3dnadzqpm76uctf5hqhe2lny344zsmpm6feee9p5rdxaa9q586nvr please fix.",
+    "created_at": 1712192721,
+    "id": "2d57ec281a0ad89e9bdeb6bd96e12a30b2def36fc3edc4145bea3c8601f56b14",
+    "kind": 1,
+    "pubkey": "3bf0c63fcb93463407af97a5e5ee64fa883d107ef9e558472c4eb9aaaefa459d",
+    "sig": "609155d1cfd8e618914c13e420d81e3bebdd442c0caf2e4c79c56db5616c7eae952bd6b927f0da83de09ba8f0ed8503826cbd46b37fc943fb6c8c1602f4a2962",
+    "tags": [
+      [
+        "client",
+        "gossip"
+      ],
+      [
+        "p",
+        "d61f3bc5b3eb4400efdae6169a5c17cabf3246b514361de939ce4a1a0da6ef4a"
+      ],
+      [
+        "p",
+        "46f6acdf9064234122fa080f5d9ef69573d791048e0b256630f8af296331b6e7"
+      ],
+      [
+        "p",
+        "532d830dffe09c13e75e8b145c825718fc12b0003f61d61e9077721c7fff93cb"
+      ],
+      [
+        "p",
+        "9fec72d579baaa772af9e71e638b529215721ace6e0f8320725ecbf9f77f85b1"
+      ],
+      [
+        "p",
+        "3d842afecd5e293f28b6627933704a3fb8ce153aa91d790ab11f6a752d44a42d"
+      ],
+      [
+        "e",
+        "4ce54015b272f2bfe1a0007dad1952e35dfb3579b7a2be2c7c5066228b2347b4",
+        "wss://nostr.mom/",
+        "root"
+      ],
+      [
+        "e",
+        "89f214a1a725461966cab7aff2d3d9508fd47c4741bbfa8482dd798e6481266f",
+        "wss://nos.lol/",
+        "reply"
+      ]
+    ]
+  },
+  {
+    "content": "We are excited to announce long-term support for our newest grantee, Bruno Garcia.\n\nhttps://opensats.org/blog/bruno-garcia-receives-lts-grant",
+    "created_at": 1710846838,
+    "id": "82e78097e908be210c62da015940aef43a8b2cf87e50ec87f58d67a0f28cd4d2",
+    "kind": 1,
+    "pubkey": "787338757fc25d65cd929394d5e7713cf43638e8d259e8dcf5c73b834eb851f2",
+    "sig": "17c8e83b23e5f287dd9300d1cb4f48b51ca50aa83531e174a2fd107ec8d2278e6a889855cda627ecfd4ed33a6dbe396fed6beacd54e8ad6a2bfb75a5f59ba2e8",
+    "tags": []
+  },
+  {
+    "content": "NOSTR IS HERE TO STAY, AND WE ARE TOO\nhttps://opensats.org/blog/nostr-lts-long-term-support-for-nostr-developers",
+    "created_at": 1710173661,
+    "id": "f769b3e9d837a020088f1166c2cf4f14e35381691dcc2e2fb8db5fcf006a1883",
+    "kind": 1,
+    "pubkey": "787338757fc25d65cd929394d5e7713cf43638e8d259e8dcf5c73b834eb851f2",
+    "sig": "4d86952d86863d191d7326e7b3140074c373850ac4c97694dccec0d0296147c6584519f8555b159e9fbb12815a8288fefd7e091551c8379ae04d35216100cc56",
+    "tags": []
+  },
+  {
+    "content": "Introducing the Latest Updates to YakiHonne, including\n1. Encrypted DMs\n2. Video Creation and Curation:\n3. BuzzFeed and News Integration:\n4. Automatically Generate Content into Images\n5. Revenue Sharing via Zap Splits\n6. Redesigned Views\n7. Notifications Support for Nostr Events\n8. Payment Optimization\n9. User Experience Optimization\n10. Bugs fixes and improvements\n\nTry it now and Download the App:\nWebsite: yakihonne.com\niOS: https://apps.apple.com/mo/app/yakihonne/id6472556189?l=en-GB\nAndroid: https://play.google.com/store/apps/details?id=com.yakihonne.yakihonne&pli=1\nTest flight: https://testflight.apple.com/join/tcXozZIu\n\nMore details, check out the guideline article.\nhttps://yakihonne.com/article/_@yakihonne.com/pieDagI6FsIOwBsRAUExG",
+    "created_at": 1712152028,
+    "id": "1511b58f78472b1ab0b63cf40c214a7cd1e3d093a6b7daf738214df550604fa1",
+    "kind": 1,
+    "pubkey": "20986fb83e775d96d188ca5c9df10ce6d613e0eb7e5768a0f0b12b37cdac21b3",
+    "sig": "044c34cf3ceb826f3d3920c04d473047f9f2336e765c3e2c2a3f5bd813a3a1adaf0e001fd4ec4516145b99c2efc319603c6d6661abd4b7b479a5ee90d2f8a5ac",
+    "tags": [
+      [
+        "l",
+        "FLASH NEWS"
+      ],
+      [
+        "important",
+        "1712152028"
+      ],
+      [
+        "source",
+        "https://yakihonne.com/article/_@yakihonne.com/pieDagI6FsIOwBsRAUExG"
+      ],
+      [
+        "yaki_flash_news",
+        "U2FsdGVkX19gLGy2ZJ2LKf/6IssAb1T/tX+dC2S5lSk="
+      ],
+      [
+        "t",
+        "Nostr"
+      ],
+      [
+        "t",
+        "YakiHonne"
+      ],
+      [
+        "t",
+        "dMedia"
+      ]
+    ]
+  },
+  {
+    "content": "The YakiHonne Week 44 report has been updated. Thanks to nostr:npub1r0rs5q2gk0e3dk3nlc7gnu378ec6cnlenqp8a3cjhyzu6f8k5sgs4sq9ac\nnostr:npub18aeesvp4fumzqt6p7sxmyqs3n26ks06lfnrqc0030lx4dr0ch5lqzrlrzn\nnostr:npub1aw76hc65wztrsmd5cv5pzjvde9rqhyyzrfslvut4r6cadtne0nfqgx55ps\nnostr:npub1a9a2l7jqqxa9mwrw034lcnuhcsncg905sl03ava49md55t4awewsvvzz87\nnostr:npub1xr8tvnnnr9aqt9vv30vj4vreeq2mk38mlwe7khvhvmzjqlcghh6sr85uum\nnostr:npub16zlc26xk7qjlfa4dquqvvs3s5zl2yw989lprj63nfw4g7ndnuahslcevpc\nnostr:npub12zqf55l7l9vsg5f6ssx5pq4f9dzu6hcmnepkm8ftj25fecy379jqkq99h8\nnostr:npub1hjanusxrha0zx0l78wkr6waq52rp67xzjyaglarfzxhxffy5u5qs3ymp83\nnostr:npub1stampryw73wy6uwgsd5dpt5qt0rzlwf0ze4tqjst0gxg8kxtc2dqtrkrsw\nnostr:npub1dc9cfsu8fsadah6ekakgz4wv66t8m9xsqhxtsajpj7an9rjzfhpsfjxz32 et al.'s contributions to the Nostr ecosystem this week.\nhttps://yakihonne.com/article/naddr1qq2hym6l24m8v7ttfyk5vmzltfphy5zefar52q3qyzvxlwp7wawed5vgefwfmugvumtp8c8t0etk3g8sky4n0ndvyxesxpqqqp65wak43du",
+    "created_at": 1712075632,
+    "id": "8612274f5bbc3dc5d3c78e3ee2ae99b59483d0913130a371fcae6f327c755dd8",
+    "kind": 1,
+    "pubkey": "20986fb83e775d96d188ca5c9df10ce6d613e0eb7e5768a0f0b12b37cdac21b3",
+    "sig": "051a626c033ce87f90c91a569f3a57b9c97895571876a6c5eb4228c506dfe0f5b9db8a99f9c05331a1127c5d241474d764b68658b0506b704f5a358a54ab08ec",
+    "tags": [
+      [
+        "source",
+        ""
+      ],
+      [
+        "l",
+        "FLASH NEWS"
+      ],
+      [
+        "yaki_flash_news",
+        "U2FsdGVkX1+1822oERkLHLmliEGtNi+my/GJ+eVRPVE="
+      ],
+      [
+        "t",
+        "YakiHonne"
+      ],
+      [
+        "t",
+        "Weekly Report"
+      ]
+    ]
+  },
+  {
+    "content": "ALL CAPS. FULL SEND. LETS FUCKING GO.",
+    "created_at": 1712269475,
+    "id": "ee91925350525b044ed869ef6b96fa15ffc392bb598181b0c5cb355992352dfe",
+    "kind": 1,
+    "pubkey": "04c915daefee38317fa734444acee390a8269fe5810b2241e5e6dd343dfbecc9",
+    "sig": "4c60f46a75e6048798fd3b0dd5b66aa1b369589e86ecfaf168b5a8a8b548f7c4ab6b7358166c003590f85429db0fa7eaf055ef035193103f5b1aa7bd8f8e5324",
+    "tags": [
+      [
+        "e",
+        "f8c181e0916542a2ef306b5b977830b158a9620d84aebd492b1a81d29249b346",
+        "",
+        "root"
+      ],
+      [
+        "p",
+        "5a8e581f16a012e24d2a640152ad562058cb065e1df28e907c1bfa82c150c8ba"
+      ]
+    ]
+  },
+  {
+    "content": "PRIMAL DOES NOT YET. WILL BE FUTURE PREMIUM OFFERING.",
+    "created_at": 1712261667,
+    "id": "ccfafebc0c7c841b3eca7b41fc23087bc040db38f7dc6ebe3486a6877fad0294",
+    "kind": 1,
+    "pubkey": "04c915daefee38317fa734444acee390a8269fe5810b2241e5e6dd343dfbecc9",
+    "sig": "17502c71ca1edbb43c8663cd3ea41ab8beffd2d97223da3383d4084ab1aa4a66251c8caa58bd7baf80d16454c09ef6011e2f9599681d264c197527f36941f8aa",
+    "tags": [
+      [
+        "e",
+        "88cd9f025de10e46d8e7e7c4181069731e88b113f25a3a57e4b8f4dfc8f916d5",
+        "",
+        "reply"
+      ],
+      [
+        "p",
+        "3fc5f8553abd753ac47967c4c468cfd08e8cb9dee71b79e12d5adab205bc04d3"
+      ],
+      [
+        "e",
+        "88cd9f025de10e46d8e7e7c4181069731e88b113f25a3a57e4b8f4dfc8f916d5",
+        "",
+        "root"
+      ]
+    ]
+  },
+  {
+    "content": "Awesome, please dm me🙌",
+    "created_at": 1711722934,
+    "id": "6d236db42a54ff4b58fb2337b9b5b97bbba2ebd83508009f4c508500bfd99c34",
+    "kind": 1,
+    "pubkey": "af9d70407464247d19fd243cf1bee81e6df1e639217dc66366bf37aa42d05d35",
+    "sig": "c072eaf19b06150d20e17e9410f10ad4fe995b964f00c2561be23d7b061238cfb6e37558cc6860a78b96a80d69cce5d41759750d0bf523cc1e446a6d8d2031da",
+    "tags": [
+      [
+        "e",
+        "d27ccd32b9a514e2ce77f11a79a176fab2df907f275eced3d22a0533a84f8591"
+      ],
+      [
+        "e",
+        "c5fe0fa086a2e058289d5954174642c2bff4e02fc00d01f4e6ac1b0cf07049fb"
+      ],
+      [
+        "p",
+        "46f6acdf9064234122fa080f5d9ef69573d791048e0b256630f8af296331b6e7"
+      ],
+      [
+        "p",
+        "c21b1a6cdb247ccbd938dcb16b15a4fa382d00ffd7b12d5cbbad172a0cd4d170"
+      ],
+      [
+        "p",
+        "dc35b4b106a811ee07a3771e84b684a1abd687c9a14b8e5dce5d40b6ce1c556f"
+      ],
+      [
+        "p",
+        "facdaf1ce758bdf04cdf1a1fa32a3564a608d4abc2481a286ffc178f86953ef0"
+      ],
+      [
+        "p",
+        "7df1004b543fb98a3ae2172e8b2bd5b6748f0f973bf3396fd5e63f356d55b90c"
+      ]
+    ]
+  },
+  {
+    "content": "YakiHonne has launched Nostr Global Events 2024, which is planned to be held in 16 countries and 20 cities around the world. \nNostr projects willing to become \"project partners“ can contact me. YakiHonne will provide accurate online/offline exposure of the cooperative projects as a media.\n\nOur goal is to strengthen the connection with more Nostr projects, cooperate with everyone as a media, highlight everyone‘s efforts, and jointly promote the development of this ecosystem.\n\nAnd of course, \nit’s free for all the Nostriches 🤙🫂 https://image.nostr.build/6fb65f6cb48a6bd78f93adf9a0cc1e514cde5e4b3bc659eccc4a7f314a167935.png ",
+    "created_at": 1711721438,
+    "id": "d27ccd32b9a514e2ce77f11a79a176fab2df907f275eced3d22a0533a84f8591",
+    "kind": 1,
+    "pubkey": "af9d70407464247d19fd243cf1bee81e6df1e639217dc66366bf37aa42d05d35",
+    "sig": "2349ef45f9bd44ea3b11dfddade19b92c9368f8b2c9ab757ab3239ef7cff0862a3eccda146e596ffaac375f363a91a5d90391a958b38e002a8f17f844d752390",
+    "tags": [
+      [
+        "imeta",
+        "url https://image.nostr.build/6fb65f6cb48a6bd78f93adf9a0cc1e514cde5e4b3bc659eccc4a7f314a167935.png",
+        "blurhash emKKgER}tQf6xtaOWAoNfja__4oMRjayV]V|fhWUjuj[D,ayWBaxa#",
+        "dim 1200x2574"
+      ],
+      [
+        "r",
+        "https://image.nostr.build/6fb65f6cb48a6bd78f93adf9a0cc1e514cde5e4b3bc659eccc4a7f314a167935.png"
+      ]
+    ]
+  },
+  {
+    "content": "Should signIn be the default behavior?",
+    "created_at": 1711813789,
+    "id": "dbbe3b4d45b0bcf316a184ae65656e968ffe5aa9733b7ea89a55613111ec80ca",
+    "kind": 1,
+    "pubkey": "4523be58d395b1b196a9b8c82b038b6895cb02b683d0c253a955068dba1facd0",
+    "sig": "dce5c3eb6e59212213c81eea3c2dbec44519a842344e1b1dedd9a465caec19eec8c9a4c7a983ffa8d096e2e9fd1cb5cfd7ebd683931689c40d2065463581f86b",
+    "tags": [
+      [
+        "e",
+        "58c5abf31e30805a13aa22b41737f052264abd4f2348ab9d5dae63980c895233",
+        "wss://soloco.nl/",
+        "root"
+      ],
+      [
+        "p",
+        "fa984bd7dbb282f07e16e7ae87b26a2a7b9b90b7246a44771f0cf5ae58018f52"
+      ]
+    ]
+  },
+  {
+    "content": "👀",
+    "created_at": 1711439158,
+    "id": "3ec6801ce2f3d03a15b235842f10656024bebfc552e4cada611c13ab5e29643b",
+    "kind": 1,
+    "pubkey": "4523be58d395b1b196a9b8c82b038b6895cb02b683d0c253a955068dba1facd0",
+    "sig": "ce4657fc42e8ca6b82ffa6efcce67380cc20a3616d8f818a6d2909583ff483e3236bb8af6b0cf554f78fc15a1fb4c0ccf871fd752c1ab6adab421e90c22f60ec",
+    "tags": [
+      [
+        "e",
+        "e9c54b6cc956edc449ef32e94af73c8e8ab1e9fdbcc68d659800d993a40a3bc8",
+        "",
+        "root"
+      ],
+      [
+        "e",
+        "4cdf63a1de9acca25cd890e5d13700f32a7aa5d8d5a410254f4a1109748a6c11",
+        "wss://nostr.fmt.wiz.biz/",
+        "reply"
+      ],
+      [
+        "p",
+        "8fe3f243e91121818107875d51bca4f3fcf543437aa9715150ec8036358939c5"
+      ]
+    ]
+  },
+  {
+    "content": "Are you seeing posts that you posted still as draft? ",
+    "created_at": 1712276521,
+    "id": "beb372a177b0ea503d70a6486241c8fcc2d5fc17a97bbcc98da16a057a2fc584",
+    "kind": 1,
+    "pubkey": "460c25e682fda7832b52d1f22d3d22b3176d972f60dcdc3212ed8c92ef85065c",
+    "sig": "721ccbe1181ff05ade8767a1a0ba30e2a58f727e2266520dd0edb3011c24275fb8df4c4d694bdadd639c22d31a7a15f98fc955fcd594363ee2c6368bb85344b9",
+    "tags": [
+      [
+        "e",
+        "3b9c84ccfacb635712f75ae78f4681166d20ca085da90946028f21dfbd8fa1bc",
+        "",
+        "root"
+      ],
+      [
+        "p",
+        "a619eb76964b870a0edad133db1b92183b6533332de555a033ada4e311d75935"
+      ]
+    ]
+  },
+  {
+    "content": "I created an issue here if you want to use as base: https://github.com/lightning/bolts/issues/1111",
+    "created_at": 1712273759,
+    "id": "5f78f283630b59c9cc28ecbea77238a214177db4319da14bc3266832c06cabbd",
+    "kind": 1,
+    "pubkey": "460c25e682fda7832b52d1f22d3d22b3176d972f60dcdc3212ed8c92ef85065c",
+    "sig": "82d57dab4ca194694ceefdbd92057469523f51ca89693171a237e54b2696aad0b84f1e91af0e9e91476a723e2cc0145003525d4a1da8c2b8cbf4aea563e92583",
+    "tags": [
+      [
+        "e",
+        "6a36f502d79e0acaa6606bf724973d9ae81fb6679fab44cde71704973e0ed2ff",
+        "",
+        "root"
+      ],
+      [
+        "e",
+        "2574b1ef28730c7e90503baf7983361d20c40d60ea37b46bef7c1d0d6dcdf889"
+      ],
+      [
+        "e",
+        "004107a9350cdbb7b070170f97c0281a0193e0414b14b3bba4f549e07df619b1",
+        "",
+        "reply"
+      ],
+      [
+        "p",
+        "fea186c2a4678dbc437704eed2160846e8a781e5fb17056e9bb333840d5bdef2"
+      ],
+      [
+        "p",
+        "460c25e682fda7832b52d1f22d3d22b3176d972f60dcdc3212ed8c92ef85065c"
+      ],
+      [
+        "r",
+        "https://github.com/lightning/bolts/issues/1111"
+      ]
+    ]
+  },
+  {
+    "content": "This is so cool 😎",
+    "created_at": 1711872686,
+    "id": "032941a1ac41a2fcb70747899202216f52bc7a50e907e6902a648b26914c8167",
+    "kind": 1,
+    "pubkey": "9c163c7351f8832b08b56cbb2e095960d1c5060dd6b0e461e813f0f07459119e",
+    "sig": "b0d9d0b95186e9e50ee5ff5ebc3b12f03f5685b786da71d20a6469eca4a5a33c96d5238cb4ed21d6209257bd5f4b3f1d4014cf17a5c4ac0c7558be1ed26ad7d7",
+    "tags": [
+      [
+        "e",
+        "39f9e17e720ef846b7bc2a93937d525675cd58a544ce75ce28255e8468ddf245",
+        "",
+        "reply"
+      ],
+      [
+        "p",
+        "12c805a56db2f408e91c344c15cebf6b3d068416ec46cbb3fb9f68fc957eb1aa"
+      ],
+      [
+        "e",
+        "39f9e17e720ef846b7bc2a93937d525675cd58a544ce75ce28255e8468ddf245",
+        "",
+        "root"
+      ]
+    ]
+  },
+  {
+    "content": "Nostrich in 🇱🇻🔥\n\nnostr:note188u7zlnjpmuyddau92fexl2j2e6u6k99gn88tn3gy40gg6xa7fzsegt3tv",
+    "created_at": 1711872676,
+    "id": "0d3b14f8cce0cded86fcc67df33132469f992c320e54e94d668ca0df2158ebbb",
+    "kind": 1,
+    "pubkey": "9c163c7351f8832b08b56cbb2e095960d1c5060dd6b0e461e813f0f07459119e",
+    "sig": "cad822042f201f0adaefa5b3678cbd3fa94ebeb71ec3ffbe355c3719353525d0bbe9e8941547d2bea9b58b628904e2782adb8c31ed1e4ac54603084d3913f9cf",
+    "tags": []
+  },
+  {
+    "content": "ux: Relay Detail Redesign (ericholguin)\nui: fix cut off emoji reaction (ericholguin)\nux: fix image indicators (ericholguin)\npostview: add haptic feedback on media upload result (Sean Kibler)\nUpdate issue templates (alltheseas)\nUpdate issue templates (alltheseas)\n\npushed to damus:refs/heads/master\nhttp://git.jb55.com/damus/commit/5492d9f49987f2c732a33fa2f63798889da730e9.html",
+    "created_at": 1712252030,
+    "id": "ff9a86c4cd4eda7cab5aeb3aca82076ca4ca253c8a82293442791db03debcbda",
+    "kind": 1,
+    "pubkey": "4c96d763eb2fe01910f7e7220b7c7ecdbe1a70057f344b9f79c28af080c3ee30",
+    "sig": "b034fd3b1b7f86a1f4c4ed3af38eed213b629d6e17f8d5a16afa82c0488d88f0cd4437e478508312c02ce5572cba0518e42944816581d54bc597981e3c07b212",
+    "tags": [
+      [
+        "t",
+        "jb55"
+      ],
+      [
+        "t",
+        "gitlog"
+      ]
+    ]
+  },
+  {
+    "content": "Fix all warnings (William Casarin)\nAdd ui_test_harness binary implementation (kernelkind)\nConstrain app minimum size (kernelkind)\nUse app_creation for common app setup functions (kernelkind)\nCreate account login panel (kernelkind)\nAdd login manager (kernelkind)\nUpdate egui 0.26.1 -> 0.27.1 (kernelkind)\nAdd login key parsing (kernelkind)\nAdd nostr-sdk dependency (kernelkind)\nupdate cargo.lock to reflect toml change (kernelkind)\nfix global query (William Casarin)\n\npushed to notedeck:refs/heads/master\nhttp://git.jb55.com/notedeck/commit/6222a7db63311bed47c843969f90986cf2f036e9.html",
+    "created_at": 1711995651,
+    "id": "69c19b3d723254086daf985425514602692e7a4281d9022f7477fdf7b2bdde3f",
+    "kind": 1,
+    "pubkey": "4c96d763eb2fe01910f7e7220b7c7ecdbe1a70057f344b9f79c28af080c3ee30",
+    "sig": "88cf425f2bfc867a3fc740df9338645cacb1b3cad2ec4edb19f628ee89e13233a10902c788976322f01d7a6281d7eb7d5bf52057f3ed0321de5b06e582ae7cc5",
+    "tags": [
+      [
+        "t",
+        "jb55"
+      ],
+      [
+        "t",
+        "gitlog"
+      ]
+    ]
+  },
+  {
+    "content": "Coming up, Plebchain Radio live in 36 minutes on the new Nostr Nests 💜\nnostr:note1mtfjgy075cha56hq2l5hcu6q9usrryfn3znjrczew29qalh97rwsgtf5kk",
+    "created_at": 1709326468,
+    "id": "6e076f4de3c73b573bc336fe46ee5ab67f85f6c2d26529cf72a9540b47bd3150",
+    "kind": 1,
+    "pubkey": "2edbcea694d164629854a52583458fd6d965b161e3c48b57d3aff01940558884",
+    "sig": "ba9b4b0ce9a29464064e376c1a89f614fa8f6aa83da3ddb528ad3df76076b1f9ba07fd1945702b915d3d574c0b6d784decdee2fe64b7bb4e07d36304f145fd04",
+    "tags": [
+      [
+        "q",
+        "dad32411fea62fda6ae057e97c73402f2031913388a721e059728a0efee5f0dd"
+      ],
+      [
+        "p",
+        "5b0183ab6c3e322bf4d41c6b3aef98562a144847b7499543727c5539a114563e"
+      ]
+    ]
+  },
+  {
+    "content": "See the new Nostr Nests in action. Going live soon with Plebchain Radio 💜\n\nhttps://nostrnests.com\nnostr:note1n2elhx99ljpvyly35d8a0fvjpy6q2urqyauztd276wer6tavs2hqarn88d",
+    "created_at": 1708721943,
+    "id": "11130a8b7bcfcc73f67a74a2b9684398f6eba29a34b991a1fdeb26dfb2311261",
+    "kind": 1,
+    "pubkey": "2edbcea694d164629854a52583458fd6d965b161e3c48b57d3aff01940558884",
+    "sig": "e46520a39fb6547a2a8412c21726347baecc35e8f67de4a8f554231b80f9676c439c78f8fb8c13678ebfbc1de5dd63025de215ffd47d6aab00cbf7a5f811ccdc",
+    "tags": [
+      [
+        "q",
+        "9ab3fb98a5fc82c27c91a34fd7a5920934057060277825b55ed3b23d2fac82ae"
+      ],
+      [
+        "p",
+        "5b0183ab6c3e322bf4d41c6b3aef98562a144847b7499543727c5539a114563e"
+      ]
+    ]
+  },
+  {
+    "content": "For Android there are other apps available:\nAmethyst: https://github.com/vitorpamplona/amethyst \nPrimal: https://primal.net",
+    "created_at": 1712267885,
+    "id": "c42d6b94b5d74d4ae3e5f192ba243c073ec12e854edf6d8b19923fd0804aea9a",
+    "kind": 1,
+    "pubkey": "9be0be0e64d38a29a9cec9a5c8ef5d873c2bfa5362a4b558da5ff69bc3cbb81e",
+    "sig": "8f45dbf1b1960816925fc4f16750558390804e7faaa136faf93f590876996dbe747c39995cf64801fed54e87119d56e951d3ca3e0d56fda539115eff8f851362",
+    "tags": [
+      [
+        "e",
+        "e61161ec43c77fd3c730236da88c4ba4bcaf8767cd89206c0c43f5c24fb425d0",
+        "",
+        "root"
+      ],
+      [
+        "e",
+        "50e33138a34975d009a98aeed6e594a0b0d269c5f5a0245d9283d24ae7af6967",
+        "",
+        "reply"
+      ],
+      [
+        "p",
+        "0d8c556f4f8580508a057ee24000ab63aef89ae2c3efdc8018ae4d2c73dfd4d7"
+      ],
+      [
+        "p",
+        "9be0be0e64d38a29a9cec9a5c8ef5d873c2bfa5362a4b558da5ff69bc3cbb81e"
+      ],
+      [
+        "client",
+        "Nostur",
+        "31990:9be0be0fc079548233231614e4e1efc9f28b0db398011efeecf05fe570e5dd33:1685868693432"
+      ]
+    ]
+  },
+  {
+    "content": "Good feedback. What I agree with most is the lack of content (people), and I think what would help most is if people with big followings on other platforms, instead exiting or not using those platforms, would share nostr posts there, as a constant reminder that the conversation is happening on nostr and not there.  I see fiatjaf doing this a lot and I wish more big accounts would do that, example:\nhttps://media.utxo.nl/wp-content/uploads/nostr/d/a/da0b6c514bf6e1d6a393ca5489298a670bc7f1cd9eb22c525c21a94783c30ecf.webp",
+    "created_at": 1711796979,
+    "id": "c9db0581cc62edcc1fffe19ce6093a870ffd38e2c6f72b7f58da89cb9aca7593",
+    "kind": 1,
+    "pubkey": "9be0be0e64d38a29a9cec9a5c8ef5d873c2bfa5362a4b558da5ff69bc3cbb81e",
+    "sig": "58696c806b61793f5ba06a314f86fab9ed4c4f01f3dda477c36ec8be46bc0163f763ec077b57e0d5aa71eee7ed13f993fa28d18a8e4d02b207416efd428e3887",
+    "tags": [
+      [
+        "e",
+        "54b7b59abbc1a0882365962d53ee8272059dbee5b9826914c6cb6916c5b64d46",
+        "",
+        "root"
+      ],
+      [
+        "e",
+        "3b6fa07dae7692308c870d0e39f5f6418fde12e4fa337c885d5544d3f3bc6687",
+        "",
+        "reply"
+      ],
+      [
+        "imeta",
+        "url https://media.utxo.nl/wp-content/uploads/nostr/d/a/da0b6c514bf6e1d6a393ca5489298a670bc7f1cd9eb22c525c21a94783c30ecf.webp",
+        "dim 1054x688",
+        "sha256 da0b6c514bf6e1d6a393ca5489298a670bc7f1cd9eb22c525c21a94783c30ecf"
+      ],
+      [
+        "p",
+        "9be0be0e64d38a29a9cec9a5c8ef5d873c2bfa5362a4b558da5ff69bc3cbb81e"
+      ],
+      [
+        "p",
+        "1bc70a0148b3f316da33fe3c89f23e3e71ac4ff998027ec712b905cd24f6a411"
+      ],
+      [
+        "p",
+        "63fe6318dc58583cfe16810f86dd09e18bfd76aabc24a0081ce2856f330504ed"
+      ],
+      [
+        "p",
+        "bd1e19980e2c91e6dc657e92c25762ca882eb9272d2579e221f037f93788de91"
+      ],
+      [
+        "p",
+        "97c70a44366a6535c145b333f973ea86dfdc2d7a99da618c40c64705ad98e322"
+      ],
+      [
+        "p",
+        "4523be58d395b1b196a9b8c82b038b6895cb02b683d0c253a955068dba1facd0"
+      ],
+      [
+        "p",
+        "460c25e682fda7832b52d1f22d3d22b3176d972f60dcdc3212ed8c92ef85065c"
+      ],
+      [
+        "p",
+        "32e1827635450ebb3c5a7d12c1f8e7b2b514439ac10a67eef3d9fd9c5c68e245"
+      ],
+      [
+        "client",
+        "Nostur",
+        "31990:9be0be0fc079548233231614e4e1efc9f28b0db398011efeecf05fe570e5dd33:1685868693432"
+      ]
+    ]
+  },
+  {
+    "content": "It was just a short upload issue, images should have still been up. Your pfp looks fine on Damus 🤷‍♂️",
+    "created_at": 1712260668,
+    "id": "1f8aedd7380e1e20f14f1656a5b131cb7042a0123650120bfbaef08a1f8ee3e1",
+    "kind": 1,
+    "pubkey": "9989500413fb756d8437912cc32be0730dbe1bfc6b5d2eef759e1456c239f905",
+    "sig": "faa6934c1f6d39d47608807e0c1caa66f2979513406db9965a663f8b24f54e81577feabaf7263a3a225bf29f7f675b6d11803306f56cd7631b81894235335f71",
+    "tags": [
+      [
+        "e",
+        "21869581b54fdf1eb3cb7db23aec74b26c3d2f2c572f2c9bcb27ad092a2d7f8c"
+      ],
+      [
+        "e",
+        "c684601ea15e54b3a34ab288d79d901179ee7b3bcd9b8637e25529a0be297a46"
+      ],
+      [
+        "p",
+        "f728d9e6e7048358e70930f5ca64b097770d989ccd86854fe618eda9c8a38106"
+      ],
+      [
+        "p",
+        "3f770d65d3a764a9c5cb503ae123e62ec7598ad035d836e2a810f3877a745b24"
+      ],
+      [
+        "p",
+        "f728d9e6e7048358e70930f5ca64b097770d989ccd86854fe618eda9c8a38106"
+      ]
+    ]
+  },
+  {
+    "content": "Is this for free uploads? Let me see.",
+    "created_at": 1712253470,
+    "id": "01e5df23503cf65c0e326ae37e867356f8842abe522d674dd95916824ba4a062",
+    "kind": 1,
+    "pubkey": "9989500413fb756d8437912cc32be0730dbe1bfc6b5d2eef759e1456c239f905",
+    "sig": "41560af6b9898c9ff0e4af7a13a420e96d54dab261211405204c329d54b85c01f71b6ca612db264de3a3b9903db62ec111d96236287081ab2ecf38d69c304b82",
+    "tags": [
+      [
+        "e",
+        "4ab46d1fb10bbb2bd1f790a665085f95bef1267fe8b30807b1465b3031d444fe"
+      ],
+      [
+        "e",
+        "b3a5697b441ffd91e1322483eb436ffa20cf9272f1d614a3a9473de46ceed8be"
+      ],
+      [
+        "p",
+        "508f28656b8db436153d5239de5034abc0351b8c90ac33e6b156d1fea64b2960"
+      ]
+    ]
+  },
+  {
+    "content": "COME HELP US DISCOVER WHAT IT MEANS TO BUILD IT RIGHT\n\nnostr:nevent1qvzqqqqqqypzpq7enxs5scju854msxd0xpjvpa4p94763rmgktrfyg0n5arpw8geqythwumn8ghj7un9d3shjtnswf5k6ctv9ehx2ap0qy88wumn8ghj7mn0wvhxcmmv9uqzqxqt84vtkepgssvd8d048ssgg35vphhrj99xe9m8u276kmcqjrm0hw9vs2",
+    "created_at": 1712268636,
+    "id": "aa64dcc7fad7fc3021d55e88284d1c6cd463024a92171953fa5b4d7bd8534643",
+    "kind": 1,
+    "pubkey": "fa984bd7dbb282f07e16e7ae87b26a2a7b9b90b7246a44771f0cf5ae58018f52",
+    "sig": "bb4d0aac69567a0f2ff3b7c56c8007fd798ce65a95637151ecb067cdb01427fc9a0b18dbad3203b2c5fb428012f1dc7f16d439a91e8aa8ea192c731135049aea",
+    "tags": [
+      [
+        "p",
+        "83d999a148625c3d2bb819af3064c0f6a12d7da88f68b2c69221f3a746171d19",
+        "",
+        "mention"
+      ]
+    ]
+  },
+  {
+    "content": "Haha yeah, I’ll fix them all 😅😅 keep em coming!",
+    "created_at": 1712252446,
+    "id": "49438cbbf391d21bab2492c54d2084da45201c6482cf93be28629f0ef79371cf",
+    "kind": 1,
+    "pubkey": "fa984bd7dbb282f07e16e7ae87b26a2a7b9b90b7246a44771f0cf5ae58018f52",
+    "sig": "eb652eb3dcca1f78401da6e0c40a5616bd62c4d831d7df2ed05168ed2830d5cfb70d389f2026aed07db83189fc93a187261a7b07c72047b464b881f701eaa143",
+    "tags": [
+      [
+        "e",
+        "85d5894338c910292842cbfd44ec71c9a5b2401a01766df106dc66d999cdfc45",
+        "",
+        "reply"
+      ],
+      [
+        "p",
+        "ae1008d23930b776c18092f6eab41e4b09fcf3f03f3641b1b4e6ee3aa166d760"
+      ],
+      [
+        "e",
+        "69a710ed91a57182d54630f3783535e40bcd3f8de19a3f6c711f4208fff4075d",
+        "",
+        "root"
+      ]
+    ]
+  },
+  {
+    "content": "GN https://image.nostr.build/03232307f46bb2a800dd0fd297e91181c6d867d5c1d7b57dc7a44d2cda76173c.jpg",
+    "created_at": 1712273293,
+    "id": "ed6efd8f036f4b510d0e880c606b1a8a54b86079c890c46167c567b319d410db",
+    "kind": 1,
+    "pubkey": "6e468422dfb74a5738702a8823b9b28168abab8655faacb6853cd0ee15deee93",
+    "sig": "ef99757a474afab40e45d5cbc787b018783207da62a8f14ca2f52d9392ee5f22b7cca8d6dc1f1da861b8b000bab58341a849e893325dd697b3d936b8123e2e7c",
+    "tags": [
+      [
+        "r",
+        "https://image.nostr.build/03232307f46bb2a800dd0fd297e91181c6d867d5c1d7b57dc7a44d2cda76173c.jpg"
+      ],
+      [
+        "imeta",
+        "url https://image.nostr.build/03232307f46bb2a800dd0fd297e91181c6d867d5c1d7b57dc7a44d2cda76173c.jpg",
+        "m image/jpeg",
+        "alt Verifiable file url",
+        "x cc731d91ee9fbe0f79e4d61e02563da854cdf86e33296b8748e4ca990a9b824e",
+        "size 78784",
+        "dim 682x1200",
+        "blurhash ]BBg3uRj9FD%-;D%M{ofRj%M4nM{-;-;IU_3Rj%Mt7D%00WB%MIUt7~qj[D%RjWB-;j[M{t7t700j[WBof%M~qt7IUt7Rj",
+        "ox 03232307f46bb2a800dd0fd297e91181c6d867d5c1d7b57dc7a44d2cda76173c"
+      ]
+    ]
+  },
+  {
+    "content": "Fantastic conversation. Stellar moderation. Loved the high-frequency beep that ripped my fucking earholes apart \n\nA++ thanks for sharing. ",
+    "created_at": 1712272916,
+    "id": "2c93a063922ba87c5c5a6423513b25aaa87a66080ebebb55d1f2748e4c73a11a",
+    "kind": 1,
+    "pubkey": "6e468422dfb74a5738702a8823b9b28168abab8655faacb6853cd0ee15deee93",
+    "sig": "c5d6f13068bdf47ee6c7fa653e32c4f035abd0d009baba9f2b5f87c79eb97d65e8e338e6af9175568355b434793496d354a3e4d252da21796a5144f503734a0d",
+    "tags": [
+      [
+        "e",
+        "ca7212d2d1b326aa10fd8d7008af27e432aa1d175ead4e0a6dde247270952f61",
+        "",
+        "root"
+      ],
+      [
+        "p",
+        "59f0660b34dd48f9dfac5d973b77774a75af057ea3a261214ac5cdccd5d24440"
+      ]
+    ]
+  },
+  {
+    "content": "Lol, my relay has reliably exceeded 30TB/month for all of 2023.  It is a bit wild and inefficient.",
+    "created_at": 1694819125,
+    "id": "99efb5d122cafa14becfa9d1634668c867d74a55421f9329406ff609caab0d33",
+    "kind": 1,
+    "pubkey": "35d26e4690cbe1a898af61cc3515661eb5fa763b57bd0b42e45099c8b32fd50f",
+    "sig": "3f0618dbf1b6dc352554f468fa23da4d5b374b7d3ab579a323a56aa798e1a9f3d2579d1b6b17a3c920118d78c5fad1c09033479ab2d9db6b3ed6e2faccd46679",
+    "tags": [
+      [
+        "e",
+        "a41638be30d99720053a48b379c2638213f738b6166480b4a3121574cd6c57bd"
+      ],
+      [
+        "e",
+        "10a8db62724c9c291cf6b649edce2e69cf3f25d1435a2762e8a465472674e431"
+      ],
+      [
+        "p",
+        "e2ccf7cf20403f3f2a4a55b328f0de3be38558a7d5f33632fdaaefc726c1c8eb"
+      ],
+      [
+        "p",
+        "cc53f373a72a82b7fb07d6efd6c8f07b32316e4ede4f9cfa908449554ff2ada5"
+      ]
+    ]
+  },
+  {
+    "content": "I've got a black lightning beanie and a macbook, CTF'ing near the DJ stand.",
+    "created_at": 1691696979,
+    "id": "e46ab186c56b41739f34cc46cc3b24a9197cf620b2e6c3deaff17e4b390a1033",
+    "kind": 1,
+    "pubkey": "35d26e4690cbe1a898af61cc3515661eb5fa763b57bd0b42e45099c8b32fd50f",
+    "sig": "5e39df3c0d1d93d514a5c749966a4fc3750179bac3478839671e58800a6ef689184ade2f4c94f484ed7bec617b3bf7726ceaae5dd570717ecd6a36880f8fb035",
+    "tags": [
+      [
+        "e",
+        "46c75979dc2a97e08f9e7784de47fb5f4f552e824c87b183d927822ff72849d9",
+        "",
+        "reply"
+      ]
+    ]
+  },
+  {
+    "content": "The overton window pendulum in action!",
+    "created_at": 1712251367,
+    "id": "6711dc8e30d4c806f3beb4b54c75ecf6d000a6cc45eac5fa95236f3321e04d31",
+    "kind": 1,
+    "pubkey": "1739d937dc8c0c7370aa27585938c119e25c41f6c441a5d34c6d38503e3136ef",
+    "sig": "463a8c9b2a4d760fb33d7fb4680d069c2846baad52f38ce2479747c766880c391768ec1bc92bb929bacc7f42c9d0781ab2c6f50ad70bef50d4914edd32b4872c",
+    "tags": [
+      [
+        "e",
+        "2c7c4dc928d413e544d9cdc6e52936346ae724de3c8c25ac43fcc2d543b8abef",
+        "",
+        "reply"
+      ],
+      [
+        "p",
+        "bb6e8b751ca4a8085082f588d62cb93ea163067a421a62420180dd19c1431f4f"
+      ],
+      [
+        "e",
+        "2c7c4dc928d413e544d9cdc6e52936346ae724de3c8c25ac43fcc2d543b8abef",
+        "",
+        "root"
+      ]
+    ]
+  },
+  {
+    "content": "And yet, billions of people still use them multiple times a day. \n\nActions speak louder than words. \n\nI completely agree with the fact that most people are unhappy with the options but they are somehow serving a purpose or solving a problem, even if their user's can't articulate what that might be. ",
+    "created_at": 1712240712,
+    "id": "37dc245d645e959257ac28c585e1d6e33ec754006685dd474e1f335130399db7",
+    "kind": 1,
+    "pubkey": "1739d937dc8c0c7370aa27585938c119e25c41f6c441a5d34c6d38503e3136ef",
+    "sig": "9233a1e569da9125462ea480a3f11eddcec6f6aba5117079fecd996deb97e6b4ba120898c9b2f8f66454c7a28b290dfb1571aae998b8fe7317c63d518392c7b9",
+    "tags": [
+      [
+        "e",
+        "b7a22eb7550b23f4026eee06616bbb3443f3a3b9b2336dae03bf37e6eab9f27b",
+        "",
+        "root"
+      ],
+      [
+        "p",
+        "460c25e682fda7832b52d1f22d3d22b3176d972f60dcdc3212ed8c92ef85065c"
+      ]
+    ]
+  },
+  {
+    "content": "Using Brave browser?",
+    "created_at": 1711848866,
+    "id": "7358d73374e09e97c990d14dc3ccf75b16f3c4dc1538b510ac6b74641dd80955",
+    "kind": 1,
+    "pubkey": "efc37e97fa4fad679e464b7a6184009b7cc7605aceb0c5f56b464d2b986a60f0",
+    "sig": "e9c59ebe7f2744f80773841c8e82ec03738094de386b5b5cec3a2a257f836b17595ed96b93e037a0cd3c263e184137e7ed2987b0d572df2169003b5d0eb4b417",
+    "tags": [
+      [
+        "e",
+        "80ceeef3fba66793c4837cd0149d868bedb72ccff8459bc31d52ff7cc8da9c80"
+      ],
+      [
+        "p",
+        "18e3af1edeecb70542eb7e000cf5c43ea0d6d3b79ebb64c8e2c98b341d42e5df"
+      ]
+    ]
+  },
+  {
+    "content": "Yea. There are too many developers on NOSTR.",
+    "created_at": 1711450557,
+    "id": "eb925c9a116c7647fe381cfc53bbb68e39874fe4a3d6552f2061d44b30b0394b",
+    "kind": 1,
+    "pubkey": "efc37e97fa4fad679e464b7a6184009b7cc7605aceb0c5f56b464d2b986a60f0",
+    "sig": "0e7716e063ca729214ef5e48e4059373a44e2b463ba6618ffd895ebdd00cf9f428d3486bcd687a8c30a8f8671711fb7d59d6f1e5fda0f3456320afaf58766a18",
+    "tags": [
+      [
+        "e",
+        "f3429a8a2d86c1ae62cbdb597318bf7a65b2824b1c797352a09226518eb4f647"
+      ],
+      [
+        "e",
+        "177223d4ae55a09275f3886175900278b18e8071463a4ebe8446f3aeb64c3e45"
+      ],
+      [
+        "p",
+        "787338757fc25d65cd929394d5e7713cf43638e8d259e8dcf5c73b834eb851f2"
+      ],
+      [
+        "p",
+        "619af6a60b3fe4c733aaca061c522cc9c7cf1d87ef4c908facc5ed936d3bdf23"
+      ]
+    ]
+  },
+  {
+    "content": "CAN CONFIRM. nostr:npub1l2vyh47mk2p0qlsku7hg0vn29faehy9hy34ygaclpn66ukqp3afqutajft IS INDEED UNREASONABLY EFFECTIVE BECAUSE HIGHLIGHTER IS LOOKING GOOD.\n\nI LIKE HOW THE ZAP POPUP HOLDS YOU HOSTAGE. IT DOESN’T CLOSE ONCE IT’S OPENED, PROBABLY A FEATURE.  \n\nhttps://highlighter.com\nhttps://m.primal.net/HrNO.jpg\nhttps://m.primal.net/HrNP.jpg",
+    "created_at": 1712251702,
+    "id": "cf4e2c5da3c0c06ef4522fbd30b30e8e156f59985486e7c27ca30673a2b171b3",
+    "kind": 1,
+    "pubkey": "a10260a2aa2f092d85e2c0b82e95eac5f8c60ea19c68e4898719b58ccaa23e3e",
+    "sig": "1d9d346d2f8870ef92b9b5d61bda0817d02be636a24dceb778d0745f971bc80ce5a119cc95b76cbb702fe20a63fde2d1a0d401df04807e8c4b3c7df1be8756b2",
+    "tags": [
+      [
+        "p",
+        "fa984bd7dbb282f07e16e7ae87b26a2a7b9b90b7246a44771f0cf5ae58018f52",
+        "",
+        "mention"
+      ]
+    ]
+  },
+  {
+    "content": "https://habla.news/u/gsovereignty@nostrovia.org/lqPpwQNzPWe5NzUD8gyDB",
+    "created_at": 1712250797,
+    "id": "b033528b14ae7f0e501830bd7dedffe950f05bdce56da9f7e0d223cb8e961dfa",
+    "kind": 1,
+    "pubkey": "a10260a2aa2f092d85e2c0b82e95eac5f8c60ea19c68e4898719b58ccaa23e3e",
+    "sig": "58fa445e742c7051ca33af942c617504f1dc2a1ca9557490b5b40ee993d39791ba12d090c2e089c3017b4985e1a2c2970569d9f762d2566f3d937deedf307158",
+    "tags": [
+      [
+        "e",
+        "92413b8a2e8cc846c730ccfc8973a5d670cb48d6b8ae8b48980119f4b5440406"
+      ],
+      [
+        "e",
+        "6f2e010118ea832d3da13b4baa87ac77bd3995e056bb0dc470abc9c8d3fa6aec"
+      ],
+      [
+        "p",
+        "fa984bd7dbb282f07e16e7ae87b26a2a7b9b90b7246a44771f0cf5ae58018f52"
+      ],
+      [
+        "p",
+        "6b9da920c4b6ecbf2c12018a7a2d143b4dfdf9878c3beac69e39bb597841cc6e"
+      ],
+      [
+        "r",
+        "https://habla.news/u/gsovereignty@nostrovia.org/lqPpwQNzPWe5NzUD8gyDB"
+      ]
+    ]
+  },
+  {
+    "content": "NEW Article - Debt From Above: The Carbon Credit Coup\n\nLatin America is quietly being forced into a carbon market scheme through regional contractual obligations – enforced by the satellites of a US intelligence-linked firm – which seeks to create an inter-continental \"smart grid,” erode national and local sovereignty, and link carbon-based life to the debt-based monetary system via a Bitcoin sidechain.\n\nhttps://unlimitedhangout.com/2024/04/investigative-reports/debt-from-above-the-carbon-credit-coup/",
+    "created_at": 1712244199,
+    "id": "52aba1a5b9c2e1c4db95046bd95d5c59f2ecc26f61054ae181f02d5e51aaadd7",
+    "kind": 1,
+    "pubkey": "43e87f5c42c5b13c193bf1e6f29740caa143ce01228ae4bd4b06254834580caa",
+    "sig": "561d8b53e1ae29c769e6de1a0c9f4c9965aaaf935f711956a1fe57272f59bf521e7a4ac134c6b06ccd80412e99c34c3de65537c40963fb4a8a8c42588f37ef04",
+    "tags": []
+  },
+  {
+    "content": "This week’s newsletter is out. Check your email or read it online.\nhttps://newsletter.unlimitedhangout.com/2024-03-24-newsletter/",
+    "created_at": 1711124809,
+    "id": "9054b150209cc090df56f2d87fb53b25d6cc1a7ccda434ef5a44d16fea1d4a17",
+    "kind": 1,
+    "pubkey": "43e87f5c42c5b13c193bf1e6f29740caa143ce01228ae4bd4b06254834580caa",
+    "sig": "09d0a512b388099dd14cf427545e1c63dde84158c08f88e83d98b5c0eb6f5b014c4fdaee74904f5bfe4848794deb4567931b58b9295f5b54b16127b5b5693b85",
+    "tags": []
+  },
+  {
+    "content": "Close to finishing up NIP-65 support for the broadcasting side of filter.nostr.wine 🚀\n\nIn addition to our usual list of public relays, we will soon also broadcast your notes to your “write” relays and any tagged user’s “read” relays.",
+    "created_at": 1712274465,
+    "id": "d4318bb5e9ec3beb3b1e571f0e8b08072ecc957073fb8d107c4560c40717c9ea",
+    "kind": 1,
+    "pubkey": "3d842afecd5e293f28b6627933704a3fb8ce153aa91d790ab11f6a752d44a42d",
+    "sig": "04238ba98d8211255c3a279efadbe85b0b77078528247d4a06f56f1d99335ce6c28292cca947283f250771ec70be7e9319ad9289f48c8d6dc24dc0e2e17eff50",
+    "tags": []
+  },
+  {
+    "content": "Agreed - though like search, it’s likely that these services will be provided by indexers that also operate relays.",
+    "created_at": 1711743656,
+    "id": "9913dbd554ea156ca08d93b87dc1541134928f0d1fa060a18fd5fdb617dc2f16",
+    "kind": 1,
+    "pubkey": "3d842afecd5e293f28b6627933704a3fb8ce153aa91d790ab11f6a752d44a42d",
+    "sig": "8c1db096fd5df2d980f5d0998b4b2f664da0ae14a1f8b96d0d63efdc5775eb3d9d35c9ae0214e017691f77e04ef47421bd91c836734611b64555d31a229c8fb8",
+    "tags": [
+      [
+        "e",
+        "1f5f4acc92ff47576d0df10cf9d33a090b1e159e4f6205286a91070593ea0696"
+      ],
+      [
+        "e",
+        "7ff34ea88195b86b607e220fd0c45ffedd6ddc751f884865617ba08c5e17aaea"
+      ],
+      [
+        "p",
+        "4c800257a588a82849d049817c2bdaad984b25a45ad9f6dad66e47d3b47e3b2f"
+      ]
+    ]
+  }
+]

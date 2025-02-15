@@ -1,11 +1,11 @@
 # This file is part of 'Nostr_client_relay'
-# Copyright (c) 2023, Space Research Software LLC, Pedro Vicente. All rights reserved.
+# Copyright (c) 2025, Space Research Software LLC, Pedro Vicente. All rights reserved.
 # See file LICENSE for full license details.
 
 if (MSVC)
  cmake_minimum_required(VERSION 3.26)
 else()
- cmake_minimum_required(VERSION 3.15)
+ cmake_minimum_required(VERSION 3.22)
 endif()
 set(CMAKE_BUILD_TYPE Debug)
 project (nostr_client_relay LANGUAGES CXX C)
@@ -17,6 +17,7 @@ option(BUILD_DESKTOP "BUILD_DESKTOP" OFF)
 option(BUILD_WEB "BUILD_WEB" OFF)
 option(BUILD_MOBILE "BUILD_MOBILE" OFF)
 option(USE_OPENSSL "set OFF to build without OpenSSL" ON)
+option(USE_BUILT_OPENSSL "Use OpenSSL built from source (Windows)" OFF)
 option(DEV_MODE "DEV_MODE" OFF)
 
 if(MSVC)
@@ -132,7 +133,6 @@ endif()
 
 set(lib_dep ${lib_dep})
 set(lib_dep ${lib_dep} nostr)
-set(lib_dep ${lib_dep} secp256k1)
 set(lib_dep ${lib_dep} nostri)
 if (MSVC)
   set(lib_dep ${lib_dep} Ws2_32.lib)
@@ -164,13 +164,11 @@ endif()
 
 if(USE_OPENSSL)
   if (MSVC)
-    if(DEFINED OPENSSL_ROOT_DIR)
-       message(STATUS "OPENSSL_ROOT_DIR: ${OPENSSL_ROOT_DIR}")
-    else() 
+    if(USE_BUILT_OPENSSL)
       set(OPENSSL_ROOT_DIR "${CMAKE_SOURCE_DIR}/ext/openssl-3.0.5")
       message(STATUS "Setting OPENSSL_ROOT_DIR to: ${OPENSSL_ROOT_DIR}")
-    endif()
-  endif()
+     endif(USE_BUILT_OPENSSL)
+  endif(MSVC)
 
  if (APPLE_IOS_TARGET)
    set(OPENSSL_ROOT_DIR "/Users/pvn/dev/openssl-apple/bin/iPhoneOS16.4-arm64.sdk")
@@ -259,14 +257,16 @@ file(COPY "${CMAKE_SOURCE_DIR}/test/list_01.txt" DESTINATION ${CMAKE_BINARY_DIR}
 file(COPY "${CMAKE_SOURCE_DIR}/test/list_02.txt" DESTINATION ${CMAKE_BINARY_DIR})
 file(COPY "${CMAKE_SOURCE_DIR}/resources/server.key" DESTINATION ${CMAKE_BINARY_DIR})
 file(COPY "${CMAKE_SOURCE_DIR}/resources/server.crt" DESTINATION ${CMAKE_BINARY_DIR})
-file(COPY "${CMAKE_SOURCE_DIR}/database/database.json" DESTINATION ${CMAKE_BINARY_DIR})
-file(COPY "${CMAKE_SOURCE_DIR}/resources/wt_config.xml" DESTINATION ${CMAKE_BINARY_DIR}/web)
+file(COPY "${CMAKE_SOURCE_DIR}/resources/database.json" DESTINATION ${CMAKE_BINARY_DIR})
 
 #//////////////////////////
 # Wt desktop
 #//////////////////////////
 
+set(HOME_DIR $ENV{HOME})
+
 if (BUILD_DESKTOP)
+  file(COPY "${CMAKE_SOURCE_DIR}/resources/feed.json" DESTINATION ${HOME_DIR}/nostro)
   add_subdirectory(desktop)
 endif()
 

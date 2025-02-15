@@ -1,11 +1,31 @@
-# Dependencies
+# Dependencies for command line applications 
 
 - CMake [https://cmake.org/]
-- libsecp256k1 [https://github.com/bitcoin-core/secp256k1]
 - OpenSSL [https://www.openssl.org/] (Windows build with ext/openssl-3.0.5/build.bat)
+
+## Software included
+
+These libraries are included in /ext
+
 - Asio [https://think-async.com/Asio/AsioStandalone.html] 
 - Simple-WebSocket-Server [https://gitlab.com/eidheim/Simple-WebSocket-Server] 
 - JSON Modern C++ [https://json.nlohmann.me/] 
+
+## Dependencies for desktop GUI Nostro
+
+GUI Nostro requires the Qt cross-platform application development framework. It can be installed with
+
+Linux
+
+``` cmd 
+sudo apt install qt6-base-dev qt6-multimedia-dev
+```
+
+Windows
+Add Qt location to PATH environment variable 
+e.g.
+C:\Qt\6.8.2\msvc2022_64
+
 
 Nostr_client_relay allows to build Nostr clients and Nostr relays. It includes:
 
@@ -15,7 +35,7 @@ Nostr_client_relay allows to build Nostr clients and Nostr relays. It includes:
 - a web interface for a client, **Wostro**
 - a native mobile client, **Mostro** (deprecated)
 
-:warning: All dependencies except boost (for web build) and wxWidgets (for desktop build) are included in the repository.  
+:warning: All dependencies except boost (for web build) and Qt (for desktop build) are included in the repository.  
 The minimal dependency needed is OpenSSL. To install dependencies on Mac and Linux
 
 Mac
@@ -86,26 +106,19 @@ To run the supplied Nostr command line API examples
 
 # Desktop build
 
-For desktop, the additional library is needed  
+For desktop, install dependencies 
 
-- WxWidgets [https://www.wxwidgets.org/]
-
-To clone WxWidgets, do
+Linux Ubuntu  
 
 ```
-git clone --recurse-submodules https://github.com/wxWidgets/wxWidgets.git ext/wxWidgets-3.2.2.1
+sudo apt-get install git cmake build-essential libgl1-mesa-dev libssl-dev
 ```
 
-build dependencies with the bash shell script
-
-``` cmd
-build.widgets.sh
-```
 
 To enable desktop build, use 
 
 ```
-cmake -DBUILD_DESKTOP=ON
+cmake .. -DBUILD_DESKTOP=ON -DCMAKE_PREFIX_PATH="/home/pvn/Qt-6.7.0
 
 ```
 

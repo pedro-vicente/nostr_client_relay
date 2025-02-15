@@ -58,6 +58,8 @@ target_link_libraries (nostril ${lib_dep})
 # generate  config.h
 #//////////////////////////
 
+if(MSVC)
+else()
 add_custom_command(
     TARGET configurator
     POST_BUILD
@@ -65,5 +67,6 @@ add_custom_command(
     COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_BINARY_DIR}/src/nostril/config.h" ${CMAKE_SOURCE_DIR}/src/nostril
     COMMENT "Generating config.h"
 )
+endif()
 
 endif()
