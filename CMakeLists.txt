@@ -255,9 +255,12 @@ endif()
 message(STATUS "Copying data files to: ${CMAKE_BINARY_DIR}")
 file(COPY "${CMAKE_SOURCE_DIR}/test/list_01.txt" DESTINATION ${CMAKE_BINARY_DIR})
 file(COPY "${CMAKE_SOURCE_DIR}/test/list_02.txt" DESTINATION ${CMAKE_BINARY_DIR})
-file(COPY "${CMAKE_SOURCE_DIR}/resources/server.key" DESTINATION ${CMAKE_BINARY_DIR})
-file(COPY "${CMAKE_SOURCE_DIR}/resources/server.crt" DESTINATION ${CMAKE_BINARY_DIR})
-file(COPY "${CMAKE_SOURCE_DIR}/resources/database.json" DESTINATION ${CMAKE_BINARY_DIR})
+
+if(MSVC)
+  file(COPY "${CMAKE_SOURCE_DIR}/resources/database.json" DESTINATION ${CMAKE_BINARY_DIR}/Debug)
+else()
+  file(COPY "${CMAKE_SOURCE_DIR}/resources/database.json" DESTINATION ${CMAKE_BINARY_DIR})
+endif()
 
 #//////////////////////////
 # Wt desktop

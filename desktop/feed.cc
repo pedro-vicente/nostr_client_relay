@@ -13,9 +13,14 @@
 #include <QVBoxLayout>
 #include <QLabel>
 
+#include <sstream>
+
 #include "feed.h"
 #include "entry.h"
 #include "store.h"
+
+#include "log.hh"
+#include "database.hh"
 
 std::string log_program_name("nostro");
 const std::string def_pubkey("4ea843d54a8fdab39aa45f61f19f3ff79cc19385370f6a272dda81fade0a052b");
@@ -27,14 +32,22 @@ std::vector<std::string> relays = { "eden.nostr.land", "nos.lol", "relay.snort.s
 
 FrameFeed::FrameFeed()
 {
-#if defined HAVE_NOSTR
+#if defined HAVE_JSON_FEED
+  read_database(database);
+#else
 
-  int get_remote = 0;
+  int get_remote = 1;
+  int read_local_database = 0;
 
   comm::start_log();
 
   //read saved database 
-  database = database::read();
+  if (read_local_database)
+  {
+    comm::log("reading local database", 1);
+    database = database::read();
+  }
+  
 
   ///////////////////////////////////////////////////////////////////////////////////////
   // get remote
@@ -85,8 +98,7 @@ FrameFeed::FrameFeed()
     //save to database
     database::append(database);
   }
-#else
-  read_database(database);
+
 #endif
 
   QVBoxLayout* layout_main = new QVBoxLayout;

@@ -1,9 +1,12 @@
 #ifndef ENTRY_FEED_NOSTR_H
 #define ENTRY_FEED_NOSTR_H
 
-#include "nostro.h"
 #include <QLabel>
 #include <QNetworkAccessManager>
+
+#include "nostr.hh"
+
+const int show_color = 1;
 
 QT_BEGIN_NAMESPACE
 class QMediaPlayer;

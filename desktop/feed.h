@@ -4,7 +4,8 @@
 #include <QMainWindow>
 #include <QFrame>
 #include "twitter.h"
-#include "nostro.h"
+
+#include "nostr.hh"
 
 QT_BEGIN_NAMESPACE
 QT_END_NAMESPACE
