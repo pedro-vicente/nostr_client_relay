@@ -9,6 +9,8 @@
 
 void make_feed();
 
+MainWindow* main_window;
+
 ///////////////////////////////////////////////////////////////////////////////////////
 // main
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -17,11 +19,16 @@ int main(int argc, char** argv)
 {
   QApplication app(argc, argv);
 
-  MainWindow window;
+  main_window = new MainWindow();
   QSize screen = QGuiApplication::primaryScreen()->size();
-  window.resize(screen.width(), screen.height());
-  window.showMaximized();
-  return app.exec();
+  main_window->resize(screen.width(), screen.height());
+  main_window->showMaximized();
+  int result = app.exec();
+
+  delete main_window;
+  main_window = NULL;
+
+  return result;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////

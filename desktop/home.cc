@@ -1,0 +1,20 @@
+#include "home.h"
+#include "window.h"
+
+#include <QLabel>
+#include <QVBoxLayout>
+
+///////////////////////////////////////////////////////////////////////////////////////
+// Home
+///////////////////////////////////////////////////////////////////////////////////////
+
+Home::Home()
+{
+  auto layout = new QVBoxLayout;
+  setLayout(layout);
+
+  QLabel* home = new QLabel(this);
+  home->setText("Home");
+
+  layout->addWidget(home);
+}

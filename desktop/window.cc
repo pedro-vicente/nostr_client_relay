@@ -13,12 +13,23 @@
 #include "entry.h"
 #include "store.h"
 #include "feed.h"
+#include "menu.h"
+#include "home.h"
 
 ///////////////////////////////////////////////////////////////////////////////////////
-//MainWindow
+// MainWindow
 ///////////////////////////////////////////////////////////////////////////////////////
 
-MainWindow::MainWindow()
+MainWindow::MainWindow() : active_frame(1)
+{
+  populate();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////
+// populate
+///////////////////////////////////////////////////////////////////////////////////////
+
+void MainWindow::populate()
 {
   auto container = new QWidget;
 
@@ -26,16 +37,25 @@ MainWindow::MainWindow()
   auto layout = new QHBoxLayout;
   container->setLayout(layout);
 
-  QFrame* frame1 = new QFrame();
-  FrameFeed* frame2 = new FrameFeed();
+  Menu* menu = new Menu();
 
-  frame1->setStyleSheet("background-color: burlywood;");
+  menu->setStyleSheet("background-color: burlywood;");
+  menu->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+  layout->addWidget(menu, 20);
 
-  frame1->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
-  frame2->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
-
-  layout->addWidget(frame1, 20);
-  layout->addWidget(frame2, 80);
+  if (active_frame == 1)
+  {
+    FrameFeed* feed = new FrameFeed();
+    feed->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+    layout->addWidget(feed, 80);
+  }
+  else if (active_frame == 0)
+  {
+    Home* home = new Home();
+    home->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+    layout->addWidget(home, 80);
+  }
 
   setCentralWidget(container);
+
 }

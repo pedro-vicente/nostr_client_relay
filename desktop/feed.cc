@@ -36,8 +36,8 @@ FrameFeed::FrameFeed()
   read_database(database);
 #else
 
-  int get_remote = 1;
-  int read_local_database = 0;
+  int get_remote = 0;
+  int read_local_database = 1;
 
   comm::start_log();
 

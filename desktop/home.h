@@ -1,19 +1,21 @@
-#ifndef MAIN_WINDOW_NOSTR_H
-#define MAIN_WINDOW_NOSTR_H
+#ifndef HOME_WINDOW_H
+#define HOME_WINDOW_H
 
-#include <QMainWindow>
+#include <QFrame>
+#include <QString>
+
+QT_BEGIN_NAMESPACE
+QT_END_NAMESPACE
 
 ///////////////////////////////////////////////////////////////////////////////////////
-//MainWindow
+// Home
 ///////////////////////////////////////////////////////////////////////////////////////
 
-class MainWindow : public QMainWindow
+class Home : public QFrame
 {
   Q_OBJECT
 public:
-  MainWindow();
-  void populate();
-  int active_frame;
+  Home();
 };
 
 

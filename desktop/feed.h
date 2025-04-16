@@ -1,10 +1,7 @@
-#ifndef MAIN_WINDOW_H
-#define MAIN_WINDOW_H
+#ifndef FEED_WINDOW_H
+#define FEED_WINDOW_H
 
-#include <QMainWindow>
 #include <QFrame>
-#include "twitter.h"
-
 #include "nostr.hh"
 
 QT_BEGIN_NAMESPACE
