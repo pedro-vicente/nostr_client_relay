@@ -25,16 +25,17 @@ cmake --install . --config Debug
 
 elif [[ "$OSTYPE" == "darwin"* ]]; then
 
-cmake .. -DCMAKE_INSTALL_PREFIX=/Users/pvn/wt_install -DBOOST_PREFIX=/Users/pvn/git/wt.extra/ext/boost_1_88_0 -DINSTALL_EXAMPLES=ON
+cmake ../../ext/wt-4.12.0 --fresh -DCMAKE_INSTALL_PREFIX=/Users/pvn/wt_install -DBOOST_PREFIX=/Users/pvn/nostr_client_relay/ext/boost_1_88_0 -DINSTALL_EXAMPLES=ON
 cmake --build . --parallel 9
 make install
 
 elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
 
-cmake .. -DCMAKE_INSTALL_PREFIX=/home/pvn/wt_install -DBOOST_PREFIX=/home/pvn/git/wt.extra/ext/boost_1_88_0 -DINSTALL_EXAMPLES=ON
+cmake ../../ext/wt-4.12.0 --fresh -DCMAKE_INSTALL_PREFIX=/home/pvn/wt_install -DBOOST_PREFIX=/home/pvn/nostr_client_relay/ext/boost_1_88_0 -DINSTALL_EXAMPLES=ON
 cmake --build . --parallel 9
 make install
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/pvn/git/wt.extra/ext/boost_1_88_0/stage/lib:/home/pvn/wt_install/lib
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/pvn/nostr_client_relay/ext/boost_1_88_0/stage/lib:/home/pvn/wt_install/lib
+echo "open browser http://localhost:8081"
 /home/pvn/wt_install/lib/Wt/examples/hello/hello.wt --http-address=0.0.0.0 --http-port=8081 --docroot=.
  
 fi
