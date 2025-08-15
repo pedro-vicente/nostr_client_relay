@@ -4,7 +4,7 @@ pushd build
 
 if [[ "$OSTYPE" == "msys" ]]; then
 
-cmake .. -DBUILD_DESKTOP=ON -DCMAKE_PREFIX_PATH="C:/Qt/6.8.2/msvc2022_64" -DHAVE_JSON_FEED=OFF
+cmake .. -DBUILD_DESKTOP=ON -DCMAKE_PREFIX_PATH="C:/Qt/6.8.2/msvc2022_64" -DHAVE_JSON_FEED=ON
 
 elif [[ "$OSTYPE" == "darwin"* ]]; then
 
