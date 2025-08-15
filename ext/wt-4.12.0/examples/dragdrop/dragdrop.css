@@ -1,0 +1,35 @@
+body, html {
+    height: 90%;
+    margin: 0px;
+    padding: 0px;
+}
+
+.root {
+    padding: 10px;
+}
+
+body, td {
+  font-family:arial,sans-serif;
+}
+
+.character {
+  padding: 10px;
+  margin: 10px;
+  border: 1px solid #000;
+}
+
+.blue-drop-site {
+  padding: 10px;
+  margin: 10px;
+  border: 1px solid #000;
+
+  background-color: #e0ecff;
+}
+
+.red-drop-site {
+  padding: 10px;
+  margin: 10px;
+  border: 1px solid #000;
+
+  background-color: #ffece0;
+}

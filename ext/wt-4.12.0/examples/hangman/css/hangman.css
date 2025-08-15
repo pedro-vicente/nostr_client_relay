@@ -1,0 +1,77 @@
+body {
+    font-family: arial;
+}
+
+h1 {
+    text-align: center;
+}
+
+.gamestack {
+    margin: 20px 40px;
+}
+
+.links {
+    margin: 10px;
+    text-align: center;
+}
+
+.links a {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.highscores table {
+    width: 60ex;
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+    border-style: solid;
+    border-color: #555;
+    border-width: 2px;
+    color: #333;
+}
+
+.highscores td, th {
+    border-style: solid;
+    border-width: 1px;
+    border-color: #999;
+    padding: 3px;
+}
+
+.highscores th {
+    font-variant: small-caps;
+}
+
+.highscores tr#self {
+    font-style: italic;
+    font-weight: bold;
+    font-variant: normal;
+}
+
+.fineprint {
+    font-size: smaller;
+}
+
+.score {
+    font-size: large;
+}
+
+.wordcontainer {
+    top-margin: 20px;
+    bottom-margin: 20px;
+
+    border-style: solid;
+    font-family: courier, Monospace;
+    font-size: xx-large;
+}
+
+.selected-link {
+    font-weight: bold;
+}
+
+.Wt-auth-logged-in {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    font-size: 90%;
+}

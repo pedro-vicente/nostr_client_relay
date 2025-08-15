@@ -1,0 +1,24 @@
+
+.upload-block {
+    color: white;
+    margin: 10px;
+    display: inline-block;
+}
+
+.upload-block.cancelled {
+    color: grey;
+}
+
+.upload-block.ready {
+    color: green;
+}
+
+.upload-block.invalid {
+    color: red;
+}
+
+.log {
+    height: 300px;
+    overflow: auto;
+    border: solid;
+}

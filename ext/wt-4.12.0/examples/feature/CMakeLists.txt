@@ -1,0 +1,28 @@
+SUBDIRS(
+  auth1
+  auth2
+  broadcast
+  client-ssl-auth
+  custom_layout
+  dbo
+  locale
+  mediaplayer
+  miniwebgl
+  multiple_servers
+  oauth
+  oidc
+  paypal
+  postall
+  scrollvisibility
+  serverpush
+  socketnotifier
+  suggestionpopup
+  template-fun
+  urlparams
+  video
+  widgetset
+)
+
+if(WT_HAS_SAML)
+  add_subdirectory(saml)
+endif()

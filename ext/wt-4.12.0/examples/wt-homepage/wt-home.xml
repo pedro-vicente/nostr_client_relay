@@ -1,0 +1,1465 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<messages>
+  <message id="template">
+    <div id="top_wrapper">
+      <div id="top_content">
+        ${languages}
+        <div id="top_wt">
+          <a href="//www.emweb.be/">
+            <img src="/css/wt/emweb_powered.jpg" alt="Emweb" height="22" />
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div id="banner_wrapper">
+      <div id="banner_content">
+        <div id="banner_end">
+          <div id="banner">
+            <!-- <a href="#">Wt</a> -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="main_wrapper" class="home">
+      <div id="main_content">
+        <div id="main_menu">
+          ${menu}
+          ${sidebar}
+        </div>
+        ${contents}
+
+        <div class="clearall"></div>
+      </div>
+    </div>
+
+    <div id="footer_wrapper">
+      <div id="footer_content">
+        <div id="footer_copyright">
+          <a href="//www.emweb.be/">
+            <img src="/css/wt/emweb_large.jpg" height="25" width="101"
+                 alt="Emweb.be" title="emweb.be"/></a>
+          Solutions for web-based systems<br/>
+          <a href="//www.emweb.be/">www.emweb.be</a>
+        </div>
+
+        <div id="footer_menu">
+          <a href="//www.webtoolkit.eu/wt">Home</a>
+          | <a href="//www.emweb.be/contact">Contact</a>
+
+        </div>
+
+        <div id="chat"></div>
+        <script type="text/javascript">
+            /*<![CDATA[*/
+          setTimeout(function() {
+            loadScript("//www.webtoolkit.eu/wt/examples/simplechat/chat.js?div=chat", null);
+          }, 0);
+            /* ]]> */
+        </script>
+
+        <div class="clearall"></div>
+      </div>
+      <script type="text/javascript">
+            /*<![CDATA[*/
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-4345578-1', 'auto');
+ga('send', 'pageview');
+            /* ]]> */
+      </script>
+    </div>
+  </message>
+
+  <message id="wt">Wt, C++ Web Toolkit</message>
+
+  <message id="introduction">Introduction</message>
+  <message id="blog">Blog</message>
+  <message id="features">Features</message>
+  <message id="documentation">Documentation</message>
+  <message id="examples">Examples</message>
+  <message id="download">Download</message>
+  <message id="community">Support</message>
+  <message id="other-language">!C++</message>
+
+  <message id="hello-world">Hello world</message>
+  <message id="charts">Charts</message>
+  <message id="wt-homepage">Wt homepage</message>
+  <message id="treeview">Treeview</message>
+  <message id="git">Git explorer</message>
+  <message id="chat">Chat</message>
+  <message id="mail-composer">Mail composer</message>
+  <message id="hangman">Hangman</message>
+  <message id="widget-gallery">Widget gallery</message>
+
+  <message id="home.news">
+    <h3><span>News</span></h3>
+  </message>
+  <message id="home.latest-news">
+    <h4><span>Latest News</span></h4>
+  </message>
+  <message id="home.historical-news">
+    <h4><span>Historical News</span></h4>
+  </message>
+
+  <message id="source-browser-link">
+    <a href="{1}">Browse the source code</a>
+  </message>
+
+  <message id="src-title">
+    <div>
+    </div>
+  </message>
+
+  <message id="home.intro">
+
+<h3><span>Wt: an introduction</span></h3>
+
+<p>Wt (pronounced as <i>witty</i>) is a C++ library for developing
+web applications.</p>
+
+<p>The API is <b>widget-centric</b> and uses well-tested patterns of
+desktop GUI development tailored to the web. To the developer, it
+offers abstraction of many web-specific implementation details,
+including client-server protocols (HTTP, Ajax, WebSockets), and frees
+the developer from tedious JavaScript manipulations of HTML and
+dealing with cross-browser issues. Instead, with Wt, you can focus on
+actual functionality with a rich set of feature-complete widgets.</p>
+
+<p>Unlike old-school page-based frameworks or current-day single-page
+JavaScript "frameworks", Wt allows you to create stateful applications
+that are at the same time highly interactive (using WebSockets and
+Ajax for everything) but still support plain HTML browsers or web
+crawlers using automatic <b>graceful degradation or progressive
+enhancement</b>. Things that are natural and simple with Wt would
+require an impractical amount of development effort otherwise:
+switching widgets using animations, while retaining clean URLs and
+browser navigation functions, or having a persistent chat widget open
+throughout the entire application, that even works in legacy browsers
+like Microsoft Internet Explorer 6.</p>
+
+<p>The library comes with an application server that acts as a
+stand-alone Http(s)/WebSocket server or integrates through FastCGI
+with other web servers.</p>
+
+<h4>Feature rich</h4>
+
+<ul>
+<li>Layout using <a
+href="//www.webtoolkit.eu/widgets/layout/html-templates">HTML
+templates</a> or intelligent <a
+href="//www.webtoolkit.eu/widgets/layout/layout-managers">layout
+managers</a> and themable look-and-feel, including support for <a
+href="http://getbootstrap.com">Twitter Bootstrap</a> versions 2 or 3.</li>
+<li>Create and maintain complexity by using and building reusable and
+self-contained widgets.</li>
+<li>Comes with a large set of feature-rich widgets that include <a href="//www.webtoolkit.eu/widgets/forms/">form
+widgets</a>, <a href="//www.webtoolkit.eu/widgets/trees-tables/mvc-table-views">table</a> and <a
+href="//www.webtoolkit.eu/widgets/trees-tables/mvc-tree-views">tree
+views</a>, <a
+href="//www.webtoolkit.eu/widgets/layout/dialogs">dialogs</a>, <a
+href="//www.webtoolkit.eu/widgets/navigation/popup-menu">popup
+menu's</a>, etc...</li>
+<li>Unified <a
+href="//www.webtoolkit.eu/widgets/graphics-charts">graphics</a>
+APIs, 2D (SVG, HTML5 Canvas, VML, PNG, and PDF) &amp; 3D (client side
+WebGL and server-side OpenGL).</li>
+<li>Feature rich <a
+href="//www.webtoolkit.eu/widgets/media/pdf-output">HTML
+to PDF renderer</a> for dynamic report generation.</li>
+<li>Elegant template-based C++ Database abstraction layer (Wt::Dbo)</li>
+<li>Built-in security against common vulnerabilities such as <a
+href="http://en.wikipedia.org/wiki/Cross-site_scripting">XSS (Cross-Site Scripting)</a> or <a
+href="http://en.wikipedia.org/wiki/Cross-site_request_forgery">CSRF
+(Cross-Site Request Forgery)</a></li>
+</ul>
+
+<h4>Typical use scenarios:</h4>
+
+<ul>
+  <li><b>High performance, complex</b> web applications which are
+  fully personalized (and thus cannot benefit from caching), fully
+  Ajax enabled and at the same time entirely accessible and Search
+  Engine Optimized.</li>
+  <li>Web-based GUIs for <b>embedded systems</b> benefit from the low
+  footprint of a C++ web application server.</li>
+  <li>Web-based GUIs that require <b>integration with (existing) C++
+  libraries</b>, for example for scientific or engineering
+  applications, or <b>existing C++ desktop applications</b>.</li>
+</ul>
+  </message>
+  <message id="home.features">
+
+<h3><span>Features</span></h3>
+
+<h4>Core library</h4>
+
+<ul>
+  <li>Supports major browsers (Firefox/Gecko, Internet Explorer,
+    Safari, Chrome, Konqueror, and Opera) but also plain HTML
+    browsers and web crawlers.</li>
+  <li>Develop and deploy on Unix/GNU Linux or Microsoft Windows
+    (Visual Studio) environments.</li>
+  <li>Equal behavior with or without support for JavaScript or Ajax,
+    as far as possible, by using graceful degradation or progressive
+    enhancement.</li>
+  <li>Efficient rendering and (sub-) millisecond latency.</li>
+  <li>Integrated Unicode support and pervasive localization.</li>
+  <li>Support for browser history navigation (back/forward buttons and
+    bookmarks), clean URLs with HTML5 History if available, and
+    search engine optimization with a unified behavior for plain HTML
+    or Ajax sessions.</li>
+  <li>High performance, suitable for embedded (Linux) devices, or
+    energy-, space- and budget-friendly (virtual private) server
+    deployments.</li>
+  <li>Based on event-driven async I/O: sessions are not
+    tied to threads, and neither do open connections block threads.
+    Instead, threads are used only to improve concurrent request
+    handling (or for reentrant event loops).</li>
+</ul>
+
+<h4>Event handling</h4>
+
+<ul>
+  <li>Typesafe signal/slot API for responding to events.</li>
+  <li>Listen for keyboard, mouse, focus, scroll or drag&amp;drop events,
+    and get event details (such as mouse position, modifier buttons, or
+    keyboard key).</li>
+  <li>Automatic synchronization Automatically synchronizes form field data
+    from browser to server and tracks server-side changes to be rendered
+    in browser.</li>
+  <li>Integrate with JavaScript libraries</li>
+  <li>Timed events and server-initiated updates ("server push")</li>
+  <li>Uses plain HTML CGI, Ajax or WebSockets</li>
+</ul>
+
+<h4>Native painting system</h4>
+
+<ul>
+  <li>Unified 2D painting API which uses the browsers native (vector)
+    graphics support (inline VML, inline SVG, or HTML5 canvas), or
+    renders to common image formats (PNG, GIF, ...) or vector formats
+    (SVG, PDF).</li>
+  <li>Unified GL-based 3D painting API which leverages WebGL in the browser
+    or server-side OpenGL (fallback).</li>
+</ul>
+
+<h4>Built-in security</h4>
+
+<ul>
+  <li>Kernel-level memory protection protects against privacy issues
+    arising from programming bugs, since sessions can be completely
+    isolated from each other (in dedicated-process mode).</li>
+  <li>Supports encryption and server authentication using Secure Sockets
+    Layer (SSL) or Transport Layer Security (TLS) through HTTPS.</li>
+  <li>Enables continuous use of HTTPS through low bandwidth
+    requirements (fine-grained Ajax).</li>
+  <li>Built-in Cross-Site Scripting (XSS) prevention. Rendered text is
+    always filtered against potentially malicious code, making XSS
+    attacks against Wt applications (close to) impossible.</li>
+  <li>Not vulnerable to Cross-site Request Forgery (CSRF) because
+    cookies for session tracking are optional, and even when used, they
+    are never solely relied on for requests that trigger event handling
+    code.</li>
+  <li>Not vulnerable to breaking the application logic by skipping to
+    a particular URL, since only those events exposed in the interface
+    can be triggered.</li>
+  <li>Session hijacking mitigation and risk prevention</li>
+  <li>DoS mitigation</li>
+  <li>A built-in authentication module implements best practices for
+    authentication, and supports third party identity providers using
+    OAuth 2.0, and (later) OpenID Connect</li>
+</ul>
+
+<h4>Object Relational Mapping library</h4>
+
+Wt comes with Wt::Dbo, a self-contained library which implements
+Object-Relational mapping, and thus a convenient way to interact with
+SQL databases from C++. Although features like optimistic concurrency
+control make this an ideal technology for a database driven web
+application (and it provides good integration with Wt's MVC classes),
+the library can also be used for other applications, and does not
+depend on Wt.
+
+The ORM library (see also <a
+href="//www.webtoolkit.eu/wt/doc/tutorial/dbo.html">this
+tutorial</a>) has the following features:
+
+<ul>
+  <li>No code generation, no macro hacks, no XML configuration, just
+    modern C++!</li>
+  <li>Uses a templated visitor pattern which requires a single
+    template method to provide the mapping: DRY and as efficient as
+    conceivable!</li>
+  <li>You can indicate surrogate auto-incremental keys or map natural
+    keys of any C++ type, which may also be composite (i.e. require more
+    than one database field).</li>
+  <li>Supports <a
+    href="http://en.wikipedia.org/wiki/Optimistic_concurrency_control">
+    optimistic concurrency control</a> using a version field.</li>
+  <li>Maps Many-to-One and Many-to-Many relations to STL-compatible
+    collections.</li>
+  <li>Provides schema generation (aka DDL: data definition language)
+    and CRUD operations (aka DML: data manipulation language).</li>
+  <li>Prepared statements throughout.</li>
+  <li>Each session tracks dirty objects and provides a first-level cache.</li>
+  <li>Flexible querying which can query individual fields, objects, or
+    tuples of any these (using Boost.Tuple).</li>
+  <li>Use a single connection or share connection pools between
+    multiple sessions from which connections are used only during an
+    active transaction.</li>
+  <li>Comes with Sqlite3, Firebird, MariaDB/MySQL and PostgreSQL
+    backends, and an Oracle backend is also available on request.</li>
+</ul>
+
+<h4>Testing</h4>
+
+With Wt, event handling code constructs and manipulates a widget tree,
+which can easily be inspected by test code. Therefore, a <a href="
+//webtoolkit.eu/wt/doc/reference/html/classWt_1_1Test_1_1WTestEnvironment.html">test
+environment</a> allows your application to be instantiated and events
+to be simulated in absence of a browser, short-cutting the underlying
+request/response cycle that would otherwise require a simulated browser.
+
+<h4>Deployment</h4>
+
+<p>
+The library abstracts different deployment options as connectors
+libraries, which connect Wt with the outer world. Switching deployment
+option is a matter of (re)linking to one of these connector libraries!
+</p>
+
+<h5>a) Built-in httpd</h5>
+
+<ul>
+  <li>Simple, high-performance web application server (multi-threaded,
+    asynchronous I/O) based on the C++ asio library.</li>
+  <li>Supports the HTTP(S) and WebSocket(S) protocols.</li>
+  <li>Supports response chunking and compression.</li>
+  <li>Single process (convenient for development and debugging), and
+    embeddable in an existing application.</li>
+  <li>Supports deployment behind a ProxyPass'ing (and if needed,
+    load-balancing) web server.</li>
+  <li>Available for both UNIX and Win32 platforms.</li>
+</ul>
+
+<h5>b) FastCGI</h5>
+
+<ul>
+  <li>Integrates with most common web servers (apache, lighttpd).</li>
+  <li>Different session-to-process mapping strategies.</li>
+  <li>Hot deployment: new sessions use the new application version while
+    older sessions may continue with their application version.</li>
+  <li>Available only for UNIX platforms.</li>
+</ul>
+
+<h5>c) ISAPI</h5>
+
+<ul>
+  <li>Integrates with Microsoft IIS server.</li>
+  <li>Uses the ISAPI asynchronous API for maximum performance.</li>
+  <li>Available for the Win32 platform.</li>
+</ul>
+
+  </message>
+  <message id="home.examples">
+
+<h3><span>Examples</span></h3>
+
+<p>Explore some live examples of Wt below.</p>
+
+<p>
+  The source code of these (and many more) examples is included in the
+  Wt source distribution. You may also browse through the source code
+  of each example using the <a href="#/src">source code viewer</a>,
+  following the link below each example.
+</p>
+
+<p>
+  Cross-linked source code for these examples is also in
+  <a href="//www.webtoolkit.eu/wt/doc/examples/html/modules.html" target="_blank">
+  doxygen documentation (in a new window)</a>.
+</p>
+
+  </message>
+  <message id="home.examples.hello">
+<div>
+<h4 class="example">Hello world!</h4>
+
+<p>
+  <a href="//www.webtoolkit.eu/wt/examples/hello/hello.wt" class="run" target="_blank">
+    <img src="/icons/green-play.png" style="vertical-align: top"/> Run example
+  </a>
+</p>
+
+<p>This simple example illustrates most of the basic Wt concepts:</p>
+<ul>
+  <li>
+    How to make a minimal Wt application, using <b>WRun()</b> to start
+    the web server, and a function to create a new <a
+    href="//www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WApplication.html"
+    target="_blank">WApplication</a>, corresponding to a new session.
+  </li>
+  <li>
+    <b>Creating widgets</b>, and adding them to <b>the widget tree</b>.
+  </li>
+  <li>
+    Reacting to events using the <b>signal/slot</b> mechanism.
+  </li>
+  <li>
+    Reading user input and updating widgets.
+  </li>
+</ul>
+
+<p>For a thorough (although slightly out-dated) explanation of the
+hello world example, see also the <a
+href="http://www.codeguru.com/cpp/i-n/internet/browsercontrol/article.php/c15275/"
+target="_blank">nice introduction to Wt</a> written by Victor Venkman.</p>
+</div>
+  </message>
+  <message id="home.examples.wt">
+<div>
+<h4 class="example">Wt homepage</h4>
+<p>We eat our own dog food: this website itself is a Wt example. </p>
+
+<p>
+  Not really the interactive application Wt was designed for, the
+  homepage illustrates how Wt also makes excellent content-driven
+  websites. To that extent, Wt supports pretty URLs all the same for
+  both Ajax and plain HTML sessions (leveraging HTML5 History support
+  if possible), useful for browser history navigation,
+  bookmarks, and search engine optimization.
+</p>
+
+<p>
+  Navigation is provided by a <a
+  href="//www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WMenu.html"
+  target="_blank">WMenu</a> and <a
+  href="//www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WTabWidget.html"
+  target="_blank">WTabWidget</a>. These widgets share the same feature
+  set. For Ajax sessions, they support <b>pre-loading</b> and <b>lazy
+  loading</b> of the contents associated with each item. Pre-loaded
+  contents does not increase the load time because the Wt rendering
+  engine always optimizes the response time by only transmitting
+  visual widgets or changes first. Everything invisible (such as the
+  contents for other pre-loaded menu items) is transmitted in the
+  background, after rendering the visible contents.
+</p>
+
+<p>
+  Menu navigation is implemented using C++ stateless slots, and
+  therefore results in <b>client-side</b> event handling
+  code. Optionally, CSS3 animations can be used to animate the
+  transition of contents managed by a <a
+  href="//www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WStackedWidget.html"
+  target="_blank">WStackedWidget</a>.
+</p>
+
+<p>
+  URLs are associated with each menu/tab entry, and in this way
+  participate in browser navigation history and bookmarking. When the
+  user browses through the history, the menu reacts
+  to <a href="//www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WApplication.html#a674fd6a2522d66d07908e8f3d82424a9"
+  target="_blank">navigation events</a>. Similarly, when a user
+  bookmarks a URL to revisit it later, or follows an external link to
+  your application, the menu reacts to the initial internal
+  path. All-together this generates a decentralized "routing
+  framework" for pretty URLs that works equally well for Ajax as plain
+  HTML sessions.
+</p>
+
+<p>
+  The chat widget sitting at the bottom is actually part of the <a
+  href="#/examples/chat">chat example</a>.
+</p>
+
+</div>
+  </message>
+
+  <message id="home.examples.treeview">
+<div>
+<h4 class="example">Treeview</h4>
+
+<p>
+  <a href="//www.webtoolkit.eu/wt/examples/treeview-dragdrop/treeview-dragdrop.wt" class="run" target="_blank">
+    <img src="/icons/green-play.png" style="vertical-align: top"/>  Run example
+  </a>
+</p>
+
+This example illustrates some MVC functionality provided by builtin
+Views (WTreeView, WTableView and PieChart) and models.
+
+<ul>
+  <li>
+    The example uses <a href="//www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WTreeView.html"
+    target="_blank">WTreeView</a>
+    and <a href="//www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WTableView.html"
+    target="_blank">WTableView</a> widgets for rendering a Model's
+    data in a tree or a table.
+  </li>
+  <li>
+    A <a
+    href="//www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WSortFilterProxyModel.html"
+    target="_blank">WSortFilterProxyModel</a>
+    implement sorting and filtering for another model.
+  </li>
+  <li>
+    These item views have support for drag and drop of a selection of items.
+  </li>
+  <li>
+    You can use nested layout managers (horizontal and
+    vertical
+    <a href="//www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WBoxLayout.html" target="_blank">
+      WBoxLayout</a>)
+    for an automatic window-filling layout, with optional resize handles.
+  </li>
+  <li>
+    Modal (and non-modal) <a
+    href="//www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WDialog.html"
+    target="_blank">dialogs</a> can be used to prompt for input.
+  </li>
+  <li>
+    You may show a context-sensitive
+    <a href="//www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WPopupMenu.html" target="_blank">
+      WPopupMenu</a>.
+  </li>
+</ul>
+</div>
+  </message>
+
+  <message id="home.examples.chart">
+<div>
+<h4 class="example">Charts example</h4>
+
+<p>
+  <a href="//www.webtoolkit.eu/wt/examples/charts/charts.wt" class="run" target="_blank">
+    <img src="/icons/green-play.png" style="vertical-align: top"/>  Run example
+  </a>
+</p>
+
+<p>This example demonstrates the <a
+href="//www.webtoolkit.eu/wt/doc/reference/html/group__charts.html" target="_blank">Wt
+charting widgets</a> that are implemented on top of Wt's cross-browser
+painting API. This painting API uses built-in browser support for
+generating high quality graphics. Depending on the browser,
+inline VML, inline SVG, HTML5 canvas, or a PNG image is used to
+render painted contents in a <a
+href="//www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WPaintedWidget.html"
+target="_blank">WPaintedWidget</a>.
+</p>
+
+<p>This example also demonstrates how a Model can be shared by several
+Views, and pass modification events to each connected View. The <a
+href="//www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WTableView.html"
+target="_blank">table view</a> and the chart implement a <i>View</i>
+on the same <a
+href="//www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WAbstractItemModel.html"
+target="_blank">item model</a>.</p>
+</div>
+  </message>
+
+  <message id="home.examples.git">
+<div>
+<h4 class="example">Git explorer</h4>
+
+<p>
+  <a href="//www.webtoolkit.eu/wt/examples/gitmodel/gitview.wt" class="run" target="_blank">
+    <img src="/icons/green-play.png" style="vertical-align: top"/>  Run example
+  </a>
+</p>
+
+<p>
+  This example serves as a demo for a custom model implementation which can
+  be used by Wt's item View classes, such as
+  <a href="//www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WTreeView.html" target="_blank">
+    WTreeView</a>.
+</p>
+<p>
+  A <a
+  href="//www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WStandardItemModel.html"
+  target="_blank">WStandardItemModel</a> can be populated with data
+  retrieved from for example a database. A draw-back is however that
+  all data must be retrieved in advance and is kept in session
+  memory. By reimplementing <a
+  href="//www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WAbstractItemModel.html"
+  target="_blank">WAbstractItemModel</a>, you can however implement a
+  model that reads (or computes) the data only when needed, and
+  provides a trade-off between keeping data in memory or fetching it
+  from the source.</p>
+
+  <p>In this example, we implement a tree model that navigates a <a
+  href="http://git-scm.com/">git repository</a>. The model lazy-stores
+  folder nodes in memory, but reads all other data directly from
+  git. Initially we thought the SHA-1 id's could be used, but folders
+  with the same content in different places of the git repository have
+  the same SHA-1 ID's while representing different <a
+  href="//www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WModelIndex.html"
+  target="_blank">model indexes</a>.
+</p>
+</div>
+  </message>
+
+  <message id="home.examples.composer">
+<div>
+<h4 class="example">Mail composer</h4>
+
+<p>
+  <a href="//www.webtoolkit.eu/wt/examples/composer/composer.wt" class="run" target="_blank">
+    <img src="/icons/green-play.png" style="vertical-align: top"/>  Run example
+  </a>
+</p>
+
+<p>
+  This example implements a GMail-like mail composer and shows among
+  other things how to upload files asynchronously, showing a
+  cross-browser upload progress bar and with support for multiple
+  files.
+</p>
+
+  <ul>
+    <li>
+      The <i>ContactSuggestions</i> class provides auto-completion of
+      the addressees in the To: Cc: and Bcc: fields. The widget
+      derives from <a href="//www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WSuggestionPopup.html"
+             target="_blank">WSuggestionPopup</a>.
+    </li>
+    <li>
+      The <i>AttachmentEdit</i> widget uses a <a
+      href="//www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WFileUpload.html"
+      target="_blank">WFileUpload</a> to asynchronously
+      upload files. The upload <a
+      href="//www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WProgressBar.html"
+      target="_blank">progress bar</a> will work even in IE6.
+    </li>
+    <li>
+      The <i>Option</i> and <i>OptionList</i> classes show how
+      stateless slots, a trick to handle events client-side but
+      implement them still in C++, may be used even when the behaviour
+      is not entirely stateless. In this case, the hiding of an Option
+      affects neighboring visible options: an option needs a separator
+      only if there is a neighbouring option. By <b>invalidating the
+      stateless slot implementations</b> when state has changed, we
+      can still use a stateless slot implementation and enjoy
+      client-side event handling performance!
+    </li>
+  </ul>
+</div>
+  </message>
+  <message id="home.examples.chat">
+<div>
+<h4 class="example">Simple Chat</h4>
+
+<p>
+  <a href="//www.webtoolkit.eu/wt/examples/simplechat/simplechat.wt" class="run" target="_blank">
+    <img src="/icons/green-play.png" style="vertical-align: top"/>  Run example
+  </a> (or ventilate your thoughts down here)
+</p>
+
+<p>
+  This example implements a simple chat client and server. Using
+  <b>server-initiated updates</b>, you can easily push events from one
+  user to other users. Server-initiated updates are implemented using
+  Ajax long polling or HTML5 WebSockets.
+</p>
+
+<p>
+  It also illustrates nice benefits of a class-based approach to web
+  application development: you can easily instantiate the same widget
+  class multiple times. The SimpleChatClient widget may be reused just
+  as you reuse basic Wt widgets such as a push button.
+</p>
+
+<p>
+  The chat application is also available as a <i>Widget</i> which can
+  be embedded in another page (very much like how you integrate a
+  google maps widget inside another application). In this case, we've
+  embedded the chat also in this very homepage as follows:
+</p>
+  <pre>    &lt;div id="chat"&gt;&lt;/div&gt;
+    &lt;script src="//www.webtoolkit.eu/wt/examples/simplechat/chat.js?div=chat"&gt;&lt;/script&gt;</pre>
+<p>
+  This uses Cross-Origin Ajax/WebSocket requests (if the browser
+  supports this, falling back to old tricks if not) to communicate
+  from a HTML origin page to a server hosting the Widget possibly from
+  a different domain.
+</p>
+
+<p>
+  Interactive applications like these, which allow users to post HTML
+  text to other users, are notorious for <b>cross-site-scripting (XSS)
+  attacks</b>: a user enters malicious (javascript) code as part of
+  his message. When another user renders this message, it may transmit
+  unwanted private information retrieved from, for example, browser
+  cookies. Wt prevents such attacks completely, and without any
+  responsibility to the developer, since widgets such as WText ensure
+  that what is displayed is only passive text, discarding anything
+  that is not strictly text.
+</p>
+</div>
+  </message>
+
+  <message id="home.examples.hangman">
+<div>
+<h4 class="example">Hangman</h4>
+
+<p>
+  <a href="//www.webtoolkit.eu/wt/examples/hangman-game/hangman.wt" class="run" target="_blank">
+    <img src="/icons/green-play.png" style="vertical-align: top"/> Run example
+  </a>
+</p>
+
+<p>
+  This example implements a simple well-known game, including a user
+  ranking system, which is persisted to a database using Wt::Dbo.
+</p>
+<p>
+  Some of the things illustrated in this example:
+</p>
+<ul>
+  <li>
+    Different approaches to layout: using an <a
+    href="//www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WTemplate.html"
+    target="_blank">HTML template</a>, a <a
+    href="//www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WBoxLayout.html"
+    target="_blank">layout manager</a>, or by compositing basic
+    widgets and CSS.
+  </li>
+
+  <li>
+    Using hidden content to optimize the user experience by preloading
+    contents, used in this game to preload the various images used to
+    show the hanging man.
+  </li>
+
+  <li>
+    Navigation is implemented using <a
+    href="//www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WAnchor.html"
+    target="_blank">WAnchor</a> which reference an internal path.
+    Action is taken by reacting to internal path changes.
+  </li>
+
+  <li>
+    The example uses <a
+    href="//www.webtoolkit.eu/wt/doc/reference/html/group__auth.html">the
+    authentication module (Wt::Auth)</a> to authenticate users using a
+    username/password, or using Google's beta OAuth 2.0 service.
+  </li>
+
+  <li>
+    A database which contains user information is accessed and updated
+    using <a href="//www.webtoolkit.eu/wt/doc/tutorial/dbo/tutorial.html">Wt::Dbo</a>.
+  </li>
+</ul>
+
+<!--<p>For a thorough explanation of the hangman example, see also the ARTICLE</p>-->
+</div>
+  </message>
+
+  <message id="home.examples.widgetgallery">
+<div>
+<h4 class="example">Widget gallery</h4>
+
+<p>
+  <a href="//www.webtoolkit.eu/widgets" class="run" target="_blank">
+    <img src="/icons/green-play.png" style="vertical-align: top"/>  Go to widget gallery
+  </a>
+</p>
+
+<p>
+ This example demonstrates most widgets provided by Wt, in addition to
+ other aspects such as event handling and layout classes. Useful as an
+ executable reference to widgets and features provided by the library.
+</p>
+
+</div>
+  </message>
+
+  <message id="home.download">
+    <h3><span>Download</span></h3>
+  </message>
+  <message id="home.download.license">
+<h4>License and Pricing</h4>
+
+<p>Wt may be used using either an Open Source or a Commercial License.</p>
+
+<p>If you wish to use the library using the <b>GNU General Public
+License (GPL)</b>, you may build a web application with Wt and deploy
+it, but per the terms of the GPL, you are obliged to make the source
+code available to anyone who you give the application to install the
+application on its own server. This also applies to redistribution of
+the Wt library, in original or modified form.</p>
+
+<p><b>The Commercial License</b> has no such limitations: you may
+redistribute applications developed with Wt without needing to
+redistribute the source code. The license is a royalty-free, perpetual
+license for one developer to use the API of Wt (respectively Wt::Dbo)
+for application development, using the latest version of Wt or any
+version released during one year.
+</p>
+
+<table class="versions">
+  <tr class="trh">
+    <th></th>
+    <th class="product">Dbo</th>
+    <th class="product">Wt + Dbo</th>
+  </tr>
+  <tr class="r0">
+    <th>Widget library</th>
+    <td></td>
+    <td>+</td>
+  </tr>
+  <tr class="r1">
+    <th>Application server</th>
+    <td></td>
+    <td>+</td>
+  </tr>
+  <tr class="r0">
+    <th>HTTP + WebSockets server</th>
+    <td></td>
+    <td>+</td>
+  </tr>
+  <tr class="r1">
+    <th>Charting Module</th>
+    <td></td>
+    <td>+</td>
+  </tr>
+  <tr class="r0">
+    <th>XHTML Rendering Module</th>
+    <td></td>
+    <td>+</td>
+  </tr>
+  <tr class="r1">
+    <th>C++ ORM</th>
+    <td>+</td>
+    <td>+</td>
+  </tr>
+  <tr class="r0">
+    <th class="indent">Sqlite3 driver</th>
+    <td>+</td>
+    <td>+</td>
+  </tr>
+  <tr class="r1">
+    <th class="indent">PostgreSQL driver</th>
+    <td>+</td>
+    <td>+</td>
+  </tr>
+  <tr class="r0">
+    <th class="indent">Firebird driver</th>
+    <td>+</td>
+    <td>+</td>
+  </tr>
+  <tr class="r1">
+    <th class="indent">MariaDB/MySQL driver</th>
+    <td>+</td>
+    <td>+</td>
+  </tr>
+  <tr class="r0">
+    <th class="indent">Oracle driver</th>
+    <td colspan="2"><a href="mailto:sales@emweb.be">Contact us</a></td>
+  </tr>
+  <tr class="separate r1">
+    <th>License</th>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr class="r0">
+    <th class="indent">
+      GNU General Public License
+    </th>
+    <td>free</td>
+    <td>free</td>
+  </tr>
+  <tr class="r1">
+    <th class="indent multiline">
+      Commercial License
+    </th>
+    <td class="multiline">
+      <div><span class="price">&euro;175</span> <span class="cart" /></div>
+      <div><a href="//www.webtoolkit.eu/wt/license/WtDbo%20License%20Agreement.pdf" class="smallprint">(license text)</a></div>
+    </td>
+    <td class="multiline">
+      <div><span class="price">&euro;599</span> <span class="cart" /></div>
+      <div><a href="//www.webtoolkit.eu/wt/license/Wt%20License%20Agreement.pdf" class="smallprint">(license text)</a></div>
+    </td>
+  </tr>
+</table>
+
+There is also an Oracle driver for Wt::Dbo, which is sold separately and
+can be used only in conjunction with a Commercial License for Wt::Dbo.
+
+  </message>
+
+  <message id="home.download.packages">
+    <h4><span>Available packages</span></h4>
+  </message>
+  <message id="home.download.version"><b>Version</b></message>
+  <message id="home.download.date"><b>Date</b></message>
+  <message id="home.download.description"><b>Description</b></message>
+
+  <message id="home.download.other">
+
+<p>
+  If you are looking to use Wt using <b>MSVC on Windows platforms</b>,
+  then you can save yourself some hassle to build Wt with its optional
+  dependencies from source, and download one of the <a
+  href="https://github.com/kdeforche/wt/releases">binary builds
+  instead</a> which allow you to quickly experiment with the examples
+  that ship with Wt.
+</p>
+
+<p>
+  Similarly, if you are on <b>Ubuntu</b>, you can install a reasonably
+  recent version of Wt from official packages. The wiki contains more
+  details on <a
+  href="http://redmine.emweb.be/projects/wt/wiki/Installing_Wt_on_Ubuntu">installing
+  Wt on Ubuntu</a>, including instructions on how to build Wt from
+  source or getting packages for the most recent Wt releases.
+</p>
+
+<div class="fragment">
+  <pre class="fragment">
+$ sudo apt-get install witty witty-dev witty-doc witty-dbg witty-examples</pre>
+</div>
+
+<p>
+  The last package (<tt>witty-examples</tt>) installs the examples
+  in <tt>/usr/lib/Wt/examples</tt>. You can run each of them like this:
+</p>
+
+<div class="fragment">
+  <pre class="fragment">$ /usr/lib/Wt/examples/hello/hello</pre>
+</div>
+
+<h4>The Wt installer: winst</h4>
+
+If you are curious about Wt and would like to try it out but your OS
+or distribution does not provide an up-to-date package, then this may
+be just what you need. This package will download and build Wt and its
+dependencies in a <b>UNIX(-like) environment</b>, and provides also
+a script to run the examples.
+
+<p>
+This requires <tt>CMake</tt> and <tt>GNU make</tt> and will try to
+download software using <tt>wget</tt>.
+</p>
+
+<p>
+Download the package
+(<a href="//www.webtoolkit.eu/packages/winst-0.4.tar.gz">winst-0.4.tar.gz</a>)
+or get the latest git version:
+<div class="fragment">
+  <pre class="fragment">$ git clone git://github.com/kdeforche/winst.git</pre>
+</div>
+</p>
+
+<h4>System requirements</h4>
+
+For building and installing the latest version of Wt, you need at
+least the following two packages:
+<ul>
+  <li><a href="http://www.cmake.org/">CMake</a> cross-platform make configure
+    utility.<br />
+
+    CMake &gt;= 2.6 is preferred (although by the act of a miracle,
+    2.4 still works).
+  </li>
+  <li>
+    The indispensable <a href="http://www.boost.org/"> boost C++
+    library</a>: boost-1.41 or later. Older boost versions (as old as 1.36)
+    may also be used, but some functionality will be missing
+    (JSON parsing and a better SQL query parsing for Wt::Dbo). <br />
+
+    The following boost libraries (which are not headers only) are
+    needed: <tt>boost_date_time</tt>, <tt>boost_regex</tt>,
+    <tt>boost_program_options</tt>, <tt>boost_signals</tt>,
+    <tt>boost_random</tt>, <tt>boost_system</tt>, and optionally (but
+    highly recommended) <tt>boost_thread</tt>.
+  </li>
+</ul>
+
+The following packages are optional, and availability enables additional
+features in Wt:
+<ul>
+
+  <li><a href="http://www.openssl.org/">OpenSSL</a>: if available,
+    then the HTTPS protocol will be supported by the web client
+    (<a href="//www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1Http_1_1Client.html">Http::Client</a>) and web server (wthttp connector)
+  </li>
+  <li><a href="https://github.com/libharu/libharu/wiki">libharu</a>: if
+    available, a
+    <a href="//www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WPdfImage.html">WPdfImage</a>
+    paint device will be included, which provides rendering support for PDF
+    documents. For more complete support for TrueType fonts and Unicode, you'll
+    want <a href="https://github.com/libharu/libharu">the latest git version</a>
+    and probably also libpango (see further) for accurate font/glyph
+    selection.
+  </li>
+  <li><a href="http://www.graphicsmagick.org/">GraphicsMagick</a>: if
+    available,
+    a <a href="//www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WRasterImage.html">WRasterImage</a>
+    paint device will be included, which outputs to raster images like PNG
+    or GIF.</li>
+  <li><a href="http://www.pango.org/">pango</a> (LGPL): if available,
+    text rendering for WPdfImage and WRasterImage will be assisted by
+    this library for TrueType font selection, taking into
+    consideration both the font face and unicode coverage.</li>
+  <li>
+    <a href="http://www.postgresql.org/">PostgreSQL</a>, <a
+    href="http://www.mysql.com/">MySQL</a>/<a
+    href="http://mariadb.org/">MariaDB</a>, and <a
+    href="http://firebirdsql.org">Firebird</a>: if available,
+    connectors for these databases for the ORM library (<a
+    href="//www.webtoolkit.eu/wt/doc/tutorial/dbo/tutorial.html">
+    Wt::Dbo</a>) will be built (alongside the Sqlite3 connector which
+    is distributed with Wt).
+  </li>
+</ul>
+
+<p>The other requirements depend on the connector support you would
+like. The connector is what makes your Wt application communicate with
+the browser:</p>
+
+<h5>For FastCGI (Unix only):</h5>
+
+<ul>
+  <li>Apache 1 or 2, or another web server which supports the FastCGI
+  protocol.</li>
+  <li>
+    <a href="http://www.fastcgi.com/#TheDevKit">FastCGI development kit</a>
+    : fcgi-2.4.0
+  </li>
+
+   <li>
+     When using apache:
+     Apache <a href="http://www.fastcgi.com/dist/mod_fastcgi-2.4.6.tar.gz">mod_fastcgi</a>:
+     mod_fastcgi-2.4.x.<br />Alternatively you may
+     use <a href="http://httpd.apache.org/download.cgi#mod_fcgid">mod_fcgid</a>:
+     mod_fcgid-2.3.5.
+  </li>
+</ul>
+
+<h5>For the built-in http deamon, wthttpd:</h5>
+
+<ul>
+  <li>Optionally, libz (for compression-over-HTTP) and openssl (for
+    HTTPS support).
+  </li>
+</ul>
+
+<h5>For ISAPI (Win32 only):</h5>
+
+<ul>
+  <li>The ISAPI connector only works for deploying Wt applications withing a
+    Microsoft IIS server.</li>
+</ul>
+
+Follow the <a
+href="//www.webtoolkit.eu/wt/doc/reference/html/InstallationUnix.html">Installation
+instructions</a> to build Wt and run the examples, or see if your
+platform is listed in the <a
+href="http://redmine.webtoolkit.eu/projects/wt/wiki/Wt_Installation">platform specific
+installation instructions</a>.
+
+<h4>Git repository</h4>
+
+<a href="https://github.com/kdeforche/wt"><img style="display: block; width: 80px; float: right" src="https://github.com/github/media/blob/master/octocats/octocat.png?raw=true"></img></a>
+<p>If you want to keep track of the latest changes, or participate in
+Wt development, you may want to work from
+the <a href="https://github.com/kdeforche/wt">github
+repository</a>.</p>
+
+<p>
+Alternatively checkout the repository using:
+<div class="fragment">
+  <pre class="fragment">$ git clone git://github.com/kdeforche/wt.git</pre>
+</div>
+</p>
+  </message>
+
+  <message id="home.community">
+<h3><span>Support</span></h3>
+
+<h4>Support and Training</h4>
+
+<p>
+  You can get <a href="//www.emweb.be/services">support and
+  training</a> directly from the library authors, with a
+  guaranteed three-day response time.
+</p>
+
+<p>
+  Community help is available in the <a
+  href="http://redmine.webtoolkit.eu/projects/wt/boards">public
+  forums</a>.
+</p>
+
+<p>
+  To get up to speed with Wt and/or Wt::Dbo, you may also obtain <a
+  href="//www.emweb.be/services">training</a> directly from
+  the library authors.
+</p>
+
+<h4>Authors</h4>
+
+<p>
+The software was originally developed by <a
+href="mailto:koen@emweb.be">Koen Deforche</a>, and is currently
+maintained by <a href="//www.emweb.be/">Emweb bv</a>.</p>
+
+<p>We are greateful to these projects from which we borrowed code:</p>
+<ul>
+<li>The built-in httpd is based on an example of the <a
+href="http://asio.sourceforge.net/">asio C++
+library</a>, developed by Christopher M. Kohlhoff. <a
+href="http://www.boost.org/LICENSE_1_0.txt">Boost Software License</a></li>
+<li>The <a href="http://rapidxml.sourceforge.net/">RapidXML</a>
+library by Marcin Kalicinski.  <a
+href="http://www.boost.org/LICENSE_1_0.txt">Boost Software License</a></li>
+<li>The authentication module
+contains <a href="http://www.openwall.com/crypt/">bcrypt</a>
+and <a href="http://www.openwall.com/passwdqc/">passwdqc</a> by Solar
+Designer. <a href="http://www.openwall.com/crypt/">Public
+domain.</a></li>
+</ul>
+
+<p>
+Other independent contributors include: Richard Ulrich, Gaetano
+Mendola, Thomas Suckow, Hilary Cheng, Dmitriy Igrishin, Daniel Derr,
+Omer Katz, and Lukasz Matuszewski, and many others (see the Changelog).
+</p>
+
+<h4>Wiki</h4>
+
+<p>
+There is a community-run <a
+href="http://redmine.webtoolkit.eu/projects/wt/wiki">Wt Wiki</a> with useful
+information, including installation notes for several Linux
+distributions.
+</p>
+
+<h4>Contributions</h4>
+
+<p>Development of Wt is sponsored by the following companies and
+organisations:</p>
+
+<p>
+<table>
+  <tr>
+    <td class="sponsor-logo"><a href="//www.emweb.be/">
+      Emweb bv</a>
+    </td>
+    <td class="sponsor-role">
+      Creators, official maintainers, and support
+    </td>
+  </tr>
+  <tr>
+    <td class="sponsor-logo">
+      <a href="http://www.eurofer.be/">
+      Eurofer</a>
+    </td>
+    <td class="sponsor-role">
+      Sponsored the development of the charting library, WTreeView and
+      hierachical item models.
+    </td>
+  </tr>
+</table>
+</p>
+
+<p>User contributions are welcomed, ranging from simple patches to
+widgets, widget sets, and core improvements.</p>
+
+<p>However, because Wt is dual-licensed under an Open Source and
+commercial license, and to legally protect the code base of Wt as a
+whole by one entity without having to worry about the copyrights for
+different pieces, we require a copyright assignment from contributors
+to <a href="//www.emweb.be/">Emweb</a> before
+accepting the contribution.</p>
+
+<h4>Translations</h4>
+
+The Chinese translation of the homepage was provided by Zhimin Song.
+
+<h4>GitHub</h4>
+
+The Wt project is hosted at GitHub <a href="https://github.com/emweb/wt">here</a>.
+  </message>
+  <message id="home.other-language">
+
+<h3><span>!C++ ?</span></h3>
+
+<p>You like the library functionality, but do not grok C++ for your
+project?</p>
+
+<p>Do not despair. Wt exists in a native variant or through bindings
+in other languages:
+
+<ul class="languages">
+<li>
+<div>
+<img class="java-language-icon" src="/icons/java-logo.png" alt="Java"></img>
+
+You can use <a href="//www.webtoolkit.eu/jwt">JWt</a>, a native <b>Java</b> version of Wt
+developed and maintained together with the C++ version. It has, with
+few exceptions, the same features as Wt, but runs natively in the JVM
+and can be deployed into any Servlet container.
+</div>
+
+<br style="clear: both" />
+
+</li>
+<li>
+<div>
+<img class="language-icon" src="/icons/ruby-logo-R.png" alt="Ruby"></img>
+
+Richard Dale is
+maintaining <a href="http://github.com/rdale/wtruby/tree/master">WtRuby</a>,
+<b>Ruby</b> bindings to Wt, using the same framework used for generating Ruby
+bindings to Qt and KDE.
+</div>
+
+
+<br style="clear: both" />
+
+</li>
+
+<li>
+<div>
+<img class="language-icon" src="/icons/clojure-logo.png" alt="Clojure"></img>
+
+Leveraging the JVM's support for other languages, such
+as <b>Clojure</b>, a LISP variant, Ralph Moritz is experimenting
+with <a href="http://lispetc.posterous.com/hello-jwt-from-clojure">using
+JWt from within Clojure</a>, documenting his experience in his blog
+and eventually developing a small support library.
+</div>
+
+<br style="clear: both" />
+
+</li>
+
+<li>
+<div>
+<img class="language-icon" src="/icons/jython-logo.png" alt="Jython"></img>
+
+Albert Cervera i Areny is experimenting to use JWt from <b>Jython</b>,
+another language running on the JVM. He documents how to create and run
+the "Hello World!" program in Jython in <a href="http://www.nan-tic.com/en/from-pyqt-to-jythonjwt-setting-up-the-environment">this blog post</a>.
+</div>
+
+<br style="clear: both" />
+
+</li>
+
+</ul>
+</p>
+
+  </message>
+  <message id="home.documentation">
+
+<h3><span>Documentation</span></h3>
+
+<h4>Build and install</h4>
+
+<p>
+Generic installation instructions (UNIX)
+are <a href="//www.webtoolkit.eu/wt/doc/reference/html/InstallationUnix.html">here</a>, which
+are also included in the source package (INSTALL or INSTALL.html).</p>
+<p>
+In addition, the <a href="http://redmine.webtoolkit.eu/projects/wt/wiki">Wt
+Wiki</a> has a section dedicated
+to <a href="http://redmine.webtoolkit.eu/projects/wt/wiki/Wt_Installation">platform
+specific installation notes</a>.
+</p>
+
+<h4>Introduction and tutorials</h4>
+
+<ul>
+<li>Learn about the benefits of Wt compared to traditional web
+application frameworks using our <a
+href="//www.webtoolkit.eu/doc/Wt-WhitePaper.pdf">white
+paper</a>.</li>
+
+<li>The <a
+href="//www.webtoolkit.eu/wt/doc/tutorial/wt.html">online
+tutorial</a> (<a
+href="//www.webtoolkit.eu/wt/doc/tutorial/wt.pdf">download
+PDF</a>) brings you up to speed on developing web applications using
+Wt (revised December 2011).</li>
+
+<li>The ORM framework (Wt::Dbo) is covered in a separate <a
+href="//www.webtoolkit.eu/wt/doc/tutorial/dbo.html">online
+tutorial</a> (<a
+href="//www.webtoolkit.eu/wt/doc/tutorial/dbo.pdf">download
+PDF</a>) (revised July 2011).</li>
+
+<li>Dr Dobbs Journal has a good <a href="http://www.ddj.com/cpp/206401952">
+introductary article on Wt</a> (February 2008).</li>
+
+<li>The reference manual contains a <a
+href="//www.webtoolkit.eu/wt/doc/reference/html/overview.html">library
+overview</a> which is recommended reading with information about
+configuration and deployment options.</li>
+
+<li>Victor Venkman wrote a
+<a href="http://www.codeguru.com/cpp/i-n/internet/browsercontrol/article.php/c15275/">nice introduction to Wt</a>, with a closer examination of
+the <a href="#/examples/">hello world example</a>.</li>
+
+</ul>
+
+<h4>Reference manual</h4>
+
+<p>The <a
+href="//www.webtoolkit.eu/wt/doc/reference/html/index.html"
+target="_blank"> reference manual</a> has been generated from the
+source code using doxygen.</p>
+
+<h4>Annotated examples</h4>
+
+<p>Source-level documentation has also been generated for the examples
+and can be viewed <a href="//www.webtoolkit.eu/wt/doc/examples/html/modules.html"
+target="_blank">here (in a new window)</a>.</p>
+
+<h4>Wiki</h4>
+
+<p>
+There is a community-run <a href="http://redmine.webtoolkit.eu/projects/wt/wiki">Wt Wiki</a> with useful information such as a FAQ and
+tips and tricks.
+</p>
+
+  </message>
+
+  <message id="srcview.title.CPP.">
+    <div class="srcviewtitle">
+      <h2>Source code for Wt examples</h2>
+
+      <p>
+        Browse below the source code for all examples included in
+        <a href="#/">Wt</a>.
+      </p>
+    </div>
+  </message>
+
+  <message id="srcview.title.">Wt examples</message>
+
+  <message id="srcview.title.CPP.hello">
+    <div class="srcviewtitle">
+      <h2>Source code of the <i>Hello world</i> example</h2>
+
+      <p>
+        Browse below the source code for Wt's
+        <a href="#/examples/">Hello world</a> example.
+      </p>
+    </div>
+  </message>
+
+  <message id="srcview.title.hello">Example: Hello world</message>
+
+  <message id="srcview.title.CPP.hangman">
+    <div class="srcviewtitle">
+      <h2>Source code of the <i>Hangman</i> example</h2>
+
+      <p>
+        Browse below the source code for Wt's
+        <a href="#/examples/">Hangman</a> example.
+      </p>
+    </div>
+  </message>
+
+  <message id="srcview.title.hangman">Example: Hangman</message>
+
+  <message id="srcview.title.CPP.charts">
+    <div class="srcviewtitle">
+      <h2>Source code of the <i>Charts</i> example</h2>
+
+      <p>
+        Browse below the source code for Wt's
+        <a href="#/examples/charts">Charts</a> example.
+      </p>
+    </div>
+  </message>
+
+  <message id="srcview.title.charts">Example: Charts</message>
+
+  <message id="srcview.title.CPP.treeview-dragdrop">
+    <div class="srcviewtitle">
+      <h2>Source code of the <i>Treeview</i> example</h2>
+
+      <p>
+        Browse below the source code for Wt's <a href="#/examples/treeview">
+          Treeview</a> example.
+      </p>
+    </div>
+  </message>
+
+  <message id="srcview.title.treeview-dragdrop">Example: Treeview</message>
+
+  <message id="srcview.title.CPP.composer">
+    <div class="srcviewtitle">
+      <h2>Source code of the <i>Mail composer</i> example</h2>
+
+      <p>
+        Browse below the source code for Wt's
+        <a href="#/examples/composer">Mail composer</a> example.
+      </p>
+    </div>
+  </message>
+
+  <message id="srcview.title.composer">Example: Mail composer</message>
+
+  <message id="srcview.title.CPP.wt-homepage">
+    <div class="srcviewtitle">
+      <h2>Source code of the <i>Wt homepage</i> example</h2>
+
+      <p>
+        Browse below the source code for Wt's
+        <a href="#/examples/wt-homepage">Homepage</a> example.
+      </p>
+    </div>
+  </message>
+
+  <message id="srcview.title.wt-homepage">Example: Wt Homepage</message>
+
+  <message id="srcview.title.CPP.gitmodel">
+    <div class="srcviewtitle">
+      <h2>Source code of the <i>Git explorer</i> example</h2>
+
+      <p>
+        Browse below the source code for Wt's
+        <a href="#/examples/gitmodel">Git explorer</a> example.
+      </p>
+    </div>
+  </message>
+
+  <message id="srcview.title.gitmodel">Example: Git explorer</message>
+
+  <message id="srcview.title.CPP.simplechat">
+    <div class="srcviewtitle">
+      <h2>Source code of the <i>Chat</i> example</h2>
+
+      <p>
+        Browse below the source code for Wt's
+        <a href="#/examples/simplechat">Chat</a> example.
+      </p>
+    </div>
+  </message>
+
+  <message id="srcview.title.simplechat">Example: Chat</message>
+
+  <message id="srcview.title.CPP.widgetgallery">
+    <div class="srcviewtitle">
+      <h2>Source code of the <i>Widget gallery</i> example</h2>
+
+      <p>
+        Browse below the source code for Wt's
+        <a href="#/examples/widgetgallery">Widget gallery</a> example.
+      </p>
+    </div>
+  </message>
+
+  <message id="srcview.title.widgetgallery">Example: Widget gallery</message>
+
+</messages>

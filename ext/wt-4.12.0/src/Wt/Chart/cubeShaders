@@ -1,0 +1,332 @@
+// This may look like C code, but it's really -*- C++ -*-
+/*
+ * Copyright (C) 2013 Emweb bv, Herent, Belgium.
+ *
+ * See the LICENSE file for terms of use.
+ */
+
+namespace {
+
+// Fragment shader (for multiple purposes)
+const std::string cubeFragmentShaderSrc = 
+  "#ifdef GL_ES\n"
+  "precision highp float;\n"
+  "#endif\n"
+  "\n"
+  "varying vec2 vTextureCo;\n"
+  "varying float vWhichTexture;\n"
+  "\n"
+  "uniform sampler2D uSampler1;\n"
+  "uniform sampler2D uSampler2;\n"
+  "uniform sampler2D uSampler3;\n"
+  "\n"
+  "void main(void) {\n"
+  "  if (vWhichTexture - 1.5 < 0.0) {" // YZ plane
+  "    gl_FragColor = texture2D(uSampler3, vec2(vTextureCo.s, vTextureCo.t));\n"
+  "  } else if (vWhichTexture - 2.5 < 0.0) {" // XY plane
+  "    gl_FragColor = texture2D(uSampler1, vec2(vTextureCo.s, vTextureCo.t));\n"
+  "  } else if (vWhichTexture - 3.5 < 0.0) {" // XZ plane
+  "    gl_FragColor = texture2D(uSampler2, vec2(vTextureCo.s, vTextureCo.t));\n"
+  "  } else {"
+  "    gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);\n"
+  "  }"
+  "}\n";
+
+// Vertex shader for the cube-faces
+const std::string cubeVertexShaderSrc =
+  "attribute vec3 aVertexPosition;\n"
+  "attribute vec3 aPlaneNormal;\n"
+  "attribute vec2 aTextureCo;\n"
+  "\n"
+  "uniform mat4 uMVMatrix;\n"
+  "uniform mat4 uPMatrix;\n"
+  "uniform mat4 uCMatrix;\n"
+  "\n"
+  "varying vec2 vTextureCo;\n"
+  "varying float vWhichTexture;\n"
+  "\n"
+  "void main(void) {\n"
+  "  gl_Position = uPMatrix * uCMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);\n"
+  "  vTextureCo = aTextureCo;\n" //aTextureCo
+  "  vWhichTexture = dot(aPlaneNormal, vec3(1.0, 2.0, 3.0));"
+  "}\n";
+
+
+// cube-lines fragment shader
+const std::string cubeLineFragmentShaderSrc = 
+  "#ifdef GL_ES\n"
+  "precision highp float;\n"
+  "#endif\n"
+  "\n"
+  "uniform vec4 uColor;\n"
+  "\n"
+  "void main(void) {\n"
+  "  gl_FragColor = uColor/255.0;\n"
+  "}\n";
+
+// Vertex shader for the cube-lines
+const std::string cubeLineVertexShaderSrc =
+  "attribute vec3 aVertexPosition;\n"
+  "attribute vec3 aNormal;\n"
+  "\n"
+  "uniform mat4 uMVMatrix;\n"
+  "uniform mat4 uPMatrix;\n"
+  "uniform mat4 uCMatrix;\n"
+  "uniform mat4 uNMatrix;\n"
+  "\n"
+  "void main(void) {\n"
+  "  vec3 transformedNormal = normalize((uNMatrix * vec4(normalize(aNormal), 0)).xyz);\n"
+  "  if (transformedNormal.z > 0.0) {\n"
+  "    gl_Position = vec4(5.0, 0.0, 0.0, 1.0);\n"
+  "  } else {"
+  "    gl_Position = uPMatrix * uCMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);\n"
+  "  }"
+  "}\n";
+
+
+// Vertex shader for the axis-flaps
+const std::string axisVertexShaderSrc = 
+  "attribute vec3 aVertexPosition;\n"
+  "attribute vec2 aTextureCo;\n"
+  "attribute float aInPlane;\n"
+  "attribute vec3 aPlaneNormal;\n"
+  "attribute vec3 aOutOfPlaneNormal;\n"
+  "\n"
+  "uniform mat4 uMVMatrix;\n"
+  "uniform mat4 uPMatrix;\n"
+  "uniform mat4 uCMatrix;\n"
+  "uniform mat4 uNMatrix;\n"
+  "uniform bool uNormalAngleTexture;\n"
+  "\n"
+  "varying vec2 vTextureCo;\n"
+  "varying float vShowTexture;\n"
+  "\n"
+  "void main(void) {\n"
+  "  gl_Position = uPMatrix * uCMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);\n"
+  "  vTextureCo = aTextureCo;\n"
+  "  "
+  "  vec3 transformedPlaneNormal = normalize((uNMatrix * vec4(normalize(aPlaneNormal), 0)).xyz);\n"
+  "  vec3 transformedOutOfPlaneNormal = normalize((uNMatrix * vec4(normalize(aOutOfPlaneNormal), 0)).xyz);\n"
+  "  "
+  "  float zProjInPlane = transformedPlaneNormal.z;\n"
+  "  float zProjOutOfPlane = transformedOutOfPlaneNormal.z;\n"
+  "  bool showInPlane = (zProjInPlane > zProjOutOfPlane);\n"
+  "  bool inPlane = (aInPlane > 0.5);\n"
+  "  "
+  "  float xOrientation = (transformedOutOfPlaneNormal + transformedPlaneNormal).x;\n"
+  "  bool correctTexture = (xOrientation > 0.0) == uNormalAngleTexture;\n"
+  "  bool cull = (zProjInPlane <= 0.0 || zProjOutOfPlane < 0.0 || correctTexture );\n"
+  "  if ( showInPlane != inPlane || cull ) {\n"
+  "    gl_Position = vec4(0.0, 0.0, 0.0, 1.0);\n"
+  "  }\n"
+  "  "
+  "  vec3 cp = cross(transformedPlaneNormal, transformedOutOfPlaneNormal);"
+  "  bool showTexture = abs(cp.z) < 0.85;"
+  "  vShowTexture = 1.0;\n"
+  "  if (!showTexture){\n"
+  "    vShowTexture = 0.0;\n"
+  "  }\n"
+  "}\n";
+
+// Fragment shader
+const std::string axisFragmentShaderSrc = 
+  "#ifdef GL_ES\n"
+  "precision highp float;\n"
+  "#endif\n"
+  "\n"
+  "varying vec2 vTextureCo;\n"
+  "varying float vShowTexture;\n"
+  "\n"
+  "uniform sampler2D uSampler;\n"
+  "\n"
+  "void main(void) {\n"
+  "  gl_FragColor = texture2D(uSampler, vec2(vTextureCo.s, vTextureCo.t));\n"
+  "}\n";
+
+
+// Shaders for all on-top textures, no projection is done here
+// the idea is to put a 2D texture on top of everything else
+const std::string fragmentShaderSrc2D = 
+  "#ifdef GL_ES\n"
+  "precision highp float;\n"
+  "#endif\n"
+  "\n"
+  "varying vec2 vTextureCo;\n"
+  "\n"
+  "uniform sampler2D uSampler;\n"
+  "\n"
+  "void main(void) {\n"
+  "  gl_FragColor = texture2D(uSampler, vec2(vTextureCo.s, vTextureCo.t));\n"
+  "}";
+
+const std::string vertexShaderSrc2D =
+  "attribute vec3 aVertexPosition;\n"
+  "attribute vec2 aTextureCo;\n"
+  "\n"
+  "varying vec2 vTextureCo;\n"
+  "\n"
+  "void main(void) {\n"
+  "  gl_Position = vec4(aVertexPosition, 1.0);\n"
+  "  vTextureCo = aTextureCo;\n"
+  "}";
+
+const std::string intersectionLinesFragmentShaderSrc =
+  "#ifdef GL_ES\n"
+  "precision highp float;\n"
+  "#endif\n"
+  "\n"
+  "varying vec2 vTextureCo;\n"
+  "\n"
+  "uniform mat4 uCamera;\n"
+  "uniform vec4 uColor;\n"
+  "uniform float uVPwidth;\n"
+  "uniform float uVPheight;\n"
+  "uniform sampler2D uPositionSampler;\n"
+  "uniform sampler2D uMeshIndexSampler;\n"
+  "\n"
+  "void main(void) {\n"
+  "  float dx = 1.0/uVPwidth;\n"
+  "  float dy = 1.0/uVPheight;\n"
+  // p: position, i: index
+  // t: top, b: bottom, l: left, r: right
+  "  vec3 pt  = texture2D(uPositionSampler, vTextureCo+vec2(-dx,0.0)).xyz;\n"
+  "  vec3 pl  = texture2D(uPositionSampler, vTextureCo+vec2(0.0,dy)).xyz;\n"
+  "  vec3 pr  = texture2D(uPositionSampler, vTextureCo+vec2(0.0,-dy)).xyz;\n"
+  "  vec3 pb  = texture2D(uPositionSampler, vTextureCo+vec2(dx,0.0)).xyz;\n"
+  "  vec3 it  = texture2D(uMeshIndexSampler, vTextureCo+vec2(-dx,0.0)).xyz;\n"
+  "  vec3 il  = texture2D(uMeshIndexSampler, vTextureCo+vec2(0.0,dy)).xyz;\n"
+  "  vec3 ir  = texture2D(uMeshIndexSampler, vTextureCo+vec2(0.0,-dy)).xyz;\n"
+  "  vec3 ib  = texture2D(uMeshIndexSampler, vTextureCo+vec2(dx,0.0)).xyz;\n"
+  // Determine the scale factor by the zoom factor. This is so that the lines
+  // remain visible, even at a distance.
+  // NOTE: When zoomed way out, edges where charts are close to eachother, but not
+  // touching will start getting colored, as this is a limitation of the position heuristic.
+  "  float scale = length(vec3(uCamera[0][0], uCamera[1][0], uCamera[2][0]));\n"
+  // Limit the scale, so that lines don't start disappearing at very high zoom
+  // levels.
+  "  scale = scale > 5.0 ? 5.0 : scale;\n"
+  // Check if neighboring pixels in the index texture are the same, or if there is a change.
+  // If there is a change, check how close those pixels are from eachother.
+  // Take the average of those differences.
+  // 1.0 is the maximum, as 1.0 - 1.0 is 0.0 and we cap factor to 0.0
+  "  float totalDistance = 0.0;\n"
+  "  int count = 0;\n"
+  "  vec3 white = vec3(1.0);\n"
+  "  if (il != ir && il != white && ir != white) {\n"
+  "    count ++;\n"
+  "    totalDistance += length(pl - pr) * scale;\n"
+  "  }\n"
+  "  if (it != ib && it != white && ib != white) {\n"
+  "    count ++;\n"
+  "    totalDistance += length(pt - pb) * scale;\n"
+  "  }\n"
+  "  float factor = count == 0 ? 0.0 : 1.0 - totalDistance / float(count);\n"
+  "  factor = smoothstep(0.9, 1.0, factor);\n"
+  "  gl_FragColor = vec4(uColor.rgb, factor);\n"
+  "}";
+
+const std::string clippingPlaneFragShaderSrc =
+  "#ifdef GL_ES\n"
+  "precision highp float;\n"
+  "#endif\n"
+  "\n"
+  "varying vec3 vPos;\n"
+  "\n"
+  "uniform bool uDrawPosition;\n"
+  "#ifdef GL_ES\n"
+  "uniform lowp int uClippingAxis;\n"
+  "#else\n"
+  "uniform int uClippingAxis;\n"
+  "#endif\n"
+  "\n"
+  "void main(void) {\n"
+  "  if (uClippingAxis == 0 && (vPos.x <= 0.0 || vPos.x >= 1.0) ||"
+  "      uClippingAxis == 1 && (vPos.y <= 0.0 || vPos.y >= 1.0) ||"
+  "      uClippingAxis == 2 && (vPos.z <= 0.0 || vPos.z >= 1.0)) {\n"
+  "    discard;\n"
+  "  }\n"
+  "  if (uDrawPosition) {\n"
+  "    gl_FragColor = vec4(vPos, 1.0);\n"
+  "  } else {\n"
+  "    gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);\n"
+  "  }\n"
+  "}\n";
+
+const std::string clippingPlaneVertexShaderSrc =
+  "attribute vec2 aVertexPosition;\n"
+  "\n"
+  "varying vec3 vPos;\n"
+  "\n"
+  "uniform vec3 uClipPt;\n"
+  "uniform vec3 uDataMinPt;\n"
+  "uniform vec3 uDataMaxPt;\n"
+  "#ifdef GL_ES\n"
+  "uniform lowp int uClippingAxis;\n"
+  "#else\n"
+  "uniform int uClippingAxis;\n"
+  "#endif\n"
+  "uniform mat4 uMVMatrix;\n"
+  "uniform mat4 uPMatrix;\n"
+  "uniform mat4 uCMatrix;\n"
+  "\n"
+  "void main(void) {\n"
+  "  vec3 pos;\n"
+  "  vec3 clipPt = clamp((uClipPt - uDataMinPt) / (uDataMaxPt - uDataMinPt), 0.0, 1.0);\n"
+  "  if (uClippingAxis == 0) {\n"
+  "    pos = vec3(clipPt.x, aVertexPosition);\n"
+  "  } else if (uClippingAxis == 1) {\n"
+  "    pos = vec3(aVertexPosition.x, clipPt.y, aVertexPosition.y);\n"
+  "  } else if (uClippingAxis == 2) {\n"
+  "    pos = vec3(aVertexPosition, clipPt.z);\n"
+  "  }\n"
+  "  gl_Position = uPMatrix * uCMatrix * uMVMatrix * vec4(pos, 1.0);\n"
+  "  vPos = pos;\n"
+  "}\n";
+
+#if PERSPECTIVE
+// Vertex shader for the axis-flaps
+const std::string axisVertexShaderSrc = 
+  "attribute vec3 aVertexPosition;\n"
+  "attribute vec2 aTextureCo;\n"
+  "attribute float aInPlane;\n"
+  "attribute vec3 aPlaneNormal;\n"
+  "attribute vec3 aOutOfPlaneNormal;\n"
+  "\n"
+  "uniform mat4 uMVMatrix;\n"
+  "uniform mat4 uPMatrix;\n"
+  "uniform mat4 uCMatrix;\n"
+  "uniform mat4 uNMatrix;\n"
+  "\n"
+  "varying vec2 vTextureCo;\n"
+  "varying float vShowTexture;\n"
+  "\n"
+  "void main(void) {\n"
+  "  gl_Position = uPMatrix * uCMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);\n"
+  "  vTextureCo = aTextureCo;\n"
+  "  "
+  "  vec3 transformedPlaneNormal = normalize((uNMatrix * vec4(normalize(aPlaneNormal), 0)).xyz);\n"
+  "  vec3 transformedPlaneNormal_perspective = normalize((uPMatrix * uNMatrix * vec4(normalize(aPlaneNormal), 0)).xyz);\n"
+  "  vec3 transformedOutOfPlaneNormal = normalize((uNMatrix * vec4(normalize(aOutOfPlaneNormal), 0)).xyz);\n"
+  "  "
+  "  float zProjInPlane = transformedPlaneNormal.z;\n"
+  "  float zProjOutOfPlane = transformedOutOfPlaneNormal.z;\n"
+  "  bool showInPlane = (zProjInPlane > zProjOutOfPlane);\n"
+  "  bool inPlane = (aInPlane > 0.5);\n"
+  "  "
+  "  float cullFloat = -1.002002002 * zProjInPlane - 0.2;\n"
+  "  bool cull = (cullFloat > 0.0);\n"
+  "  if ( showInPlane != inPlane || cull ) {\n"
+  "    gl_Position = vec4(0.0, 0.0, 0.0, 1.0);\n"
+  "  }\n"
+  "  "
+  "  vec3 cp = cross(transformedPlaneNormal, transformedOutOfPlaneNormal);"
+  "  bool showTexture = abs(cp.z) < 0.85;"
+  "  vShowTexture = 1.0;\n"
+  "  if (!showTexture){\n"
+  "    vShowTexture = 0.0;\n"
+  "  }\n"
+  "}\n";
+
+#endif
+
+}
