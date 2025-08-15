@@ -1,5 +1,0 @@
-EXPORTS
-	HttpExtensionProc
-	GetExtensionVersion
-	TerminateExtension
-	DllMain

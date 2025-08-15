@@ -1,2 +1,0 @@
-WT_ADD_EXAMPLE(urlparams.wt urlparams.C)
-INCLUDE_DIRECTORIES(${WT_SOURCE_DIR}/src)
