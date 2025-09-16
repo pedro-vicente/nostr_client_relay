@@ -3,12 +3,6 @@ project(gnostro VERSION 1.0.0 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-if (MSVC)
-  set(ENV{Qt6_DIR} "C:/Qt/6.8.2/msvc2022_64")
-  list(APPEND CMAKE_PREFIX_PATH  "C:/Qt/6.8.2/msvc2022_64")
-endif()
-
-
 find_package(Qt6 REQUIRED COMPONENTS Widgets Network Multimedia MultimediaWidgets)
 qt_standard_project_setup()
 

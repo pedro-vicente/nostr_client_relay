@@ -64,3 +64,10 @@ target_link_libraries (wostro ${lib_web})
 message(STATUS "Copying data files to: ${CMAKE_BINARY_DIR}/web")
 file(COPY "${CMAKE_SOURCE_DIR}/web/nostro.css" DESTINATION ${CMAKE_BINARY_DIR}/web)
 add_custom_target(css SOURCES ${CMAKE_BINARY_DIR}/web/nostro.css)
+
+if (MSVC)
+  set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT wostro)
+  set_property(TARGET wostro PROPERTY 
+    VS_DEBUGGER_COMMAND_ARGUMENTS "--http-address=0.0.0.0 --http-port=8080  --docroot=.")
+  set_property(TARGET wostro PROPERTY VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_BINARY_DIR}")
+endif()

@@ -219,6 +219,7 @@ FeedEntry::FeedEntry(const nostr::event_t& nostr_event, QWidget* parent, Qt::Win
 
     if (url.contains(".png", Qt::CaseInsensitive)
       || url.contains(".jpg", Qt::CaseInsensitive)
+      || url.contains(".jpeg", Qt::CaseInsensitive)
       || url.contains(".webp", Qt::CaseInsensitive)
       || url.contains(".svg", Qt::CaseInsensitive))
     {
