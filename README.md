@@ -99,7 +99,7 @@ This call generates the following message to send
 ]
 ```
 
-Vostro responds withe following EVENT, that was found in the database by comparing the <code>--authors</code> field.
+Vostro responds with the following EVENT, that was found in the database by comparing the <code>--authors</code> field.
 
 ```json
 [
@@ -128,17 +128,17 @@ At command line
 Open a browser at localhost port 8080
 
 ```
-http://127.0.0.1/8080
+http://127.0.0.1:8080
 ```
 ## Web interface
 
 The nostro web interface at this time allows input of a limited set of the command line options.
 
-![Nostro on the web](https://pedro-vicente.net/images/nostro.png)
+![Nostro on the web](http://pedro-vicente.net/images/nostro.png)
 
 It is available at
 
-[https://nostro.cloud/]
+[http://nostro.cloud:7001/](http://nostro.cloud:7001/)
 
 ## API
 
@@ -264,7 +264,7 @@ std::string json = R"([
  }
 ])";
 std::string uri = "nos.lol";
-std::vector&ltstd::string&gt& response;
+std::vector<std::string>& response;
 nostr::relay_to(uri, json, response);
 comm::to_file("response.txt", response);
 for (int idx = 0; idx < response.size(); idx++)
@@ -358,9 +358,4 @@ And for that request a response is obtained according to <a href="https://github
 
 This file is part of 'Nostr_client_relay'  
 Copyright (c) 2023, Space Research Software LLC, Pedro Vicente. All rights reserved.  
-See file LICENSE for full license details.  
-
-
-
-
-
+See file LICENSE for full license details.
