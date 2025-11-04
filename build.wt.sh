@@ -45,7 +45,7 @@ cmake --install . --config Release
 
 elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
 
-cmake ../../ext/wt-4.12.0 \
+cmake ../../ext/wt-4.12.0 --fresh \
  -DCMAKE_INSTALL_PREFIX="$(pwd)/../../install/wt" \
  -DBOOST_PREFIX="$path_boost" \
  -DINSTALL_EXAMPLES=ON \
@@ -53,9 +53,13 @@ cmake ../../ext/wt-4.12.0 \
  -DBUILD_SHARED_LIBS=OFF \
  -DCMAKE_FIND_LIBRARY_SUFFIXES=".a" \
  -DBoost_USE_STATIC_LIBS=ON \
- -DCMAKE_POSITION_INDEPENDENT_CODE=ON
+ -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
+ -DOPENSSL_ROOT_DIR=/usr \
+ -DOPENSSL_CRYPTO_LIBRARY=/usr/lib/x86_64-linux-gnu/libcrypto.so \
+ -DOPENSSL_SSL_LIBRARY=/usr/lib/x86_64-linux-gnu/libssl.so \
+ -DENABLE_SSL:BOOL=ON
 
-cmake --build . --config Release --parallel 4
+cmake --build . --config Release -j1
 cmake --install . --config Release
 
 fi
